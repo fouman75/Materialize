@@ -12,7 +12,7 @@ public class TextureImportTest : MonoBehaviour {
 
 		FIBITMAP bitmap = FreeImage.LoadEx (PathToLoad);
 		bool importSuccess = FreeImage.SaveEx (bitmap, Application.dataPath + "/tempImage.png", FREE_IMAGE_FORMAT.FIF_PNG);
-	
+        Debug.Log("Import Success: " + importSuccess);
 	}
 	
 	// Update is called once per frame

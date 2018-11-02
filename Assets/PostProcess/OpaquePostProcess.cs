@@ -19,10 +19,10 @@ public class OpaquePostProcess : MonoBehaviour {
 	RenderTexture _AccumulatedFramesAlt;
 	
 	Camera thisCamera;
-	Quaternion lastCamRotation = Quaternion.identity;
-	Vector3 lastCamPosition = Vector3.zero;
-	Quaternion savedCameraRotation = Quaternion.identity;
-	float lastBlendAmount = 1.0f;
+	//Quaternion lastCamRotation = Quaternion.identity;
+	//Vector3 lastCamPosition = Vector3.zero;
+	//Quaternion savedCameraRotation = Quaternion.identity;
+	//float lastBlendAmount = 1.0f;
 	
 	HaltonSequence positionsequence = new HaltonSequence();
 	int hspos = 0;
@@ -32,9 +32,9 @@ public class OpaquePostProcess : MonoBehaviour {
 	
 	Matrix4x4 _LAST_BG_VP_MATRIX;
 	
-	Matrix4x4 _CURRENT_P_MATRIX;
+	//Matrix4x4 _CURRENT_P_MATRIX;
 	
-	Matrix4x4 _CURRENT_V_MATRIX;
+	//Matrix4x4 _CURRENT_V_MATRIX;
 	Matrix4x4 _CURRENT_VP_INVERSE_MATRIX;
 
 	Material PostProcessMaterial;
@@ -120,7 +120,7 @@ public class OpaquePostProcess : MonoBehaviour {
 		Ray afRay;
 		int hits = 0;
 		int taps = 10;
-		float invTaps = 1.0f / taps;
+		//float invTaps = 1.0f / taps;
 		float newAFDepth = 0;
 		for( int i = 0; i <= taps; i++ ){
 			for( int j = 0; j <= taps; j++ ){
@@ -141,8 +141,8 @@ public class OpaquePostProcess : MonoBehaviour {
 
 		
 		// Save the current camera matrixes
-		_CURRENT_P_MATRIX = thisCamera.projectionMatrix;
-		_CURRENT_V_MATRIX = thisCamera.worldToCameraMatrix;
+		//_CURRENT_P_MATRIX = thisCamera.projectionMatrix;
+		//_CURRENT_V_MATRIX = thisCamera.worldToCameraMatrix;
 		_CURRENT_VP_MATRIX = thisCamera.projectionMatrix * thisCamera.worldToCameraMatrix;
 		_CURRENT_VP_INVERSE_MATRIX = _CURRENT_VP_MATRIX.inverse;
 		

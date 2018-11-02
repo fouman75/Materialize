@@ -80,12 +80,12 @@ public class PostProcess : MonoBehaviour {
 	private Material PostProcessMaterial;
 	private int ScreenX = 1280, ScreenY = 720;
 	
-	private Camera thisCamera;
+	//private Camera thisCamera;
 	
-	private Matrix4x4 _LAST_VP_MATRIX;
+	//private Matrix4x4 _LAST_VP_MATRIX;
 	private Matrix4x4 _CURRENT_VP_MATRIX;	
 	
-	OpaquePostProcess opaquePostProcess;
+	//OpaquePostProcess opaquePostProcess;
 	
 	enum Pass
 	{   
@@ -118,7 +118,7 @@ public class PostProcess : MonoBehaviour {
 	void OnEnable()
 	{		
 		
-		thisCamera = this.GetComponent<Camera>();
+		//thisCamera = this.GetComponent<Camera>();
 		
 		//thisCamera.depthTextureMode |= DepthTextureMode.DepthNormals;
 		
@@ -152,11 +152,11 @@ public class PostProcess : MonoBehaviour {
 		Texture2D RoughnessNoiseTexture = ( Texture2D )Resources.Load( "RoughnessNoiseTexture", typeof( Texture2D ) );
 		Shader.SetGlobalTexture( "_RoughnessNoiseTexture", RoughnessNoiseTexture );
 		
-		_LAST_VP_MATRIX = thisCamera.projectionMatrix * thisCamera.worldToCameraMatrix;
+		//_LAST_VP_MATRIX = thisCamera.projectionMatrix * thisCamera.worldToCameraMatrix;
 		
 		averageColorBlendTexture = new RenderTexture( 1, 1, 0, RenderTextureFormat.ARGBFloat );
 		
-		opaquePostProcess = this.gameObject.GetComponent<OpaquePostProcess>();
+		//opaquePostProcess = this.gameObject.GetComponent<OpaquePostProcess>();
 		
 	}
 	
@@ -285,7 +285,7 @@ public class PostProcess : MonoBehaviour {
 		ScreenX = source.width;
 		ScreenY = source.height;
 		
-		Vector2 ScreenSize = new Vector2( source.width, source.height );
+		//Vector2 ScreenSize = new Vector2( source.width, source.height );
 		Vector2 ScreenSizeHalf = new Vector2( source.width/2, source.height/2 );
 		Vector2 ScreenSizeQuarter = new Vector2( source.width/4, source.height/4);
 		Vector2 ScreenSizeEighth = new Vector2( source.width/8, source.height/8 );

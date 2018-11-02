@@ -120,7 +120,7 @@ public class NormalFromHeightGui : MonoBehaviour {
 
 	float Slider = 0.5f;
 
-	float _BlurScale = 1.0f;
+	//float _BlurScale = 1.0f;
 	int imageSizeX = 1024;
 	int imageSizeY = 1024;
 

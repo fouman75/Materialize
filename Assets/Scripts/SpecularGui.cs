@@ -14,7 +14,7 @@ public class SpecularGui : MonoBehaviour {
 	public GameObject MainGuiObject;
 	MainGui MainGuiScript;
 
-	Textures textureToLoad = Textures.diffuse;
+	//Textures textureToLoad = Textures.diffuse;
 	
 	Texture2D _HeightMap;
 	Texture2D _DiffuseMap;
@@ -138,7 +138,7 @@ public class SpecularGui : MonoBehaviour {
 		
 		//toolsWindowRect = GUI.Window (toolsWindowID, toolsWindowRect, DrawToolsWindow, toolsWindowTitle);
 		
-		int spacingX = 0;
+		//int spacingX = 0;
 		int spacingY = 50;
 		int spacing2Y = 70;
 		

@@ -164,8 +164,8 @@ public class AOFromNormalGui : MonoBehaviour {
 
 	void DoMyWindow ( int windowID ) {
 
-		int spacingX = 0;
-		int spacingY = 50;
+		//int spacingX = 0;
+		//int spacingY = 50;
 		
 		int offsetX = 10;
 		int offsetY = 30;

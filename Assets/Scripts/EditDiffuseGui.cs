@@ -121,7 +121,7 @@ public class EditDiffuseGui : MonoBehaviour {
 
 	RenderTexture _TempMap;
 	RenderTexture _BlurMap;
-	RenderTexture _AvgTempMap;
+	//RenderTexture _AvgTempMap;
 	RenderTexture _AvgMap;
 
 	public Material thisMaterial;
@@ -234,9 +234,9 @@ public class EditDiffuseGui : MonoBehaviour {
 
 	void DoMyWindow ( int windowID ) {
 
-		int spacingX = 0;
-		int spacingY = 50;
-		int spacing2Y = 70;
+		//int spacingX = 0;
+		//int spacingY = 50;
+		//int spacing2Y = 70;
 		
 		int offsetX = 10;
 		int offsetY = 30;
@@ -323,7 +323,7 @@ public class EditDiffuseGui : MonoBehaviour {
 		CleanupTexture( _BlurMap );
 		CleanupTexture( _TempMap );
 		CleanupTexture (_AvgMap);
-		CleanupTexture (_AvgTempMap);
+		//CleanupTexture (_AvgTempMap);
 	}
 
 	void InitializeTextures() {
@@ -438,7 +438,7 @@ public class EditDiffuseGui : MonoBehaviour {
 		thisMaterial.SetTexture ("_AvgTex", _AvgMap);
 
 		CleanupTexture ( _TempMap );
-		CleanupTexture ( _AvgTempMap );
+		//CleanupTexture ( _AvgTempMap );
 
 		yield return new WaitForSeconds(0.01f);
 		

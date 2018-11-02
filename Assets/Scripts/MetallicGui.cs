@@ -276,9 +276,9 @@ public class MetallicGui : MonoBehaviour {
 
 	void DoMyWindow ( int windowID ) {
 
-		int spacingX = 0;
-		int spacingY = 50;
-		int spacing2Y = 70;
+		//int spacingX = 0;
+		//int spacingY = 50;
+		//int spacing2Y = 70;
 		
 		int offsetX = 10;
 		int offsetY = 30;

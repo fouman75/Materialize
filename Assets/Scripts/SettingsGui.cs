@@ -1,11 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.IO;
-
-using FreeImageAPI;
-using System.Runtime.InteropServices;
-
-using System.Xml;
 using System.Xml.Serialization;
 
 public class Settings {
@@ -35,51 +29,43 @@ public class SettingsGui : MonoBehaviour {
 
 	public static SettingsGui instance;
 
-	char pathChar;
+	public char pathChar = '/';
 
-	// Use this for initialization
-	void Start () {
+    private string _settingsFile = "";
 
-		instance = this;
+    private void Awake()
+    {
+        instance = this;
 
-		if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer) {
-			pathChar = '\\';
-		} else {
-			pathChar = '/';
-		}
+        if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer)
+        {
+            pathChar = '\\';
+        }
+        else
+        {
+            pathChar = '/';
+        }
 
-		LoadSettings ();
-	
+        _settingsFile = GetSettingsFileName();
+    }
+
+    // Use this for initialization
+    void Start () {
+    
 	}
 
-	string GetPathToFile(){
+	private string GetSettingsFileName(){
 
-		string pathToFile = Application.dataPath;
-		//string pathToFile = Application.persistentDataPath;
-
-		if (Application.isEditor) {
-			pathToFile = pathToFile + "/settings.txt";
-		} else {
-			pathToFile = pathToFile.Substring (0, pathToFile.Length - 16) + "settings.txt";
-		}
-		return pathToFile;
+		//string pathToFile = Application.dataPath;
+		string pathToFile = Application.persistentDataPath + pathChar + "settings.txt";
+        Debug.Log("Settings File: " + pathToFile);
+        return pathToFile;
 	}
 
 	public void LoadSettings(){
-
-		string pathToFile = GetPathToFile();
-
-		Debug.Log (pathToFile);
-		//if (File.Exists (pathToFile)) {
-			//FileAttributes fileAttributes = File.GetAttributes(pathToFile);
-			//if ((fileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly) {
-				//File.SetAttributes (pathToFile, FileAttributes.Normal);
-			//}
-		//}
-
-		if (System.IO.File.Exists (pathToFile)) {
+        if (System.IO.File.Exists (_settingsFile)) {
 			var serializer = new XmlSerializer (typeof(Settings));
-			var stream = new FileStream (pathToFile, FileMode.Open);
+            var stream = new FileStream (_settingsFile, FileMode.Open);
 			settings = serializer.Deserialize (stream) as Settings;
 			stream.Close ();
 		} else {
@@ -98,20 +84,15 @@ public class SettingsGui : MonoBehaviour {
 	}
 
 	void SaveSettings(){
-
-		string pathToFile = GetPathToFile();
-		
-		Debug.Log (pathToFile);
-
-		if (File.Exists (pathToFile)) {
+		if (File.Exists (_settingsFile)) {
 			//FileAttributes fileAttributes = File.GetAttributes(pathToFile);
 			//if ((fileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly) {
-				File.SetAttributes (pathToFile, FileAttributes.Normal);
+				File.SetAttributes (_settingsFile, FileAttributes.Normal);
 			//}
 		}
 
 		var serializer = new XmlSerializer (typeof(Settings));
-		var stream = new FileStream (pathToFile, FileMode.Create);
+		var stream = new FileStream (_settingsFile, FileMode.Create);
 		serializer.Serialize (stream, settings);
 		stream.Close ();
 	}

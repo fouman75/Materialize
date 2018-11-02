@@ -7,7 +7,7 @@ public class SuggestionGui : MonoBehaviour {
 	MainGui MainGuiScript;
 
 	public GameObject AuthenticateObject;
-	AuthenticateGui AuthenticateScript;
+	//AuthenticateGui AuthenticateScript;
 	
 	string SuggestionText = "";
 	string stringEmail = "";
@@ -21,16 +21,16 @@ public class SuggestionGui : MonoBehaviour {
 
 	SuggestionState suggestionState = SuggestionState.Write;
 
-	bool suggestionSent = false;
-	bool sendingSuggestion = false;
+	//bool suggestionSent = false;
+	//bool sendingSuggestion = false;
 	
 	Rect windowRect = new Rect (30, 300, 300, 450);
 	
 	// Use this for initialization
 	void Start () {
 
-		AuthenticateScript = AuthenticateObject.GetComponent<AuthenticateGui> ();
-		stringEmail = AuthenticateScript.stringEmail;
+		//AuthenticateScript = AuthenticateObject.GetComponent<AuthenticateGui> ();
+		//stringEmail = AuthenticateScript.stringEmail;
 		Debug.Log ("Suggestion Box Email: " + stringEmail);
 		windowRect.position = new Vector2( Screen.width - 310, 50 );
 

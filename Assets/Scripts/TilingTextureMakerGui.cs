@@ -55,8 +55,8 @@ public class TilingTextureMakerGui : MonoBehaviour {
 	float SplatWobble = 0.2f;
 	string SplatWobbleText = "0.2";
 
-    float SplatWobbleRandom = 0.2f;
-    string SplatWobbleRandomText = "0.2";
+    //float SplatWobbleRandom = 0.2f;
+    //string SplatWobbleRandomText = "0.2";
 
     float SplatRandomize = 0.0f;
     string SplatRandomizeText = "0.0";
@@ -316,9 +316,9 @@ public class TilingTextureMakerGui : MonoBehaviour {
 	
 	void DoMyWindow ( int windowID ) {
 		
-		int spacingX = 0;
-		int spacingY = 50;
-		int spacing2Y = 70;
+		//int spacingX = 0;
+		//int spacingY = 50;
+		//int spacing2Y = 70;
 		
 		int offsetX = 10;
 		int offsetY = 30;
@@ -598,13 +598,10 @@ public class TilingTextureMakerGui : MonoBehaviour {
 		switch(tileTech) {
 		case TileTechnique.Overlap:
 			return TileTextureOverlap (textureToTile, textureTarget, TexName);
-			break;
 		case TileTechnique.Splat:
 			return TileTextureSplat (textureToTile, textureTarget, TexName);
-			break;
 		default:
 			return TileTextureOverlap (textureToTile, textureTarget, TexName);
-			break;
 		}
 
 	}

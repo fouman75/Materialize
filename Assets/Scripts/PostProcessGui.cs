@@ -11,7 +11,7 @@ public class PostProcessGui : MonoBehaviour {
 
 	bool EnablePostProcess = true;
 
-	bool UseTAA = true;
+	//bool UseTAA = true;
 
 	float BloomThreshold = 0.8f;
 	string BloomThresholdText = "0.8";
@@ -113,9 +113,9 @@ public class PostProcessGui : MonoBehaviour {
 
 	void DoMyWindow ( int windowID ) {
 		
-		int spacingX = 0;
-		int spacingY = 50;
-		int spacing2Y = 70;
+		//int spacingX = 0;
+		//int spacingY = 50;
+		//int spacing2Y = 70;
 		
 		int offsetX = 10;
 		int offsetY = 30;

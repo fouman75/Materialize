@@ -24,9 +24,6 @@ public class WelcomeGui : MonoBehaviour {
 
 		Application.runInBackground = true;
 
-		float backgroundFade = 1.0f;
-		float logoFade = 0.0f;
-
 		if ( skipWelcomeScreen || Application.isEditor ) {
 			ActivateObjects();
 			this.gameObject.SetActive(false);
