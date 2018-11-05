@@ -170,11 +170,15 @@ public class MainGui : MonoBehaviour
 
     private string defaultFileName = "Texture";
     private ExtensionFilter[] imagesExtensionFilter;
+    private ExtensionFilter[] projectExtensionFilter;
 
     private void Awake()
     {
         imagesExtensionFilter = new[] {
             new ExtensionFilter("Image Files", "png", "jpg", "jpeg" )
+        };
+        projectExtensionFilter = new[] {
+            new ExtensionFilter("Project File", "mtz" )
         };
     }
 
@@ -1229,13 +1233,15 @@ public class MainGui : MonoBehaviour
         //Save Project
         if (GUI.Button(new Rect(offsetX + 10, offsetY + 180, 100, 25), "Save Project"))
         {
-            //TODO            fileBrowser.ShowBrowser("Save Project", this.SaveProject);
+            string filePath = FileBrowser.SaveFile("Save Project", "", defaultFileName, projectExtensionFilter);
+            this.SaveProject(filePath);
         }
 
         //Load Project
         if (GUI.Button(new Rect(offsetX + 10, offsetY + 215, 100, 25), "Load Project"))
         {
-            //TODO            fileBrowser.ShowBrowser("Load Project", this.LoadProject);
+            string filePath = FileBrowser.OpenSingleFile("Load Project", "", projectExtensionFilter);
+            LoadProject(filePath);
         }
         #endregion
 
