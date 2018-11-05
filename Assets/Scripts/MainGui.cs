@@ -582,9 +582,8 @@ public class MainGui : MonoBehaviour
         {
             textureToSave = _HeightMap;
             mapType = "_height";
-            string filePath = FileBrowser.SaveFile("Open Height Map", "", defaultFileName + mapType, selectedFormat.ToString());
+            string filePath = FileBrowser.SaveFile("Save Height Map", "", defaultFileName + mapType, selectedFormat.ToString());
             this.SaveFile(filePath);
-//TODO            fileBrowser.ShowBrowser("Save Height Map", this.SaveFile);
         }
 
 
@@ -692,7 +691,8 @@ public class MainGui : MonoBehaviour
                 textureToSave = _DiffuseMapOriginal;
             }
             mapType = "_diffuse";
-//TODO            fileBrowser.ShowBrowser("Save Diffuse Map", this.SaveFile);
+            string filePath = FileBrowser.SaveFile("Save diffuse Map", "", defaultFileName + mapType, selectedFormat.ToString());
+            this.SaveFile(filePath);
         }
 
         if ((_DiffuseMapOriginal == null && _DiffuseMap == null) || QuicksavePathDiffuse == "") { GUI.enabled = false; } else { GUI.enabled = true; }
@@ -790,7 +790,8 @@ public class MainGui : MonoBehaviour
         {
             textureToSave = _NormalMap;
             mapType = "_normal";
-//TODO            fileBrowser.ShowBrowser("Save Normal Map", this.SaveFile);
+            string filePath = FileBrowser.SaveFile("Save Normal Map", "", defaultFileName + mapType, selectedFormat.ToString());
+            this.SaveFile(filePath);
         }
 
         if (_NormalMap == null || QuicksavePathNormal == "") { GUI.enabled = false; } else { GUI.enabled = true; }
@@ -874,8 +875,8 @@ public class MainGui : MonoBehaviour
         {
             textureToSave = _MetallicMap;
             mapType = "_metallic";
-//TODO            fileBrowser.ShowBrowser("Save Metallic Map", this.SaveFile);
-            //UniFileBrowser.use.SaveFileWindow (SaveFile);
+            string filePath = FileBrowser.SaveFile("Save Metallic Map", "", defaultFileName + mapType, selectedFormat.ToString());
+            this.SaveFile(filePath);
         }
 
         if (_MetallicMap == null || QuicksavePathMetallic == "") { GUI.enabled = false; } else { GUI.enabled = true; }
@@ -960,7 +961,8 @@ public class MainGui : MonoBehaviour
         {
             textureToSave = _SmoothnessMap;
             mapType = "_smoothness";
-//TODO            fileBrowser.ShowBrowser("Save Smoothness Map", this.SaveFile);
+            string filePath = FileBrowser.SaveFile("Save Smoothness Map", "", defaultFileName + mapType, selectedFormat.ToString());
+            this.SaveFile(filePath);
         }
 
         if (_SmoothnessMap == null || QuicksavePathSmoothness == "") { GUI.enabled = false; } else { GUI.enabled = true; }
@@ -1044,7 +1046,8 @@ public class MainGui : MonoBehaviour
         {
             textureToSave = _EdgeMap;
             mapType = "_edge";
-//TODO            fileBrowser.ShowBrowser("Save Edge Map", this.SaveFile);
+            string filePath = FileBrowser.SaveFile("Save Edge Map", "", defaultFileName + mapType, selectedFormat.ToString());
+            this.SaveFile(filePath);
         }
 
         if (_EdgeMap == null || QuicksavePathEdge == "") { GUI.enabled = false; } else { GUI.enabled = true; }
@@ -1128,7 +1131,8 @@ public class MainGui : MonoBehaviour
         {
             textureToSave = _AOMap;
             mapType = "_ao";
-//TODO            fileBrowser.ShowBrowser("Save AO Map", this.SaveFile);
+            string filePath = FileBrowser.SaveFile("Save AO Map", "", defaultFileName + mapType, selectedFormat.ToString());
+            this.SaveFile(filePath);
         }
 
         if (_AOMap == null || QuicksavePathAO == "") { GUI.enabled = false; } else { GUI.enabled = true; }
