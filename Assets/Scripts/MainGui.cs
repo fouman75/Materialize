@@ -551,6 +551,7 @@ public class MainGui : MonoBehaviour
             GUI.DrawTexture(new Rect(offsetX + 5, offsetY + 25, 100, 100), _HeightMap);
         }
 
+#if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         // Paste 
         if (GUI.Button(new Rect(offsetX + 5, offsetY + 130, 20, 20), "P"))
         {
@@ -566,6 +567,7 @@ public class MainGui : MonoBehaviour
             textureToSave = _HeightMap;
             CopyFile();
         }
+#endif
 
         GUI.enabled = true;
 
@@ -644,6 +646,7 @@ public class MainGui : MonoBehaviour
             GUI.DrawTexture(new Rect(offsetX + spacingX + 5, offsetY + 25, 100, 100), _DiffuseMapOriginal);
         }
 
+#if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         // Paste 
         if (GUI.Button(new Rect(offsetX + spacingX + 5, offsetY + 130, 20, 20), "P"))
         {
@@ -666,6 +669,7 @@ public class MainGui : MonoBehaviour
             }
             CopyFile();
         }
+#endif
 
         GUI.enabled = true;
 
@@ -759,6 +763,7 @@ public class MainGui : MonoBehaviour
             GUI.DrawTexture(new Rect(offsetX + spacingX * 2 + 5, offsetY + 25, 100, 100), _NormalMap);
         }
 
+#if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         // Paste 
         if (GUI.Button(new Rect(offsetX + spacingX * 2 + 5, offsetY + 130, 20, 20), "P"))
         {
@@ -774,6 +779,7 @@ public class MainGui : MonoBehaviour
             textureToSave = _NormalMap;
             CopyFile();
         }
+#endif
 
         GUI.enabled = true;
 
@@ -844,6 +850,7 @@ public class MainGui : MonoBehaviour
             GUI.DrawTexture(new Rect(offsetX + spacingX * 3 + 5, offsetY + 25, 100, 100), _MetallicMap);
         }
 
+#if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         // Paste 
         if (GUI.Button(new Rect(offsetX + spacingX * 3 + 5, offsetY + 130, 20, 20), "P"))
         {
@@ -859,6 +866,7 @@ public class MainGui : MonoBehaviour
             textureToSave = _MetallicMap;
             CopyFile();
         }
+#endif
 
         GUI.enabled = true;
 
@@ -930,6 +938,7 @@ public class MainGui : MonoBehaviour
             GUI.DrawTexture(new Rect(offsetX + spacingX * 4 + 5, offsetY + 25, 100, 100), _SmoothnessMap);
         }
 
+#if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         // Paste 
         if (GUI.Button(new Rect(offsetX + spacingX * 4 + 5, offsetY + 130, 20, 20), "P"))
         {
@@ -945,6 +954,7 @@ public class MainGui : MonoBehaviour
             textureToSave = _SmoothnessMap;
             CopyFile();
         }
+#endif
 
         GUI.enabled = true;
 
@@ -1015,6 +1025,7 @@ public class MainGui : MonoBehaviour
             GUI.DrawTexture(new Rect(offsetX + spacingX * 5 + 5, offsetY + 25, 100, 100), _EdgeMap);
         }
 
+#if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         // Paste 
         if (GUI.Button(new Rect(offsetX + spacingX * 5 + 5, offsetY + 130, 20, 20), "P"))
         {
@@ -1030,6 +1041,7 @@ public class MainGui : MonoBehaviour
             textureToSave = _EdgeMap;
             CopyFile();
         }
+#endif
 
         GUI.enabled = true;
 
@@ -1100,7 +1112,7 @@ public class MainGui : MonoBehaviour
             GUI.DrawTexture(new Rect(offsetX + spacingX * 6 + 5, offsetY + 25, 100, 100), _AOMap);
         }
 
-
+#if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         // Paste 
         if (GUI.Button(new Rect(offsetX + spacingX * 6 + 5, offsetY + 130, 20, 20), "P"))
         {
@@ -1116,6 +1128,7 @@ public class MainGui : MonoBehaviour
             textureToSave = _AOMap;
             CopyFile();
         }
+#endif
 
         GUI.enabled = true;
 
