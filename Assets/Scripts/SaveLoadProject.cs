@@ -82,29 +82,6 @@ public class SaveLoadProject : MonoBehaviour
 
     public bool busy = false;
 
-    [DllImport("FreeImageNET")]
-    private static extern FIBITMAP FreeImage_Load(FREE_IMAGE_FORMAT fif, string filename, int flags);
-
-    [DllImport("FreeImageNET")]
-    private static extern void FreeImage_Unload(FIBITMAP dib);
-
-    [DllImport("FreeImageNET")]
-    private static extern bool FreeImage_Save(FREE_IMAGE_FORMAT fif, FIBITMAP dib, string filename, FREE_IMAGE_SAVE_FLAGS flags);
-
-    [DllImport("FreeImageNET")]
-    private static extern int FreeImage_GetHeight(FIBITMAP dib);
-
-    [DllImport("FreeImageNET")]
-    private static extern int FreeImage_GetWidth(FIBITMAP dib);
-
-    [DllImport("FreeImageNET")]
-    private static extern bool FreeImage_GetPixelColor(FIBITMAP dib, int x, int y, RGBQUAD value);
-
-    [DllImport("FreeImageNET")]
-    private static extern FIBITMAP FreeImage_MakeThumbnail(FIBITMAP dib, int max_pixel_size, bool convert);
-
-
-
     // Use this for initialization
     void Start()
     {
@@ -292,7 +269,7 @@ public class SaveLoadProject : MonoBehaviour
         StartCoroutine(SaveAllTextures(extension, pathToFile));
     }
 
-    public void SaveFile(string pathToFile, FileFormat selectedFormat, Texture2D textureToSave, string mapType)
+    public void SaveFile(string pathToFile, FileFormat selectedFormat, Texture2D textureToSave)
     {
         //int fileIndex = pathToFile.LastIndexOf (pathChar);
         //UnityEngine.Debug.Log = "You're saving file: " + pathToFile.Substring (fileIndex+1, pathToFile.Length-fileIndex-1);
@@ -301,7 +278,7 @@ public class SaveLoadProject : MonoBehaviour
             pathToFile = pathToFile.Substring(0, pathToFile.LastIndexOf(".", StringComparison.Ordinal));
         }
         string extension = SwitchFormats(selectedFormat);
-        StartCoroutine(SaveTexture(extension, textureToSave, pathToFile + mapType));
+        StartCoroutine(SaveTexture(extension, textureToSave, pathToFile));
     }
 
     public void PasteFile(MapType mapTypeToLoad)
@@ -335,7 +312,7 @@ public class SaveLoadProject : MonoBehaviour
     public void CopyFile(Texture2D textureToSave)
     {
 
-        SaveFile(Application.dataPath + "/temp.png", FileFormat.png, textureToSave, "");
+        SaveFile(Application.dataPath + "/temp.png", FileFormat.png, textureToSave);
         //SaveFile(Application.persistentDataPath + "/temp.png",FileFormat.png,textureToSave, "" );
 
         try
@@ -398,56 +375,24 @@ public class SaveLoadProject : MonoBehaviour
 
         if (textureToSave != null)
         {
-
-            FREE_IMAGE_FORMAT imageFormat = FREE_IMAGE_FORMAT.FIF_UNKNOWN;
-            FREE_IMAGE_SAVE_FLAGS flags = FREE_IMAGE_SAVE_FLAGS.DEFAULT;
-
-            bool useFIF = true;
-
             switch (extension.ToLower())
             {
                 case "bmp":
-                    imageFormat = FREE_IMAGE_FORMAT.FIF_BMP;
                     break;
                 case "tga":
-                    imageFormat = FREE_IMAGE_FORMAT.FIF_TARGA;
                     break;
                 case "tiff":
-                    imageFormat = FREE_IMAGE_FORMAT.FIF_TIFF;
-                    flags = FREE_IMAGE_SAVE_FLAGS.TIFF_NONE;
                     break;
                 case "png":
                     byte[] pngBytes = textureToSave.EncodeToPNG();
                     File.WriteAllBytes(pathToFile + ".png", pngBytes);
-                    useFIF = false;
-                    //imageFormat = FREE_IMAGE_FORMAT.FIF_PNG;
                     break;
                 case "jpg":
                     byte[] jpgBytes = textureToSave.EncodeToJPG();
                     File.WriteAllBytes(pathToFile + ".jpg", jpgBytes);
-                    useFIF = false;
-                    //imageFormat = FREE_IMAGE_FORMAT.FIF_JPEG;
-                    //flags = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYSUPERB;
                     break;
                 default:
-                    imageFormat = FREE_IMAGE_FORMAT.FIF_UNKNOWN;
                     break;
-            }
-
-            if (useFIF)
-            {
-                byte[] bytes = textureToSave.EncodeToPNG();
-
-                string tempFilePath = Application.dataPath + pathChar + "temp.png";
-                //string tempFilePath = Application.persistentDataPath + pathChar + "temp.png";
-                File.WriteAllBytes(tempFilePath, bytes);
-
-                FIBITMAP bitmap = FreeImage_Load(FREE_IMAGE_FORMAT.FIF_PNG, tempFilePath, 0);
-                bool saveSuccess = FreeImage_Save(imageFormat, bitmap, pathToFile + "." + extension, flags);
-                UnityEngine.Debug.Log("Save success: " + saveSuccess);
-                FreeImage_Unload(bitmap);
-
-                //File.Delete (tempFilePath);
             }
 
             Resources.UnloadUnusedAssets();
@@ -455,7 +400,6 @@ public class SaveLoadProject : MonoBehaviour
         }
         yield return new WaitForSeconds(0.01f);
         busy = false;
-
     }
 
     //==============================================//

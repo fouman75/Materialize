@@ -1,8 +1,7 @@
-﻿using FreeImageAPI;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Crosstales.FB;
+using System.IO;
 
 public enum Textures
 {
@@ -169,34 +168,13 @@ public class MainGui : MonoBehaviour
 
     //private ClipboardImageHelper.ClipboardImage CIH;
 
-    //[DllImport ("FreeImage")]
-    //private static extern FIBITMAP FreeImage_Load( FREE_IMAGE_FORMAT fif, string filename, int flags );
-
-    //[DllImport ("FreeImageNET")]
-    //private static extern void FreeImage_Unload( FIBITMAP dib );
-
-    //[DllImport ("FreeImageNET")]
-    //private static extern bool FreeImage_Save( FREE_IMAGE_FORMAT fif, FIBITMAP dib, string filename, FREE_IMAGE_SAVE_FLAGS flags );
-
-    //[DllImport ("FreeImageNET")]
-    //private static extern int FreeImage_GetHeight( FIBITMAP dib );
-
-    //[DllImport ("FreeImageNET")]
-    //private static extern int FreeImage_GetWidth( FIBITMAP dib );
-
-    //[DllImport ("FreeImageNET")]
-    //private static extern bool FreeImage_GetPixelColor( FIBITMAP dib, int x, int y, RGBQUAD value );
-
-    //[DllImport ("FreeImageNET")]
-    //private static extern FIBITMAP FreeImage_MakeThumbnail( FIBITMAP dib, int max_pixel_size, bool convert );
-
+    private string defaultFileName = "Texture";
     private ExtensionFilter[] imagesExtensionFilter;
 
     private void Awake()
     {
         imagesExtensionFilter = new[] {
-            new ExtensionFilter("Image Files", "png", "jpg", "jpeg", "tga", "tif", "bmp" ),
-            new ExtensionFilter("All Files", "*" ),
+            new ExtensionFilter("Image Files", "png", "jpg", "jpeg" )
         };
     }
 
@@ -604,6 +582,8 @@ public class MainGui : MonoBehaviour
         {
             textureToSave = _HeightMap;
             mapType = "_height";
+            string filePath = FileBrowser.SaveFile("Open Height Map", "", defaultFileName + mapType, selectedFormat.ToString());
+            this.SaveFile(filePath);
 //TODO            fileBrowser.ShowBrowser("Save Height Map", this.SaveFile);
         }
 
@@ -694,6 +674,8 @@ public class MainGui : MonoBehaviour
             mapTypeToLoad = MapType.diffuseOriginal;
             string filePath = FileBrowser.OpenSingleFile("Open Diffuse Map", "", imagesExtensionFilter);
             OpenFile(filePath);
+            defaultFileName = Path.GetFileNameWithoutExtension(filePath);
+            Debug.Log("Default File Name: " + defaultFileName);
         }
 
         if (_DiffuseMapOriginal == null && _DiffuseMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
@@ -1871,7 +1853,7 @@ public class MainGui : MonoBehaviour
 
     void SaveFile(string pathToFile)
     {
-        SaveLoadProjectScript.SaveFile(pathToFile, selectedFormat, textureToSave, mapType);
+        SaveLoadProjectScript.SaveFile(pathToFile, selectedFormat, textureToSave);
     }
 
     void CopyFile()
