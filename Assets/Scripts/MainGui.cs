@@ -130,8 +130,8 @@ public class MainGui : MonoBehaviour
 
     //bool busySaving = false;
 
-    public FileFormat selectedFormat = FileFormat.tga;
-    bool bmpSelected = true;
+    public FileFormat selectedFormat = FileFormat.png;
+    bool bmpSelected = false;
     bool jpgSelected = false;
     bool pngSelected = true;
     bool tgaSelected = false;
@@ -192,8 +192,6 @@ public class MainGui : MonoBehaviour
         _SmoothnessMap = null;
         _EdgeMap = null;
         _AOMap = null;
-
-        //fileBrowser = this.GetComponent<FileBrowser> ();
 
         PropertyCompShader = Shader.Find("Hidden/Blit_Property_Comp");
         PropertyCompMaterial = new Material(PropertyCompShader);
@@ -541,7 +539,7 @@ public class MainGui : MonoBehaviour
         //==============================//
         // 			Height Map			//
         //==============================//
-
+        #region "Height Map"
         GUI.Box(new Rect(offsetX, offsetY, 110, 250), "Height Map");
 
         if (_HeightMap != null)
@@ -625,12 +623,12 @@ public class MainGui : MonoBehaviour
             FixSize();
         }
         GUI.enabled = true;
-
+        #endregion
 
         //==============================//
         // 			Diffuse Map			//
         //==============================//
-
+        #region "Diffuse Map"
         GUI.Box(new Rect(offsetX + spacingX, offsetY, 110, 250), "Diffuse Map");
 
         if (_DiffuseMap != null)
@@ -744,12 +742,12 @@ public class MainGui : MonoBehaviour
             FixSize();
         }
         GUI.enabled = true;
-
+        #endregion
 
         //==============================//
         // 			Normal Map			//
         //==============================//
-
+        #region "Normal Map"
         GUI.Box(new Rect(offsetX + spacingX * 2, offsetY, 110, 250), "Normal Map");
 
         if (_NormalMap != null)
@@ -829,12 +827,12 @@ public class MainGui : MonoBehaviour
             FixSize();
         }
         GUI.enabled = true;
-
+        #endregion
 
         //==============================//
         // 			Metallic Map		//
         //==============================//
-
+        #region "Metallic Map"
         GUI.Box(new Rect(offsetX + spacingX * 3, offsetY, 110, 250), "Metallic Map");
 
         if (_MetallicMap != null)
@@ -915,12 +913,12 @@ public class MainGui : MonoBehaviour
             FixSize();
         }
         GUI.enabled = true;
-
+        #endregion
 
         //==============================//
         // 		Smoothness Map			//
         //==============================//
-
+        #region "Smoothness Map"
         GUI.Box(new Rect(offsetX + spacingX * 4, offsetY, 110, 250), "Smoothness Map");
 
         if (_SmoothnessMap != null)
@@ -1000,12 +998,12 @@ public class MainGui : MonoBehaviour
             FixSize();
         }
         GUI.enabled = true;
-
+        #endregion
 
         //==============================//
         // 			Edge Map			//
         //==============================//
-
+        #region "Edge Map"
         GUI.Box(new Rect(offsetX + spacingX * 5, offsetY, 110, 250), "Edge Map");
 
         if (_EdgeMap != null)
@@ -1085,11 +1083,12 @@ public class MainGui : MonoBehaviour
             FixSize();
         }
         GUI.enabled = true;
+        #endregion
 
         //==============================//
         // 			AO Map				//
         //==============================//
-
+        #region "AO Map"
         GUI.Box(new Rect(offsetX + spacingX * 6, offsetY, 110, 250), "AO Map");
 
         if (_AOMap != null)
@@ -1170,23 +1169,25 @@ public class MainGui : MonoBehaviour
             FixSize();
         }
         GUI.enabled = true;
-
+        #endregion
 
         //==============================//
         // 		Map Saving Options		//
         //==============================//
-
+        #region "Map Saving Options"
         offsetX = offsetX + spacingX * 7;
 
         GUI.Box(new Rect(offsetX, offsetY, 230, 250), "Saving Options");
 
         GUI.Label(new Rect(offsetX + 20, offsetY + 20, 100, 25), "File Format");
 
+#if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         bmpSelected = GUI.Toggle(new Rect(offsetX + 30, offsetY + 40, 80, 20), bmpSelected, "BMP");
         if (bmpSelected)
         {
             SetFormat(FileFormat.bmp);
         }
+#endif
 
         jpgSelected = GUI.Toggle(new Rect(offsetX + 30, offsetY + 60, 80, 20), jpgSelected, "JPG");
         if (jpgSelected)
@@ -1200,17 +1201,22 @@ public class MainGui : MonoBehaviour
             SetFormat(FileFormat.png);
         }
 
+
+#if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         tgaSelected = GUI.Toggle(new Rect(offsetX + 30, offsetY + 100, 80, 20), tgaSelected, "TGA");
         if (tgaSelected)
         {
             SetFormat(FileFormat.tga);
         }
+#endif
 
+#if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         tiffSelected = GUI.Toggle(new Rect(offsetX + 30, offsetY + 120, 80, 20), tiffSelected, "TIFF");
         if (tiffSelected)
         {
             SetFormat(FileFormat.tiff);
         }
+#endif
 
         // Flip Normal Map Y
         if (_NormalMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
@@ -1223,19 +1229,20 @@ public class MainGui : MonoBehaviour
         //Save Project
         if (GUI.Button(new Rect(offsetX + 10, offsetY + 180, 100, 25), "Save Project"))
         {
-//TODO            fileBrowser.ShowBrowser("Save Project", this.SaveProject);
+            //TODO            fileBrowser.ShowBrowser("Save Project", this.SaveProject);
         }
 
         //Load Project
         if (GUI.Button(new Rect(offsetX + 10, offsetY + 215, 100, 25), "Load Project"))
         {
-//TODO            fileBrowser.ShowBrowser("Load Project", this.LoadProject);
+            //TODO            fileBrowser.ShowBrowser("Load Project", this.LoadProject);
         }
+        #endregion
 
         //======================================//
         //			Property Map Settings		//
         //======================================//
-
+        #region "Property Map Settings"
         GUI.Label(new Rect(offsetX + 130, offsetY + 20, 100, 25), "Property Map");
 
         if (propRedChoose) { GUI.enabled = false; } else { GUI.enabled = true; }
@@ -1336,7 +1343,7 @@ public class MainGui : MonoBehaviour
             ProcessPropertyMap();
             textureToSave = _PropertyMap;
             mapType = "_msao";
-//TODO            fileBrowser.ShowBrowser("Save Property Map", this.SaveFile);
+            //TODO            fileBrowser.ShowBrowser("Save Property Map", this.SaveFile);
         }
 
         if (QuicksavePathProperty == "") { GUI.enabled = false; }
@@ -1348,12 +1355,12 @@ public class MainGui : MonoBehaviour
             SaveFile(QuicksavePathProperty);
         }
         GUI.enabled = true;
-
+        #endregion
 
         //==========================//
         // 		View Buttons		//
         //==========================//
-
+        #region "View buttons"
         offsetX = 430;
         offsetY = 280;
 
@@ -1448,7 +1455,7 @@ public class MainGui : MonoBehaviour
         }
 
         GUI.enabled = true;
-
+        #endregion
     }
 
     string PCM2String(PropChannelMap pcm, string defaultName)
