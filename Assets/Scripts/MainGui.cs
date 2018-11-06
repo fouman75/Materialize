@@ -539,11 +539,132 @@ public class MainGui : MonoBehaviour
         int offsetX = 20;
         int offsetY = 20;
 
+        //==============================//
+        //          Diffuse Map         //
+        //==============================//
+        #region "Diffuse Map"
+        GUI.Box(new Rect(offsetX, offsetY, 110, 250), "Diffuse Map");
+
+        if (_DiffuseMap != null)
+        {
+            GUI.DrawTexture(new Rect(offsetX + 5, offsetY + 25, 100, 100), _DiffuseMap);
+        }
+        else if (_DiffuseMapOriginal != null)
+        {
+            GUI.DrawTexture(new Rect(offsetX + 5, offsetY + 25, 100, 100), _DiffuseMapOriginal);
+        }
+
+#if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
+        // Paste 
+        if (GUI.Button(new Rect(offsetX + 5, offsetY + 130, 20, 20), "P"))
+        {
+            mapTypeToLoad = MapType.diffuseOriginal;
+            PasteFile();
+        }
+
+        if (_DiffuseMapOriginal == null && _DiffuseMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
+
+        // Copy
+        if (GUI.Button(new Rect(offsetX + 30, offsetY + 130, 20, 20), "C"))
+        {
+            if (_DiffuseMap != null)
+            {
+                textureToSave = _DiffuseMap;
+            }
+            else
+            {
+                textureToSave = _DiffuseMapOriginal;
+            }
+            CopyFile();
+        }
+#endif
+
+        GUI.enabled = true;
+
+        // Open
+        if (GUI.Button(new Rect(offsetX + 60, offsetY + 130, 20, 20), "O"))
+        {
+            mapTypeToLoad = MapType.diffuseOriginal;
+            string filePath = FileBrowser.OpenSingleFile("Open Diffuse Map", "", imagesExtensionFilter);
+            OpenFile(filePath);
+            defaultFileName = Path.GetFileNameWithoutExtension(filePath);
+            Debug.Log("Default File Name: " + defaultFileName);
+        }
+
+        if (_DiffuseMapOriginal == null && _DiffuseMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
+
+        // Save
+        if (GUI.Button(new Rect(offsetX + 85, offsetY + 130, 20, 20), "S"))
+        {
+            if (_DiffuseMap != null)
+            {
+                textureToSave = _DiffuseMap;
+            }
+            else
+            {
+                textureToSave = _DiffuseMapOriginal;
+            }
+            mapType = "_diffuse";
+            string filePath = FileBrowser.SaveFile("Save diffuse Map", "", defaultFileName + mapType, selectedFormat.ToString());
+            this.SaveFile(filePath);
+        }
+
+        if ((_DiffuseMapOriginal == null && _DiffuseMap == null) || QuicksavePathDiffuse == "") { GUI.enabled = false; } else { GUI.enabled = true; }
+
+        // Quick Save
+        if (GUI.Button(new Rect(offsetX + 15, offsetY + 160, 80, 20), "Quick Save"))
+        {
+            if (_DiffuseMap != null)
+            {
+                textureToSave = _DiffuseMap;
+            }
+            else
+            {
+                textureToSave = _DiffuseMapOriginal;
+            }
+            mapType = "_diffuse";
+            SaveFile(QuicksavePathDiffuse);
+        }
+
+        if (_DiffuseMapOriginal == null && _DiffuseMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
+        if (GUI.Button(new Rect(offsetX + 15, offsetY + 190, 80, 20), "Preview"))
+        {
+            if (_DiffuseMap != null)
+            {
+                SetPreviewMaterial(_DiffuseMap);
+            }
+            else
+            {
+                SetPreviewMaterial(_DiffuseMapOriginal);
+            }
+        }
+
+        if (_DiffuseMapOriginal == null) { GUI.enabled = false; } else { GUI.enabled = true; }
+        if (GUI.Button(new Rect(offsetX + 5, offsetY + 220, 50, 20), "Edit"))
+        {
+            CloseWindows();
+            FixSize();
+            EditDiffuseGuiObject.SetActive(true);
+            EditDiffuseGuiScript.NewTexture();
+            EditDiffuseGuiScript.DoStuff();
+        }
+
+        if (_DiffuseMapOriginal == null && _DiffuseMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
+        if (GUI.Button(new Rect(offsetX + 60, offsetY + 220, 45, 20), "Clear"))
+        {
+            ClearTexture(MapType.diffuse);
+            CloseWindows();
+            SetMaterialValues();
+            FixSize();
+        }
+        GUI.enabled = true;
+        #endregion
 
         //==============================//
         // 			Height Map			//
         //==============================//
         #region "Height Map"
+        offsetX += spacingX;
         GUI.Box(new Rect(offsetX, offsetY, 110, 250), "Height Map");
 
         if (_HeightMap != null)
@@ -631,141 +752,23 @@ public class MainGui : MonoBehaviour
         GUI.enabled = true;
         #endregion
 
-        //==============================//
-        // 			Diffuse Map			//
-        //==============================//
-        #region "Diffuse Map"
-        GUI.Box(new Rect(offsetX + spacingX, offsetY, 110, 250), "Diffuse Map");
 
-        if (_DiffuseMap != null)
-        {
-            GUI.DrawTexture(new Rect(offsetX + spacingX + 5, offsetY + 25, 100, 100), _DiffuseMap);
-        }
-        else if (_DiffuseMapOriginal != null)
-        {
-            GUI.DrawTexture(new Rect(offsetX + spacingX + 5, offsetY + 25, 100, 100), _DiffuseMapOriginal);
-        }
-
-#if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
-        // Paste 
-        if (GUI.Button(new Rect(offsetX + spacingX + 5, offsetY + 130, 20, 20), "P"))
-        {
-            mapTypeToLoad = MapType.diffuseOriginal;
-            PasteFile();
-        }
-
-        if (_DiffuseMapOriginal == null && _DiffuseMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-
-        // Copy
-        if (GUI.Button(new Rect(offsetX + spacingX + 30, offsetY + 130, 20, 20), "C"))
-        {
-            if (_DiffuseMap != null)
-            {
-                textureToSave = _DiffuseMap;
-            }
-            else
-            {
-                textureToSave = _DiffuseMapOriginal;
-            }
-            CopyFile();
-        }
-#endif
-
-        GUI.enabled = true;
-
-        // Open
-        if (GUI.Button(new Rect(offsetX + spacingX + 60, offsetY + 130, 20, 20), "O"))
-        {
-            mapTypeToLoad = MapType.diffuseOriginal;
-            string filePath = FileBrowser.OpenSingleFile("Open Diffuse Map", "", imagesExtensionFilter);
-            OpenFile(filePath);
-            defaultFileName = Path.GetFileNameWithoutExtension(filePath);
-            Debug.Log("Default File Name: " + defaultFileName);
-        }
-
-        if (_DiffuseMapOriginal == null && _DiffuseMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-
-        // Save
-        if (GUI.Button(new Rect(offsetX + spacingX + 85, offsetY + 130, 20, 20), "S"))
-        {
-            if (_DiffuseMap != null)
-            {
-                textureToSave = _DiffuseMap;
-            }
-            else
-            {
-                textureToSave = _DiffuseMapOriginal;
-            }
-            mapType = "_diffuse";
-            string filePath = FileBrowser.SaveFile("Save diffuse Map", "", defaultFileName + mapType, selectedFormat.ToString());
-            this.SaveFile(filePath);
-        }
-
-        if ((_DiffuseMapOriginal == null && _DiffuseMap == null) || QuicksavePathDiffuse == "") { GUI.enabled = false; } else { GUI.enabled = true; }
-
-        // Quick Save
-        if (GUI.Button(new Rect(offsetX + spacingX + 15, offsetY + 160, 80, 20), "Quick Save"))
-        {
-            if (_DiffuseMap != null)
-            {
-                textureToSave = _DiffuseMap;
-            }
-            else
-            {
-                textureToSave = _DiffuseMapOriginal;
-            }
-            mapType = "_diffuse";
-            SaveFile(QuicksavePathDiffuse);
-        }
-
-        if (_DiffuseMapOriginal == null && _DiffuseMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX + 15, offsetY + 190, 80, 20), "Preview"))
-        {
-            if (_DiffuseMap != null)
-            {
-                SetPreviewMaterial(_DiffuseMap);
-            }
-            else
-            {
-                SetPreviewMaterial(_DiffuseMapOriginal);
-            }
-        }
-
-        if (_DiffuseMapOriginal == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX + 5, offsetY + 220, 50, 20), "Edit"))
-        {
-            CloseWindows();
-            FixSize();
-            EditDiffuseGuiObject.SetActive(true);
-            EditDiffuseGuiScript.NewTexture();
-            EditDiffuseGuiScript.DoStuff();
-        }
-
-        if (_DiffuseMapOriginal == null && _DiffuseMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX + 60, offsetY + 220, 45, 20), "Clear"))
-        {
-            ClearTexture(MapType.diffuse);
-            CloseWindows();
-            SetMaterialValues();
-            FixSize();
-        }
-        GUI.enabled = true;
-        #endregion
 
         //==============================//
         // 			Normal Map			//
         //==============================//
         #region "Normal Map"
-        GUI.Box(new Rect(offsetX + spacingX * 2, offsetY, 110, 250), "Normal Map");
+        offsetX += spacingX;
+        GUI.Box(new Rect(offsetX, offsetY, 110, 250), "Normal Map");
 
         if (_NormalMap != null)
         {
-            GUI.DrawTexture(new Rect(offsetX + spacingX * 2 + 5, offsetY + 25, 100, 100), _NormalMap);
+            GUI.DrawTexture(new Rect(offsetX + 5, offsetY + 25, 100, 100), _NormalMap);
         }
 
 #if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         // Paste 
-        if (GUI.Button(new Rect(offsetX + spacingX * 2 + 5, offsetY + 130, 20, 20), "P"))
+        if (GUI.Button(new Rect(offsetX + 5, offsetY + 130, 20, 20), "P"))
         {
             mapTypeToLoad = MapType.normal;
             PasteFile();
@@ -774,7 +777,7 @@ public class MainGui : MonoBehaviour
         if (_NormalMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Copy
-        if (GUI.Button(new Rect(offsetX + spacingX * 2 + 30, offsetY + 130, 20, 20), "C"))
+        if (GUI.Button(new Rect(offsetX + 30, offsetY + 130, 20, 20), "C"))
         {
             textureToSave = _NormalMap;
             CopyFile();
@@ -784,7 +787,7 @@ public class MainGui : MonoBehaviour
         GUI.enabled = true;
 
         //Open
-        if (GUI.Button(new Rect(offsetX + spacingX * 2 + 60, offsetY + 130, 20, 20), "O"))
+        if (GUI.Button(new Rect(offsetX + 60, offsetY + 130, 20, 20), "O"))
         {
             mapTypeToLoad = MapType.normal;
             string filePath = FileBrowser.OpenSingleFile("Open Normal Map", "", imagesExtensionFilter);
@@ -794,7 +797,7 @@ public class MainGui : MonoBehaviour
         if (_NormalMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 2 + 85, offsetY + 130, 20, 20), "S"))
+        if (GUI.Button(new Rect(offsetX + 85, offsetY + 130, 20, 20), "S"))
         {
             textureToSave = _NormalMap;
             mapType = "_normal";
@@ -805,7 +808,7 @@ public class MainGui : MonoBehaviour
         if (_NormalMap == null || QuicksavePathNormal == "") { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Quick Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 2 + 15, offsetY + 160, 80, 20), "Quick Save"))
+        if (GUI.Button(new Rect(offsetX + 15, offsetY + 160, 80, 20), "Quick Save"))
         {
             textureToSave = _NormalMap;
             mapType = "_normal";
@@ -813,13 +816,13 @@ public class MainGui : MonoBehaviour
         }
 
         if (_NormalMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 2 + 15, offsetY + 190, 80, 20), "Preview"))
+        if (GUI.Button(new Rect(offsetX + 15, offsetY + 190, 80, 20), "Preview"))
         {
             SetPreviewMaterial(_NormalMap);
         }
 
         if (_HeightMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 2 + 5, offsetY + 220, 50, 20), "Create"))
+        if (GUI.Button(new Rect(offsetX + 5, offsetY + 220, 50, 20), "Create"))
         {
             CloseWindows();
             FixSize();
@@ -829,7 +832,7 @@ public class MainGui : MonoBehaviour
         }
 
         if (_NormalMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 2 + 60, offsetY + 220, 45, 20), "Clear"))
+        if (GUI.Button(new Rect(offsetX + 60, offsetY + 220, 45, 20), "Clear"))
         {
             ClearTexture(MapType.normal);
             CloseWindows();
@@ -843,16 +846,17 @@ public class MainGui : MonoBehaviour
         // 			Metallic Map		//
         //==============================//
         #region "Metallic Map"
-        GUI.Box(new Rect(offsetX + spacingX * 3, offsetY, 110, 250), "Metallic Map");
+        offsetX += spacingX;
+        GUI.Box(new Rect(offsetX, offsetY, 110, 250), "Metallic Map");
 
         if (_MetallicMap != null)
         {
-            GUI.DrawTexture(new Rect(offsetX + spacingX * 3 + 5, offsetY + 25, 100, 100), _MetallicMap);
+            GUI.DrawTexture(new Rect(offsetX + 5, offsetY + 25, 100, 100), _MetallicMap);
         }
 
 #if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         // Paste 
-        if (GUI.Button(new Rect(offsetX + spacingX * 3 + 5, offsetY + 130, 20, 20), "P"))
+        if (GUI.Button(new Rect(offsetX + 5, offsetY + 130, 20, 20), "P"))
         {
             mapTypeToLoad = MapType.metallic;
             PasteFile();
@@ -861,7 +865,7 @@ public class MainGui : MonoBehaviour
         if (_MetallicMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Copy
-        if (GUI.Button(new Rect(offsetX + spacingX * 3 + 30, offsetY + 130, 20, 20), "C"))
+        if (GUI.Button(new Rect(offsetX + 30, offsetY + 130, 20, 20), "C"))
         {
             textureToSave = _MetallicMap;
             CopyFile();
@@ -871,7 +875,7 @@ public class MainGui : MonoBehaviour
         GUI.enabled = true;
 
         //Open
-        if (GUI.Button(new Rect(offsetX + spacingX * 3 + 60, offsetY + 130, 20, 20), "O"))
+        if (GUI.Button(new Rect(offsetX + 60, offsetY + 130, 20, 20), "O"))
         {
             mapTypeToLoad = MapType.metallic;
             string filePath = FileBrowser.OpenSingleFile("Open Metallic Map", "", imagesExtensionFilter);
@@ -881,7 +885,7 @@ public class MainGui : MonoBehaviour
         if (_MetallicMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 3 + 85, offsetY + 130, 20, 20), "S"))
+        if (GUI.Button(new Rect(offsetX + 85, offsetY + 130, 20, 20), "S"))
         {
             textureToSave = _MetallicMap;
             mapType = "_metallic";
@@ -892,7 +896,7 @@ public class MainGui : MonoBehaviour
         if (_MetallicMap == null || QuicksavePathMetallic == "") { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Quick Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 3 + 15, offsetY + 160, 80, 20), "Quick Save"))
+        if (GUI.Button(new Rect(offsetX + 15, offsetY + 160, 80, 20), "Quick Save"))
         {
             textureToSave = _MetallicMap;
             mapType = "_metallic";
@@ -900,13 +904,13 @@ public class MainGui : MonoBehaviour
         }
 
         if (_MetallicMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 3 + 15, offsetY + 190, 80, 20), "Preview"))
+        if (GUI.Button(new Rect(offsetX + 15, offsetY + 190, 80, 20), "Preview"))
         {
             SetPreviewMaterial(_MetallicMap);
         }
 
         if (_DiffuseMapOriginal == null && _DiffuseMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 3 + 5, offsetY + 220, 50, 20), "Create"))
+        if (GUI.Button(new Rect(offsetX + 5, offsetY + 220, 50, 20), "Create"))
         {
             CloseWindows();
             FixSize();
@@ -917,7 +921,7 @@ public class MainGui : MonoBehaviour
         }
 
         if (_MetallicMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 3 + 60, offsetY + 220, 45, 20), "Clear"))
+        if (GUI.Button(new Rect(offsetX + 60, offsetY + 220, 45, 20), "Clear"))
         {
             ClearTexture(MapType.metallic);
             CloseWindows();
@@ -931,16 +935,17 @@ public class MainGui : MonoBehaviour
         // 		Smoothness Map			//
         //==============================//
         #region "Smoothness Map"
-        GUI.Box(new Rect(offsetX + spacingX * 4, offsetY, 110, 250), "Smoothness Map");
+        offsetX += spacingX;
+        GUI.Box(new Rect(offsetX, offsetY, 110, 250), "Smoothness Map");
 
         if (_SmoothnessMap != null)
         {
-            GUI.DrawTexture(new Rect(offsetX + spacingX * 4 + 5, offsetY + 25, 100, 100), _SmoothnessMap);
+            GUI.DrawTexture(new Rect(offsetX + 5, offsetY + 25, 100, 100), _SmoothnessMap);
         }
 
 #if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         // Paste 
-        if (GUI.Button(new Rect(offsetX + spacingX * 4 + 5, offsetY + 130, 20, 20), "P"))
+        if (GUI.Button(new Rect(offsetX + 5, offsetY + 130, 20, 20), "P"))
         {
             mapTypeToLoad = MapType.smoothness;
             PasteFile();
@@ -949,7 +954,7 @@ public class MainGui : MonoBehaviour
         if (_SmoothnessMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Copy
-        if (GUI.Button(new Rect(offsetX + spacingX * 4 + 30, offsetY + 130, 20, 20), "C"))
+        if (GUI.Button(new Rect(offsetX + 30, offsetY + 130, 20, 20), "C"))
         {
             textureToSave = _SmoothnessMap;
             CopyFile();
@@ -959,7 +964,7 @@ public class MainGui : MonoBehaviour
         GUI.enabled = true;
 
         //Open
-        if (GUI.Button(new Rect(offsetX + spacingX * 4 + 60, offsetY + 130, 20, 20), "O"))
+        if (GUI.Button(new Rect(offsetX + 60, offsetY + 130, 20, 20), "O"))
         {
             mapTypeToLoad = MapType.smoothness;
             string filePath = FileBrowser.OpenSingleFile("Open Smoothness Map", "", imagesExtensionFilter);
@@ -969,7 +974,7 @@ public class MainGui : MonoBehaviour
         if (_SmoothnessMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 4 + 85, offsetY + 130, 20, 20), "S"))
+        if (GUI.Button(new Rect(offsetX + 85, offsetY + 130, 20, 20), "S"))
         {
             textureToSave = _SmoothnessMap;
             mapType = "_smoothness";
@@ -980,7 +985,7 @@ public class MainGui : MonoBehaviour
         if (_SmoothnessMap == null || QuicksavePathSmoothness == "") { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Quick Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 4 + 15, offsetY + 160, 80, 20), "Quick Save"))
+        if (GUI.Button(new Rect(offsetX + 15, offsetY + 160, 80, 20), "Quick Save"))
         {
             textureToSave = _SmoothnessMap;
             mapType = "_smoothness";
@@ -988,13 +993,13 @@ public class MainGui : MonoBehaviour
         }
 
         if (_SmoothnessMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 4 + 15, offsetY + 190, 80, 20), "Preview"))
+        if (GUI.Button(new Rect(offsetX + 15, offsetY + 190, 80, 20), "Preview"))
         {
             SetPreviewMaterial(_SmoothnessMap);
         }
 
         if (_DiffuseMapOriginal == null && _DiffuseMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 4 + 5, offsetY + 220, 50, 20), "Create"))
+        if (GUI.Button(new Rect(offsetX + 5, offsetY + 220, 50, 20), "Create"))
         {
             CloseWindows();
             FixSize();
@@ -1004,7 +1009,7 @@ public class MainGui : MonoBehaviour
         }
 
         if (_SmoothnessMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 4 + 60, offsetY + 220, 45, 20), "Clear"))
+        if (GUI.Button(new Rect(offsetX + 60, offsetY + 220, 45, 20), "Clear"))
         {
             ClearTexture(MapType.smoothness);
             CloseWindows();
@@ -1018,16 +1023,17 @@ public class MainGui : MonoBehaviour
         // 			Edge Map			//
         //==============================//
         #region "Edge Map"
-        GUI.Box(new Rect(offsetX + spacingX * 5, offsetY, 110, 250), "Edge Map");
+        offsetX += spacingX;
+        GUI.Box(new Rect(offsetX, offsetY, 110, 250), "Edge Map");
 
         if (_EdgeMap != null)
         {
-            GUI.DrawTexture(new Rect(offsetX + spacingX * 5 + 5, offsetY + 25, 100, 100), _EdgeMap);
+            GUI.DrawTexture(new Rect(offsetX + 5, offsetY + 25, 100, 100), _EdgeMap);
         }
 
 #if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         // Paste 
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 5, offsetY + 130, 20, 20), "P"))
+        if (GUI.Button(new Rect(offsetX + 5, offsetY + 130, 20, 20), "P"))
         {
             mapTypeToLoad = MapType.edge;
             PasteFile();
@@ -1036,7 +1042,7 @@ public class MainGui : MonoBehaviour
         if (_EdgeMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Copy
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 30, offsetY + 130, 20, 20), "C"))
+        if (GUI.Button(new Rect(offsetX + 30, offsetY + 130, 20, 20), "C"))
         {
             textureToSave = _EdgeMap;
             CopyFile();
@@ -1046,7 +1052,7 @@ public class MainGui : MonoBehaviour
         GUI.enabled = true;
 
         //Open
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 60, offsetY + 130, 20, 20), "O"))
+        if (GUI.Button(new Rect(offsetX + 60, offsetY + 130, 20, 20), "O"))
         {
             mapTypeToLoad = MapType.edge;
             string filePath = FileBrowser.OpenSingleFile("Open Edge Map", "", imagesExtensionFilter);
@@ -1056,7 +1062,7 @@ public class MainGui : MonoBehaviour
         if (_EdgeMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 85, offsetY + 130, 20, 20), "S"))
+        if (GUI.Button(new Rect(offsetX + 85, offsetY + 130, 20, 20), "S"))
         {
             textureToSave = _EdgeMap;
             mapType = "_edge";
@@ -1067,7 +1073,7 @@ public class MainGui : MonoBehaviour
         if (_EdgeMap == null || QuicksavePathEdge == "") { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Quick Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 15, offsetY + 160, 80, 20), "Quick Save"))
+        if (GUI.Button(new Rect(offsetX + 15, offsetY + 160, 80, 20), "Quick Save"))
         {
             textureToSave = _EdgeMap;
             mapType = "_edge";
@@ -1075,13 +1081,13 @@ public class MainGui : MonoBehaviour
         }
 
         if (_EdgeMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 15, offsetY + 190, 80, 20), "Preview"))
+        if (GUI.Button(new Rect(offsetX + 15, offsetY + 190, 80, 20), "Preview"))
         {
             SetPreviewMaterial(_EdgeMap);
         }
 
         if (_NormalMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 5, offsetY + 220, 50, 20), "Create"))
+        if (GUI.Button(new Rect(offsetX + 5, offsetY + 220, 50, 20), "Create"))
         {
             CloseWindows();
             FixSize();
@@ -1091,7 +1097,7 @@ public class MainGui : MonoBehaviour
         }
 
         if (_EdgeMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 60, offsetY + 220, 45, 20), "Clear"))
+        if (GUI.Button(new Rect(offsetX + 60, offsetY + 220, 45, 20), "Clear"))
         {
             ClearTexture(MapType.edge);
             CloseWindows();
@@ -1105,16 +1111,17 @@ public class MainGui : MonoBehaviour
         // 			AO Map				//
         //==============================//
         #region "AO Map"
-        GUI.Box(new Rect(offsetX + spacingX * 6, offsetY, 110, 250), "AO Map");
+        offsetX += spacingX;
+        GUI.Box(new Rect(offsetX, offsetY, 110, 250), "AO Map");
 
         if (_AOMap != null)
         {
-            GUI.DrawTexture(new Rect(offsetX + spacingX * 6 + 5, offsetY + 25, 100, 100), _AOMap);
+            GUI.DrawTexture(new Rect(offsetX + 5, offsetY + 25, 100, 100), _AOMap);
         }
 
 #if !UNITY_STANDALONE_OSX && !UNITY_EDITOR_OSX
         // Paste 
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 5, offsetY + 130, 20, 20), "P"))
+        if (GUI.Button(new Rect(offsetX + 5, offsetY + 130, 20, 20), "P"))
         {
             mapTypeToLoad = MapType.ao;
             PasteFile();
@@ -1123,7 +1130,7 @@ public class MainGui : MonoBehaviour
         if (_AOMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Copy
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 30, offsetY + 130, 20, 20), "C"))
+        if (GUI.Button(new Rect(offsetX + 30, offsetY + 130, 20, 20), "C"))
         {
             textureToSave = _AOMap;
             CopyFile();
@@ -1133,7 +1140,7 @@ public class MainGui : MonoBehaviour
         GUI.enabled = true;
 
         //Open
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 60, offsetY + 130, 20, 20), "O"))
+        if (GUI.Button(new Rect(offsetX + 60, offsetY + 130, 20, 20), "O"))
         {
             mapTypeToLoad = MapType.ao;
             string filePath = FileBrowser.OpenSingleFile("Open AO Map", "", imagesExtensionFilter);
@@ -1143,7 +1150,7 @@ public class MainGui : MonoBehaviour
         if (_AOMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 85, offsetY + 130, 20, 20), "S"))
+        if (GUI.Button(new Rect(offsetX + 85, offsetY + 130, 20, 20), "S"))
         {
             textureToSave = _AOMap;
             mapType = "_ao";
@@ -1154,7 +1161,7 @@ public class MainGui : MonoBehaviour
         if (_AOMap == null || QuicksavePathAO == "") { GUI.enabled = false; } else { GUI.enabled = true; }
 
         // Quick Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 15, offsetY + 160, 80, 20), "Quick Save"))
+        if (GUI.Button(new Rect(offsetX + 15, offsetY + 160, 80, 20), "Quick Save"))
         {
             textureToSave = _AOMap;
             mapType = "_ao";
@@ -1162,13 +1169,13 @@ public class MainGui : MonoBehaviour
         }
 
         if (_AOMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 15, offsetY + 190, 80, 20), "Preview"))
+        if (GUI.Button(new Rect(offsetX + 15, offsetY + 190, 80, 20), "Preview"))
         {
             SetPreviewMaterial(_AOMap);
         }
 
         if (_NormalMap == null && _HeightMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 5, offsetY + 220, 50, 20), "Create"))
+        if (GUI.Button(new Rect(offsetX + 5, offsetY + 220, 50, 20), "Create"))
         {
             CloseWindows();
             FixSize();
@@ -1178,7 +1185,7 @@ public class MainGui : MonoBehaviour
         }
 
         if (_AOMap == null) { GUI.enabled = false; } else { GUI.enabled = true; }
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 60, offsetY + 220, 45, 20), "Clear"))
+        if (GUI.Button(new Rect(offsetX + 60, offsetY + 220, 45, 20), "Clear"))
         {
             ClearTexture(MapType.ao);
             CloseWindows();
@@ -1192,7 +1199,7 @@ public class MainGui : MonoBehaviour
         // 		Map Saving Options		//
         //==============================//
         #region "Map Saving Options"
-        offsetX = offsetX + spacingX * 7;
+        offsetX += spacingX;
 
         GUI.Box(new Rect(offsetX, offsetY, 230, 250), "Saving Options");
 
@@ -1883,6 +1890,11 @@ public class MainGui : MonoBehaviour
 
     void SaveFile(string pathToFile)
     {
+        if (string.IsNullOrEmpty(pathToFile))
+        {
+            return;
+        }
+
         SaveLoadProjectScript.SaveFile(pathToFile, selectedFormat, textureToSave);
     }
 
@@ -1899,7 +1911,7 @@ public class MainGui : MonoBehaviour
 
     void OpenFile(string pathToFile)
     {
-        if (pathToFile == null)
+        if (string.IsNullOrEmpty(pathToFile))
         {
             return;
         }
