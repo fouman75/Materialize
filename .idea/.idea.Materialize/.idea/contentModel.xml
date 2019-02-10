@@ -42,16 +42,6 @@
           </e>
           <e p="Readme.txt" t="Include" />
         </e>
-        <e p="PostProcess" t="Include">
-          <e p="HaltonSequence.cs" t="Include" />
-          <e p="MotionBlurMatrixHelper.cs" t="Include" />
-          <e p="OpaquePostProcess.cs" t="Include" />
-          <e p="PostProcess.cs" t="Include" />
-          <e p="Resources" t="Include">
-            <e p="HiddenPostProcess.shader" t="Include" />
-            <e p="HiddenTAA.shader" t="Include" />
-          </e>
-        </e>
         <e p="Scripts" t="Include">
           <e p="AlignmentGui.cs" t="Include" />
           <e p="AoFromNormalGui.cs" t="Include" />

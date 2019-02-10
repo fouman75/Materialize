@@ -126,7 +126,7 @@ public class TilingTextureMakerGui : MonoBehaviour
 
     public void Initialize()
     {
-        _thisMaterial = MainGui.Instance.FullMaterial;
+        _thisMaterial = MainGui.Instance.FullMaterialCopy;
 
         TestObject.GetComponent<Renderer>().material = _thisMaterial;
         _doStuff = true;

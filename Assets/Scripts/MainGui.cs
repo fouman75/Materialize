@@ -22,9 +22,9 @@ public class MainGui : MonoBehaviour
     private static readonly int CorrectionId = Shader.PropertyToID("_GamaCorrection");
     private static readonly int MainTexId = Shader.PropertyToID("_MainTex");
     private static readonly int GlobalCubemapId = Shader.PropertyToID("_GlobalCubemap");
-    private static readonly int DisplacementMapId = Shader.PropertyToID("_DisplacementMap");
-    private static readonly int DiffuseMapId = Shader.PropertyToID("_DiffuseMap");
-    private static readonly int NormalMapId = Shader.PropertyToID("_NormalMap");
+    private static readonly int HeightMapId = Shader.PropertyToID("_HeightMap"); //
+    private static readonly int DiffuseMapId = Shader.PropertyToID("_BaseColorMap"); //
+    private static readonly int NormalMapId = Shader.PropertyToID("_NormalMap"); //
     private static readonly int MetallicMapId = Shader.PropertyToID("_MetallicMap");
     private static readonly int SmoothnessMapId = Shader.PropertyToID("_SmoothnessMap");
     private static readonly int AoMapId = Shader.PropertyToID("_AOMap");
@@ -75,7 +75,7 @@ public class MainGui : MonoBehaviour
     public AlignmentGui AlignmentGuiScript;
 
     public GameObject AoFromNormalGuiObject;
-    public AoFromNormalGui AoFromNormalGuiScript;
+    [HideInInspector] public AoFromNormalGui AoFromNormalGuiScript;
     public Texture2D AoMap;
 
     public Cubemap[] CubeMaps;
@@ -83,30 +83,31 @@ public class MainGui : MonoBehaviour
     public Texture2D DiffuseMapOriginal;
 
     public GameObject EdgeFromNormalGuiObject;
-    public EdgeFromNormalGui EdgeFromNormalGuiScript;
+    [HideInInspector] public EdgeFromNormalGui EdgeFromNormalGuiScript;
     public Texture2D EdgeMap;
 
     public GameObject EditDiffuseGuiObject;
-    public EditDiffuseGui EditDiffuseGuiScript;
-    public Material FullMaterial;
+    [HideInInspector] public EditDiffuseGui EditDiffuseGuiScript;
+    [HideInInspector] public Material FullMaterialCopy;
 
-    public Material FullMaterialRef;
+    // ReSharper disable once RedundantDefaultMemberInitializer
+    [SerializeField] private Material FullMaterial = null;
 
     public RenderTexture HdHeightMap;
 
     public GameObject HeightFromDiffuseGuiObject;
-    public HeightFromDiffuseGui HeightFromDiffuseGuiScript;
+    [HideInInspector] public HeightFromDiffuseGui HeightFromDiffuseGuiScript;
     public Texture2D HeightMap;
 
     public GameObject MaterialGuiObject;
-    public MaterialGui MaterialGuiScript;
+    [HideInInspector] public MaterialGui MaterialGuiScript;
 
     public GameObject MetallicGuiObject;
-    public MetallicGui MetallicGuiScript;
+    [HideInInspector] public MetallicGui MetallicGuiScript;
     public Texture2D MetallicMap;
 
     public GameObject NormalFromHeightGuiObject;
-    public NormalFromHeightGui NormalFromHeightGuiScript;
+    [HideInInspector] public NormalFromHeightGui NormalFromHeightGuiScript;
     public Texture2D NormalMap;
 
     public GameObject PostProcessGuiObject;
@@ -172,8 +173,8 @@ public class MainGui : MonoBehaviour
 
         Shader.SetGlobalFloat(CorrectionId, GamaCorrection);
 
-        FullMaterial = new Material(FullMaterialRef.shader);
-        FullMaterial.CopyPropertiesFromMaterial(FullMaterialRef);
+        FullMaterialCopy = new Material(FullMaterial.shader);
+        FullMaterialCopy.CopyPropertiesFromMaterial(FullMaterial);
 
         SampleMaterial = new Material(SampleMaterialRef.shader);
         SampleMaterial.CopyPropertiesFromMaterial(SampleMaterialRef);
@@ -196,7 +197,7 @@ public class MainGui : MonoBehaviour
             Application.platform == RuntimePlatform.WindowsPlayer)
             _pathChar = '\\';
 
-        TestObject.GetComponent<Renderer>().material = FullMaterial;
+        TestObject.GetComponent<Renderer>().material = FullMaterialCopy;
         SetMaterialValues();
 
         ReflectionProbe.RenderProbe();
@@ -244,28 +245,28 @@ public class MainGui : MonoBehaviour
     {
         Shader.SetGlobalTexture(GlobalCubemapId, CubeMaps[_selectedCubemap]);
 
-        FullMaterial.SetTexture(DisplacementMapId, HeightMap != null ? HeightMap : TextureGrey);
+        FullMaterialCopy.SetTexture(HeightMapId, HeightMap != null ? HeightMap : TextureGrey);
 
         if (DiffuseMap != null)
-            FullMaterial.SetTexture(DiffuseMapId, DiffuseMap);
+            FullMaterialCopy.SetTexture(DiffuseMapId, DiffuseMap);
         else if (DiffuseMapOriginal != null)
-            FullMaterial.SetTexture(DiffuseMapId, DiffuseMapOriginal);
+            FullMaterialCopy.SetTexture(DiffuseMapId, DiffuseMapOriginal);
         else
-            FullMaterial.SetTexture(DiffuseMapId, TextureGrey);
+            FullMaterialCopy.SetTexture(DiffuseMapId, TextureGrey);
 
-        FullMaterial.SetTexture(NormalMapId, NormalMap != null ? NormalMap : TextureNormal);
+        FullMaterialCopy.SetTexture(NormalMapId, NormalMap != null ? NormalMap : TextureNormal);
 
-        FullMaterial.SetTexture(MetallicMapId, MetallicMap != null ? MetallicMap : TextureBlack);
+        FullMaterialCopy.SetTexture(MetallicMapId, MetallicMap != null ? MetallicMap : TextureBlack);
 
-        FullMaterial.SetTexture(SmoothnessMapId, SmoothnessMap != null ? SmoothnessMap : TextureBlack);
+        FullMaterialCopy.SetTexture(SmoothnessMapId, SmoothnessMap != null ? SmoothnessMap : TextureBlack);
 
-        FullMaterial.SetTexture(AoMapId, AoMap != null ? AoMap : TextureWhite);
+        FullMaterialCopy.SetTexture(AoMapId, AoMap != null ? AoMap : TextureWhite);
 
-        FullMaterial.SetTexture(EdgeMapId, EdgeMap != null ? EdgeMap : TextureGrey);
+        FullMaterialCopy.SetTexture(EdgeMapId, EdgeMap != null ? EdgeMap : TextureGrey);
 
-        TestObject.GetComponent<Renderer>().material = FullMaterial;
+        TestObject.GetComponent<Renderer>().material = FullMaterialCopy;
 
-        FullMaterial.SetVector(TilingId, new Vector4(1, 1, 0, 0));
+        FullMaterialCopy.SetVector(TilingId, new Vector4(1, 1, 0, 0));
     }
 
     public void CloseWindows()
@@ -1688,7 +1689,14 @@ public class MainGui : MonoBehaviour
         testObjectScale.x *= areaScale;
         testObjectScale.y *= areaScale;
 
-        TestObject.transform.localScale = testObjectScale;
+        if (TestObject.transform.parent && TestObject.GetComponentInParent<MeshFilter>() != null)
+        {
+            TestObject.transform.parent.localScale.Scale(testObjectScale);
+        }
+        else
+        {
+            TestObject.transform.localScale.Scale(testObjectScale);
+        }
     }
 
     #region Gui Hide Variables
