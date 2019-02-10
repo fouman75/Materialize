@@ -7,90 +7,7 @@
     <list default="true" id="bd680e91-9dfe-4bdc-b145-084e397fb63e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Materialize/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Materialize/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/MainScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainScene/LightingData.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainScene/LightingData.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainScene/LightingData.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainScene/LightingData.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainScene/ReflectionProbe-0.exr" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainScene/ReflectionProbe-0.exr" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainScene/ReflectionProbe-0.exr.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainScene/ReflectionProbe-0.exr.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/AO_Preview.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/AO_Preview.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Box_Material.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Box_Material.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Box_Material.mat.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Box_Material.mat.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Edge_Preview.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Edge_Preview.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Full_Material.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Full_Material.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Full_Material.mat.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Full_Material.mat.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Full_Material_Copy.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Full_Material_Copy.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Height_Preview.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Height_Preview.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Metallic_Preview.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Metallic_Preview.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Normal_Preview.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Normal_Preview.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Skybox.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Skybox.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/Materials/box_material.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Materials/box_material.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/Materials/cube_material.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Materials/cube_material.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/Materials/cylinder_material.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Materials/cylinder_material.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/Materials/sphere_material.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Materials/sphere_material.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/box_plane.FBX.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/box_plane.FBX.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/test_object_cube.FBX.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/test_object_cube.FBX.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/test_object_cylinder.FBX.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/test_object_cylinder.FBX.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/test_object_sphere.FBX.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/test_object_sphere.FBX.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/test_objects.FBX.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/test_objects.FBX.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/OBJ-IO/Examples/Meshes/Materials/Teapot001Mat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/OBJ-IO/Examples/Meshes/Materials/Teapot001Mat.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ClipboardHelper.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ClipboardHelper.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/I18N.West.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/I18N.West.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/I18N.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/I18N.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/HaltonSequence.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/HaltonSequence.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/MotionBlurMatrixHelper.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/MotionBlurMatrixHelper.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/OpaquePostProcess.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/OpaquePostProcess.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/PostProcess.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/PostProcess.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/HiddenPostProcess.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/HiddenPostProcess.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/HiddenTAA.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/HiddenTAA.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/LensDirt_01.tga" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/LensDirt_01.tga.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/LensDirt_02.tga" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/LensDirt_02.tga.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/LensDirt_03.tga" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/LensDirt_03.tga.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/LensDirt_04.tga" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/LensDirt_04.tga.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/flareMask.tga" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/flareMask.tga.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/noise.tga" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/noise.tga.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/vignette.tga" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PostProcess/Resources/vignette.tga.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainGui.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainGui.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MaterialGui.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MaterialGui.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PostProcessGui.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PostProcessGui.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TilingTextureMakerGui.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TilingTextureMakerGui.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Tessellation Shaders.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Tessellation Shaders/BumpedSpecularDisplacement.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Tessellation Shaders/BumpedSpecularDisplacement.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Tessellation Shaders/BumpedSpecularSmooth.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Tessellation Shaders/BumpedSpecularSmooth.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/packages.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/packages/System.Buffers.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/packages/System.Buffers.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/packages/System.Memory.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/packages/System.Memory.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/packages/System.Runtime.CompilerServices.Unsafe.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/packages/System.Runtime.CompilerServices.Unsafe.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/Packages-Update.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/Packages-Update.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -392,19 +309,19 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/PostProcessGui.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="610">
-              <caret line="159" column="24" lean-forward="true" selection-start-line="159" selection-start-column="24" selection-end-line="159" selection-end-column="24" />
+            <state relative-caret-position="135">
+              <caret line="50" column="58" lean-forward="true" selection-start-line="50" selection-start-column="58" selection-end-line="50" selection-end-column="60" />
               <folding>
-                <marker date="1549821649958" expanded="false" signature="0:136" ph="##region" />
-                <marker date="1549821649958" expanded="true" signature="15:124" ph="..." />
-                <marker date="1549821649958" expanded="true" signature="181:5815" ph="{...}" />
-                <marker date="1549821649958" expanded="true" signature="1220:2488" ph="{...}" />
-                <marker date="1549821649958" expanded="true" signature="2521:2998" ph="{...}" />
-                <marker date="1549821649958" expanded="true" signature="3031:3085" ph="{...}" />
-                <marker date="1549821649958" expanded="true" signature="3119:3174" ph="{...}" />
-                <marker date="1549821649958" expanded="true" signature="3201:3317" ph="{...}" />
-                <marker date="1549821649958" expanded="true" signature="3360:5628" ph="{...}" />
-                <marker date="1549821649958" expanded="true" signature="5654:5813" ph="{...}" />
+                <marker date="1549822770962" expanded="false" signature="0:136" ph="##region" />
+                <marker date="1549822770962" expanded="true" signature="15:124" ph="..." />
+                <marker date="1549822770962" expanded="true" signature="181:5820" ph="{...}" />
+                <marker date="1549822770962" expanded="true" signature="1220:2493" ph="{...}" />
+                <marker date="1549822770962" expanded="true" signature="2526:3003" ph="{...}" />
+                <marker date="1549822770962" expanded="true" signature="3036:3090" ph="{...}" />
+                <marker date="1549822770962" expanded="true" signature="3124:3179" ph="{...}" />
+                <marker date="1549822770962" expanded="true" signature="3206:3322" ph="{...}" />
+                <marker date="1549822770962" expanded="true" signature="3365:5633" ph="{...}" />
+                <marker date="1549822770962" expanded="true" signature="5659:5818" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -809,12 +726,12 @@
       <workItem from="1549731950740" duration="2721000" />
       <workItem from="1549735791786" duration="2508000" />
       <workItem from="1549764706588" duration="7743000" />
-      <workItem from="1549818042169" duration="4146000" />
+      <workItem from="1549818042169" duration="4730000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="140446000" />
+    <option name="totallyTimeSpent" value="141030000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2560,19 +2477,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/PostProcessGui.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="610">
-          <caret line="159" column="24" lean-forward="true" selection-start-line="159" selection-start-column="24" selection-end-line="159" selection-end-column="24" />
+        <state relative-caret-position="135">
+          <caret line="50" column="58" lean-forward="true" selection-start-line="50" selection-start-column="58" selection-end-line="50" selection-end-column="60" />
           <folding>
-            <marker date="1549821649958" expanded="false" signature="0:136" ph="##region" />
-            <marker date="1549821649958" expanded="true" signature="15:124" ph="..." />
-            <marker date="1549821649958" expanded="true" signature="181:5815" ph="{...}" />
-            <marker date="1549821649958" expanded="true" signature="1220:2488" ph="{...}" />
-            <marker date="1549821649958" expanded="true" signature="2521:2998" ph="{...}" />
-            <marker date="1549821649958" expanded="true" signature="3031:3085" ph="{...}" />
-            <marker date="1549821649958" expanded="true" signature="3119:3174" ph="{...}" />
-            <marker date="1549821649958" expanded="true" signature="3201:3317" ph="{...}" />
-            <marker date="1549821649958" expanded="true" signature="3360:5628" ph="{...}" />
-            <marker date="1549821649958" expanded="true" signature="5654:5813" ph="{...}" />
+            <marker date="1549822770962" expanded="false" signature="0:136" ph="##region" />
+            <marker date="1549822770962" expanded="true" signature="15:124" ph="..." />
+            <marker date="1549822770962" expanded="true" signature="181:5820" ph="{...}" />
+            <marker date="1549822770962" expanded="true" signature="1220:2493" ph="{...}" />
+            <marker date="1549822770962" expanded="true" signature="2526:3003" ph="{...}" />
+            <marker date="1549822770962" expanded="true" signature="3036:3090" ph="{...}" />
+            <marker date="1549822770962" expanded="true" signature="3124:3179" ph="{...}" />
+            <marker date="1549822770962" expanded="true" signature="3206:3322" ph="{...}" />
+            <marker date="1549822770962" expanded="true" signature="3365:5633" ph="{...}" />
+            <marker date="1549822770962" expanded="true" signature="5659:5818" ph="{...}" />
           </folding>
         </state>
       </provider>

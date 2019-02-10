@@ -51,7 +51,7 @@ public class PostProcessGui : MonoBehaviour
         _bloomIntensityText = _bloomIntensity.ToString();
 
         _bloomThreshold = _bloom.threshold.value;
-        _bloomThresholdText = _bloom.threshold.ToString();
+        _bloomThresholdText = _bloomThreshold.ToString();
 
         _lensDirtIntensity = _bloom.dirtIntensity.value;
         _lensDirtIntensityText = _lensDirtIntensity.ToString();
@@ -72,7 +72,7 @@ public class PostProcessGui : MonoBehaviour
 
         _ambientOcclusion = Profile.GetSetting<AmbientOcclusion>();
         _ambientOcclusionIntensity = _ambientOcclusion.intensity.value;
-        _ambientOcclusionIntensityText = _ambientOcclusion.intensity.ToString();
+        _ambientOcclusionIntensityText = _ambientOcclusionIntensity.ToString();
     }
 
     private void UpdateValues()
@@ -124,7 +124,7 @@ public class PostProcessGui : MonoBehaviour
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Lens Dirt Intensity", _lensDirtIntensity,
             _lensDirtIntensityText,
-            out _lensDirtIntensity, out _lensDirtIntensityText, 0.0f, 2.0f);
+            out _lensDirtIntensity, out _lensDirtIntensityText, 0.0f, 20.0f);
         offsetY += 60;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Vignette Intensity", _vignetteIntensity,
