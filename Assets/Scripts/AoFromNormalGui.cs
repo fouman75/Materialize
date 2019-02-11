@@ -2,6 +2,7 @@
 
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.HDPipeline;
 
 #endregion
 
@@ -45,9 +46,12 @@ public class AoFromNormalGui : MonoBehaviour
     public GameObject TestObject;
 
     public Material ThisMaterial;
+    private Coroutine _processingCoroutine;
+    private Renderer _testObjectRenderer;
 
     private void Awake()
     {
+        _testObjectRenderer = TestObject.GetComponent<Renderer>();
         _mainGui = MainGui.Instance;
     }
 
@@ -97,9 +101,7 @@ public class AoFromNormalGui : MonoBehaviour
     {
         TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
 
-        //_blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
-
-        _blitMaterial = new Material(Shader.Find("Hidden/Blit_Height_From_Normal"));
+        _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
 
         InitializeSettings();
     }
@@ -124,9 +126,8 @@ public class AoFromNormalGui : MonoBehaviour
 
         if (_doStuff)
         {
-            StopAllCoroutines();
-
-            StartCoroutine(ProcessNormalDepth());
+            if (_processingCoroutine != null) StopCoroutine(_processingCoroutine);
+            _processingCoroutine = StartCoroutine(ProcessNormalDepth());
             _doStuff = false;
         }
 
@@ -177,7 +178,7 @@ public class AoFromNormalGui : MonoBehaviour
 
     public void InitializeTextures()
     {
-        TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
+        _testObjectRenderer.sharedMaterial = ThisMaterial;
 
         CleanupTextures();
 
@@ -235,6 +236,7 @@ public class AoFromNormalGui : MonoBehaviour
         _blitMaterial.SetFloat(AoBlend, _aos.Blend);
 
         Graphics.Blit(_blendedAoMap, _tempAoMap, _blitMaterial, 8);
+        
 
         if (_mainGui.AoMap) Destroy(_mainGui.AoMap);
 
@@ -252,7 +254,6 @@ public class AoFromNormalGui : MonoBehaviour
 
     public IEnumerator ProcessNormalDepth()
     {
-        if (!_mainGui.NormalMap) yield break;
         Busy = true;
 
         Debug.Log("Processing Normal Depth to AO");
@@ -280,7 +281,7 @@ public class AoFromNormalGui : MonoBehaviour
             _blitMaterial.SetFloat(BlendAmount, 1.0f / i);
             _blitMaterial.SetFloat(Progress, i / 100.0f);
 
-            Graphics.Blit(_mainGui.NormalMap, _workingAoMap, _blitMaterial);
+            Graphics.Blit(_mainGui.NormalMap, _workingAoMap, _blitMaterial, 7);
             Graphics.Blit(_workingAoMap, _blendedAoMap);
 
 

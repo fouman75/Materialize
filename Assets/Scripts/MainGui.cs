@@ -23,15 +23,10 @@ public class MainGui : MonoBehaviour
 
     private static readonly int CorrectionId = Shader.PropertyToID("_GamaCorrection");
     private static readonly int MainTexId = Shader.PropertyToID("_MainTex");
-    private static readonly int GlobalCubemapId = Shader.PropertyToID("_GlobalCubemap");
-    private static readonly int HeightMapId = Shader.PropertyToID("_HeightMap"); //
-    private static readonly int DiffuseMapId = Shader.PropertyToID("_BaseColorMap"); //
-    private static readonly int NormalMapId = Shader.PropertyToID("_NormalMap"); //
-    private static readonly int MetallicMapId = Shader.PropertyToID("_MetallicMap");
-    private static readonly int SmoothnessMapId = Shader.PropertyToID("_SmoothnessMap");
-    private static readonly int AoMapId = Shader.PropertyToID("_AOMap");
-    private static readonly int EdgeMapId = Shader.PropertyToID("_EdgeMap");
-    private static readonly int TilingId = Shader.PropertyToID("_Tiling");
+    private static readonly int DiffuseMapId = Shader.PropertyToID("_BaseColorMap");
+    private static readonly int NormalMapId = Shader.PropertyToID("_NormalMap");
+    private static readonly int HeightMapId = Shader.PropertyToID("_HeightMap");
+
 
     private readonly ExtensionFilter[] _imageLoadFilter =
     {
@@ -248,30 +243,18 @@ public class MainGui : MonoBehaviour
 
     public void SetMaterialValues()
     {
-//        Shader.SetGlobalTexture(GlobalCubemapId, CubeMaps[_selectedCubemap]);
-//
-//        FullMaterialCopy.SetTexture(HeightMapId, HeightMap != null ? HeightMap : TextureGrey);
-//
-//        if (DiffuseMap != null)
-//            FullMaterialCopy.SetTexture(DiffuseMapId, DiffuseMap);
-//        else if (DiffuseMapOriginal != null)
-//            FullMaterialCopy.SetTexture(DiffuseMapId, DiffuseMapOriginal);
-//        else
-//            FullMaterialCopy.SetTexture(DiffuseMapId, TextureGrey);
-//
-//        FullMaterialCopy.SetTexture(NormalMapId, NormalMap != null ? NormalMap : TextureNormal);
-//
-//        FullMaterialCopy.SetTexture(MetallicMapId, MetallicMap != null ? MetallicMap : TextureBlack);
-//
-//        FullMaterialCopy.SetTexture(SmoothnessMapId, SmoothnessMap != null ? SmoothnessMap : TextureBlack);
-//
-//        FullMaterialCopy.SetTexture(AoMapId, AoMap != null ? AoMap : TextureWhite);
-//
-//        FullMaterialCopy.SetTexture(EdgeMapId, EdgeMap != null ? EdgeMap : TextureGrey);
-//
-//        TestObject.GetComponent<Renderer>().material = FullMaterialCopy;
-//
-//        FullMaterialCopy.SetVector(TilingId, new Vector4(1, 1, 0, 0));
+        FullMaterialCopy.SetTexture(HeightMapId, HeightMap != null ? HeightMap : TextureGrey);
+
+        if (DiffuseMap != null)
+            FullMaterialCopy.SetTexture(DiffuseMapId, DiffuseMap);
+        else if (DiffuseMapOriginal != null)
+            FullMaterialCopy.SetTexture(DiffuseMapId, DiffuseMapOriginal);
+        else
+            FullMaterialCopy.SetTexture(DiffuseMapId, TextureGrey);
+
+        FullMaterialCopy.SetTexture(NormalMapId, NormalMap != null ? NormalMap : TextureNormal);
+
+        TestObject.GetComponent<Renderer>().material = FullMaterialCopy;
     }
 
     public void CloseWindows()

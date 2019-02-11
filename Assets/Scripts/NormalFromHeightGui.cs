@@ -10,6 +10,12 @@ using UnityEngine;
 public class NormalFromHeightGui : MonoBehaviour
 {
     private static readonly int Blur0Weight = Shader.PropertyToID("_Blur0Weight");
+
+    private void Awake()
+    {
+        _testMaterialRenderer = TestObject.GetComponent<Renderer>();
+    }
+
     private static readonly int Blur1Weight = Shader.PropertyToID("_Blur1Weight");
     private static readonly int Blur2Weight = Shader.PropertyToID("_Blur2Weight");
     private static readonly int Blur3Weight = Shader.PropertyToID("_Blur3Weight");
@@ -56,6 +62,8 @@ public class NormalFromHeightGui : MonoBehaviour
     public GameObject TestObject;
 
     public Material ThisMaterial;
+    private Coroutine _processingCoroutine;
+    private Renderer _testMaterialRenderer;
 
     public void GetValues(ProjectObject projectObject)
     {
@@ -168,7 +176,8 @@ public class NormalFromHeightGui : MonoBehaviour
 
         if (_doStuff)
         {
-            StartCoroutine(ProcessHeight());
+            if (_processingCoroutine != null) StopCoroutine(_processingCoroutine);
+            _processingCoroutine = StartCoroutine(ProcessHeight());
             _doStuff = false;
         }
 
@@ -298,7 +307,7 @@ public class NormalFromHeightGui : MonoBehaviour
 
     public void InitializeTextures()
     {
-        TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
+        _testMaterialRenderer.sharedMaterial = ThisMaterial;
 
         CleanupTextures();
 

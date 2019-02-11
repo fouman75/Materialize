@@ -409,9 +409,23 @@ public class MaterialGui : MonoBehaviour
             size = _aoMap.height;
         }
 
-        if (_metallicMap) _metallicMap.Resize(size, size);
-        if (_smoothnessMap) _smoothnessMap.Resize(size, size);
-        if (_aoMap) _aoMap.Resize(size, size);
+        if (_metallicMap && (_metallicMap.width != size || _metallicMap.height != size))
+        {
+            _metallicMap.Resize(size, size);
+            _metallicMap.Apply(false);
+        }
+
+        if (_smoothnessMap && (_smoothnessMap.width != size || _smoothnessMap.height != size))
+        {
+            _smoothnessMap.Resize(size, size);
+            _smoothnessMap.Apply(false);
+        }
+
+        if (_aoMap && (_aoMap.width != size || _aoMap.height != size))
+        {
+            _aoMap.Resize(size, size);
+            _aoMap.Apply(false);
+        }
 
         var map = new Texture2D(size, size, TextureFormat.RGBA32, false);
 
