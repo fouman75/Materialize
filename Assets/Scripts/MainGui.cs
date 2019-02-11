@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using SFB;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.HDPipeline;
+using UnityEngine.Rendering;
 
 #endregion
 
@@ -127,7 +129,6 @@ public class MainGui : MonoBehaviour
     public string QuicksavePathProperty = "";
     public string QuicksavePathSmoothness = "";
 
-    //public Material skyboxMaterial;
     public ReflectionProbe ReflectionProbe;
     [HideInInspector] public Material SampleMaterial;
     public Material SampleMaterialRef;
@@ -148,6 +149,8 @@ public class MainGui : MonoBehaviour
     public Texture2D TextureWhite;
 
     public GameObject TilingTextureMakerGuiObject;
+    public VolumeProfile VolumeProfile;
+    public HDRISky HdriSky;
 
     private void Awake()
     {
@@ -203,6 +206,8 @@ public class MainGui : MonoBehaviour
         ReflectionProbe.RenderProbe();
 
         HideGuiLocker.LockEmpty += LoadHideState;
+        VolumeProfile.TryGet(out HdriSky);
+        HdriSky.hdriSky.value = CubeMaps[0];
     }
 
     public void SaveHideState()
@@ -243,30 +248,30 @@ public class MainGui : MonoBehaviour
 
     public void SetMaterialValues()
     {
-        Shader.SetGlobalTexture(GlobalCubemapId, CubeMaps[_selectedCubemap]);
-
-        FullMaterialCopy.SetTexture(HeightMapId, HeightMap != null ? HeightMap : TextureGrey);
-
-        if (DiffuseMap != null)
-            FullMaterialCopy.SetTexture(DiffuseMapId, DiffuseMap);
-        else if (DiffuseMapOriginal != null)
-            FullMaterialCopy.SetTexture(DiffuseMapId, DiffuseMapOriginal);
-        else
-            FullMaterialCopy.SetTexture(DiffuseMapId, TextureGrey);
-
-        FullMaterialCopy.SetTexture(NormalMapId, NormalMap != null ? NormalMap : TextureNormal);
-
-        FullMaterialCopy.SetTexture(MetallicMapId, MetallicMap != null ? MetallicMap : TextureBlack);
-
-        FullMaterialCopy.SetTexture(SmoothnessMapId, SmoothnessMap != null ? SmoothnessMap : TextureBlack);
-
-        FullMaterialCopy.SetTexture(AoMapId, AoMap != null ? AoMap : TextureWhite);
-
-        FullMaterialCopy.SetTexture(EdgeMapId, EdgeMap != null ? EdgeMap : TextureGrey);
-
-        TestObject.GetComponent<Renderer>().material = FullMaterialCopy;
-
-        FullMaterialCopy.SetVector(TilingId, new Vector4(1, 1, 0, 0));
+//        Shader.SetGlobalTexture(GlobalCubemapId, CubeMaps[_selectedCubemap]);
+//
+//        FullMaterialCopy.SetTexture(HeightMapId, HeightMap != null ? HeightMap : TextureGrey);
+//
+//        if (DiffuseMap != null)
+//            FullMaterialCopy.SetTexture(DiffuseMapId, DiffuseMap);
+//        else if (DiffuseMapOriginal != null)
+//            FullMaterialCopy.SetTexture(DiffuseMapId, DiffuseMapOriginal);
+//        else
+//            FullMaterialCopy.SetTexture(DiffuseMapId, TextureGrey);
+//
+//        FullMaterialCopy.SetTexture(NormalMapId, NormalMap != null ? NormalMap : TextureNormal);
+//
+//        FullMaterialCopy.SetTexture(MetallicMapId, MetallicMap != null ? MetallicMap : TextureBlack);
+//
+//        FullMaterialCopy.SetTexture(SmoothnessMapId, SmoothnessMap != null ? SmoothnessMap : TextureBlack);
+//
+//        FullMaterialCopy.SetTexture(AoMapId, AoMap != null ? AoMap : TextureWhite);
+//
+//        FullMaterialCopy.SetTexture(EdgeMapId, EdgeMap != null ? EdgeMap : TextureGrey);
+//
+//        TestObject.GetComponent<Renderer>().material = FullMaterialCopy;
+//
+//        FullMaterialCopy.SetVector(TilingId, new Vector4(1, 1, 0, 0));
     }
 
     public void CloseWindows()
@@ -370,7 +375,7 @@ public class MainGui : MonoBehaviour
 
         #region Main Gui
 
-//==================================================//
+        //==================================================//
         // 						Main Gui					//
         //==================================================//
 
@@ -1157,8 +1162,7 @@ public class MainGui : MonoBehaviour
             _selectedCubemap += 1;
             if (_selectedCubemap >= CubeMaps.Length) _selectedCubemap = 0;
 
-            //skyboxMaterial.SetTexture ("_Tex", CubeMaps[selectedCubemap] );
-            Shader.SetGlobalTexture(GlobalCubemapId, CubeMaps[_selectedCubemap]);
+            HdriSky.hdriSky.value = CubeMaps[_selectedCubemap];
             ReflectionProbe.RenderProbe();
         }
 

@@ -40,11 +40,16 @@ public class AoFromNormalGui : MonoBehaviour
 
     public Texture2D DefaultNormal;
 
-    public MainGui MainGuiScript;
+    private MainGui _mainGui;
 
     public GameObject TestObject;
 
     public Material ThisMaterial;
+
+    private void Awake()
+    {
+        _mainGui = MainGui.Instance;
+    }
 
     public void GetValues(ProjectObject projectObject)
     {
@@ -73,7 +78,7 @@ public class AoFromNormalGui : MonoBehaviour
         if (_settingsInitialized) return;
         _aos = new AoSettings();
 
-        if (MainGuiScript.HeightMap != null)
+        if (_mainGui.HeightMap != null)
         {
             _aos.Blend = 1.0f;
             _aos.BlendText = "1.0";
@@ -92,9 +97,9 @@ public class AoFromNormalGui : MonoBehaviour
     {
         TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
 
-        _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
+        //_blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
 
-        //blitMaterial = new Material (Shader.Find ("Hidden/Blit_Height_From_Normal"));
+        _blitMaterial = new Material(Shader.Find("Hidden/Blit_Height_From_Normal"));
 
         InitializeSettings();
     }
@@ -109,8 +114,6 @@ public class AoFromNormalGui : MonoBehaviour
         _newTexture = true;
     }
 
-
-    // Update is called once per frame
     private void Update()
     {
         if (_newTexture)
@@ -178,15 +181,15 @@ public class AoFromNormalGui : MonoBehaviour
 
         CleanupTextures();
 
-        if (MainGuiScript.NormalMap)
+        if (_mainGui.NormalMap)
         {
-            _imageSizeX = MainGuiScript.NormalMap.width;
-            _imageSizeY = MainGuiScript.NormalMap.height;
+            _imageSizeX = _mainGui.NormalMap.width;
+            _imageSizeY = _mainGui.NormalMap.height;
         }
         else
         {
-            _imageSizeX = MainGuiScript.HeightMap.width;
-            _imageSizeY = MainGuiScript.HeightMap.height;
+            _imageSizeX = _mainGui.HeightMap.width;
+            _imageSizeY = _mainGui.HeightMap.height;
         }
 
         Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
@@ -233,12 +236,12 @@ public class AoFromNormalGui : MonoBehaviour
 
         Graphics.Blit(_blendedAoMap, _tempAoMap, _blitMaterial, 8);
 
-        if (MainGuiScript.AoMap != null) Destroy(MainGuiScript.AoMap);
+        if (_mainGui.AoMap) Destroy(_mainGui.AoMap);
 
         RenderTexture.active = _tempAoMap;
-        MainGuiScript.AoMap = new Texture2D(_tempAoMap.width, _tempAoMap.height, TextureFormat.ARGB32, true, true);
-        MainGuiScript.AoMap.ReadPixels(new Rect(0, 0, _tempAoMap.width, _tempAoMap.height), 0, 0);
-        MainGuiScript.AoMap.Apply();
+        _mainGui.AoMap = new Texture2D(_tempAoMap.width, _tempAoMap.height, TextureFormat.ARGB32, true, true);
+        _mainGui.AoMap.ReadPixels(new Rect(0, 0, _tempAoMap.width, _tempAoMap.height), 0, 0);
+        _mainGui.AoMap.Apply();
 
         yield return new WaitForSeconds(0.1f);
 
@@ -249,6 +252,7 @@ public class AoFromNormalGui : MonoBehaviour
 
     public IEnumerator ProcessNormalDepth()
     {
+        if (!_mainGui.NormalMap) yield break;
         Busy = true;
 
         Debug.Log("Processing Normal Depth to AO");
@@ -256,12 +260,12 @@ public class AoFromNormalGui : MonoBehaviour
         _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
         _blitMaterial.SetFloat(Spread, _aos.Spread);
 
-        _blitMaterial.SetTexture(MainTex, MainGuiScript.NormalMap != null ? MainGuiScript.NormalMap : DefaultNormal);
+        _blitMaterial.SetTexture(MainTex, _mainGui.NormalMap ? _mainGui.NormalMap : DefaultNormal);
 
-        if (MainGuiScript.HdHeightMap != null)
-            _blitMaterial.SetTexture(HeightTex, MainGuiScript.HdHeightMap);
-        else if (MainGuiScript.HeightMap != null)
-            _blitMaterial.SetTexture(HeightTex, MainGuiScript.HeightMap);
+        if (_mainGui.HdHeightMap)
+            _blitMaterial.SetTexture(HeightTex, _mainGui.HdHeightMap);
+        else if (_mainGui.HeightMap)
+            _blitMaterial.SetTexture(HeightTex, _mainGui.HeightMap);
         else
             _blitMaterial.SetTexture(HeightTex, DefaultHeight);
 
@@ -276,7 +280,7 @@ public class AoFromNormalGui : MonoBehaviour
             _blitMaterial.SetFloat(BlendAmount, 1.0f / i);
             _blitMaterial.SetFloat(Progress, i / 100.0f);
 
-            Graphics.Blit(MainGuiScript.NormalMap, _workingAoMap, _blitMaterial, 7);
+            Graphics.Blit(_mainGui.NormalMap, _workingAoMap, _blitMaterial);
             Graphics.Blit(_workingAoMap, _blendedAoMap);
 
 

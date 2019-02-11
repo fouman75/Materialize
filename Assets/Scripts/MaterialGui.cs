@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.ComponentModel;
+using System.Threading.Tasks;
 using UnityEngine;
 
 #endregion
@@ -34,6 +35,19 @@ public class MaterialSettings
     [DefaultValue(1)] public float SmoothnessRemapMax;
     [DefaultValue("1")] public string SmoothnessRemapMaxText;
 
+    [DefaultValue(1)] public float TexTilingX;
+    [DefaultValue("1")] public string TexTilingXText;
+
+    [DefaultValue(1)] public float TexTilingY;
+    [DefaultValue("1")] public string TexTilingYText;
+
+
+    [DefaultValue(0)] public float TexOffsetX;
+    [DefaultValue("0")] public string TexOffsetXText;
+
+    [DefaultValue(0)] public float TexOffsetY;
+    [DefaultValue("0")] public string TexOffsetYText;
+
     public MaterialSettings()
     {
         Metallic = 1.0f;
@@ -50,6 +64,16 @@ public class MaterialSettings
         LightG = 1.0f;
         LightB = 1.0f;
         LightIntensity = 1.0f;
+
+        TexTilingX = 1;
+        TexTilingY = 1;
+        TexTilingXText = TexTilingX.ToString();
+        TexTilingYText = TexTilingY.ToString();
+
+        TexOffsetX = 0;
+        TexOffsetY = 0;
+        TexOffsetXText = TexOffsetX.ToString();
+        TexOffsetYText = TexOffsetY.ToString();
     }
 }
 
@@ -243,6 +267,25 @@ public class MaterialGui : MonoBehaviour
             out _materialSettings.DisplacementAmplitude, out _materialSettings.DisplacementAmplitudeText, 0.0f, 100.0f);
         offsetY += 40;
 
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Tiling X", _materialSettings.TexTilingX,
+            _materialSettings.TexTilingXText,
+            out _materialSettings.TexTilingX, out _materialSettings.TexTilingXText, 0.1f, 5.0f);
+        offsetY += 30;
+
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Tiling Y", _materialSettings.TexTilingY,
+            _materialSettings.TexTilingYText,
+            out _materialSettings.TexTilingY, out _materialSettings.TexTilingYText, 0.1f, 5.0f);
+        offsetY += 40;
+
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Offset X", _materialSettings.TexOffsetX,
+            _materialSettings.TexOffsetXText,
+            out _materialSettings.TexOffsetX, out _materialSettings.TexOffsetXText, -1.0f, 1.0f);
+        offsetY += 30;
+
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Offset Y", _materialSettings.TexOffsetY,
+            _materialSettings.TexOffsetYText,
+            out _materialSettings.TexOffsetY, out _materialSettings.TexOffsetYText, -1.0f, 1.0f);
+        offsetY += 40;
 
         GUI.Label(new Rect(offsetX, offsetY, 250, 30), "Light Color");
         ChooseLightColor(offsetX, offsetY + 20);
@@ -294,7 +337,7 @@ public class MaterialGui : MonoBehaviour
     private void OnGUI()
     {
         _windowRect.width = 300;
-        _windowRect.height = 590;
+        _windowRect.height = 620;
 
         _windowRect = GUI.Window(14, _windowRect, DoMyWindow, "Full Material");
     }
@@ -306,10 +349,6 @@ public class MaterialGui : MonoBehaviour
         _mainGuiScript = MainGui.Instance;
         _thisMaterial = _mainGuiScript.FullMaterialCopy;
 
-        _thisMaterial.SetTexture(HeightMapId, _mainGuiScript.TextureGrey);
-        _thisMaterial.SetTexture(BaseColorId, _mainGuiScript.TextureGrey);
-        _thisMaterial.SetTexture(NormalMapId, _mainGuiScript.TextureNormal);
-
         _heightMap = _mainGuiScript.HeightMap;
 
         _diffuseMap = _mainGuiScript.DiffuseMap != null ? _mainGuiScript.DiffuseMap : _mainGuiScript.DiffuseMapOriginal;
@@ -318,12 +357,32 @@ public class MaterialGui : MonoBehaviour
         _smoothnessMap = _mainGuiScript.SmoothnessMap;
         _aoMap = _mainGuiScript.AoMap;
 
-        if (_heightMap != null) _thisMaterial.SetTexture(HeightMapId, _heightMap);
-        if (_diffuseMap != null) _thisMaterial.SetTexture(BaseColorId, _diffuseMap);
-        if (_normalMap != null) _thisMaterial.SetTexture(NormalMapId, _normalMap);
+        if (_heightMap != null)
+        {
+            _thisMaterial.EnableKeyword("_TESSELLATION_DISPLACEMENT");
+            _thisMaterial.EnableKeyword("_HEIGHTMAP");
+            _thisMaterial.SetTexture(HeightMapId, _heightMap);
+        }
+
+        if (_diffuseMap != null)
+        {
+            _thisMaterial.SetTexture(BaseColorId, _diffuseMap);
+        }
+
+        if (_normalMap != null)
+        {
+            // ReSharper disable once StringLiteralTypo
+            _thisMaterial.EnableKeyword("_NORMALMAP");
+            _thisMaterial.SetTexture(NormalMapId, _normalMap);
+        }
 
         var maskMap = PackMaskMap();
-        _thisMaterial.SetTexture(MaskMapId, maskMap);
+        if (maskMap != null)
+        {
+            // ReSharper disable once StringLiteralTypo
+            _thisMaterial.EnableKeyword("_MASKMAP");
+            _thisMaterial.SetTexture(MaskMapId, maskMap);
+        }
 
 
         TestObject.GetComponent<Renderer>().material = _thisMaterial;
@@ -334,35 +393,40 @@ public class MaterialGui : MonoBehaviour
 
     private Texture2D PackMaskMap()
     {
+        if (!_metallicMap && !_smoothnessMap && !_aoMap) return null;
+
         var size = 0;
-        if (_metallicMap.height > size)
+        if (_metallicMap && _metallicMap.height > size)
         {
             size = _metallicMap.height;
         }
-        else if (_smoothnessMap.height > size)
+        else if (_smoothnessMap && _smoothnessMap.height > size)
         {
             size = _smoothnessMap.height;
         }
-        else if (_aoMap.height > size)
+        else if (_aoMap && _aoMap.height > size)
         {
             size = _aoMap.height;
         }
 
-        _metallicMap.Resize(size, size);
-        _smoothnessMap.Resize(size, size);
-        _aoMap.Resize(size, size);
+        if (_metallicMap) _metallicMap.Resize(size, size);
+        if (_smoothnessMap) _smoothnessMap.Resize(size, size);
+        if (_aoMap) _aoMap.Resize(size, size);
 
-        var map = new Texture2D(size, size);
+        var map = new Texture2D(size, size, TextureFormat.RGBA32, false);
 
-        for (var i = 0; i < size; i++)
-        for (var j = 0; j < size; j++)
+        var mapData = map.GetRawTextureData();
+        var metallicData = _metallicMap ? _metallicMap.GetRawTextureData() : null;
+        var smoothData = _smoothnessMap ? _smoothnessMap.GetRawTextureData() : null;
+        var aoData = _aoMap ? _aoMap.GetRawTextureData() : null;
+        Parallel.For(0, size, j =>
         {
-            var color = new Color
-            {
-                r = _metallicMap.GetPixel(i, j).r, a = _smoothnessMap.GetPixel(i, j).g, g = _aoMap.GetPixel(i, j).b
-            };
-            map.SetPixel(i, j, color);
-        }
+            if (metallicData != null) mapData[j * 4] = metallicData[j * 4];
+            if (aoData != null) mapData[j * 4 + 1] = aoData[j * 4 + 1];
+            if (smoothData != null) mapData[j * 4 + 3] = smoothData[j * 4 + 3];
+        });
+
+        map.Apply(false);
 
         return map;
     }
