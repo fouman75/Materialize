@@ -46,12 +46,14 @@ public class AoFromNormalGui : MonoBehaviour
     public GameObject TestObject;
 
     public Material ThisMaterial;
-    private Coroutine _processingCoroutine;
+    private Coroutine _processingNormalCoroutine;
     private Renderer _testObjectRenderer;
+    private Coroutine _processingAoCoroutine;
 
     private void Awake()
     {
         _testObjectRenderer = TestObject.GetComponent<Renderer>();
+        ThisMaterial = new Material(ThisMaterial.shader);
         _mainGui = MainGui.Instance;
     }
 
@@ -96,11 +98,8 @@ public class AoFromNormalGui : MonoBehaviour
         _settingsInitialized = true;
     }
 
-    // Use this for initialization
     private void Start()
     {
-        TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
-
         _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
 
         InitializeSettings();
@@ -126,8 +125,9 @@ public class AoFromNormalGui : MonoBehaviour
 
         if (_doStuff)
         {
-            if (_processingCoroutine != null) StopCoroutine(_processingCoroutine);
-            _processingCoroutine = StartCoroutine(ProcessNormalDepth());
+            if (_processingNormalCoroutine != null) StopCoroutine(_processingNormalCoroutine);
+            if (_processingAoCoroutine != null) StopCoroutine(_processingAoCoroutine);
+            _processingNormalCoroutine = StartCoroutine(ProcessNormalDepth());
             _doStuff = false;
         }
 
@@ -163,7 +163,11 @@ public class AoFromNormalGui : MonoBehaviour
         offsetY += 50;
 
         GUI.enabled = !Busy;
-        if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set as AO Map")) StartCoroutine(ProcessAo());
+        if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set as AO Map"))
+        {
+            _processingAoCoroutine = StartCoroutine(ProcessAo());
+        }
+
         GUI.enabled = true;
         GUI.DragWindow();
     }
@@ -182,16 +186,8 @@ public class AoFromNormalGui : MonoBehaviour
 
         CleanupTextures();
 
-        if (_mainGui.NormalMap)
-        {
-            _imageSizeX = _mainGui.NormalMap.width;
-            _imageSizeY = _mainGui.NormalMap.height;
-        }
-        else
-        {
-            _imageSizeX = _mainGui.HeightMap.width;
-            _imageSizeY = _mainGui.HeightMap.height;
-        }
+        _imageSizeX = _mainGui.NormalMap.width;
+        _imageSizeY = _mainGui.NormalMap.height;
 
         Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
@@ -211,6 +207,8 @@ public class AoFromNormalGui : MonoBehaviour
     {
         if (!texture) return;
         texture.Release();
+        // ReSharper disable once RedundantAssignment
+        texture = null;
     }
 
     private void CleanupTextures()
@@ -222,6 +220,7 @@ public class AoFromNormalGui : MonoBehaviour
 
     public IEnumerator ProcessAo()
     {
+        yield return _processingNormalCoroutine;
         Busy = true;
 
         Debug.Log("Processing AO Map");
@@ -236,7 +235,7 @@ public class AoFromNormalGui : MonoBehaviour
         _blitMaterial.SetFloat(AoBlend, _aos.Blend);
 
         Graphics.Blit(_blendedAoMap, _tempAoMap, _blitMaterial, 8);
-        
+
 
         if (_mainGui.AoMap) Destroy(_mainGui.AoMap);
 
@@ -254,6 +253,7 @@ public class AoFromNormalGui : MonoBehaviour
 
     public IEnumerator ProcessNormalDepth()
     {
+        yield return _processingNormalCoroutine;
         Busy = true;
 
         Debug.Log("Processing Normal Depth to AO");
@@ -261,7 +261,7 @@ public class AoFromNormalGui : MonoBehaviour
         _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
         _blitMaterial.SetFloat(Spread, _aos.Spread);
 
-        _blitMaterial.SetTexture(MainTex, _mainGui.NormalMap ? _mainGui.NormalMap : DefaultNormal);
+        _blitMaterial.SetTexture(MainTex, _mainGui.NormalMap);
 
         if (_mainGui.HdHeightMap)
             _blitMaterial.SetTexture(HeightTex, _mainGui.HdHeightMap);
@@ -274,8 +274,6 @@ public class AoFromNormalGui : MonoBehaviour
         _blitMaterial.SetFloat(Depth, _aos.Depth);
         ThisMaterial.SetTexture(MainTex, _blendedAoMap);
 
-        var yieldCountDown = 5;
-
         for (var i = 1; i < 100; i++)
         {
             _blitMaterial.SetFloat(BlendAmount, 1.0f / i);
@@ -283,15 +281,8 @@ public class AoFromNormalGui : MonoBehaviour
 
             Graphics.Blit(_mainGui.NormalMap, _workingAoMap, _blitMaterial, 7);
             Graphics.Blit(_workingAoMap, _blendedAoMap);
-
-
-            yieldCountDown -= 1;
-            if (yieldCountDown > 0) continue;
-            yieldCountDown = 5;
-            yield return new WaitForSeconds(0.01f);
+            yield return null;
         }
-
-        yield return new WaitForSeconds(0.01f);
 
         Busy = false;
     }

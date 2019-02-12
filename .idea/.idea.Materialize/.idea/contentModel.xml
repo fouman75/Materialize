@@ -54,8 +54,6 @@
           <e p="CopyScale.cs" t="Include" />
           <e p="CountLocker.cs" t="Include" />
           <e p="CubemapPicker.cs" t="Include" />
-          <e p="EdgeFromNormalGui.cs" t="Include" />
-          <e p="EdgeSettings.cs" t="Include" />
           <e p="EditDiffuseGui.cs" t="Include" />
           <e p="Editor" t="Include">
             <e p="TextureImportTest.cs" t="Include" />
@@ -110,6 +108,7 @@
             <e p="Blit_FlipNormalY.shader" t="Include" />
             <e p="Blit_Height_From_Diffuse.shader" t="Include" />
             <e p="Blit_Height_From_Normal.shader" t="Include" />
+            <e p="Blit_MaskMap.shader" t="Include" />
             <e p="Blit_Metallic.shader" t="Include" />
             <e p="Blit_Normal_From_Height.shader" t="Include" />
             <e p="Blit_Property_Comp.shader" t="Include" />

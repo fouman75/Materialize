@@ -4,7 +4,6 @@ public enum PropChannelMap
     Height,
     Metallic,
     Smoothness,
-    Edge,
     Ao,
-    AoEdge
+    MaskMap
 }

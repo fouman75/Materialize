@@ -18,9 +18,9 @@ public enum MapType
     Metallic,
     Smoothness,
     Normal,
-    Edge,
     Ao,
-    Property
+    Property,
+    MaskMap
 }
 
 public enum FileFormat
@@ -38,9 +38,7 @@ public class ProjectObject
     public AoSettings AoSettings;
     public string DiffuseMapOriginalPath;
     public string DiffuseMapPath;
-    public string EdgeMapPath;
-
-    public EdgeSettings EdgeSettings;
+    public string MaskMapPath;
 
     public EditDiffuseSettings EditDiffuseSettings;
     public HeightFromDiffuseSettings HeightFromDiffuseSettings;
@@ -90,7 +88,6 @@ public class SaveLoadProject : MonoBehaviour
         MainGui.Instance.NormalFromHeightGuiScript.SetValues(_thisProject);
         MainGui.Instance.MetallicGuiScript.SetValues(_thisProject);
         MainGui.Instance.SmoothnessGuiScript.SetValues(_thisProject);
-        MainGui.Instance.EdgeFromNormalGuiScript.SetValues(_thisProject);
         MainGui.Instance.AoFromNormalGuiScript.SetValues(_thisProject);
         MainGui.Instance.MaterialGuiScript.SetValues(_thisProject);
 
@@ -145,11 +142,10 @@ public class SaveLoadProject : MonoBehaviour
         else
             _thisProject.SmoothnessMapPath = "null";
 
-        MainGui.Instance.EdgeFromNormalGuiScript.GetValues(_thisProject);
-        if (MainGui.Instance.EdgeMap != null)
-            _thisProject.EdgeMapPath = projectName + "_edge." + extension;
+        if (MainGui.Instance.MaskMap != null)
+            _thisProject.MaskMapPath = projectName + "_maskMap." + extension;
         else
-            _thisProject.EdgeMapPath = "null";
+            _thisProject.MaskMapPath = "null";
 
         MainGui.Instance.AoFromNormalGuiScript.GetValues(_thisProject);
         if (MainGui.Instance.AoMap != null)
@@ -242,7 +238,7 @@ public class SaveLoadProject : MonoBehaviour
 
         yield return StartCoroutine(SaveTexture(MainGui.Instance.SmoothnessMap, path + _thisProject.SmoothnessMapPath));
 
-        yield return StartCoroutine(SaveTexture(MainGui.Instance.EdgeMap, path + _thisProject.EdgeMapPath));
+        yield return StartCoroutine(SaveTexture(MainGui.Instance.MaskMap, path + _thisProject.MaskMapPath));
 
         yield return StartCoroutine(SaveTexture(MainGui.Instance.AoMap, path + _thisProject.AoMapPath));
     }
@@ -335,8 +331,8 @@ public class SaveLoadProject : MonoBehaviour
 
         while (Busy) yield return new WaitForSeconds(0.01f);
 
-        if (_thisProject.EdgeMapPath != "null")
-            StartCoroutine(LoadTexture(MapType.Edge, pathToFile + _thisProject.EdgeMapPath));
+        if (_thisProject.MaskMapPath != "null")
+            StartCoroutine(LoadTexture(MapType.MaskMap, pathToFile + _thisProject.MaskMapPath));
 
         while (Busy) yield return new WaitForSeconds(0.01f);
 
@@ -385,8 +381,8 @@ public class SaveLoadProject : MonoBehaviour
             case MapType.Smoothness:
                 MainGui.Instance.SmoothnessMap = newTexture;
                 break;
-            case MapType.Edge:
-                MainGui.Instance.EdgeMap = newTexture;
+            case MapType.MaskMap:
+                MainGui.Instance.MaskMap = newTexture;
                 break;
             case MapType.Ao:
                 MainGui.Instance.AoMap = newTexture;

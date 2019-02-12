@@ -20,7 +20,7 @@ public enum CommandType
     Metallic,
     Smoothness,
     AoFromNormal,
-    EdgeFromNormal,
+    MaskMap,
     QuickSave,
     FlipNormalMapY,
     FileFormat
@@ -98,7 +98,7 @@ public class CommandListExecutor : MonoBehaviour
         command = new Command {CommandType = CommandType.AoFromNormal};
         commandList.Commands.Add(command);
 
-        command = new Command {CommandType = CommandType.EdgeFromNormal};
+        command = new Command {CommandType = CommandType.MaskMap};
         commandList.Commands.Add(command);
 
         command = new Command {CommandType = CommandType.FileFormat, Extension = "tga"};
@@ -185,8 +185,8 @@ public class CommandListExecutor : MonoBehaviour
                                 StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension, _mainGui.SmoothnessMap,
                                     thisCommand.FilePath));
                                 break;
-                            case MapType.Edge:
-                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension, _mainGui.EdgeMap,
+                            case MapType.MaskMap:
+                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension, _mainGui.MaskMap,
                                     thisCommand.FilePath));
                                 break;
                             case MapType.Ao:
@@ -285,18 +285,10 @@ public class CommandListExecutor : MonoBehaviour
                         _mainGui.AoFromNormalGuiScript.Close();
                         break;
                     }
-                    case CommandType.EdgeFromNormal:
+                    case CommandType.MaskMap:
                     {
                         _mainGui.CloseWindows();
-                        _mainGui.EdgeFromNormalGuiObject.SetActive(true);
-                        yield return new WaitForSeconds(0.1f);
-                        _mainGui.EdgeFromNormalGuiScript.InitializeTextures();
-                        yield return new WaitForSeconds(0.1f);
-                        StartCoroutine(_mainGui.EdgeFromNormalGuiScript.ProcessNormal());
-                        while (_mainGui.EdgeFromNormalGuiScript.Busy) yield return new WaitForSeconds(0.1f);
-                        StartCoroutine(_mainGui.EdgeFromNormalGuiScript.ProcessEdge());
-                        while (_mainGui.EdgeFromNormalGuiScript.Busy) yield return new WaitForSeconds(0.1f);
-                        _mainGui.EdgeFromNormalGuiScript.Close();
+                        _mainGui.BlitMaskMap();
                         break;
                     }
                     case CommandType.QuickSave:
@@ -317,8 +309,8 @@ public class CommandListExecutor : MonoBehaviour
                             case MapType.Smoothness:
                                 _mainGui.QuicksavePathSmoothness = thisCommand.FilePath;
                                 break;
-                            case MapType.Edge:
-                                _mainGui.QuicksavePathEdge = thisCommand.FilePath;
+                            case MapType.MaskMap:
+                                _mainGui.QuicksavePathMaskMap = thisCommand.FilePath;
                                 break;
                             case MapType.Ao:
                                 _mainGui.QuicksavePathAo = thisCommand.FilePath;

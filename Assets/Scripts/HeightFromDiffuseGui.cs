@@ -205,21 +205,21 @@ public class HeightFromDiffuseGui : MonoBehaviour
 
     private void FixUseMaps()
     {
-        if (MainGuiScript.DiffuseMapOriginal == null && _heightFromDiffuseSettings.UseOriginalDiffuse)
+        if (!MainGuiScript.DiffuseMapOriginal && _heightFromDiffuseSettings.UseOriginalDiffuse)
         {
             _heightFromDiffuseSettings.UseAdjustedDiffuse = true;
             _heightFromDiffuseSettings.UseOriginalDiffuse = false;
             _heightFromDiffuseSettings.UseNormal = false;
         }
 
-        if (MainGuiScript.DiffuseMap == null && _heightFromDiffuseSettings.UseAdjustedDiffuse)
+        if (!MainGuiScript.DiffuseMap && _heightFromDiffuseSettings.UseAdjustedDiffuse)
         {
             _heightFromDiffuseSettings.UseAdjustedDiffuse = false;
             _heightFromDiffuseSettings.UseOriginalDiffuse = true;
             _heightFromDiffuseSettings.UseNormal = false;
         }
 
-        if (MainGuiScript.NormalMap == null && _heightFromDiffuseSettings.UseNormal)
+        if (!MainGuiScript.NormalMap && _heightFromDiffuseSettings.UseNormal)
         {
             _heightFromDiffuseSettings.UseAdjustedDiffuse = true;
             _heightFromDiffuseSettings.UseOriginalDiffuse = false;

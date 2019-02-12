@@ -1,6 +1,7 @@
 ﻿Shader "Custom/Normal_From_Height_Preview" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
+		_HeightTex ("Base (RGB)", 2D) = "white" {}
 		_BlurTex0 ("Base (RGB)", 2D) = "white" {}
 		_BlurTex1 ("Base (RGB)", 2D) = "white" {}
 		_BlurTex2 ("Base (RGB)", 2D) = "white" {}
@@ -93,6 +94,7 @@
 			fixed4 frag (v2f IN) : SV_Target {
 
 				float2 UV = IN.uv;
+				half4 heightTex = tex2D(_HeightTex, UV);
 
 				half4 mainTex = half4( tex2Dlod(_BlurTex0, float4( UV, 0, 0 ) ).xyz, 1.0 ) * _Blur0Weight;
 				half4 blurTex1 = half4( tex2Dlod(_BlurTex1, float4( UV, 0, 0 ) ).xyz, 1.0 ) * _Blur1Weight;
@@ -116,7 +118,8 @@
 				
 				mainTex.xyz = normalize( mainTex.xyz ) * 0.5 + 0.5;
 
-				return float4( mainTex.xyz, 1 );
+                float3 finalColor = lerp( mainTex.xyz, heightTex.xxx, smoothstep( _Slider - 0.01, _Slider + 0.01, UV.x ) );
+				return float4( finalColor, 1 );
 			}
 
 			ENDCG

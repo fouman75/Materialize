@@ -82,8 +82,8 @@ public class AlignmentGui : MonoBehaviour
             _textureToAlign = _mainGui.MetallicMap;
         else if (_mainGui.SmoothnessMap != null)
             _textureToAlign = _mainGui.SmoothnessMap;
-        else if (_mainGui.EdgeMap != null)
-            _textureToAlign = _mainGui.EdgeMap;
+        else if (_mainGui.MaskMap != null)
+            _textureToAlign = _mainGui.MaskMap;
         else if (_mainGui.AoMap != null) _textureToAlign = _mainGui.AoMap;
 
 
@@ -301,10 +301,10 @@ public class AlignmentGui : MonoBehaviour
 
         offsetY += 40;
 
-        GUI.enabled = _mainGui.EdgeMap != null;
-        if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Edge Map"))
+        GUI.enabled = _mainGui.MaskMap != null;
+        if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Mask Map"))
         {
-            _textureToAlign = _mainGui.EdgeMap;
+            _textureToAlign = _mainGui.MaskMap;
             _doStuff = true;
         }
 
@@ -505,10 +505,10 @@ public class AlignmentGui : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
 
-        if (_mainGui.EdgeMap != null)
+        if (_mainGui.MaskMap != null)
         {
-            Debug.Log("Setting Edge");
-            _mainGui.EdgeMap = SetMap(_mainGui.EdgeMap);
+            Debug.Log("Setting MaskMap");
+            _mainGui.MaskMap = SetMap(_mainGui.MaskMap);
         }
 
         yield return new WaitForSeconds(0.1f);

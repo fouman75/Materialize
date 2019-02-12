@@ -23,7 +23,6 @@ public class TilingTextureMakerGui : MonoBehaviour
     private RenderTexture _diffuseMapTemp;
 
     private bool _doStuff;
-    private RenderTexture _edgeMapTemp;
 
     private float _falloff = 0.1f;
 
@@ -507,16 +506,6 @@ public class TilingTextureMakerGui : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
 
-        if (MainGui.Instance.EdgeMap)
-        {
-            Debug.Log("Setting Edge");
-            Destroy(MainGui.Instance.EdgeMap);
-            MainGui.Instance.EdgeMap = null;
-            MainGui.Instance.EdgeMap = SetMap(MainGui.Instance.EdgeMap, _edgeMapTemp);
-        }
-
-        yield return new WaitForSeconds(0.1f);
-
         if (MainGui.Instance.AoMap)
         {
             Debug.Log("Setting AO");
@@ -575,7 +564,6 @@ public class TilingTextureMakerGui : MonoBehaviour
         CleanupTexture(_metallicMapTemp);
         CleanupTexture(_smoothnessMapTemp);
         CleanupTexture(_normalMapTemp);
-        CleanupTexture(_edgeMapTemp);
         CleanupTexture(_aoMapTemp);
 
         CleanupTexture(_tileTemp);
@@ -805,12 +793,6 @@ public class TilingTextureMakerGui : MonoBehaviour
         }
 
         _blitMaterial.SetFloat("_IsNormal", 0.0f);
-
-        if (MainGui.Instance.EdgeMap != null)
-        {
-            _edgeMapTemp = TileTexture(MainGui.Instance.EdgeMap, _edgeMapTemp, "_EdgeMap");
-            _thisMaterial.SetTexture("_EdgeMap", _edgeMapTemp);
-        }
 
         if (MainGui.Instance.AoMap != null)
         {

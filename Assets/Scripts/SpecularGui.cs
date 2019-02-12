@@ -37,7 +37,6 @@ public class SpecularGui : MonoBehaviour
     private float _diffuseContrast = 1.0f;
     private Texture2D _diffuseMap;
     private bool _doStuff;
-    private Texture2D _edgeMap;
     private float _finalBias;
 
     private float _finalContrast = 1.0f;

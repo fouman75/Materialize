@@ -25,6 +25,7 @@ public class MainGui : MonoBehaviour
     private static readonly int MainTexId = Shader.PropertyToID("_MainTex");
     private static readonly int DiffuseMapId = Shader.PropertyToID("_BaseColorMap");
     private static readonly int NormalMapId = Shader.PropertyToID("_NormalMap");
+    private static readonly int MaskMapId = Shader.PropertyToID("_MaskMap");
     private static readonly int HeightMapId = Shader.PropertyToID("_HeightMap");
 
 
@@ -79,9 +80,7 @@ public class MainGui : MonoBehaviour
     public Texture2D DiffuseMap;
     public Texture2D DiffuseMapOriginal;
 
-    public GameObject EdgeFromNormalGuiObject;
-    [HideInInspector] public EdgeFromNormalGui EdgeFromNormalGuiScript;
-    public Texture2D EdgeMap;
+    public Texture2D MaskMap;
 
     public GameObject EditDiffuseGuiObject;
     [HideInInspector] public EditDiffuseGui EditDiffuseGuiScript;
@@ -117,7 +116,7 @@ public class MainGui : MonoBehaviour
 
     public string QuicksavePathAo = "";
     public string QuicksavePathDiffuse = "";
-    public string QuicksavePathEdge = "";
+    public string QuicksavePathMaskMap = "";
     public string QuicksavePathHeight = "";
     public string QuicksavePathMetallic = "";
     public string QuicksavePathNormal = "";
@@ -163,7 +162,7 @@ public class MainGui : MonoBehaviour
         NormalMap = null;
         MetallicMap = null;
         SmoothnessMap = null;
-        EdgeMap = null;
+        MaskMap = null;
         AoMap = null;
 
         _propertyCompShader = Shader.Find("Hidden/Blit_Property_Comp");
@@ -179,7 +178,6 @@ public class MainGui : MonoBehaviour
 
         HeightFromDiffuseGuiScript = HeightFromDiffuseGuiObject.GetComponent<HeightFromDiffuseGui>();
         NormalFromHeightGuiScript = NormalFromHeightGuiObject.GetComponent<NormalFromHeightGui>();
-        EdgeFromNormalGuiScript = EdgeFromNormalGuiObject.GetComponent<EdgeFromNormalGui>();
         AoFromNormalGuiScript = AoFromNormalGuiObject.GetComponent<AoFromNormalGui>();
         EditDiffuseGuiScript = EditDiffuseGuiObject.GetComponent<EditDiffuseGui>();
         MetallicGuiScript = MetallicGuiObject.GetComponent<MetallicGui>();
@@ -243,7 +241,7 @@ public class MainGui : MonoBehaviour
 
     public void SetMaterialValues()
     {
-        FullMaterialCopy.SetTexture(HeightMapId, HeightMap != null ? HeightMap : TextureGrey);
+        FullMaterialCopy.SetTexture(HeightMapId, HeightMap ? HeightMap : TextureGrey);
 
         if (DiffuseMap != null)
             FullMaterialCopy.SetTexture(DiffuseMapId, DiffuseMap);
@@ -252,7 +250,11 @@ public class MainGui : MonoBehaviour
         else
             FullMaterialCopy.SetTexture(DiffuseMapId, TextureGrey);
 
-        FullMaterialCopy.SetTexture(NormalMapId, NormalMap != null ? NormalMap : TextureNormal);
+        FullMaterialCopy.SetTexture(NormalMapId, NormalMap ? NormalMap : TextureNormal);
+        if (MaskMap)
+        {
+            FullMaterialCopy.SetTexture(MaskMapId, MaskMap);
+        }
 
         TestObject.GetComponent<Renderer>().material = FullMaterialCopy;
     }
@@ -261,7 +263,6 @@ public class MainGui : MonoBehaviour
     {
         HeightFromDiffuseGuiScript.Close();
         NormalFromHeightGuiScript.Close();
-        EdgeFromNormalGuiScript.Close();
         AoFromNormalGuiScript.Close();
         EditDiffuseGuiScript.Close();
         MetallicGuiScript.Close();
@@ -280,8 +281,6 @@ public class MainGui : MonoBehaviour
 
         if (NormalFromHeightGuiObject.activeSelf) _objectsToUnhide.Add(NormalFromHeightGuiObject);
 
-        if (EdgeFromNormalGuiObject.activeSelf) _objectsToUnhide.Add(EdgeFromNormalGuiObject);
-
         if (AoFromNormalGuiObject.activeSelf) _objectsToUnhide.Add(AoFromNormalGuiObject);
 
         if (EditDiffuseGuiObject.activeSelf) _objectsToUnhide.Add(EditDiffuseGuiObject);
@@ -298,7 +297,6 @@ public class MainGui : MonoBehaviour
 
         HeightFromDiffuseGuiObject.SetActive(false);
         NormalFromHeightGuiObject.SetActive(false);
-        EdgeFromNormalGuiObject.SetActive(false);
         AoFromNormalGuiObject.SetActive(false);
         EditDiffuseGuiObject.SetActive(false);
         MetallicGuiObject.SetActive(false);
@@ -788,26 +786,26 @@ public class MainGui : MonoBehaviour
 
 
         //==============================//
-        // 			Edge Map			//
+        // 			Mask Map			//
         //==============================//
 
-        GUI.Box(new Rect(offsetX + spacingX * 5, offsetY, 110, 250), "Edge Map");
+        GUI.Box(new Rect(offsetX + spacingX * 5, offsetY, 110, 250), "Mask Map");
 
-        if (EdgeMap != null) GUI.DrawTexture(new Rect(offsetX + spacingX * 5 + 5, offsetY + 25, 100, 100), EdgeMap);
+        if (MaskMap != null) GUI.DrawTexture(new Rect(offsetX + spacingX * 5 + 5, offsetY + 25, 100, 100), MaskMap);
 
         // Paste 
         if (GUI.Button(new Rect(offsetX + spacingX * 5 + 5, offsetY + 130, 20, 20), "P"))
         {
-            _activeMapType = MapType.Edge;
+            _activeMapType = MapType.MaskMap;
             PasteFile();
         }
 
-        GUI.enabled = EdgeMap != null;
+        GUI.enabled = MaskMap != null;
 
         // Copy
         if (GUI.Button(new Rect(offsetX + spacingX * 5 + 30, offsetY + 130, 20, 20), "C"))
         {
-            _textureToSave = EdgeMap;
+            _textureToSave = MaskMap;
             CopyFile();
         }
 
@@ -815,15 +813,15 @@ public class MainGui : MonoBehaviour
 
         //Open
         if (GUI.Button(new Rect(offsetX + spacingX * 5 + 60, offsetY + 130, 20, 20), "O"))
-            OpenTextureFile(MapType.Edge);
+            OpenTextureFile(MapType.MaskMap);
 
-        GUI.enabled = EdgeMap != null;
+        GUI.enabled = MaskMap != null;
 
         // Save
         if (GUI.Button(new Rect(offsetX + spacingX * 5 + 85, offsetY + 130, 20, 20), "S"))
-            SaveTextureFile(MapType.Edge);
+            SaveTextureFile(MapType.MaskMap);
 
-        if (EdgeMap == null || QuicksavePathEdge == "")
+        if (MaskMap == null || QuicksavePathMaskMap == "")
             GUI.enabled = false;
         else
             GUI.enabled = true;
@@ -831,14 +829,14 @@ public class MainGui : MonoBehaviour
         // Quick Save
         if (GUI.Button(new Rect(offsetX + spacingX * 5 + 15, offsetY + 160, 80, 20), "Quick Save"))
         {
-            _textureToSave = EdgeMap;
-            SaveFile(QuicksavePathEdge);
+            _textureToSave = MaskMap;
+            SaveFile(QuicksavePathMaskMap);
         }
 
-        GUI.enabled = EdgeMap != null;
+        GUI.enabled = MaskMap != null;
 
         if (GUI.Button(new Rect(offsetX + spacingX * 5 + 15, offsetY + 190, 80, 20), "Preview"))
-            SetPreviewMaterial(EdgeMap);
+            SetPreviewMaterial(MaskMap);
 
         GUI.enabled = NormalMap != null;
 
@@ -846,16 +844,15 @@ public class MainGui : MonoBehaviour
         {
             CloseWindows();
             FixSize();
-            EdgeFromNormalGuiObject.SetActive(true);
-            EdgeFromNormalGuiScript.NewTexture();
-            EdgeFromNormalGuiScript.DoStuff();
+            MaskMap = BlitMaskMap();
+            SetPreviewMaterial(MaskMap);
         }
 
-        GUI.enabled = EdgeMap != null;
+        GUI.enabled = MaskMap != null;
 
         if (GUI.Button(new Rect(offsetX + spacingX * 5 + 60, offsetY + 220, 45, 20), "Clear"))
         {
-            ClearTexture(MapType.Edge);
+            ClearTexture(MapType.MaskMap);
             CloseWindows();
             SetMaterialValues();
             FixSize();
@@ -915,7 +912,7 @@ public class MainGui : MonoBehaviour
         if (GUI.Button(new Rect(offsetX + spacingX * 6 + 15, offsetY + 190, 80, 20), "Preview"))
             SetPreviewMaterial(AoMap);
 
-        if (NormalMap == null && HeightMap == null)
+        if (NormalMap == null || HeightMap == null)
             GUI.enabled = false;
         else
             GUI.enabled = true;
@@ -1066,22 +1063,16 @@ public class MainGui : MonoBehaviour
                 chosenPcm = PropChannelMap.Smoothness;
             }
 
-            if (GUI.Button(new Rect(propBoxOffsetX + 10, propBoxOffsetY + 150, 130, 25), "Edge"))
+            if (GUI.Button(new Rect(propBoxOffsetX + 10, propBoxOffsetY + 150, 130, 25), "MaskMap"))
             {
                 chosen = true;
-                chosenPcm = PropChannelMap.Edge;
+                chosenPcm = PropChannelMap.MaskMap;
             }
 
             if (GUI.Button(new Rect(propBoxOffsetX + 10, propBoxOffsetY + 180, 130, 25), "Ambient Occlusion"))
             {
                 chosen = true;
                 chosenPcm = PropChannelMap.Ao;
-            }
-
-            if (GUI.Button(new Rect(propBoxOffsetX + 10, propBoxOffsetY + 210, 130, 25), "AO + Edge"))
-            {
-                chosen = true;
-                chosenPcm = PropChannelMap.AoEdge;
             }
 
             if (chosen)
@@ -1166,7 +1157,7 @@ public class MainGui : MonoBehaviour
         offsetX += 70;
 
         if (HeightMap == null && DiffuseMapOriginal == null && MetallicMap == null && SmoothnessMap == null &&
-            EdgeMap == null && AoMap == null)
+            MaskMap == null && AoMap == null)
             GUI.enabled = false;
         else
             GUI.enabled = true;
@@ -1248,8 +1239,8 @@ public class MainGui : MonoBehaviour
                 return SmoothnessMap;
             case MapType.Normal:
                 return NormalMap;
-            case MapType.Edge:
-                return EdgeMap;
+            case MapType.MaskMap:
+                return MaskMap;
             case MapType.Ao:
                 return AoMap;
             case MapType.Property:
@@ -1286,14 +1277,11 @@ public class MainGui : MonoBehaviour
             case PropChannelMap.Smoothness:
                 returnString = "Smoothness";
                 break;
-            case PropChannelMap.Edge:
-                returnString = "Edge";
+            case PropChannelMap.MaskMap:
+                returnString = "MaskMap";
                 break;
             case PropChannelMap.Ao:
                 returnString = "Ambient Occ";
-                break;
-            case PropChannelMap.AoEdge:
-                returnString = "AO + Edge";
                 break;
             case PropChannelMap.None:
                 break;
@@ -1374,11 +1362,11 @@ public class MainGui : MonoBehaviour
                 }
 
                 break;
-            case MapType.Edge:
-                if (EdgeMap)
+            case MapType.MaskMap:
+                if (MaskMap)
                 {
-                    Destroy(EdgeMap);
-                    EdgeMap = null;
+                    Destroy(MaskMap);
+                    MaskMap = null;
                 }
 
                 break;
@@ -1414,7 +1402,7 @@ public class MainGui : MonoBehaviour
         ClearTexture(MapType.Normal);
         ClearTexture(MapType.Metallic);
         ClearTexture(MapType.Smoothness);
-        ClearTexture(MapType.Edge);
+        ClearTexture(MapType.MaskMap);
         ClearTexture(MapType.Ao);
     }
 
@@ -1498,8 +1486,8 @@ public class MainGui : MonoBehaviour
             case MapType.Smoothness:
                 SetPreviewMaterial(SmoothnessMap);
                 break;
-            case MapType.Edge:
-                SetPreviewMaterial(EdgeMap);
+            case MapType.MaskMap:
+                SetPreviewMaterial(MaskMap);
                 break;
             case MapType.Ao:
                 SetPreviewMaterial(AoMap);
@@ -1537,14 +1525,11 @@ public class MainGui : MonoBehaviour
             case PropChannelMap.Smoothness:
                 SetPropertyTexture(texPrefix, SmoothnessMap, TextureGrey);
                 break;
-            case PropChannelMap.Edge:
-                SetPropertyTexture(texPrefix, EdgeMap, TextureGrey);
-                break;
             case PropChannelMap.Ao:
                 SetPropertyTexture(texPrefix, AoMap, TextureGrey);
                 break;
-            case PropChannelMap.AoEdge:
-                SetPropertyTexture(texPrefix, AoMap, EdgeMap);
+            case PropChannelMap.MaskMap:
+                SetPropertyTexture(texPrefix, MaskMap, TextureGrey);
                 break;
             case PropChannelMap.None:
                 SetPropertyTexture(texPrefix, TextureBlack, TextureGrey);
@@ -1636,8 +1621,8 @@ public class MainGui : MonoBehaviour
             mapToUse = MetallicMap;
         else if (SmoothnessMap != null)
             mapToUse = SmoothnessMap;
-        else if (EdgeMap != null)
-            mapToUse = EdgeMap;
+        else if (MaskMap != null)
+            mapToUse = MaskMap;
         else if (AoMap != null) mapToUse = AoMap;
 
         if (mapToUse == null) return size;
@@ -1686,11 +1671,30 @@ public class MainGui : MonoBehaviour
         }
     }
 
+    public Texture2D BlitMaskMap()
+    {
+        var mat = new Material(Shader.Find("Blit/Blit_MaskMap"));
+        mat.SetTexture(MetallicTex, MetallicMap ? MetallicMap : TextureBlack);
+        mat.SetTexture(SmoothnessTex, SmoothnessMap ? SmoothnessMap : TextureBlack);
+        mat.SetTexture(AoTex, AoMap ? AoMap : TextureBlack);
+        var emptyTex = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+        var map = new RenderTexture(MetallicMap.width, MetallicMap.height, 0, RenderTextureFormat.ARGB32);
+        Graphics.Blit(emptyTex, map, mat);
+        RenderTexture.active = map;
+        var maskMap = new Texture2D(map.width, map.height, TextureFormat.ARGB32, true, true);
+        maskMap.ReadPixels(new Rect(0, 0, map.width, map.height), 0, 0);
+        maskMap.Apply();
+        return maskMap;
+    }
+
     #region Gui Hide Variables
 
     [HideInInspector] public CountLocker HideGuiLocker = new CountLocker();
     private bool _lastGuiIsHiddenState;
     private bool _isGuiHidden;
+    private static readonly int MetallicTex = Shader.PropertyToID("_MetallicTex");
+    private static readonly int SmoothnessTex = Shader.PropertyToID("_SmoothnessTex");
+    private static readonly int AoTex = Shader.PropertyToID("_AoTex");
 
     public bool IsGuiHidden
     {

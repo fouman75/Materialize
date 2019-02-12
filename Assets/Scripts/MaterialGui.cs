@@ -2,6 +2,7 @@
 
 using System.ComponentModel;
 using System.Threading.Tasks;
+using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
 
 #endregion
@@ -50,13 +51,13 @@ public class MaterialSettings
 
     public MaterialSettings()
     {
-        Metallic = 1.0f;
-        DisplacementAmplitude = 1.0f;
+        Metallic = 0.4f;
+        DisplacementAmplitude = 5.0f;
         AoRemapMax = 1.0f;
         SmoothnessRemapMax = 1.0f;
 
-        MetallicText = "1";
-        DisplacementAmplitudeText = "1";
+        MetallicText = "0.4";
+        DisplacementAmplitudeText = "5";
         AoRemapMaxText = "1";
         SmoothnessRemapMaxText = "1";
 
@@ -125,6 +126,7 @@ public class MaterialGui : MonoBehaviour
     public GameObject TestObjectSphere;
     public ObjRotator TestRotator;
     private static readonly int MaskMapId = Shader.PropertyToID("_MaskMap");
+    private Texture2D _maskMap;
 
     private void OnDisable()
     {
@@ -191,6 +193,9 @@ public class MaterialGui : MonoBehaviour
         TestObjectCylinder.SetActive(_cylinderShown);
         TestObjectSphere.SetActive(_sphereShown);
         _thisMaterial.SetFloat(DisplacementOffsetId, _dispOffset);
+        TestObject.GetComponent<Renderer>().enabled = false;
+        TestObject.GetComponent<Renderer>().enabled = true;
+        
     }
 
     private void ChooseLightColor(int posX, int posY)
@@ -356,6 +361,7 @@ public class MaterialGui : MonoBehaviour
         _metallicMap = _mainGuiScript.MetallicMap;
         _smoothnessMap = _mainGuiScript.SmoothnessMap;
         _aoMap = _mainGuiScript.AoMap;
+        _maskMap = _mainGuiScript.MaskMap;
 
         if (_heightMap != null)
         {
@@ -376,12 +382,11 @@ public class MaterialGui : MonoBehaviour
             _thisMaterial.SetTexture(NormalMapId, _normalMap);
         }
 
-        var maskMap = PackMaskMap();
-        if (maskMap != null)
+        if (_maskMap != null)
         {
             // ReSharper disable once StringLiteralTypo
             _thisMaterial.EnableKeyword("_MASKMAP");
-            _thisMaterial.SetTexture(MaskMapId, maskMap);
+            _thisMaterial.SetTexture(MaskMapId, _maskMap);
         }
 
 
@@ -391,57 +396,4 @@ public class MaterialGui : MonoBehaviour
         TestObjectSphere.GetComponent<Renderer>().material = _thisMaterial;
     }
 
-    private Texture2D PackMaskMap()
-    {
-        if (!_metallicMap && !_smoothnessMap && !_aoMap) return null;
-
-        var size = 0;
-        if (_metallicMap && _metallicMap.height > size)
-        {
-            size = _metallicMap.height;
-        }
-        else if (_smoothnessMap && _smoothnessMap.height > size)
-        {
-            size = _smoothnessMap.height;
-        }
-        else if (_aoMap && _aoMap.height > size)
-        {
-            size = _aoMap.height;
-        }
-
-        if (_metallicMap && (_metallicMap.width != size || _metallicMap.height != size))
-        {
-            _metallicMap.Resize(size, size);
-            _metallicMap.Apply(false);
-        }
-
-        if (_smoothnessMap && (_smoothnessMap.width != size || _smoothnessMap.height != size))
-        {
-            _smoothnessMap.Resize(size, size);
-            _smoothnessMap.Apply(false);
-        }
-
-        if (_aoMap && (_aoMap.width != size || _aoMap.height != size))
-        {
-            _aoMap.Resize(size, size);
-            _aoMap.Apply(false);
-        }
-
-        var map = new Texture2D(size, size, TextureFormat.RGBA32, false);
-
-        var mapData = map.GetRawTextureData();
-        var metallicData = _metallicMap ? _metallicMap.GetRawTextureData() : null;
-        var smoothData = _smoothnessMap ? _smoothnessMap.GetRawTextureData() : null;
-        var aoData = _aoMap ? _aoMap.GetRawTextureData() : null;
-        Parallel.For(0, size, j =>
-        {
-            if (metallicData != null) mapData[j * 4] = metallicData[j * 4];
-            if (aoData != null) mapData[j * 4 + 1] = aoData[j * 4 + 1];
-            if (smoothData != null) mapData[j * 4 + 3] = smoothData[j * 4 + 3];
-        });
-
-        map.Apply(false);
-
-        return map;
-    }
 }
