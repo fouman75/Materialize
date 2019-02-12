@@ -11,23 +11,13 @@ public class SmoothnessSettings
 {
     [DefaultValue(0.1f)] public float BaseSmoothness;
 
-    [DefaultValue("0.1")] public string BaseSmoothnessText;
-
     [DefaultValue(3.0f)] public float BlurOverlay;
-
-    [DefaultValue("3")] public string BlurOverlayText;
 
     [DefaultValue(0)] public int BlurSize;
 
-    [DefaultValue("0")] public string BlurSizeText;
-
     [DefaultValue(0.0f)] public float FinalBias;
 
-    [DefaultValue("0")] public string FinalBiasText;
-
     [DefaultValue(1.0f)] public float FinalContrast;
-
-    [DefaultValue("1")] public string FinalContrastText;
 
     [DefaultValue(1.0f)] public float HueWeight1;
 
@@ -61,11 +51,7 @@ public class SmoothnessSettings
 
     [DefaultValue(0.7f)] public float MetalSmoothness;
 
-    [DefaultValue("0.7")] public string MetalSmoothnessText;
-
     [DefaultValue(30)] public int OverlayBlurSize;
-
-    [DefaultValue("30")] public string OverlayBlurSizeText;
 
     [DefaultValue(0.5f)] public float Sample1Smoothness;
 
@@ -119,8 +105,6 @@ public class SmoothnessSettings
         SampleUv3 = Vector2.zero;
 
         MetalSmoothness = 0.7f;
-        MetalSmoothnessText = "0.7";
-
         UseSample1 = false;
         IsolateSample1 = false;
         HueWeight1 = 1.0f;
@@ -149,22 +133,11 @@ public class SmoothnessSettings
         Sample3Smoothness = 0.2f;
 
         BaseSmoothness = 0.1f;
-        BaseSmoothnessText = "0.1";
-
         BlurSize = 0;
-        BlurSizeText = "0";
-
         OverlayBlurSize = 30;
-        OverlayBlurSizeText = "30";
-
         BlurOverlay = 3.0f;
-        BlurOverlayText = "3";
-
         FinalContrast = 1.0f;
-        FinalContrastText = "1";
-
         FinalBias = 0.0f;
-        FinalBiasText = "0";
 
         UseAdjustedDiffuse = false;
         UseOriginalDiffuse = true;

@@ -320,8 +320,7 @@ public class SmoothnessGui : MonoBehaviour
         offsetY += 40;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Metal Smoothness", _settings.MetalSmoothness,
-            _settings.MetalSmoothnessText, out _settings.MetalSmoothness, out _settings.MetalSmoothnessText, 0.0f,
-            1.0f);
+            out _settings.MetalSmoothness, 0.0f, 1.0f);
         offsetY += 40;
 
         _settings.UseSample1 =
@@ -434,32 +433,27 @@ public class SmoothnessGui : MonoBehaviour
         }
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Base Smoothness", _settings.BaseSmoothness,
-            _settings.BaseSmoothnessText, out _settings.BaseSmoothness, out _settings.BaseSmoothnessText, 0.0f, 1.0f);
+            out _settings.BaseSmoothness, 0.0f, 1.0f);
         offsetY += 40;
 
         if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Sample Blur Size", _settings.BlurSize,
-            _settings.BlurSizeText,
-            out _settings.BlurSize, out _settings.BlurSizeText, 0, 100)) _doStuff = true;
+            out _settings.BlurSize, 0, 100)) _doStuff = true;
         offsetY += 40;
 
         if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "High Pass Blur Size", _settings.OverlayBlurSize,
-            _settings.OverlayBlurSizeText, out _settings.OverlayBlurSize, out _settings.OverlayBlurSizeText, 10, 100))
-            _doStuff = true;
+            out _settings.OverlayBlurSize, 10, 100)) _doStuff = true;
         offsetY += 40;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "High Pass Overlay", _settings.BlurOverlay,
-            _settings.BlurOverlayText,
-            out _settings.BlurOverlay, out _settings.BlurOverlayText, -10.0f, 10.0f);
+            out _settings.BlurOverlay, -10.0f, 10.0f);
         offsetY += 40;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Contrast", _settings.FinalContrast,
-            _settings.FinalContrastText,
-            out _settings.FinalContrast, out _settings.FinalContrastText, -2.0f, 2.0f);
+            out _settings.FinalContrast, -2.0f, 2.0f);
         offsetY += 40;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _settings.FinalBias,
-            _settings.FinalBiasText,
-            out _settings.FinalBias, out _settings.FinalBiasText, -0.5f, 0.5f);
+            out _settings.FinalBias, -0.5f, 0.5f);
         offsetY += 50;
 
         if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Set as Smoothness")) StartCoroutine(ProcessSmoothness());

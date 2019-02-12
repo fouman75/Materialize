@@ -33,7 +33,6 @@ public class AlignmentGui : MonoBehaviour
     private int _grabbedPoint;
 
     private float _lensDistort;
-    private string _lensDistortText = "0.0";
 
     private RenderTexture _lensMap;
 
@@ -41,10 +40,8 @@ public class AlignmentGui : MonoBehaviour
     private RenderTexture _perspectiveMap;
 
     private float _perspectiveX;
-    private string _perspectiveXText = "0.0";
 
     private float _perspectiveY;
-    private string _perspectiveYText = "0.0";
     private Vector2 _pointBl = new Vector2(0.0f, 0.0f);
     private Vector2 _pointBr = new Vector2(1.0f, 0.0f);
 
@@ -204,7 +201,7 @@ public class AlignmentGui : MonoBehaviour
     {
         SelectClosestPoint();
         DragPoint();
-        
+
         ProcessMap(_textureToAlign);
 
         var aspect = _textureToAlign.width / (float) _textureToAlign.height;
@@ -321,15 +318,15 @@ public class AlignmentGui : MonoBehaviour
 
 
         if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Lens Distort Correction", _lensDistort,
-            _lensDistortText, out _lensDistort, out _lensDistortText, -1.0f, 1.0f)) _doStuff = true;
+            out _lensDistort, -1.0f, 1.0f)) _doStuff = true;
         offsetY += 40;
 
         if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Perspective Correction X", _perspectiveX,
-            _perspectiveXText, out _perspectiveX, out _perspectiveXText, -5.0f, 5.0f)) _doStuff = true;
+            out _perspectiveX, -5.0f, 5.0f)) _doStuff = true;
         offsetY += 40;
 
         if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Perspective Correction Y", _perspectiveY,
-            _perspectiveYText, out _perspectiveY, out _perspectiveYText, -5.0f, 5.0f)) _doStuff = true;
+            out _perspectiveY, -5.0f, 5.0f)) _doStuff = true;
         offsetY += 50;
 
         if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Reset Points"))

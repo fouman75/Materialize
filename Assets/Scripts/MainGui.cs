@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using SFB;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
+//using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
 
 #endregion
@@ -144,7 +145,7 @@ public class MainGui : MonoBehaviour
 
     public GameObject TilingTextureMakerGuiObject;
     public VolumeProfile VolumeProfile;
-    public HDRISky HdriSky;
+    [HideInInspector] public HDRISky HdriSky;
 
     private void Awake()
     {
@@ -784,93 +785,17 @@ public class MainGui : MonoBehaviour
 
         GUI.enabled = true;
 
-
-        //==============================//
-        // 			Mask Map			//
-        //==============================//
-
-        GUI.Box(new Rect(offsetX + spacingX * 5, offsetY, 110, 250), "Mask Map");
-
-        if (MaskMap != null) GUI.DrawTexture(new Rect(offsetX + spacingX * 5 + 5, offsetY + 25, 100, 100), MaskMap);
-
-        // Paste 
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 5, offsetY + 130, 20, 20), "P"))
-        {
-            _activeMapType = MapType.MaskMap;
-            PasteFile();
-        }
-
-        GUI.enabled = MaskMap != null;
-
-        // Copy
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 30, offsetY + 130, 20, 20), "C"))
-        {
-            _textureToSave = MaskMap;
-            CopyFile();
-        }
-
-        GUI.enabled = true;
-
-        //Open
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 60, offsetY + 130, 20, 20), "O"))
-            OpenTextureFile(MapType.MaskMap);
-
-        GUI.enabled = MaskMap != null;
-
-        // Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 85, offsetY + 130, 20, 20), "S"))
-            SaveTextureFile(MapType.MaskMap);
-
-        if (MaskMap == null || QuicksavePathMaskMap == "")
-            GUI.enabled = false;
-        else
-            GUI.enabled = true;
-
-        // Quick Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 15, offsetY + 160, 80, 20), "Quick Save"))
-        {
-            _textureToSave = MaskMap;
-            SaveFile(QuicksavePathMaskMap);
-        }
-
-        GUI.enabled = MaskMap != null;
-
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 15, offsetY + 190, 80, 20), "Preview"))
-            SetPreviewMaterial(MaskMap);
-
-        GUI.enabled = NormalMap != null;
-
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 5, offsetY + 220, 50, 20), "Create"))
-        {
-            CloseWindows();
-            FixSize();
-            MaskMap = BlitMaskMap();
-            SetPreviewMaterial(MaskMap);
-        }
-
-        GUI.enabled = MaskMap != null;
-
-        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 60, offsetY + 220, 45, 20), "Clear"))
-        {
-            ClearTexture(MapType.MaskMap);
-            CloseWindows();
-            SetMaterialValues();
-            FixSize();
-        }
-
-        GUI.enabled = true;
-
         //==============================//
         // 			AO Map				//
         //==============================//
 
-        GUI.Box(new Rect(offsetX + spacingX * 6, offsetY, 110, 250), "AO Map");
+        GUI.Box(new Rect(offsetX + spacingX * 5, offsetY, 110, 250), "AO Map");
 
         if (AoMap != null) GUI.DrawTexture(new Rect(offsetX + spacingX * 6 + 5, offsetY + 25, 100, 100), AoMap);
 
 
         // Paste 
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 5, offsetY + 130, 20, 20), "P"))
+        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 5, offsetY + 130, 20, 20), "P"))
         {
             _activeMapType = MapType.Ao;
             PasteFile();
@@ -879,7 +804,7 @@ public class MainGui : MonoBehaviour
         GUI.enabled = AoMap != null;
 
         // Copy
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 30, offsetY + 130, 20, 20), "C"))
+        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 30, offsetY + 130, 20, 20), "C"))
         {
             _textureToSave = AoMap;
             CopyFile();
@@ -888,12 +813,12 @@ public class MainGui : MonoBehaviour
         GUI.enabled = true;
 
         //Open
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 60, offsetY + 130, 20, 20), "O")) OpenTextureFile(MapType.Ao);
+        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 60, offsetY + 130, 20, 20), "O")) OpenTextureFile(MapType.Ao);
 
         GUI.enabled = AoMap != null;
 
         // Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 85, offsetY + 130, 20, 20), "S")) SaveTextureFile(MapType.Ao);
+        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 85, offsetY + 130, 20, 20), "S")) SaveTextureFile(MapType.Ao);
 
         if (AoMap == null || QuicksavePathAo == "")
             GUI.enabled = false;
@@ -901,7 +826,7 @@ public class MainGui : MonoBehaviour
             GUI.enabled = true;
 
         // Quick Save
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 15, offsetY + 160, 80, 20), "Quick Save"))
+        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 15, offsetY + 160, 80, 20), "Quick Save"))
         {
             _textureToSave = AoMap;
             SaveFile(QuicksavePathAo);
@@ -909,7 +834,7 @@ public class MainGui : MonoBehaviour
 
         GUI.enabled = AoMap != null;
 
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 15, offsetY + 190, 80, 20), "Preview"))
+        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 15, offsetY + 190, 80, 20), "Preview"))
             SetPreviewMaterial(AoMap);
 
         if (NormalMap == null || HeightMap == null)
@@ -917,7 +842,7 @@ public class MainGui : MonoBehaviour
         else
             GUI.enabled = true;
 
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 5, offsetY + 220, 50, 20), "Create"))
+        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 5, offsetY + 220, 50, 20), "Create"))
         {
             CloseWindows();
             FixSize();
@@ -928,9 +853,84 @@ public class MainGui : MonoBehaviour
 
         GUI.enabled = AoMap != null;
 
-        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 60, offsetY + 220, 45, 20), "Clear"))
+        if (GUI.Button(new Rect(offsetX + spacingX * 5 + 60, offsetY + 220, 45, 20), "Clear"))
         {
             ClearTexture(MapType.Ao);
+            CloseWindows();
+            SetMaterialValues();
+            FixSize();
+        }
+
+        GUI.enabled = true;
+        
+         //==============================//
+        // 			Mask Map			//
+        //==============================//
+
+        GUI.Box(new Rect(offsetX + spacingX * 6, offsetY, 110, 250), "Mask Map");
+
+        if (MaskMap != null) GUI.DrawTexture(new Rect(offsetX + spacingX * 5 + 5, offsetY + 25, 100, 100), MaskMap);
+
+        // Paste 
+        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 5, offsetY + 130, 20, 20), "P"))
+        {
+            _activeMapType = MapType.MaskMap;
+            PasteFile();
+        }
+
+        GUI.enabled = MaskMap != null;
+
+        // Copy
+        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 30, offsetY + 130, 20, 20), "C"))
+        {
+            _textureToSave = MaskMap;
+            CopyFile();
+        }
+
+        GUI.enabled = true;
+
+        //Open
+        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 60, offsetY + 130, 20, 20), "O"))
+            OpenTextureFile(MapType.MaskMap);
+
+        GUI.enabled = MaskMap != null;
+
+        // Save
+        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 85, offsetY + 130, 20, 20), "S"))
+            SaveTextureFile(MapType.MaskMap);
+
+        if (MaskMap == null || QuicksavePathMaskMap == "")
+            GUI.enabled = false;
+        else
+            GUI.enabled = true;
+
+        // Quick Save
+        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 15, offsetY + 160, 80, 20), "Quick Save"))
+        {
+            _textureToSave = MaskMap;
+            SaveFile(QuicksavePathMaskMap);
+        }
+
+        GUI.enabled = MaskMap != null;
+
+        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 15, offsetY + 190, 80, 20), "Preview"))
+            SetPreviewMaterial(MaskMap);
+
+        GUI.enabled = NormalMap != null;
+
+        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 5, offsetY + 220, 50, 20), "Create"))
+        {
+            CloseWindows();
+            FixSize();
+            MaskMap = BlitMaskMap();
+            SetPreviewMaterial(MaskMap);
+        }
+
+        GUI.enabled = MaskMap != null;
+
+        if (GUI.Button(new Rect(offsetX + spacingX * 6 + 60, offsetY + 220, 45, 20), "Clear"))
+        {
+            ClearTexture(MapType.MaskMap);
             CloseWindows();
             SetMaterialValues();
             FixSize();
@@ -1673,17 +1673,25 @@ public class MainGui : MonoBehaviour
 
     public Texture2D BlitMaskMap()
     {
+        Vector2Int size;
+        if (MetallicMap)
+            size = new Vector2Int(MetallicMap.width, MetallicMap.height);
+        else if (SmoothnessMap)
+            size = new Vector2Int(SmoothnessMap.width, SmoothnessMap.height);
+        else if (AoMap)
+            size = new Vector2Int(AoMap.width, AoMap.height);
+        else return null;
+
         var mat = new Material(Shader.Find("Blit/Blit_MaskMap"));
         mat.SetTexture(MetallicTex, MetallicMap ? MetallicMap : TextureBlack);
         mat.SetTexture(SmoothnessTex, SmoothnessMap ? SmoothnessMap : TextureBlack);
         mat.SetTexture(AoTex, AoMap ? AoMap : TextureBlack);
         var emptyTex = new Texture2D(1, 1, TextureFormat.ARGB32, false);
-        var map = new RenderTexture(MetallicMap.width, MetallicMap.height, 0, RenderTextureFormat.ARGB32);
+        var map = new RenderTexture(size.x, size.y, 0, RenderTextureFormat.ARGB32);
         Graphics.Blit(emptyTex, map, mat);
         RenderTexture.active = map;
-        var maskMap = new Texture2D(map.width, map.height, TextureFormat.ARGB32, true, true);
-        maskMap.ReadPixels(new Rect(0, 0, map.width, map.height), 0, 0);
-        maskMap.Apply();
+        var maskMap = new Texture2D(map.width, map.height, TextureFormat.RGBA32, false);
+        Graphics.CopyTexture(map, maskMap);
         return maskMap;
     }
 

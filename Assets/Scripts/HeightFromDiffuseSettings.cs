@@ -9,7 +9,6 @@ public class HeightFromDiffuseSettings
 {
     [DefaultValue(1.0f)] public float Blur0Contrast;
 
-
     [DefaultValue(0.15f)] public float Blur0Weight;
 
     [DefaultValue(1.0f)] public float Blur1Contrast;
@@ -38,15 +37,9 @@ public class HeightFromDiffuseSettings
 
     [DefaultValue(0.0f)] public float FinalBias;
 
-    [DefaultValue("0")] public string FinalBiasText;
-
     [DefaultValue(1.5f)] public float FinalContrast;
 
-    [DefaultValue("1.5")] public string FinalContrastText;
-
     [DefaultValue(0.0f)] public float FinalGain;
-
-    [DefaultValue("0")] public string FinalGainText;
 
     [DefaultValue(1.0f)] public float HueWeight1;
 
@@ -74,7 +67,6 @@ public class HeightFromDiffuseSettings
 
     [DefaultValue(0.5f)] public float SampleBlend;
 
-    [DefaultValue("0.5")] public string SampleBlendText;
 
     //[DefaultValueAttribute(Color.black)]
     public Color SampleColor1;
@@ -95,10 +87,6 @@ public class HeightFromDiffuseSettings
     [DefaultValue(50.0f)] public float Spread;
 
     [DefaultValue(1.0f)] public float SpreadBoost;
-
-    [DefaultValue("1")] public string SpreadBoostText;
-
-    [DefaultValue("50")] public string SpreadText;
 
     [DefaultValue(true)] public bool UseAdjustedDiffuse;
 
@@ -155,21 +143,10 @@ public class HeightFromDiffuseSettings
         Sample2Height = 0.3f;
 
         FinalContrast = 1.5f;
-        FinalContrastText = "1.5";
-
         FinalBias = 0.0f;
-        FinalBiasText = "0.0";
-
         FinalGain = 0.0f;
-        FinalGainText = "0.0";
-
         SampleBlend = 0.5f;
-        SampleBlendText = "0.5";
-
         Spread = 50.0f;
-        SpreadText = "50";
-
         SpreadBoost = 1.0f;
-        SpreadBoostText = "1";
     }
 }

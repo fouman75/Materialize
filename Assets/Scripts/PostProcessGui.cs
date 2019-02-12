@@ -1,41 +1,27 @@
 ﻿#region
 
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Experimental.Rendering.HDPipeline;
+using UnityEngine.Rendering;
+
+//using UnityEngine.Rendering.PostProcessing;
 
 #endregion
 
 public class PostProcessGui : MonoBehaviour
 {
     private float _bloomIntensity;
-    private string _bloomIntensityText;
-
-    private float _bloomThreshold;
-    private string _bloomThresholdText;
-
-    private float _dofFocalLength;
-    private string _dofFocalLengthText;
-
+    private float _bloomScatter;
     private float _dofFocusDistance;
-    private string _dofFocusDistanceText;
-
     private float _lensDirtIntensity;
-    private string _lensDirtIntensityText;
-
     private float _vignetteIntensity;
-    private string _vignetteIntensityText;
-
     private float _vignetteSmoothness;
-    private string _vignetteSmoothnessText;
-
     private float _ambientOcclusionIntensity;
-    private string _ambientOcclusionIntensityText;
 
     private Rect _windowRect = new Rect(360, 330, 300, 530);
 
-    public PostProcessVolume PostProcessVolume;
-    [HideInInspector] public PostProcessProfile Profile;
+    public Volume SceneVolume;
+    [HideInInspector] public VolumeProfile Profile;
     private Bloom _bloom;
     private DepthOfField _depthOfField;
     private Vignette _vignette;
@@ -44,43 +30,33 @@ public class PostProcessGui : MonoBehaviour
 
     private void Awake()
     {
-        Profile = PostProcessVolume.profile;
+        Profile = SceneVolume.profile;
 
-        _bloom = Profile.GetSetting<Bloom>();
+        Profile.TryGet(out _bloom);
         _bloomIntensity = _bloom.intensity.value;
-        _bloomIntensityText = _bloomIntensity.ToString();
 
-        _bloomThreshold = _bloom.threshold.value;
-        _bloomThresholdText = _bloomThreshold.ToString();
+        _bloomScatter = _bloom.scatter.value;
 
         _lensDirtIntensity = _bloom.dirtIntensity.value;
-        _lensDirtIntensityText = _lensDirtIntensity.ToString();
 
-        _depthOfField = Profile.GetSetting<DepthOfField>();
-        _dofFocalLength = _depthOfField.focalLength.value;
-        _dofFocalLengthText = _dofFocalLength.ToString();
+        Profile.TryGet(out _depthOfField);
 
         _dofFocusDistance = _depthOfField.focusDistance.value;
-        _dofFocusDistanceText = _dofFocusDistance.ToString();
 
-        _vignette = Profile.GetSetting<Vignette>();
+        Profile.TryGet(out _vignette);
         _vignetteIntensity = _vignette.intensity.value;
-        _vignetteIntensityText = _vignetteIntensity.ToString();
 
         _vignetteSmoothness = _vignette.smoothness.value;
-        _vignetteSmoothnessText = _vignetteSmoothness.ToString();
 
-        _ambientOcclusion = Profile.GetSetting<AmbientOcclusion>();
+        Profile.TryGet(out _ambientOcclusion);
         _ambientOcclusionIntensity = _ambientOcclusion.intensity.value;
-        _ambientOcclusionIntensityText = _ambientOcclusionIntensity.ToString();
     }
 
     private void UpdateValues()
     {
         _bloom.intensity.value = _bloomIntensity;
-        _bloom.threshold.value = _bloomThreshold;
+        _bloom.scatter.value = _bloomScatter;
         _bloom.dirtIntensity.value = _lensDirtIntensity;
-        _depthOfField.focalLength.value = _dofFocalLength;
         _depthOfField.focusDistance.value = _dofFocusDistance;
         _vignette.intensity.value = _vignetteIntensity;
         _vignette.smoothness.value = _vignetteSmoothness;
@@ -89,12 +65,12 @@ public class PostProcessGui : MonoBehaviour
 
     public void PostProcessOn()
     {
-        PostProcessVolume.enabled = true;
+        SceneVolume.enabled = true;
     }
 
     public void PostProcessOff()
     {
-        PostProcessVolume.enabled = false;
+        SceneVolume.enabled = false;
     }
 
     private void Update()
@@ -114,41 +90,32 @@ public class PostProcessGui : MonoBehaviour
         offsetY += 40;
 
 
-        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Bloom Threshold", _bloomThreshold, _bloomThresholdText,
-            out _bloomThreshold, out _bloomThresholdText, 0.0f, 2.0f);
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Bloom Scatter", _bloomScatter,
+            out _bloomScatter, 0.0f, 1.0f);
         offsetY += 40;
 
-        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Bloom Intensity", _bloomIntensity, _bloomIntensityText,
-            out _bloomIntensity, out _bloomIntensityText, 0.0f, 8.0f);
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Bloom Intensity", _bloomIntensity,
+            out _bloomIntensity, 0.0f, 1.0f);
         offsetY += 40;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Lens Dirt Intensity", _lensDirtIntensity,
-            _lensDirtIntensityText,
-            out _lensDirtIntensity, out _lensDirtIntensityText, 0.0f, 20.0f);
+            out _lensDirtIntensity, 0.0f, 10.0f);
         offsetY += 60;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Vignette Intensity", _vignetteIntensity,
-            _vignetteIntensityText,
-            out _vignetteIntensity, out _vignetteIntensityText, 0.0f, 1.0f);
+            out _vignetteIntensity, 0.0f, 1.0f);
         offsetY += 40;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Vignette Smoothness", _vignetteSmoothness,
-            _vignetteSmoothnessText,
-            out _vignetteSmoothness, out _vignetteSmoothnessText, 0.0f, 1.0f);
+            out _vignetteSmoothness, 0.0f, 1.0f);
         offsetY += 60;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Ambient Occlusion Intensity", _ambientOcclusionIntensity,
-            _ambientOcclusionIntensityText,
-            out _ambientOcclusionIntensity, out _ambientOcclusionIntensityText, 0.0f, 10.0f);
+            out _ambientOcclusionIntensity, 0.0f, 4.0f);
         offsetY += 60;
 
-        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "DOF Focal Length", _dofFocalLength, _dofFocalLengthText,
-            out _dofFocalLength, out _dofFocalLengthText, 0.0f, 200.0f);
-        offsetY += 40;
-
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "DOF Focus Distance", _dofFocusDistance,
-            _dofFocusDistanceText,
-            out _dofFocusDistance, out _dofFocusDistanceText, 0.0f, 50.0f);
+            out _dofFocusDistance, 0.0f, 20.0f);
         offsetY += 50;
 
         if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Close")) gameObject.SetActive(false);

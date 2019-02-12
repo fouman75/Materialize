@@ -25,9 +25,6 @@ public class TilingTextureMakerGui : MonoBehaviour
     private bool _doStuff;
 
     private float _falloff = 0.1f;
-
-    private string _falloffText = "0.1";
-
     private RenderTexture _hdHeightMapTemp;
     private RenderTexture _heightMapTemp;
 
@@ -51,44 +48,30 @@ public class TilingTextureMakerGui : MonoBehaviour
 
     private Vector2[] _offsetKernel;
     private float _overlapX = 0.2f;
-    private string _overlapXText = "0.2";
     private float _overlapY = 0.2f;
-    private string _overlapYText = "0.2";
     private RenderTexture _smoothnessMapTemp;
 
     private Vector4[] _splatKernel;
 
     private float _splatRandomize;
-    private string _splatRandomizeText = "0.0";
-
     private float _splatRotation;
-
     private float _splatRotationRandom = 0.25f;
-    private string _splatRotationRandomText = "0.25";
-    private string _splatRotationText = "0.0";
 
     private float _splatScale = 1.0f;
-    private string _splatScaleText = "1.0";
     private RenderTexture _splatTemp;
     private RenderTexture _splatTempAlt;
 
     private float _splatWobble = 0.2f;
-    private string _splatWobbleText = "0.2";
-
     private Vector2 _targetAr;
 
     private bool _techniqueOverlap = true;
     private bool _techniqueSplat;
     private float _texOffsetX;
-    private string _texOffsetXText = "0.0";
     private float _texOffsetY;
-    private string _texOffsetYText = "0.0";
 
     private GUIContent[] _texSizes;
 
     private float _texTiling = 1.0f;
-
-    private string _texTilingText = "1.0";
 
     private Material _thisMaterial;
 
@@ -362,61 +345,58 @@ public class TilingTextureMakerGui : MonoBehaviour
 
         offsetY += 100;
 
-        if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Edge Falloff", _falloff, _falloffText, out _falloff,
-            out _falloffText, 0.01f, 1.0f)) _doStuff = true;
+        if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Edge Falloff", _falloff, out _falloff,
+            0.01f, 1.0f)) _doStuff = true;
         offsetY += 40;
 
         if (_techniqueOverlap)
         {
-            if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlap X", _overlapX, _overlapXText,
-                out _overlapX,
-                out _overlapXText, 0.00f, 1.0f)) _doStuff = true;
+            if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlap X", _overlapX,
+                out _overlapX, 0.00f, 1.0f)) _doStuff = true;
             offsetY += 40;
 
-            if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlap Y", _overlapY, _overlapYText,
-                out _overlapY,
-                out _overlapYText, 0.00f, 1.0f)) _doStuff = true;
+            if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlap Y", _overlapY,
+                out _overlapY, 0.00f, 1.0f)) _doStuff = true;
             offsetY += 50;
         }
 
         if (_techniqueSplat)
         {
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Splat Rotation", _splatRotation,
-                _splatRotationText, out _splatRotation, out _splatRotationText, 0.0f, 1.0f)) _doStuff = true;
+                out _splatRotation, 0.0f, 1.0f)) _doStuff = true;
             offsetY += 40;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Splat Random Rotation", _splatRotationRandom,
-                _splatRotationRandomText, out _splatRotationRandom, out _splatRotationRandomText, 0.0f, 1.0f))
+                out _splatRotationRandom, 0.0f, 1.0f))
                 _doStuff = true;
             offsetY += 40;
 
-            if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Splat Scale", _splatScale, _splatScaleText,
-                out _splatScale, out _splatScaleText, 0.5f, 2.0f)) _doStuff = true;
+            if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Splat Scale", _splatScale,
+                out _splatScale, 0.5f, 2.0f)) _doStuff = true;
             offsetY += 40;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Splat Wooble Amount", _splatWobble,
-                _splatWobbleText, out _splatWobble, out _splatWobbleText, 0.0f, 1.0f)) _doStuff = true;
+                out _splatWobble, 0.0f, 1.0f)) _doStuff = true;
             offsetY += 40;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Splat Randomize", _splatRandomize,
-                _splatRandomizeText, out _splatRandomize, out _splatRandomizeText, 0.0f, 1.0f)) _doStuff = true;
+                out _splatRandomize, 0.0f, 1.0f)) _doStuff = true;
             offsetY += 50;
         }
 
         GUI.Label(new Rect(offsetX, offsetY, 150, 30), "Tiling Test Variables");
         offsetY += 30;
 
-        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Tiling", _texTiling, _texTilingText,
-            out _texTiling,
-            out _texTilingText, 0.1f, 5.0f);
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Tiling", _texTiling,
+            out _texTiling, 0.1f, 5.0f);
         offsetY += 40;
 
-        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Offset X", _texOffsetX, _texOffsetXText,
-            out _texOffsetX, out _texOffsetXText, -1.0f, 1.0f);
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Offset X", _texOffsetX,
+            out _texOffsetX, -1.0f, 1.0f);
         offsetY += 40;
 
-        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Offset Y", _texOffsetY, _texOffsetYText,
-            out _texOffsetY, out _texOffsetYText, -1.0f, 1.0f);
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Offset Y", _texOffsetY,
+            out _texOffsetY, -1.0f, 1.0f);
         offsetY += 40;
 
         if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set Maps")) StartCoroutine(SetMaps());

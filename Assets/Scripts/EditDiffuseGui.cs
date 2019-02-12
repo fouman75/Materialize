@@ -9,98 +9,35 @@ using UnityEngine;
 public class EditDiffuseSettings
 {
     [DefaultValue(50)] public int AvgColorBlurSize;
-
-    [DefaultValue("50")] public string AvgColorBlurSizeText;
-
     [DefaultValue(0.0f)] public float BlurContrast;
-
-    [DefaultValue("0")] public string BlurContrastText;
-
     [DefaultValue(20)] public int BlurSize;
-
-    [DefaultValue("20")] public string BlurSizeText;
-
     [DefaultValue(0.5f)] public float ColorLerp;
-
-    [DefaultValue("0.5")] public string ColorLerpText;
-
     [DefaultValue(0.5f)] public float DarkMaskPow;
-
-    [DefaultValue("0.5")] public string DarkMaskPowText;
-
     [DefaultValue(0.0f)] public float DarkPow;
-
-    [DefaultValue("0")] public string DarkPowText;
-
     [DefaultValue(0.0f)] public float DarkSpot;
-
-    [DefaultValue("0")] public string DarkSpotText;
-
     [DefaultValue(0.0f)] public float FinalBias;
-
-    [DefaultValue("0")] public string FinalBiasText;
-
     [DefaultValue(1.0f)] public float FinalContrast;
-
-    [DefaultValue("1")] public string FinalContrastText;
-
     [DefaultValue(0.0f)] public float HotSpot;
-
-    [DefaultValue("0")] public string HotSpotText;
-
     [DefaultValue(0.5f)] public float LightMaskPow;
-
-    [DefaultValue("0.5")] public string LightMaskPowText;
-
     [DefaultValue(0f)] public float LightPow;
-
-    [DefaultValue("0")] public string LightPowText;
-
     [DefaultValue(1.0f)] public float Saturation;
-
-    [DefaultValue("1")] public string SaturationText;
 
 
     public EditDiffuseSettings()
     {
         AvgColorBlurSize = 50;
-        AvgColorBlurSizeText = "50";
-
         BlurSize = 20;
-        BlurSizeText = "20";
-
         BlurContrast = 0.0f;
-        BlurContrastText = "0";
-
         LightMaskPow = 0.5f;
-        LightMaskPowText = "0";
-
         LightPow = 0.0f;
-        LightPowText = "0";
-
         DarkMaskPow = 0.5f;
-        DarkMaskPowText = "0.5";
-
         DarkPow = 0.0f;
-        DarkPowText = "0";
-
         HotSpot = 0.0f;
-        HotSpotText = "0";
-
         DarkSpot = 0.0f;
-        DarkSpotText = "0";
-
         FinalContrast = 1.0f;
-        FinalContrastText = "1";
-
         FinalBias = 0.0f;
-        FinalBiasText = "0";
-
         ColorLerp = 0.5f;
-        ColorLerpText = "0.5";
-
         Saturation = 1.0f;
-        SaturationText = "1";
     }
 }
 
@@ -256,50 +193,49 @@ public class EditDiffuseGui : MonoBehaviour
         offsetY += 50;
 
         if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Average Color Blur Size", _eds.AvgColorBlurSize,
-            _eds.AvgColorBlurSizeText, out _eds.AvgColorBlurSize, out _eds.AvgColorBlurSizeText, 5, 100))
+            out _eds.AvgColorBlurSize, 5, 100))
             _doStuff = true;
         offsetY += 50;
 
-        if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlay Blur Size", _eds.BlurSize, _eds.BlurSizeText,
-            out _eds.BlurSize, out _eds.BlurSizeText, 5, 100)) _doStuff = true;
+        if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlay Blur Size", _eds.BlurSize,
+            out _eds.BlurSize, 5, 100)) _doStuff = true;
         offsetY += 30;
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlay Blur Contrast", _eds.BlurContrast,
-            _eds.BlurContrastText, out _eds.BlurContrast, out _eds.BlurContrastText, -1.0f, 1.0f);
+            out _eds.BlurContrast, -1.0f, 1.0f);
         offsetY += 50;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Light Mask Power", _eds.LightMaskPow,
-            _eds.LightMaskPowText, out _eds.LightMaskPow, out _eds.LightMaskPowText, 0.0f, 1.0f);
+            out _eds.LightMaskPow, 0.0f, 1.0f);
         offsetY += 30;
-        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Remove Light", _eds.LightPow, _eds.LightPowText,
-            out _eds.LightPow, out _eds.LightPowText, 0.0f, 1.0f);
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Remove Light", _eds.LightPow,
+            out _eds.LightPow, 0.0f, 1.0f);
         offsetY += 50;
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Shadow Mask Power", _eds.DarkMaskPow,
-            _eds.DarkMaskPowText,
-            out _eds.DarkMaskPow, out _eds.DarkMaskPowText, 0.0f, 1.0f);
+            out _eds.DarkMaskPow, 0.0f, 1.0f);
         offsetY += 30;
-        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Remove Shadow", _eds.DarkPow, _eds.DarkPowText,
-            out _eds.DarkPow, out _eds.DarkPowText, 0.0f, 1.0f);
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Remove Shadow", _eds.DarkPow,
+            out _eds.DarkPow, 0.0f, 1.0f);
         offsetY += 50;
 
-        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Hot Spot Removal", _eds.HotSpot, _eds.HotSpotText,
-            out _eds.HotSpot, out _eds.HotSpotText, 0.0f, 1.0f);
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Hot Spot Removal", _eds.HotSpot,
+            out _eds.HotSpot, 0.0f, 1.0f);
         offsetY += 30;
-        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Dark Spot Removal", _eds.DarkSpot, _eds.DarkSpotText,
-            out _eds.DarkSpot, out _eds.DarkSpotText, 0.0f, 1.0f);
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Dark Spot Removal", _eds.DarkSpot,
+            out _eds.DarkSpot, 0.0f, 1.0f);
         offsetY += 50;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Contrast", _eds.FinalContrast,
-            _eds.FinalContrastText, out _eds.FinalContrast, out _eds.FinalContrastText, -2.0f, 2.0f);
+            out _eds.FinalContrast, -2.0f, 2.0f);
         offsetY += 30;
-        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _eds.FinalBias, _eds.FinalBiasText,
-            out _eds.FinalBias, out _eds.FinalBiasText, -0.5f, 0.5f);
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _eds.FinalBias,
+            out _eds.FinalBias, -0.5f, 0.5f);
         offsetY += 50;
 
-        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Keep Original Color", _eds.ColorLerp, _eds.ColorLerpText,
-            out _eds.ColorLerp, out _eds.ColorLerpText, 0.0f, 1.0f);
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Keep Original Color", _eds.ColorLerp,
+            out _eds.ColorLerp, 0.0f, 1.0f);
         offsetY += 30;
-        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Saturation", _eds.Saturation, _eds.SaturationText,
-            out _eds.Saturation, out _eds.SaturationText, 0.0f, 1.0f);
+        GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Saturation", _eds.Saturation,
+            out _eds.Saturation, 0.0f, 1.0f);
         offsetY += 50;
 
         if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set as Diffuse"))

@@ -525,16 +525,14 @@ public class HeightFromDiffuseGui : MonoBehaviour
         if (_heightFromDiffuseSettings.UseNormal)
         {
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 10), "Sample Spread",
-                _heightFromDiffuseSettings.Spread, _heightFromDiffuseSettings.SpreadText,
-                out _heightFromDiffuseSettings.Spread, out _heightFromDiffuseSettings.SpreadText, 10.0f, 200.0f))
+                _heightFromDiffuseSettings.Spread, out _heightFromDiffuseSettings.Spread, 10.0f, 200.0f))
                 _doStuff = true;
 
             offsetY += 40;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 10), "Sample Spread Boost",
-                _heightFromDiffuseSettings.SpreadBoost,
-                _heightFromDiffuseSettings.SpreadBoostText, out _heightFromDiffuseSettings.SpreadBoost,
-                out _heightFromDiffuseSettings.SpreadBoostText, 1.0f, 5.0f)) _doStuff = true;
+                _heightFromDiffuseSettings.SpreadBoost, out _heightFromDiffuseSettings.SpreadBoost,
+                1.0f, 5.0f)) _doStuff = true;
 
             offsetY += 40;
         }
@@ -730,28 +728,24 @@ public class HeightFromDiffuseGui : MonoBehaviour
             if (_heightFromDiffuseSettings.UseSample1 || _heightFromDiffuseSettings.UseSample2)
             {
                 if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Sample Blend",
-                    _heightFromDiffuseSettings.SampleBlend,
-                    _heightFromDiffuseSettings.SampleBlendText, out _heightFromDiffuseSettings.SampleBlend,
-                    out _heightFromDiffuseSettings.SampleBlendText, 0.0f, 1.0f)) _doStuff = true;
+                    _heightFromDiffuseSettings.SampleBlend, out _heightFromDiffuseSettings.SampleBlend,
+                    0.0f, 1.0f)) _doStuff = true;
                 offsetY += 40;
             }
         }
 
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Gain", _heightFromDiffuseSettings.FinalGain,
-            _heightFromDiffuseSettings.FinalGainText,
-            out _heightFromDiffuseSettings.FinalGain, out _heightFromDiffuseSettings.FinalGainText, -0.5f, 0.5f);
+            out _heightFromDiffuseSettings.FinalGain, -0.5f, 0.5f);
         offsetY += 40;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Contrast",
-            _heightFromDiffuseSettings.FinalContrast,
-            _heightFromDiffuseSettings.FinalContrastText, out _heightFromDiffuseSettings.FinalContrast,
-            out _heightFromDiffuseSettings.FinalContrastText, -10.0f, 10.0f);
+            _heightFromDiffuseSettings.FinalContrast, out _heightFromDiffuseSettings.FinalContrast,
+            -10.0f, 10.0f);
         offsetY += 40;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _heightFromDiffuseSettings.FinalBias,
-            _heightFromDiffuseSettings.FinalBiasText,
-            out _heightFromDiffuseSettings.FinalBias, out _heightFromDiffuseSettings.FinalBiasText, -1.0f, 1.0f);
+            out _heightFromDiffuseSettings.FinalBias, -1.0f, 1.0f);
         offsetY += 50;
 
         GUI.enabled = !Busy;

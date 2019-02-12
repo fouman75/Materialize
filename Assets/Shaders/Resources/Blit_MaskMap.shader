@@ -9,7 +9,7 @@
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Transparent" }
         LOD 100
 
         Pass
@@ -52,7 +52,7 @@
                 fixed4 smoothness = tex2D(_SmoothnessTex, i.uv);
                 fixed4 ao = tex2D(_AoTex, i.uv);
 
-                return fixed4(metallic.r, ao.g, 0, smoothness.a);
+                return fixed4(metallic.r, ao.r, 0, smoothness.r);
             }
             ENDCG
         }

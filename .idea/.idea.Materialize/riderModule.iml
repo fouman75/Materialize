@@ -7,6 +7,13 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$/../.." />
+    <content url="file://$MODULE_DIR$/../../../ScriptableRenderPipeline/com.unity.render-pipelines.core/Editor" />
+    <content url="file://$MODULE_DIR$/../../../ScriptableRenderPipeline/com.unity.render-pipelines.core/Runtime" />
+    <content url="file://$MODULE_DIR$/../../../ScriptableRenderPipeline/com.unity.render-pipelines.core/ShaderLibrary" />
+    <content url="file://$MODULE_DIR$/../../../ScriptableRenderPipeline/com.unity.render-pipelines.high-definition/Editor" />
+    <content url="file://$MODULE_DIR$/../../../ScriptableRenderPipeline/com.unity.render-pipelines.high-definition/Runtime" />
+    <content url="file://$MODULE_DIR$/../../../ScriptableRenderPipeline/com.unity.shadergraph/Editor" />
+    <content url="file://$MODULE_DIR$/../../../ScriptableRenderPipeline/com.unity.shadergraph/ShaderGraphLibrary" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

@@ -251,29 +251,24 @@ public class MetallicGui : MonoBehaviour
         offsetY += 150;
 
         if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Blur Size", _metallicSettings.BlurSize,
-            _metallicSettings.BlurSizeText,
-            out _metallicSettings.BlurSize, out _metallicSettings.BlurSizeText, 0, 100)) _doStuff = true;
+            out _metallicSettings.BlurSize, 0, 100)) _doStuff = true;
         offsetY += 40;
 
         if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlay Blur Size",
-            _metallicSettings.OverlayBlurSize,
-            _metallicSettings.OverlayBlurSizeText, out _metallicSettings.OverlayBlurSize,
-            out _metallicSettings.OverlayBlurSizeText, 10, 100)) _doStuff = true;
+            _metallicSettings.OverlayBlurSize, out _metallicSettings.OverlayBlurSize,
+            10, 100)) _doStuff = true;
         offsetY += 40;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "High Pass Overlay", _metallicSettings.BlurOverlay,
-            _metallicSettings.BlurOverlayText,
-            out _metallicSettings.BlurOverlay, out _metallicSettings.BlurOverlayText, -10.0f, 10.0f);
+            out _metallicSettings.BlurOverlay, -10.0f, 10.0f);
         offsetY += 40;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Contrast", _metallicSettings.FinalContrast,
-            _metallicSettings.FinalContrastText,
-            out _metallicSettings.FinalContrast, out _metallicSettings.FinalContrastText, -2.0f, 2.0f);
+            out _metallicSettings.FinalContrast, -2.0f, 2.0f);
         offsetY += 40;
 
         GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _metallicSettings.FinalBias,
-            _metallicSettings.FinalBiasText,
-            out _metallicSettings.FinalBias, out _metallicSettings.FinalBiasText, -0.5f, 0.5f);
+            out _metallicSettings.FinalBias, -0.5f, 0.5f);
         offsetY += 50;
 
         if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set as Metallic")) StartCoroutine(ProcessMetallic());
