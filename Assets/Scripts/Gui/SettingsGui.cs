@@ -2,22 +2,11 @@
 
 using System.IO;
 using System.Xml.Serialization;
+using Gui;
+using Settings;
 using UnityEngine;
 
 #endregion
-
-public class Settings
-{
-    public FileFormat FileFormat;
-    public bool NormalMapMaxStyle;
-    public bool NormalMapMayaStyle;
-
-    public bool PostProcessEnabled;
-    public PropChannelMap PropBlue;
-    public PropChannelMap PropGreen;
-
-    public PropChannelMap PropRed;
-}
 
 
 public class SettingsGui : MonoBehaviour
@@ -29,7 +18,7 @@ public class SettingsGui : MonoBehaviour
 
     private Rect _windowRect = new Rect(Screen.width - 300, Screen.height - 320, 280, 600);
     public PostProcessGui PostProcessGui;
-    [HideInInspector] public Settings Settings = new Settings();
+    [HideInInspector] public ProgramSettings ProgramSettings = new ProgramSettings();
 
     private void Start()
     {
@@ -43,33 +32,48 @@ public class SettingsGui : MonoBehaviour
         if (PlayerPrefs.HasKey(SettingsKey))
         {
             var set = PlayerPrefs.GetString(SettingsKey);
-            var serializer = new XmlSerializer(typeof(Settings));
+            var serializer = new XmlSerializer(typeof(ProgramSettings));
             using (TextReader sr = new StringReader(set))
             {
-                Settings = serializer.Deserialize(sr) as Settings;
+                serializer.UnknownNode += Serializer_UnknownNode;
+                serializer.UnknownAttribute += Serializer_UnknownAttribute;
+                ProgramSettings = serializer.Deserialize(sr) as ProgramSettings;
             }
         }
         else
         {
-            Settings.NormalMapMaxStyle = true;
-            Settings.NormalMapMayaStyle = false;
-            Settings.PostProcessEnabled = true;
-            Settings.PropRed = PropChannelMap.None;
-            Settings.PropGreen = PropChannelMap.None;
-            Settings.PropBlue = PropChannelMap.None;
-            Settings.FileFormat = FileFormat.Png;
+            ProgramSettings.NormalMapMaxStyle = true;
+            ProgramSettings.NormalMapMayaStyle = false;
+            ProgramSettings.PostProcessEnabled = true;
+            ProgramSettings.PropRed = PropChannelMap.None;
+            ProgramSettings.PropGreen = PropChannelMap.None;
+            ProgramSettings.PropBlue = PropChannelMap.None;
+            ProgramSettings.FileFormat = FileFormat.Png;
             SaveSettings();
         }
 
         SetSettings();
     }
 
+    private void Serializer_UnknownNode
+        (object sender, XmlNodeEventArgs e)
+    {
+        Debug.LogError($"Unknown Node: {e.Name}\te.Text ");
+    }
+
+    private void Serializer_UnknownAttribute
+        (object sender, XmlAttributeEventArgs e)
+    {
+        System.Xml.XmlAttribute attr = e.Attr;
+        Debug.LogError($"Unknown attribute {attr.Name} + ='{attr.Value}'");
+    }
+
     private void SaveSettings()
     {
-        var serializer = new XmlSerializer(typeof(Settings));
+        var serializer = new XmlSerializer(typeof(ProgramSettings));
         using (TextWriter sw = new StringWriter())
         {
-            serializer.Serialize(sw, Settings);
+            serializer.Serialize(sw, ProgramSettings);
             PlayerPrefs.SetString(SettingsKey, sw.ToString());
         }
     }
@@ -77,7 +81,7 @@ public class SettingsGui : MonoBehaviour
     private void SetNormalMode()
     {
         var flipNormalY = 0;
-        if (Settings.NormalMapMayaStyle) flipNormalY = 1;
+        if (ProgramSettings.NormalMapMayaStyle) flipNormalY = 1;
 
         Shader.SetGlobalInt(FlipNormalY, flipNormalY);
     }
@@ -86,17 +90,17 @@ public class SettingsGui : MonoBehaviour
     {
         SetNormalMode();
 
-        if (Settings.PostProcessEnabled)
+        if (ProgramSettings.PostProcessEnabled)
             PostProcessGui.PostProcessOn();
         else
             PostProcessGui.PostProcessOff();
 
         var mainGui = MainGui.Instance;
-        mainGui.PropRed = Settings.PropRed;
-        mainGui.PropGreen = Settings.PropGreen;
-        mainGui.PropBlue = Settings.PropBlue;
+        mainGui.PropRed = ProgramSettings.PropRed;
+        mainGui.PropGreen = ProgramSettings.PropGreen;
+        mainGui.PropBlue = ProgramSettings.PropBlue;
 
-        mainGui.SetFormat(Settings.FileFormat);
+        mainGui.SetFormat(ProgramSettings.FileFormat);
     }
 
     private void DoMyWindow(int windowId)
@@ -108,33 +112,35 @@ public class SettingsGui : MonoBehaviour
 
         offsetY += 30;
 
-        Settings.NormalMapMaxStyle =
-            GUI.Toggle(new Rect(offsetX, offsetY, 100, 30), Settings.NormalMapMaxStyle, " Max Style");
-        Settings.NormalMapMayaStyle = !Settings.NormalMapMaxStyle;
+        ProgramSettings.NormalMapMaxStyle =
+            GUI.Toggle(new Rect(offsetX, offsetY, 100, 30), ProgramSettings.NormalMapMaxStyle, " Max Style");
+        ProgramSettings.NormalMapMayaStyle = !ProgramSettings.NormalMapMaxStyle;
 
 
-        Settings.NormalMapMayaStyle = GUI.Toggle(new Rect(offsetX + 100, offsetY, 100, 30), Settings.NormalMapMayaStyle,
+        ProgramSettings.NormalMapMayaStyle = GUI.Toggle(new Rect(offsetX + 100, offsetY, 100, 30),
+            ProgramSettings.NormalMapMayaStyle,
             " Maya Style");
-        Settings.NormalMapMaxStyle = !Settings.NormalMapMayaStyle;
+        ProgramSettings.NormalMapMaxStyle = !ProgramSettings.NormalMapMayaStyle;
 
         offsetY += 30;
 
-        Settings.PostProcessEnabled = GUI.Toggle(new Rect(offsetX, offsetY, 280, 30), Settings.PostProcessEnabled,
+        ProgramSettings.PostProcessEnabled = GUI.Toggle(new Rect(offsetX, offsetY, 280, 30),
+            ProgramSettings.PostProcessEnabled,
             " Enable Post Process By Default");
 
         offsetY += 30;
 
         if (GUI.Button(new Rect(offsetX, offsetY, 260, 25), "Set Default Property Map Channels"))
         {
-            Settings.PropRed = MainGui.Instance.PropRed;
-            Settings.PropGreen = MainGui.Instance.PropGreen;
-            Settings.PropBlue = MainGui.Instance.PropBlue;
+            ProgramSettings.PropRed = MainGui.Instance.PropRed;
+            ProgramSettings.PropGreen = MainGui.Instance.PropGreen;
+            ProgramSettings.PropBlue = MainGui.Instance.PropBlue;
         }
 
         offsetY += 30;
 
         if (GUI.Button(new Rect(offsetX, offsetY, 260, 25), "Set Default File Format"))
-            Settings.FileFormat = FileFormat.Png;
+            ProgramSettings.FileFormat = FileFormat.Png;
 
         offsetY += 40;
 

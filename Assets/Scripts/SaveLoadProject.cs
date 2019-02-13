@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
+using Gui;
 using UnityEngine;
 
 #endregion
@@ -252,6 +253,8 @@ public class SaveLoadProject : MonoBehaviour
     {
         if (!textureToSave || pathToFile.IsNullOrEmpty()) yield break;
         Debug.Log($"Salvando {textureToSave} como {pathToFile}");
+        if(!textureToSave.isReadable) Debug.LogError($"Texture {pathToFile} somente leitura");
+        
         if (!pathToFile.Contains(".")) pathToFile = $"{pathToFile}.{MainGui.Instance.SelectedFormat}";
 
         var fileIndex = pathToFile.LastIndexOf('.');

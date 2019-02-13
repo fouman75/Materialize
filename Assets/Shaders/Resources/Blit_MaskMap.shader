@@ -51,8 +51,17 @@
                 fixed4 metallic = tex2D(_MetallicTex, i.uv);
                 fixed4 smoothness = tex2D(_SmoothnessTex, i.uv);
                 fixed4 ao = tex2D(_AoTex, i.uv);
+                
+                float  metallicMean = float(metallic.r + metallic.g + metallic.b);
+                metallicMean = metallicMean / 3; 
+                
+                float  smoothnessMean = float(smoothness.r + smoothness.g + smoothness.b);
+                smoothnessMean = smoothnessMean / 3; 
+                
+                float  aoMean = float(ao.r + ao.g + ao.b);
+                aoMean = aoMean / 3; 
 
-                return fixed4(metallic.r, ao.r, 0, smoothness.r);
+                return fixed4(metallicMean, aoMean, 0, smoothnessMean);
             }
             ENDCG
         }
