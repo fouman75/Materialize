@@ -18,7 +18,7 @@ namespace Gui
     {
         //Nao remover, alguns shaders dependem disso
         private const float GamaCorrection = 1f;
-        
+
         #region Variables
 
         public static MainGui Instance;
@@ -914,25 +914,15 @@ namespace Gui
             if (GUI.Button(new Rect(offsetX + 10, offsetY + 180, 100, 25), "Save Project"))
             {
                 const string defaultName = "baseName.mtz";
-                var path = StandaloneFileBrowser.SaveFilePanel("Save Project", _lastDirectory, defaultName, "mtz");
-                if (path.IsNullOrEmpty()) return;
-
-                var lastBar = path.LastIndexOf(_pathChar);
-                _lastDirectory = path.Substring(0, lastBar + 1);
-
-                _saveLoadProjectScript.SaveProject(path);
+                StandaloneFileBrowser.SaveFilePanelAsync("Save Project", _lastDirectory, defaultName, "mtz",
+                    SaveProjectCallback);
             }
 
             //Load Project
             if (GUI.Button(new Rect(offsetX + 10, offsetY + 215, 100, 25), "Load Project"))
             {
-                var path = StandaloneFileBrowser.OpenFilePanel("Load Project", _lastDirectory, "mtz", false);
-                if (path[0].IsNullOrEmpty()) return;
-
-                var lastBar = path[0].LastIndexOf(_pathChar);
-                _lastDirectory = path[0].Substring(0, lastBar + 1);
-
-                _saveLoadProjectScript.LoadProject(path[0]);
+                StandaloneFileBrowser.OpenFilePanelAsync("Load Project", _lastDirectory, "mtz", false,
+                    LoadProjectCallback);
             }
 
             #endregion
@@ -1149,6 +1139,26 @@ namespace Gui
             #endregion
         }
 
+        private void SaveProjectCallback(string path)
+        {
+            if (path.IsNullOrEmpty()) ;
+
+            var lastBar = path.LastIndexOf(_pathChar);
+            _lastDirectory = path.Substring(0, lastBar + 1);
+
+            _saveLoadProjectScript.SaveProject(path);
+        }
+
+        private void LoadProjectCallback(string[] path)
+        {
+            if (path[0].IsNullOrEmpty()) return;
+
+            var lastBar = path[0].LastIndexOf(_pathChar);
+            _lastDirectory = path[0].Substring(0, lastBar + 1);
+
+            _saveLoadProjectScript.LoadProject(path[0]);
+        }
+
         private void ShowGui()
         {
             foreach (var objToHide in _objectsToUnhide)
@@ -1286,13 +1296,16 @@ namespace Gui
 
         private void SaveTextureFile(MapType mapType)
         {
-            _textureToSave = HeightMap;
+            _textureToSave = GetTextureToSave(mapType);
             var defaultName = "_" + mapType + ".png";
-            var path = StandaloneFileBrowser.SaveFilePanel("Save Height Map", _lastDirectory, defaultName,
-                _imageSaveFilter);
+            StandaloneFileBrowser.SaveFilePanelAsync("Save Height Map", _lastDirectory, defaultName,
+                _imageSaveFilter, SaveTextureFileCallback);
+        }
+
+        private void SaveTextureFileCallback(string path)
+        {
             if (path.IsNullOrEmpty()) return;
 
-            _textureToSave = GetTextureToSave(mapType);
             var lastBar = path.LastIndexOf(_pathChar);
             _lastDirectory = path.Substring(0, lastBar + 1);
             SaveFile(path);
@@ -1329,7 +1342,12 @@ namespace Gui
         {
             _activeMapType = mapType;
             var title = "Open " + mapType + " Map";
-            var path = StandaloneFileBrowser.OpenFilePanel(title, _lastDirectory, _imageLoadFilter, false);
+            StandaloneFileBrowser.OpenFilePanelAsync(title, _lastDirectory, _imageLoadFilter, false,
+                OpenTextureCallback);
+        }
+
+        private void OpenTextureCallback(string[] path)
+        {
             if (path[0].IsNullOrEmpty()) return;
             var lastBar = path[0].LastIndexOf(_pathChar);
             _lastDirectory = path[0].Substring(0, lastBar + 1);
@@ -1380,8 +1398,7 @@ namespace Gui
 
                     if (HdHeightMap)
                     {
-                        Destroy(HdHeightMap);
-                        HdHeightMap = null;
+                        RenderTexture.ReleaseTemporary(HdHeightMap);
                     }
 
                     break;
