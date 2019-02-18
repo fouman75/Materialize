@@ -426,6 +426,7 @@
         <e p="Shadow" t="Include">
           <e p="ContactShadowsEditor.cs" t="Include" />
           <e p="HDShadowSettingsEditor.cs" t="Include" />
+          <e p="ShadowCascadeGUI.cs" t="Include" />
         </e>
         <e p="VolumetricLighting" t="Include">
           <e p="DensityVolumeEditor.cs" t="Include" />
@@ -1233,6 +1234,7 @@
           <e p="ShaderPassVelocity.hlsl" t="Include" />
           <e p="TessellationShare.hlsl" t="Include" />
           <e p="VaryingMesh.hlsl" t="Include" />
+          <e p="VelocityVertexShaderCommon.hlsl" t="Include" />
           <e p="VertMesh.hlsl" t="Include" />
         </e>
         <e p="Utility" t="Include">

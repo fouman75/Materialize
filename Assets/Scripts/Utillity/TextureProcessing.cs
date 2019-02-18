@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using General;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
+using Object = UnityEngine.Object;
 
 public static class TextureProcessing
 {
@@ -57,7 +59,7 @@ public static class TextureProcessing
 
     private static Texture2D LoadPngBmpJpg(string path)
     {
-        var newTexture = TextureManager.Instance.GetStandardTexture(2, 2);
+        var newTexture = new Texture2D(2, 2, TextureFormat.RGBAHalf, false, true);
         if (!File.Exists(path)) return null;
 
         var fileData = File.ReadAllBytes(path);
@@ -93,7 +95,6 @@ public static class TextureProcessing
                 newTexture = TextureProcessing.LoadPngBmpJpg(pathToFile);
                 break;
             case ProgramEnums.FileFormat.Tga:
-                var tex = TextureManager.Instance.GetStandardTexture(2, 2);
                 newTexture = TGALoader.LoadTGA(pathToFile);
                 break;
             case ProgramEnums.FileFormat.Exr:
@@ -104,6 +105,16 @@ public static class TextureProcessing
                 throw new ArgumentOutOfRangeException();
         }
 
+        return newTexture;
+    }
+
+    public static Texture2D ConvertToStandard(Texture2D newTexture, bool linear = false)
+    {
+        var converted = TextureManager.Instance.GetStandardTexture(newTexture.width, newTexture.height, linear);
+        var result = Graphics.ConvertTexture(newTexture, converted);
+        Object.Destroy(newTexture);
+        Debug.Log(result ? "Sucesso na conversao" : "Erro na conversao");
+        newTexture = converted;
         return newTexture;
     }
 }

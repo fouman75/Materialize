@@ -61,7 +61,7 @@ namespace General
             _blackTexture = GetStandardTexture(1, 1);
             _blackTexture.SetPixel(0, 0, Color.black);
 
-            RenderTextureFormat = Hdr ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.ARGB32;
+            RenderTextureFormat = Hdr ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
         }
 
         private void Start()
@@ -219,44 +219,44 @@ namespace General
             ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = FullMaterialInstance;
         }
 
-        public Texture2D GetStandardTexture(int width, int height)
+        public Texture2D GetStandardTexture(int width, int height, bool linear = true)
         {
             if (Hdr)
             {
-                return GetStandardHdrTexture(width, height);
+                return GetStandardHdrTexture(width, height, linear);
             }
             else
             {
-                return GetStandardLdrTexture(width, height);
+                return GetStandardLdrTexture(width, height, linear);
             }
         }
 
-        public static Texture2D GetStandardHdrTexture(int width, int height)
+        public static Texture2D GetStandardHdrTexture(int width, int height, bool linear = true)
         {
-            var texture = new Texture2D(width, height, DefaultHdrTextureFormat, false, true)
+            var texture = new Texture2D(width, height, DefaultHdrTextureFormat, false, linear)
             {
                 hideFlags = HideFlags.HideAndDontSave,
-                filterMode = FilterMode.Point,
-                alphaIsTransparency = true
+                filterMode = FilterMode.Point
             };
             return texture;
         }
 
 
-        public static Texture2D GetStandardLdrTexture(int width, int height)
+        public static Texture2D GetStandardLdrTexture(int width, int height, bool linear = true)
         {
-            var texture = new Texture2D(width, height, DefaultLdrTextureFormat, false, true)
+            var texture = new Texture2D(width, height, DefaultLdrTextureFormat, false, linear)
             {
                 hideFlags = HideFlags.HideAndDontSave,
-                filterMode = FilterMode.Point,
-                alphaIsTransparency = true
+                filterMode = FilterMode.Point
             };
             return texture;
         }
 
-        public RenderTexture GetTempRenderTexture(int width, int height)
+        public RenderTexture GetTempRenderTexture(int width, int height, bool forceGama = false)
         {
-            return RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat, RenderTextureReadWrite.Default);
+            return forceGama
+                ? RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat, RenderTextureReadWrite.sRGB)
+                : RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat, RenderTextureReadWrite.Default);
         }
 
         public void GetTextureFromRender(RenderTexture input, ProgramEnums.MapType mapType)

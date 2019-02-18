@@ -335,6 +335,7 @@ namespace General
             if (StringExt.IsNullOrEmpty(pathToFile)) yield break;
 
             var newTexture = TextureProcessing.GetTextureFromFile(pathToFile);
+            if (!newTexture) yield break;
 
             if (!Mathf.IsPowerOfTwo(newTexture.width))
             {
@@ -344,11 +345,7 @@ namespace General
 
             if (newTexture && newTexture.format != TextureManager.DefaultHdrTextureFormat)
             {
-                var converted = TextureManager.Instance.GetStandardTexture(newTexture.width, newTexture.height);
-                var result = Graphics.ConvertTexture(newTexture, converted);
-                Destroy(newTexture);
-                Debug.Log(result ? "Sucesso na conversao" : "Erro na conversao");
-                newTexture = converted;
+                newTexture = TextureProcessing.ConvertToStandard(newTexture);
             }
 
             if (!newTexture) yield break;
