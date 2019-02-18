@@ -18,10 +18,9 @@ namespace Gui
         private static readonly int AoRemapMaxId = Shader.PropertyToID("_AORemapMax");
         private static readonly int SmoothnessRemapMinId = Shader.PropertyToID("_SmoothnessRemapMin");
         private static readonly int SmoothnessRemapMaxId = Shader.PropertyToID("_SmoothnessRemapMax");
-        private static readonly int DisplacementAmplitudeId = Shader.PropertyToID("_HeightOffset");
-        private static readonly int HeightMin = Shader.PropertyToID("_HeightMin");
-        private static readonly int HeightMax = Shader.PropertyToID("_HeightMax");
-        private static readonly int HeightAmplitude = Shader.PropertyToID("_HeightAmplitude");
+        private static readonly int HeightAmplitudeId = Shader.PropertyToID("_HeightAmplitude");
+        private static readonly int TessAmplitudeId = Shader.PropertyToID("_HeightTessAmplitude");
+
 
         private bool _cubeShown;
         private bool _cylinderShown;
@@ -100,8 +99,15 @@ namespace Gui
         {
             if (_settingsInitialized) return;
             Debug.Log("Initializing MaterialSettings");
-            _materialSettings = new MaterialSettings(_light);
+            _materialSettings = new MaterialSettings();
             _myColorTexture = TextureManager.Instance.GetStandardTexture(1, 1);
+            _materialSettings.DisplacementAmplitude = _thisMaterial.GetFloat(HeightAmplitudeId);
+            _materialSettings.Metallic.Value = _thisMaterial.GetFloat(MetallicId);
+            _materialSettings.SmoothnessRemapMin = _thisMaterial.GetFloat(SmoothnessRemapMinId);
+            _materialSettings.SmoothnessRemapMax = _thisMaterial.GetFloat(SmoothnessRemapMaxId);
+            _materialSettings.AoRemapMin = _thisMaterial.GetFloat(AoRemapMinId);
+            _materialSettings.AoRemapMax = _thisMaterial.GetFloat(AoRemapMaxId);
+
             _settingsInitialized = true;
         }
 
@@ -114,10 +120,10 @@ namespace Gui
                 _divisorCount--;
                 return;
             }
-            else
-            {
-                _divisorCount = UpdateDivisor;
-            }
+
+            _divisorCount = UpdateDivisor;
+
+            if (!_settingsInitialized) InitializeSettings();
 
             if (!_thisMaterial || _materialSettings == null) return;
 
@@ -135,7 +141,7 @@ namespace Gui
             _thisMaterial.SetFloat(SmoothnessRemapMinId, _materialSettings.SmoothnessRemapMin);
             _thisMaterial.SetFloat(SmoothnessRemapMaxId, _materialSettings.SmoothnessRemapMax);
 //            _thisMaterial.SetFloat(DisplacementOffsetId, _dispOffset);
-            _thisMaterial.SetFloat(DisplacementAmplitudeId, _materialSettings.DisplacementAmplitude);
+            _thisMaterial.SetFloat(HeightAmplitudeId, _materialSettings.DisplacementAmplitude);
 
             _light.color = new Color(_materialSettings.LightR, _materialSettings.LightG, _materialSettings.LightB);
             _light.intensity = _materialSettings.LightIntensity;
@@ -145,10 +151,8 @@ namespace Gui
             if (TestObjectCylinder.activeSelf != _planeShown) TestObjectCylinder.SetActive(_cylinderShown);
             if (TestObjectSphere.activeSelf != _planeShown) TestObjectSphere.SetActive(_sphereShown);
 
-            var half = _materialSettings.DisplacementAmplitude / 2f;
-            _thisMaterial.SetFloat(HeightMin, -half);
-            _thisMaterial.SetFloat(HeightMax, half);
-            _thisMaterial.SetFloat(HeightAmplitude, _materialSettings.DisplacementAmplitude);
+            _thisMaterial.SetFloat(HeightAmplitudeId, _materialSettings.DisplacementAmplitude);
+            _thisMaterial.SetFloat(TessAmplitudeId, _materialSettings.DisplacementAmplitude * 100f);
 
 
 //            
@@ -226,7 +230,7 @@ namespace Gui
 
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Tessellation Amplitude",
-                _materialSettings.DisplacementAmplitude, out _materialSettings.DisplacementAmplitude, 0.0f, 1.0f);
+                _materialSettings.DisplacementAmplitude, out _materialSettings.DisplacementAmplitude, 0.0f, 3.0f);
             offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Tiling X", _materialSettings.TexTilingX,
@@ -298,9 +302,8 @@ namespace Gui
 
         public void Initialize()
         {
-            InitializeSettings();
             _thisMaterial = TextureManager.Instance.FullMaterialInstance;
-
+            InitializeSettings();
             TestObject.GetComponent<Renderer>().material = _thisMaterial;
             TestObjectCube.GetComponent<Renderer>().material = _thisMaterial;
             TestObjectCylinder.GetComponent<Renderer>().material = _thisMaterial;

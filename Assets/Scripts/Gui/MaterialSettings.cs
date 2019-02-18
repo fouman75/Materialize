@@ -6,6 +6,7 @@ namespace Gui
 {
     public class MaterialSettings
     {
+        public const float LightIntensityDefault = 10f;
         [DefaultValue(1.0f)] public float DisplacementAmplitude;
 
         public float LightB;
@@ -26,29 +27,26 @@ namespace Gui
         [DefaultValue(0)] public float TexOffsetX;
         [DefaultValue(0)] public float TexOffsetY;
 
-        public MaterialSettings(Light light)
+        public MaterialSettings()
         {
+            var light = ProgramManager.Instance.MainLight;
             Metallic.Value = 0.5f;
             DisplacementAmplitude = 0.2f;
             AoRemapMax = 1.0f;
             SmoothnessRemapMax = 1.0f;
 
-            var color = light != null ? light.color : new Color();
+            var color = light != null ? light.color : new Color(1.0f, 1.0f, 1.0f);
 
             LightR = color.r;
             LightG = color.g;
             LightB = color.b;
-            LightIntensity = light != null ? light.intensity : 20f;
+            LightIntensity = light != null ? light.intensity : LightIntensityDefault;
 
             TexTilingX = 1;
             TexTilingY = 1;
 
             TexOffsetX = 0;
             TexOffsetY = 0;
-        }
-
-        public MaterialSettings() : this(null)
-        {
         }
     }
 }

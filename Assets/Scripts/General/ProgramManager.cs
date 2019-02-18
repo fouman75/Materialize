@@ -9,6 +9,7 @@ namespace General
     {
         public static ProgramManager Instance;
         public char PathChar { get; private set; }
+        public Light MainLight;
         private const string LastPathKey = nameof(LastPathKey);
         [HideInInspector] public string LastPath;
         private static readonly int GamaCorrectionId = Shader.PropertyToID("_GamaCorrection");
@@ -107,8 +108,8 @@ namespace General
             MainGui.Instance.CloseWindows();
             TextureManager.Instance.FixSize();
             TextureManager.Instance.SetFullMaterial();
-            MaterialGuiObject.SetActive(true);
             MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
+            MaterialGuiObject.SetActive(true);
         }
     }
 }

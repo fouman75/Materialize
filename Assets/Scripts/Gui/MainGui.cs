@@ -157,6 +157,8 @@ namespace Gui
 
             hdrp.RequestSkyEnvironmentUpdate();
             Debug.Log("HDRI Sky Atualizado");
+
+            ReflectionProbe.RequestRenderNextUpdate();
         }
 
         #endregion
@@ -408,6 +410,7 @@ namespace Gui
 
             var hdrp = UnityEngine.Rendering.RenderPipelineManager.currentPipeline as HDRenderPipeline;
             hdrp.RequestSkyEnvironmentUpdate();
+            ReflectionProbe.RequestRenderNextUpdate();
         }
 
 

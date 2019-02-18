@@ -181,7 +181,7 @@ namespace General
             }
             else
             {
-                FullMaterialInstance.SetTexture(HeightMapId, _blackTexture);
+                FullMaterialInstance.SetTexture(HeightMapId, Texture2D.blackTexture);
             }
 
             if (DiffuseMap != null)
@@ -190,7 +190,7 @@ namespace General
                 FullMaterialInstance.SetTexture(DiffuseMapId, DiffuseMapOriginal);
             else
             {
-                FullMaterialInstance.SetTexture(HeightMapId, _blackTexture);
+                FullMaterialInstance.SetTexture(DiffuseMapId, Texture2D.whiteTexture);
             }
 
 
@@ -202,7 +202,7 @@ namespace General
             }
             else
             {
-                FullMaterialInstance.SetTexture(HeightMapId, _blackTexture);
+                FullMaterialInstance.SetTexture(NormalMapId, Texture2D.normalTexture);
             }
 
             if (MaskMap)
@@ -213,7 +213,7 @@ namespace General
             }
             else
             {
-                FullMaterialInstance.SetTexture(HeightMapId, _blackTexture);
+                FullMaterialInstance.SetTexture(MaskMapId, _blackTexture);
             }
 
             ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = FullMaterialInstance;
@@ -261,7 +261,7 @@ namespace General
 
         public void GetTextureFromRender(RenderTexture input, ProgramEnums.MapType mapType)
         {
-            GetTextureFromRender(input, mapType, out var none);
+            GetTextureFromRender(input, mapType, out _);
         }
 
         public void GetTextureFromRender(RenderTexture input, out Texture2D outTexture)
@@ -337,6 +337,7 @@ namespace General
                 case ProgramEnums.MapType.Height:
                     if (HeightMap)
                     {
+                        FullMaterialInstance.SetTexture(HeightMapId, Texture2D.whiteTexture);
                         Destroy(HeightMap);
                         HeightMap = null;
                     }
@@ -350,6 +351,7 @@ namespace General
                 case ProgramEnums.MapType.Diffuse:
                     if (DiffuseMap)
                     {
+                        FullMaterialInstance.SetTexture(DiffuseMapId, Texture2D.whiteTexture);
                         Destroy(DiffuseMap);
                         DiffuseMap = null;
                     }
@@ -358,6 +360,7 @@ namespace General
                 case ProgramEnums.MapType.Normal:
                     if (NormalMap)
                     {
+                        FullMaterialInstance.SetTexture(NormalMapId, Texture2D.normalTexture);
                         Destroy(NormalMap);
                         NormalMap = null;
                     }
@@ -382,6 +385,7 @@ namespace General
                 case ProgramEnums.MapType.MaskMap:
                     if (MaskMap)
                     {
+                        FullMaterialInstance.SetTexture(MaskMapId, Texture2D.whiteTexture);
                         Destroy(MaskMap);
                         MaskMap = null;
                     }
@@ -398,6 +402,7 @@ namespace General
                 case ProgramEnums.MapType.DiffuseOriginal:
                     if (DiffuseMapOriginal)
                     {
+                        FullMaterialInstance.SetTexture(DiffuseMapId, Texture2D.whiteTexture);
                         Destroy(DiffuseMapOriginal);
                         DiffuseMapOriginal = null;
                     }
