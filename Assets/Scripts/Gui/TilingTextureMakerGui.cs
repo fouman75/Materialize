@@ -559,7 +559,7 @@ namespace Gui
         private RenderTexture TileTexture(Texture textureToTile, RenderTexture textureTarget, string texName)
         {
             CleanupTexture(_tileTemp);
-            _tileTemp = TextureManager.GetTempRenderTexture(textureToTile.width, textureToTile.height);
+            _tileTemp = TextureManager.Instance.GetTempRenderTexture(textureToTile.width, textureToTile.height);
             _blitMaterial.SetTexture(MainTex, textureToTile);
             Graphics.Blit(textureToTile, _tileTemp);
 

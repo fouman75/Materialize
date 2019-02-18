@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using General;
 using Plugins.Extension;
@@ -113,7 +114,7 @@ namespace Gui
             Instance = this;
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
             _propertyCompShader = Shader.Find("Hidden/Blit_Property_Comp");
             _propertyCompMaterial = new Material(_propertyCompShader);
@@ -137,6 +138,25 @@ namespace Gui
             HideGuiLocker.LockEmpty += LoadHideState;
             VolumeProfile.TryGet(out HdriSky);
             HdriSky.hdriSky.value = CubeMaps[0];
+
+            HDRenderPipeline hdrp = null;
+            if (RenderPipelineManager.currentPipeline != null)
+            {
+                hdrp = RenderPipelineManager.currentPipeline as HDRenderPipeline;
+            }
+
+            while (hdrp == null)
+            {
+                if (RenderPipelineManager.currentPipeline != null)
+                {
+                    hdrp = RenderPipelineManager.currentPipeline as HDRenderPipeline;
+                }
+
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            hdrp.RequestSkyEnvironmentUpdate();
+            Debug.Log("HDRI Sky Atualizado");
         }
 
         #endregion
@@ -232,14 +252,16 @@ namespace Gui
             if (GUI.Button(new Rect(offsetXm + 10, offsetY + 180, 100, 25), "Save Project"))
             {
                 const string defaultName = "baseName.mtz";
-                StandaloneFileBrowser.StandaloneFileBrowser.SaveFilePanelAsync("Save Project", _lastDirectory, defaultName, "mtz",
+                StandaloneFileBrowser.StandaloneFileBrowser.SaveFilePanelAsync("Save Project", _lastDirectory,
+                    defaultName, "mtz",
                     SaveProjectCallback);
             }
 
             //Load Project
             if (GUI.Button(new Rect(offsetXm + 10, offsetY + 215, 100, 25), "Load Project"))
             {
-                StandaloneFileBrowser.StandaloneFileBrowser.OpenFilePanelAsync("Load Project", _lastDirectory, "mtz", false,
+                StandaloneFileBrowser.StandaloneFileBrowser.OpenFilePanelAsync("Load Project", _lastDirectory, "mtz",
+                    false,
                     LoadProjectCallback);
             }
 
@@ -383,8 +405,9 @@ namespace Gui
             if (_selectedCubemap >= CubeMaps.Length) _selectedCubemap = 0;
 
             HdriSky.hdriSky.value = CubeMaps[_selectedCubemap];
-            
-            ProgramManager.Instance.RenderPipeline.RequestSkyEnvironmentUpdate();
+
+            var hdrp = UnityEngine.Rendering.RenderPipelineManager.currentPipeline as HDRenderPipeline;
+            hdrp.RequestSkyEnvironmentUpdate();
         }
 
 
@@ -640,7 +663,7 @@ namespace Gui
             SetPropertyMapChannel("_Blue", PropBlue);
 
             var size = TextureManager.Instance.GetSize();
-            var tempMap = TextureManager.GetTempRenderTexture(size.x, size.y);
+            var tempMap = TextureManager.Instance.GetTempRenderTexture(size.x, size.y);
             Graphics.Blit(TextureManager.Instance.MetallicMap, tempMap, _propertyCompMaterial, 0);
             RenderTexture.active = tempMap;
 

@@ -15,7 +15,7 @@ namespace General
         public HDRenderPipeline RenderPipeline;
 
         //Nao remover, alguns shaders dependem disso
-        private const float GamaCorrection = 1f;
+        private const float GamaCorrection = 0.4545f;
 
         #region Settings
 
@@ -66,7 +66,6 @@ namespace General
 
         private void Awake()
         {
-            RenderPipeline = UnityEngine.Rendering.RenderPipelineManager.currentPipeline as HDRenderPipeline;
             Instance = this;
             QualitySettings.vSyncCount = 0;
             Application.targetFrameRate = TargetFps;
@@ -82,8 +81,8 @@ namespace General
         private void Start()
         {
             ActivateObjects();
-            RenderPipeline.RequestSkyEnvironmentUpdate();
-            
+            RenderPipeline = UnityEngine.Rendering.RenderPipelineManager.currentPipeline as HDRenderPipeline;
+            RenderPipeline?.RequestSkyEnvironmentUpdate();
         }
 
         void Update()

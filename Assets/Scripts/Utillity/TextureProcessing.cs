@@ -29,7 +29,7 @@ public static class TextureProcessing
         mat.SetTexture(SmoothnessTex, smoothnessMap ? smoothnessMap : textureBlack);
         mat.SetTexture(AoTex, aoMap ? aoMap : textureBlack);
         var emptyTex = new Texture2D(1, 1, TextureFormat.ARGB32, false);
-        var map = TextureManager.GetTempRenderTexture(size.x, size.y);
+        var map = TextureManager.Instance.GetTempRenderTexture(size.x, size.y);
         Graphics.Blit(emptyTex, map, mat);
         RenderTexture.active = map;
         var maskMap = TextureManager.Instance.GetStandardTexture(map.width, map.height);

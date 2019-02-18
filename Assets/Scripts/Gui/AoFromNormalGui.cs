@@ -196,7 +196,7 @@ namespace Gui
 
             Debug.Log("Processing AO Map");
 
-            var tempAoMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            var tempAoMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             _blitMaterial.SetFloat(FinalBias, _aos.FinalBias);
             _blitMaterial.SetFloat(FinalContrast, _aos.FinalContrast);

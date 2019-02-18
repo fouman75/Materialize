@@ -862,7 +862,7 @@ namespace Gui
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
 
             RenderTexture.ReleaseTemporary(_tempHeightMap);
-            _tempHeightMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _tempHeightMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             _blitMaterial.SetFloat(FinalContrast, _heightFromDiffuseSettings.FinalContrast);
             _blitMaterial.SetFloat(FinalBias, _heightFromDiffuseSettings.FinalBias);
@@ -930,7 +930,7 @@ namespace Gui
             }
 
             TextureManager.Instance.HdHeightMap =
-                TextureManager.GetTempRenderTexture(_tempHeightMap.width, _tempHeightMap.width);
+                TextureManager.Instance.GetTempRenderTexture(_tempHeightMap.width, _tempHeightMap.width);
             Graphics.Blit(_blurMap0, TextureManager.Instance.HdHeightMap, _blitMaterial, 2);
 
             RenderTexture.ReleaseTemporary(_tempHeightMap);

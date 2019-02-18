@@ -253,8 +253,8 @@ namespace Gui
 
             Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
-            _blurMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
-            _avgMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _blurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _avgMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
         }
 
         private void ProcessDiffuse()
@@ -288,7 +288,7 @@ namespace Gui
             _blitMaterial.SetFloat(Saturation, _eds.Saturation);
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             Graphics.Blit(_diffuseMapOriginal, _tempMap, _blitMaterial, 11);
 
@@ -302,7 +302,7 @@ namespace Gui
             Debug.Log("Processing Blur");
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
             _blitMaterial.SetFloat(BlurContrast, 1.0f);

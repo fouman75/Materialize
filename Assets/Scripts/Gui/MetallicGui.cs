@@ -328,9 +328,9 @@ namespace Gui
 
             Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
-            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
-            _blurMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
-            _overlayBlurMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _blurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _overlayBlurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
         }
 
         public IEnumerator ProcessMetallic()
@@ -365,7 +365,7 @@ namespace Gui
             _metallicBlitMaterial.SetTexture("_OverlayBlurTex", _overlayBlurMap);
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             Graphics.Blit(_metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal, _tempMap,
                 _metallicBlitMaterial, 0);

@@ -406,7 +406,7 @@ namespace Gui
             _blitMaterial.SetFloat(AngularIntensity, _settings.AngularIntensity);
 
 
-            var tempNormalMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            var tempNormalMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
             Graphics.Blit(_blurMap0, tempNormalMap, _blitMaterial, 4);
 
             TextureManager.Instance.GetTextureFromRender(tempNormalMap, ProgramEnums.MapType.Normal);

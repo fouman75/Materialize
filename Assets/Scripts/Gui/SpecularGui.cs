@@ -229,8 +229,8 @@ namespace Gui
 
             Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
-            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
-            _blurMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _blurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
         }
 
         private IEnumerator ProcessRoughSpec(Textures whichTexture)
@@ -262,7 +262,7 @@ namespace Gui
             _blitMaterial.SetFloat("_Saturation", _saturation);
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             Graphics.Blit(_diffuseMap, _tempMap, _blitMaterial, 10);
 

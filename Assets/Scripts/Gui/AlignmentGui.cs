@@ -363,11 +363,11 @@ namespace Gui
             var height = textureTarget.height;
 
             if (_lensMap == null)
-                _lensMap = TextureManager.GetTempRenderTexture(width, height);
+                _lensMap = TextureManager.Instance.GetTempRenderTexture(width, height);
             if (_alignMap == null)
-                _alignMap = TextureManager.GetTempRenderTexture(width, height);
+                _alignMap = TextureManager.Instance.GetTempRenderTexture(width, height);
             if (_perspectiveMap == null)
-                _perspectiveMap = TextureManager.GetTempRenderTexture(width, height);
+                _perspectiveMap = TextureManager.Instance.GetTempRenderTexture(width, height);
 
             Graphics.Blit(textureTarget, _lensMap, _blitMaterial, 0);
             Graphics.Blit(_lensMap, _alignMap, _blitMaterial, 1);
@@ -383,9 +383,9 @@ namespace Gui
             RenderTexture.ReleaseTemporary(_alignMap);
             RenderTexture.ReleaseTemporary(_perspectiveMap);
 
-            _lensMap = TextureManager.GetTempRenderTexture(width, height);
-            _alignMap = TextureManager.GetTempRenderTexture(width, height);
-            _perspectiveMap = TextureManager.GetTempRenderTexture(width, height);
+            _lensMap = TextureManager.Instance.GetTempRenderTexture(width, height);
+            _alignMap = TextureManager.Instance.GetTempRenderTexture(width, height);
+            _perspectiveMap = TextureManager.Instance.GetTempRenderTexture(width, height);
 
             Graphics.Blit(textureTarget, _lensMap, _blitMaterial, 0);
             Graphics.Blit(_lensMap, _alignMap, _blitMaterial, 1);

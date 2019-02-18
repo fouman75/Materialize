@@ -227,24 +227,15 @@ namespace General
 
             if (File.Exists(pathToFile)) File.Delete(pathToFile);
 
-            var isHdr = textureToSave.format == TextureFormat.RGBAFloat ||
-                        textureToSave.format == TextureFormat.RGBAHalf;
-            Texture2D converted = null;
-            if (isHdr && extension != "exr")
-            {
-                converted = TextureManager.GetStandardLdrTexture(textureToSave.width, textureToSave.height);
-            }
+//            var isHdr = textureToSave.format == TextureFormat.RGBAFloat ||
+//                        textureToSave.format == TextureFormat.RGBAHalf;
 
-            if (!isHdr && extension == "exr")
-            {
-                converted = TextureManager.GetStandardHdrTexture(textureToSave.width, textureToSave.height);
-            }
+            var renderTexture = TextureManager.Instance.GetTempRenderTexture(textureToSave.width, textureToSave.height);
+            Graphics.Blit(textureToSave, renderTexture);
+            RenderTexture.active = renderTexture;
+            textureToSave.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0, false);
+            textureToSave.Apply(false);
 
-            if (converted)
-            {
-                Graphics.ConvertTexture(textureToSave, converted);
-                textureToSave = converted;
-            }
 
             byte[] bytes;
             switch (extension)
@@ -274,7 +265,6 @@ namespace General
                     throw new ArgumentOutOfRangeException(nameof(extension), extension, null);
             }
 
-            if (converted) Destroy(converted);
             if (bytes == null) yield break;
             File.WriteAllBytes(pathToFile, bytes);
 

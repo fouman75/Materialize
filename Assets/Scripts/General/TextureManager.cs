@@ -12,7 +12,7 @@ namespace General
         public bool Hdr;
         public const TextureFormat DefaultHdrTextureFormat = TextureFormat.RGBAHalf;
         public const TextureFormat DefaultLdrTextureFormat = TextureFormat.RGBA32;
-        public const RenderTextureFormat RenderTextureFormat = UnityEngine.RenderTextureFormat.ARGBFloat;
+        public RenderTextureFormat RenderTextureFormat;
 
         [HideInInspector] public ProgramEnums.MapType TextureInClipboard;
 
@@ -60,6 +60,8 @@ namespace General
 
             _blackTexture = GetStandardTexture(1, 1);
             _blackTexture.SetPixel(0, 0, Color.black);
+
+            RenderTextureFormat = Hdr ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.ARGB32;
         }
 
         private void Start()
@@ -252,12 +254,22 @@ namespace General
             return texture;
         }
 
-        public static RenderTexture GetTempRenderTexture(int width, int height)
+        public RenderTexture GetTempRenderTexture(int width, int height)
         {
             return RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat, RenderTextureReadWrite.Default);
         }
 
         public void GetTextureFromRender(RenderTexture input, ProgramEnums.MapType mapType)
+        {
+            GetTextureFromRender(input, mapType, out var none);
+        }
+
+        public void GetTextureFromRender(RenderTexture input, out Texture2D outTexture)
+        {
+            GetTextureFromRender(input, ProgramEnums.MapType.None, out outTexture);
+        }
+
+        public void GetTextureFromRender(RenderTexture input, ProgramEnums.MapType mapType, out Texture2D outTexture)
         {
             RenderTexture.active = input;
             var texture = GetStandardTexture(input.width, input.height);
@@ -301,6 +313,8 @@ namespace General
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
             }
+
+            outTexture = texture;
         }
 
         public void ClearAllTextures()
