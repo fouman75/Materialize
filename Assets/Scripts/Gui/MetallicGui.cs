@@ -1,8 +1,9 @@
 ﻿#region
 
 using System.Collections;
+using General;
+using Settings;
 using UnityEngine;
-using Utility;
 
 #endregion
 
@@ -57,8 +58,6 @@ namespace Gui
 
         [HideInInspector] public bool Busy = true;
 
-        public MainGui MainGuiScript;
-
         public GameObject TestObject;
 
         public Material ThisMaterial;
@@ -83,7 +82,7 @@ namespace Gui
             }
 
             _metalColorMap.SetPixel(1, 1, _metallicSettings.MetalColor);
-            _metalColorMap.Apply();
+            _metalColorMap.Apply(false);
 
             _doStuff = true;
         }
@@ -94,9 +93,9 @@ namespace Gui
             Debug.Log("Initializing Metallic Settings");
             _metallicSettings = new MetallicSettings();
 
-            _metalColorMap = new Texture2D(1, 1, TextureFormat.ARGB32, false, true);
+            _metalColorMap = TextureManager.Instance.GetStandardTexture(1, 1);
             _metalColorMap.SetPixel(1, 1, _metallicSettings.MetalColor);
-            _metalColorMap.Apply();
+            _metalColorMap.Apply(false);
 
             _settingsInitialized = true;
         }
@@ -147,7 +146,7 @@ namespace Gui
                     : _diffuseMapOriginal.GetPixelBilinear(pixelUv.x, pixelUv.y);
 
                 _metalColorMap.SetPixel(1, 1, _metallicSettings.MetalColor);
-                _metalColorMap.Apply();
+                _metalColorMap.Apply(false);
             }
 
             if (!Input.GetMouseButtonUp(0) || !_mouseButtonDown) return;
@@ -308,8 +307,8 @@ namespace Gui
 
             CleanupTextures();
 
-            _diffuseMap = MainGuiScript.DiffuseMap;
-            _diffuseMapOriginal = MainGuiScript.DiffuseMapOriginal;
+            _diffuseMap = TextureManager.Instance.DiffuseMap;
+            _diffuseMapOriginal = TextureManager.Instance.DiffuseMapOriginal;
 
             if (_diffuseMap)
             {
@@ -329,12 +328,9 @@ namespace Gui
 
             Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
-            _tempMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGB32,
-                RenderTextureReadWrite.Linear);
-            _blurMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGB32,
-                RenderTextureReadWrite.Linear);
-            _overlayBlurMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGB32,
-                RenderTextureReadWrite.Linear);
+            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _blurMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _overlayBlurMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
         }
 
         public IEnumerator ProcessMetallic()
@@ -369,20 +365,12 @@ namespace Gui
             _metallicBlitMaterial.SetTexture("_OverlayBlurTex", _overlayBlurMap);
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGB32,
-                RenderTextureReadWrite.Linear);
+            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             Graphics.Blit(_metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal, _tempMap,
                 _metallicBlitMaterial, 0);
 
-            RenderTexture.active = _tempMap;
-
-            if (MainGuiScript.MetallicMap) Destroy(MainGuiScript.MetallicMap);
-
-            MainGuiScript.MetallicMap =
-                new Texture2D(_tempMap.width, _tempMap.height, TextureFormat.ARGB32, true, true);
-            MainGuiScript.MetallicMap.ReadPixels(new Rect(0, 0, _tempMap.width, _tempMap.height), 0, 0);
-            MainGuiScript.MetallicMap.Apply();
+            TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Metallic);
 
             yield return new WaitForSeconds(0.01f);
 

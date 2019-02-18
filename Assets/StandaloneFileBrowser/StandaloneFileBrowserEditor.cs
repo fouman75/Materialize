@@ -3,7 +3,7 @@
 using System;
 using UnityEditor;
 
-namespace SFB {
+namespace StandaloneFileBrowser {
     public class StandaloneFileBrowserEditor : IStandaloneFileBrowser  {
         public string[] OpenFilePanel(string title, string directory, ExtensionFilter[] extensions, bool multiselect) {
             string path = "";

@@ -1,8 +1,9 @@
 ﻿#region
 
 using System.Collections;
+using General;
+using Settings;
 using UnityEngine;
-using Utility;
 
 #endregion
 
@@ -41,8 +42,6 @@ namespace Gui
         private bool _doStuff;
         private int _imageSizeX = 1024;
         private int _imageSizeY = 1024;
-
-        private MainGui _mgs;
         private bool _newTexture;
 
         private NormalFromHeightSettings _settings;
@@ -120,8 +119,6 @@ namespace Gui
 
         private void Start()
         {
-            _mgs = MainGui.Instance;
-
             _previewMaterial = new Material(ThisMaterial.shader);
 
             _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
@@ -267,7 +264,7 @@ namespace Gui
                 out _settings.Angularity, 0.0f, 1.0f);
             offsetY += 40;
 
-            if (_mgs.DiffuseMapOriginal)
+            if (TextureManager.Instance.DiffuseMapOriginal)
             {
                 GUI.enabled = true;
             }
@@ -305,7 +302,7 @@ namespace Gui
             offsetY += 40;
 
             if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set as Normal Map"))
-                StartCoroutine(ProcessNormal());
+                ProcessNormal();
 
             GUI.DragWindow();
         }
@@ -326,13 +323,13 @@ namespace Gui
 
             CleanupTextures();
 
-            if (!_mgs.HdHeightMap)
-                _previewMaterial.SetTexture(HeightTex, _mgs.HeightMap);
+            if (!TextureManager.Instance.HdHeightMap)
+                _previewMaterial.SetTexture(HeightTex, TextureManager.Instance.HeightMap);
             else
-                _previewMaterial.SetTexture(HeightTex, _mgs.HdHeightMap);
+                _previewMaterial.SetTexture(HeightTex, TextureManager.Instance.HdHeightMap);
 
-            _imageSizeX = _mgs.HeightMap.width;
-            _imageSizeY = _mgs.HeightMap.height;
+            _imageSizeX = TextureManager.Instance.HeightMap.width;
+            _imageSizeY = TextureManager.Instance.HeightMap.height;
 
             Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
@@ -377,7 +374,7 @@ namespace Gui
             RenderTexture.ReleaseTemporary(_blurMap6);
         }
 
-        public IEnumerator ProcessNormal()
+        public void ProcessNormal()
         {
             Busy = true;
 
@@ -409,23 +406,10 @@ namespace Gui
             _blitMaterial.SetFloat(AngularIntensity, _settings.AngularIntensity);
 
 
-            var tempNormalMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGB32,
-                RenderTextureReadWrite.Linear);
+            var tempNormalMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
             Graphics.Blit(_blurMap0, tempNormalMap, _blitMaterial, 4);
 
-            if (_mgs.NormalMap) Destroy(_mgs.NormalMap);
-
-            RenderTexture.active = tempNormalMap;
-            _mgs.NormalMap =
-                new Texture2D(tempNormalMap.width, tempNormalMap.height, TextureFormat.ARGB32, false, true);
-            _mgs.NormalMap.ReadPixels(new Rect(0, 0, tempNormalMap.width, tempNormalMap.height), 0, 0);
-            _mgs.NormalMap.Apply(false);
-//            _mgs.NormalMap.Compress(true);
-//            _mgs.NormalMap.Apply(false);
-            
-            RenderTexture.ReleaseTemporary(tempNormalMap);
-
-            yield return new WaitForSeconds(0.1f);
+            TextureManager.Instance.GetTextureFromRender(tempNormalMap, ProgramEnums.MapType.Normal);
 
             RenderTexture.ReleaseTemporary(tempNormalMap);
 
@@ -446,25 +430,25 @@ namespace Gui
             _blitMaterial.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
             _blitMaterial.SetFloat(BlurContrast, 1.0f);
 
-            if (_mgs.DiffuseMapOriginal && _settings.UseDiffuse)
+            if (TextureManager.Instance.DiffuseMapOriginal && _settings.UseDiffuse)
             {
                 _blitMaterial.SetInt(Desaturate, 1);
-                Graphics.Blit(_mgs.DiffuseMapOriginal, _tempBlurMap, _blitMaterial, 1);
-                _blitMaterial.SetTexture(LightTex, _mgs.DiffuseMapOriginal);
+                Graphics.Blit(TextureManager.Instance.DiffuseMapOriginal, _tempBlurMap, _blitMaterial, 1);
+                _blitMaterial.SetTexture(LightTex, TextureManager.Instance.DiffuseMapOriginal);
             }
             else
             {
-                if (!_mgs.HdHeightMap)
+                if (!TextureManager.Instance.HdHeightMap)
                 {
                     _blitMaterial.SetInt(Desaturate, 0);
-                    Graphics.Blit(_mgs.HeightMap, _tempBlurMap, _blitMaterial, 1);
-                    _blitMaterial.SetTexture(LightTex, _mgs.HeightMap);
+                    Graphics.Blit(TextureManager.Instance.HeightMap, _tempBlurMap, _blitMaterial, 1);
+                    _blitMaterial.SetTexture(LightTex, TextureManager.Instance.HeightMap);
                 }
                 else
                 {
                     _blitMaterial.SetInt(Desaturate, 0);
-                    Graphics.Blit(_mgs.HdHeightMap, _tempBlurMap, _blitMaterial, 1);
-                    _blitMaterial.SetTexture(LightTex, _mgs.HdHeightMap);
+                    Graphics.Blit(TextureManager.Instance.HdHeightMap, _tempBlurMap, _blitMaterial, 1);
+                    _blitMaterial.SetTexture(LightTex, TextureManager.Instance.HdHeightMap);
                 }
             }
 
@@ -486,14 +470,14 @@ namespace Gui
             _blitMaterial.SetFloat(LightRotation, _settings.LightRotation);
             _blitMaterial.SetFloat(ShapeRecognition, _settings.ShapeRecognition);
             _blitMaterial.SetFloat(ShapeBias, _settings.ShapeBias);
-            _blitMaterial.SetTexture(DiffuseTex, _mgs.DiffuseMapOriginal);
+            _blitMaterial.SetTexture(DiffuseTex, TextureManager.Instance.DiffuseMapOriginal);
 
             _blitMaterial.SetFloat(BlurContrast, _settings.Blur0Contrast);
 
-            if (!_mgs.HdHeightMap)
-                Graphics.Blit(_mgs.HeightMap, _blurMap0, _blitMaterial, 3);
+            if (!TextureManager.Instance.HdHeightMap)
+                Graphics.Blit(TextureManager.Instance.HeightMap, _blurMap0, _blitMaterial, 3);
             else
-                Graphics.Blit(_mgs.HdHeightMap, _blurMap0, _blitMaterial, 3);
+                Graphics.Blit(TextureManager.Instance.HdHeightMap, _blurMap0, _blitMaterial, 3);
 
             var extraSpread = (_blurMap0.width + _blurMap0.height) * 0.5f / 1024.0f;
             var spread = 1.0f;
@@ -554,13 +538,13 @@ namespace Gui
             _blitMaterial.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
             Graphics.Blit(_tempBlurMap, _blurMap6, _blitMaterial, 1);
 
-            if (_mgs.HdHeightMap)
+            if (TextureManager.Instance.HdHeightMap)
             {
-                _previewMaterial.SetTexture(MainTex, _mgs.HdHeightMap);
+                _previewMaterial.SetTexture(MainTex, TextureManager.Instance.HdHeightMap);
             }
             else
             {
-                _previewMaterial.SetTexture(MainTex, _mgs.HeightMap);
+                _previewMaterial.SetTexture(MainTex, TextureManager.Instance.HeightMap);
             }
 
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
+using General;
 using Gui;
 using Settings;
 using UnityEngine;
@@ -34,7 +35,7 @@ public struct Command
     public CommandType CommandType;
     public string Extension;
     public string FilePath;
-    public MapType MapType;
+    public ProgramEnums.MapType MapType;
 
     public ProgramSettings ProjectProgramSettings;
 }
@@ -46,7 +47,6 @@ public class CommandList
 
 public class CommandListExecutor : MonoBehaviour
 {
-    private MainGui _mainGui;
     private SaveLoadProject _saveLoad;
 
     public GameObject SaveLoadProjectObject;
@@ -56,7 +56,6 @@ public class CommandListExecutor : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        _mainGui = MainGui.Instance.GetComponent<MainGui>();
         _saveLoad = SaveLoadProjectObject.GetComponent<SaveLoadProject>();
 
         StartCoroutine(StartCommandString());
@@ -83,7 +82,7 @@ public class CommandListExecutor : MonoBehaviour
         {
             CommandType = CommandType.Open,
             FilePath = "F:\\Project_Files\\TextureTools5\\Dev\\Output\\test_diffuse.bmp",
-            MapType = MapType.DiffuseOriginal
+            MapType = ProgramEnums.MapType.DiffuseOriginal
         };
         commandList.Commands.Add(command);
 
@@ -91,7 +90,7 @@ public class CommandListExecutor : MonoBehaviour
         {
             CommandType = CommandType.Open,
             FilePath = "F:\\Project_Files\\TextureTools5\\Dev\\Output\\test_normal.bmp",
-            MapType = MapType.Normal
+            MapType = ProgramEnums.MapType.Normal
         };
         commandList.Commands.Add(command);
 
@@ -171,38 +170,45 @@ public class CommandListExecutor : MonoBehaviour
                     {
                         switch (thisCommand.MapType)
                         {
-                            case MapType.Height:
-                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension, _mainGui.HeightMap,
+                            case ProgramEnums.MapType.Height:
+                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension,
+                                    TextureManager.Instance.HeightMap,
                                     thisCommand.FilePath));
                                 break;
-                            case MapType.Diffuse:
-                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension, _mainGui.DiffuseMapOriginal,
+                            case ProgramEnums.MapType.Diffuse:
+                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension,
+                                    TextureManager.Instance.DiffuseMapOriginal,
                                     thisCommand.FilePath));
                                 break;
-                            case MapType.Metallic:
-                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension, _mainGui.MetallicMap,
+                            case ProgramEnums.MapType.Metallic:
+                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension,
+                                    TextureManager.Instance.MetallicMap,
                                     thisCommand.FilePath));
                                 break;
-                            case MapType.Smoothness:
-                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension, _mainGui.SmoothnessMap,
+                            case ProgramEnums.MapType.Smoothness:
+                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension,
+                                    TextureManager.Instance.SmoothnessMap,
                                     thisCommand.FilePath));
                                 break;
-                            case MapType.MaskMap:
-                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension, _mainGui.MaskMap,
+                            case ProgramEnums.MapType.MaskMap:
+                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension,
+                                    TextureManager.Instance.MaskMap,
                                     thisCommand.FilePath));
                                 break;
-                            case MapType.Ao:
+                            case ProgramEnums.MapType.Ao:
                                 StartCoroutine(
-                                    _saveLoad.SaveTexture(thisCommand.Extension, _mainGui.AoMap, thisCommand.FilePath));
+                                    _saveLoad.SaveTexture(thisCommand.Extension, TextureManager.Instance.AoMap,
+                                        thisCommand.FilePath));
                                 break;
-                            case MapType.Property:
-                                _mainGui.ProcessPropertyMap();
-                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension, _mainGui.PropertyMap,
+                            case ProgramEnums.MapType.Property:
+                                MainGui.Instance.ProcessPropertyMap();
+                                StartCoroutine(_saveLoad.SaveTexture(thisCommand.Extension,
+                                    TextureManager.Instance.PropertyMap,
                                     thisCommand.FilePath));
                                 break;
-                            case MapType.DiffuseOriginal:
+                            case ProgramEnums.MapType.DiffuseOriginal:
                                 break;
-                            case MapType.Normal:
+                            case ProgramEnums.MapType.Normal:
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
@@ -212,110 +218,79 @@ public class CommandListExecutor : MonoBehaviour
                         break;
                     }
                     case CommandType.FlipNormalMapY:
-                        _mainGui.FlipNormalMapY();
+                        TextureManager.Instance.FlipNormalY();
                         break;
                     case CommandType.FileFormat:
-                        _mainGui.SetFormat(thisCommand.Extension);
+                        MainGui.Instance.SetFormat(thisCommand.Extension);
                         break;
                     case CommandType.HeightFromDiffuse:
                     {
-                        _mainGui.CloseWindows();
-                        _mainGui.HeightFromDiffuseGuiObject.SetActive(true);
+                        MainGui.Instance.CloseWindows();
+                        MainGui.Instance.HeightFromDiffuseGuiObject.SetActive(true);
                         yield return new WaitForSeconds(0.1f);
-                        _mainGui.HeightFromDiffuseGuiScript.InitializeTextures();
+                        MainGui.Instance.HeightFromDiffuseGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
-                        yield return StartCoroutine(_mainGui.HeightFromDiffuseGuiScript.ProcessDiffuse());
-                        yield return StartCoroutine(_mainGui.HeightFromDiffuseGuiScript.ProcessHeight());
-                        _mainGui.HeightFromDiffuseGuiScript.Close();
+                        yield return StartCoroutine(MainGui.Instance.HeightFromDiffuseGuiScript.ProcessDiffuse());
+                        yield return StartCoroutine(MainGui.Instance.HeightFromDiffuseGuiScript.ProcessHeight());
+                        MainGui.Instance.HeightFromDiffuseGuiScript.Close();
                         break;
                     }
                     case CommandType.NormalFromHeight:
                     {
-                        _mainGui.CloseWindows();
-                        _mainGui.NormalFromHeightGuiObject.SetActive(true);
+                        MainGui.Instance.CloseWindows();
+                        MainGui.Instance.NormalFromHeightGuiObject.SetActive(true);
                         yield return new WaitForSeconds(0.1f);
-                        _mainGui.NormalFromHeightGuiScript.InitializeTextures();
+                        MainGui.Instance.NormalFromHeightGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
-                        yield return StartCoroutine(_mainGui.NormalFromHeightGuiScript.ProcessHeight());
-                        yield return StartCoroutine(_mainGui.NormalFromHeightGuiScript.ProcessNormal());
+                        yield return StartCoroutine(MainGui.Instance.NormalFromHeightGuiScript.ProcessHeight());
+                        MainGui.Instance.NormalFromHeightGuiScript.ProcessNormal();
 
-                        _mainGui.NormalFromHeightGuiScript.Close();
+                        MainGui.Instance.NormalFromHeightGuiScript.Close();
                         break;
                     }
                     case CommandType.Metallic:
                     {
-                        _mainGui.CloseWindows();
-                        _mainGui.MetallicGuiObject.SetActive(true);
+                        MainGui.Instance.CloseWindows();
+                        MainGui.Instance.MetallicGuiObject.SetActive(true);
                         yield return new WaitForSeconds(0.1f);
-                        _mainGui.MetallicGuiScript.InitializeTextures();
+                        MainGui.Instance.MetallicGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
-                        yield return StartCoroutine(_mainGui.MetallicGuiScript.ProcessBlur());
-                        yield return StartCoroutine(_mainGui.MetallicGuiScript.ProcessMetallic());
-                        _mainGui.MetallicGuiScript.Close();
+                        yield return StartCoroutine(MainGui.Instance.MetallicGuiScript.ProcessBlur());
+                        yield return StartCoroutine(MainGui.Instance.MetallicGuiScript.ProcessMetallic());
+                        MainGui.Instance.MetallicGuiScript.Close();
                         break;
                     }
                     case CommandType.Smoothness:
                     {
-                        _mainGui.CloseWindows();
-                        _mainGui.SmoothnessGuiObject.SetActive(true);
+                        MainGui.Instance.CloseWindows();
+                        MainGui.Instance.SmoothnessGuiObject.SetActive(true);
                         yield return new WaitForSeconds(0.1f);
-                        _mainGui.SmoothnessGuiScript.InitializeTextures();
+                        MainGui.Instance.SmoothnessGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
-                        yield return StartCoroutine(_mainGui.SmoothnessGuiScript.ProcessBlur());
-                        yield return StartCoroutine(_mainGui.SmoothnessGuiScript.ProcessSmoothness());
-                        _mainGui.SmoothnessGuiScript.Close();
+                        yield return StartCoroutine(MainGui.Instance.SmoothnessGuiScript.ProcessBlur());
+                        MainGui.Instance.SmoothnessGuiScript.ProcessSmoothness();
+                        MainGui.Instance.SmoothnessGuiScript.Close();
                         break;
                     }
                     case CommandType.AoFromNormal:
                     {
-                        _mainGui.CloseWindows();
-                        _mainGui.AoFromNormalGuiObject.SetActive(true);
+                        MainGui.Instance.CloseWindows();
+                        MainGui.Instance.AoFromNormalGuiObject.SetActive(true);
                         yield return new WaitForSeconds(0.1f);
-                        _mainGui.AoFromNormalGuiScript.InitializeTextures();
+                        MainGui.Instance.AoFromNormalGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
-                        yield return StartCoroutine(_mainGui.AoFromNormalGuiScript.ProcessNormalDepth());
-                        yield return StartCoroutine(_mainGui.AoFromNormalGuiScript.ProcessAo());
-                        _mainGui.AoFromNormalGuiScript.Close();
+                        yield return StartCoroutine(MainGui.Instance.AoFromNormalGuiScript.ProcessNormalDepth());
+                        yield return StartCoroutine(MainGui.Instance.AoFromNormalGuiScript.ProcessAo());
+                        MainGui.Instance.AoFromNormalGuiScript.Close();
                         break;
                     }
                     case CommandType.MaskMap:
                     {
-                        _mainGui.CloseWindows();
-                        _mainGui.MakeMaskMap();
+                        MainGui.Instance.CloseWindows();
+                        TextureManager.Instance.MakeMaskMap();
                         break;
                     }
                     case CommandType.QuickSave:
-                        switch (thisCommand.MapType)
-                        {
-                            case MapType.Height:
-                                _mainGui.QuicksavePathHeight = thisCommand.FilePath;
-                                break;
-                            case MapType.Diffuse:
-                                _mainGui.QuicksavePathDiffuse = thisCommand.FilePath;
-                                break;
-                            case MapType.Normal:
-                                _mainGui.QuicksavePathNormal = thisCommand.FilePath;
-                                break;
-                            case MapType.Metallic:
-                                _mainGui.QuicksavePathMetallic = thisCommand.FilePath;
-                                break;
-                            case MapType.Smoothness:
-                                _mainGui.QuicksavePathSmoothness = thisCommand.FilePath;
-                                break;
-                            case MapType.MaskMap:
-                                _mainGui.QuicksavePathMaskMap = thisCommand.FilePath;
-                                break;
-                            case MapType.Ao:
-                                _mainGui.QuicksavePathAo = thisCommand.FilePath;
-                                break;
-                            case MapType.Property:
-                                _mainGui.QuicksavePathProperty = thisCommand.FilePath;
-                                break;
-                            case MapType.DiffuseOriginal:
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
 
                         break;
                     default:
@@ -329,9 +304,9 @@ public class CommandListExecutor : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
 
-        _mainGui.CloseWindows();
-        _mainGui.FixSize();
-        _mainGui.MaterialGuiObject.SetActive(true);
-        _mainGui.MaterialGuiScript.Initialize();
+        MainGui.Instance.CloseWindows();
+        TextureManager.Instance.FixSize();
+        MainGui.Instance.MaterialGuiObject.SetActive(true);
+        MainGui.Instance.MaterialGuiScript.Initialize();
     }
 }

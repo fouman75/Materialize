@@ -1,101 +1,98 @@
-﻿
-using System;
-using System.IO;
-using System.Linq;
+﻿using System;
 using System.Collections.Generic;
+using Plugins.Extension;
 
-using UnityEngine;
-
-using UnityExtension;
-
-public class OBJFace
+namespace Plugins.Mesh.OBJ
 {
-    //------------------------------------------------------------------------------------------------------------
-    private readonly List<OBJFaceVertex> m_Vertices = new List<OBJFaceVertex>();
-
-    //------------------------------------------------------------------------------------------------------------
-    public void AddVertex(OBJFaceVertex lVertex)
+    public class OBJFace
     {
-        m_Vertices.Add(lVertex);
-    }
+        //------------------------------------------------------------------------------------------------------------
+        private readonly List<OBJFaceVertex> m_Vertices = new List<OBJFaceVertex>();
 
-    //------------------------------------------------------------------------------------------------------------
-    public void ParseVertex(string lVertexString)
-    {
-        var fields = lVertexString.Split(new[] { '/' }, StringSplitOptions.None);
-
-        var lIndex = fields[0].ParseInvariantInt();
-        var faceVertex = new OBJFaceVertex
+        //------------------------------------------------------------------------------------------------------------
+        public void AddVertex(OBJFaceVertex lVertex)
         {
-            m_VertexIndex = lIndex - 1
-        };
-
-        if (fields.Length > 1)
-        {
-            lIndex = fields[1].Length == 0 ? 0 : fields[1].ParseInvariantInt();
-            faceVertex.m_UVIndex = lIndex - 1;
+            m_Vertices.Add(lVertex);
         }
 
-        if (fields.Length > 2)
+        //------------------------------------------------------------------------------------------------------------
+        public void ParseVertex(string lVertexString)
         {
-            lIndex = fields[2].Length == 0 ? 0 : fields[2].ParseInvariantInt();
-            faceVertex.m_NormalIndex = lIndex - 1;
+            var fields = lVertexString.Split(new[] { '/' }, StringSplitOptions.None);
+
+            var lIndex = fields[0].ParseInvariantInt();
+            var faceVertex = new OBJFaceVertex
+            {
+                m_VertexIndex = lIndex - 1
+            };
+
+            if (fields.Length > 1)
+            {
+                lIndex = fields[1].Length == 0 ? 0 : fields[1].ParseInvariantInt();
+                faceVertex.m_UVIndex = lIndex - 1;
+            }
+
+            if (fields.Length > 2)
+            {
+                lIndex = fields[2].Length == 0 ? 0 : fields[2].ParseInvariantInt();
+                faceVertex.m_NormalIndex = lIndex - 1;
+            }
+
+            if (fields.Length > 3)
+            {
+                lIndex = fields[3].Length == 0 ? 0 : fields[3].ParseInvariantInt();
+                faceVertex.m_UV2Index = lIndex - 1;
+            }
+
+            if (fields.Length > 4)
+            {
+                lIndex = fields[4].Length == 0 ? 0 : fields[4].ParseInvariantInt();
+                faceVertex.m_ColorIndex = lIndex - 1;
+            }
+
+            AddVertex(faceVertex);
         }
 
-        if (fields.Length > 3)
+        //------------------------------------------------------------------------------------------------------------
+        public string ToString(int lIndex)
         {
-            lIndex = fields[3].Length == 0 ? 0 : fields[3].ParseInvariantInt();
-            faceVertex.m_UV2Index = lIndex - 1;
+            OBJFaceVertex lFaceVertex = m_Vertices[lIndex];
+
+            string lOutput = (lFaceVertex.m_VertexIndex + 1).ToString();
+
+            if (lFaceVertex.m_UVIndex > -1)
+            {
+                lOutput += string.Format("/{0}", (lFaceVertex.m_UVIndex + 1).ToString());
+            }
+
+            if (lFaceVertex.m_NormalIndex > -1)
+            {
+                lOutput += string.Format("/{0}", (lFaceVertex.m_NormalIndex + 1).ToString());
+            }
+
+            if (lFaceVertex.m_UV2Index > -1)
+            {
+                lOutput += string.Format("/{0}", (lFaceVertex.m_UV2Index + 1).ToString());
+            }
+
+            if (lFaceVertex.m_ColorIndex > -1)
+            {
+                lOutput += string.Format("/{0}", (lFaceVertex.m_ColorIndex + 1).ToString());
+            }
+
+            return lOutput;
         }
 
-        if (fields.Length > 4)
+        //------------------------------------------------------------------------------------------------------------
+        public OBJFaceVertex this[int i]
         {
-            lIndex = fields[4].Length == 0 ? 0 : fields[4].ParseInvariantInt();
-            faceVertex.m_ColorIndex = lIndex - 1;
+            get { return m_Vertices[i]; }
         }
 
-        AddVertex(faceVertex);
-    }
-
-    //------------------------------------------------------------------------------------------------------------
-    public string ToString(int lIndex)
-    {
-        OBJFaceVertex lFaceVertex = m_Vertices[lIndex];
-
-        string lOutput = (lFaceVertex.m_VertexIndex + 1).ToString();
-
-        if (lFaceVertex.m_UVIndex > -1)
+        //------------------------------------------------------------------------------------------------------------
+        public int Count
         {
-            lOutput += string.Format("/{0}", (lFaceVertex.m_UVIndex + 1).ToString());
+            get { return m_Vertices.Count; }
         }
-
-        if (lFaceVertex.m_NormalIndex > -1)
-        {
-            lOutput += string.Format("/{0}", (lFaceVertex.m_NormalIndex + 1).ToString());
-        }
-
-        if (lFaceVertex.m_UV2Index > -1)
-        {
-            lOutput += string.Format("/{0}", (lFaceVertex.m_UV2Index + 1).ToString());
-        }
-
-        if (lFaceVertex.m_ColorIndex > -1)
-        {
-            lOutput += string.Format("/{0}", (lFaceVertex.m_ColorIndex + 1).ToString());
-        }
-
-        return lOutput;
-    }
-
-    //------------------------------------------------------------------------------------------------------------
-    public OBJFaceVertex this[int i]
-    {
-        get { return m_Vertices[i]; }
-    }
-
-    //------------------------------------------------------------------------------------------------------------
-    public int Count
-    {
-        get { return m_Vertices.Count; }
     }
 }

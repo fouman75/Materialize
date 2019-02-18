@@ -1,12 +1,9 @@
-
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-
 using UnityEngine;
 
-namespace UnityExtension
+namespace Plugins.Extension
 {
     //------------------------------------------------------------------------------------------------------------
     public static class Utils

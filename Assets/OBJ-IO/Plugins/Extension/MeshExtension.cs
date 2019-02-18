@@ -1,17 +1,16 @@
-﻿
-using System;
-using System.IO;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-
+using Plugins.Mesh.OBJ;
+using Plugins.Utils;
 using UnityEngine;
 
-namespace UnityExtension
+namespace Plugins.Extension
 {
     public static class MeshExt
     {
         //------------------------------------------------------------------------------------------------------------
-        public static void RecalculateTangents(this Mesh lMesh)
+        public static void RecalculateTangents(this UnityEngine.Mesh lMesh)
         {
             //speed up math by copying the mesh arrays
             int[] triangles = lMesh.triangles;
@@ -88,7 +87,7 @@ namespace UnityExtension
         }
 
         //------------------------------------------------------------------------------------------------------------
-        public static void LoadOBJ(this Mesh lMesh, OBJData lData)
+        public static void LoadOBJ(this UnityEngine.Mesh lMesh, OBJData lData)
         {
             List<Vector3> lVertices = new List<Vector3>();
             List<Vector3> lNormals = new List<Vector3>();
@@ -156,7 +155,7 @@ namespace UnityExtension
         }
 
         //------------------------------------------------------------------------------------------------------------
-        public static OBJData EncodeOBJ(this Mesh lMesh)
+        public static OBJData EncodeOBJ(this UnityEngine.Mesh lMesh)
         {
             OBJData lData = new OBJData
             {
@@ -220,7 +219,7 @@ namespace UnityExtension
         internal const short MESH_BINARY_VERSION = 1;
 
         //------------------------------------------------------------------------------------------------------------
-        public static bool LoadBinary(this Mesh lMesh, byte[] lData)
+        public static bool LoadBinary(this UnityEngine.Mesh lMesh, byte[] lData)
         {
             int lSizeOfVector2 = Marshal.SizeOf(typeof(Vector2));
             int lSizeOfVector3 = Marshal.SizeOf(typeof(Vector3));
@@ -417,7 +416,7 @@ namespace UnityExtension
         }
 
         //------------------------------------------------------------------------------------------------------------
-        public static byte[] EncodeBinary(this Mesh lMesh)
+        public static byte[] EncodeBinary(this UnityEngine.Mesh lMesh)
         {
             //  Currently no support for BlendShape
 

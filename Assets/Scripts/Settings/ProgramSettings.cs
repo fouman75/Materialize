@@ -1,8 +1,11 @@
+using General;
+
 namespace Settings
 {
     public class ProgramSettings
     {
-        public FileFormat FileFormat;
+        public ProgramEnums.FileFormat FileFormat;
+        public bool HDR;
         public bool NormalMapMaxStyle;
         public bool NormalMapMayaStyle;
 

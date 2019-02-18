@@ -2,8 +2,9 @@
 
 using System;
 using System.Collections;
+using General;
+using Settings;
 using UnityEngine;
-using Utility;
 
 #endregion
 
@@ -91,9 +92,6 @@ namespace Gui
         [HideInInspector] public bool Busy;
 
         public Texture2D DefaultMetallicMap;
-
-        public MainGui MainGuiScript;
-
         public GameObject TestObject;
 
         public Material ThisMaterial;
@@ -123,13 +121,13 @@ namespace Gui
             }
 
             _sampleColorMap1.SetPixel(1, 1, _settings.SampleColor1);
-            _sampleColorMap1.Apply();
+            _sampleColorMap1.Apply(false);
 
             _sampleColorMap2.SetPixel(1, 1, _settings.SampleColor2);
-            _sampleColorMap2.Apply();
+            _sampleColorMap2.Apply(false);
 
             _sampleColorMap3.SetPixel(1, 1, _settings.SampleColor3);
-            _sampleColorMap3.Apply();
+            _sampleColorMap3.Apply(false);
 
             _doStuff = true;
         }
@@ -139,17 +137,17 @@ namespace Gui
             if (_settingsInitialized) return;
             _settings = new SmoothnessSettings();
 
-            _sampleColorMap1 = new Texture2D(1, 1, TextureFormat.ARGB32, false, true);
+            _sampleColorMap1 = TextureManager.Instance.GetStandardTexture(1, 1);
             _sampleColorMap1.SetPixel(1, 1, _settings.SampleColor1);
-            _sampleColorMap1.Apply();
+            _sampleColorMap1.Apply(false);
 
-            _sampleColorMap2 = new Texture2D(1, 1, TextureFormat.ARGB32, false, true);
+            _sampleColorMap2 = TextureManager.Instance.GetStandardTexture(1, 1);
             _sampleColorMap2.SetPixel(1, 1, _settings.SampleColor2);
-            _sampleColorMap2.Apply();
+            _sampleColorMap2.Apply(false);
 
-            _sampleColorMap3 = new Texture2D(1, 1, TextureFormat.ARGB32, false, true);
+            _sampleColorMap3 = TextureManager.Instance.GetStandardTexture(1, 1);
             _sampleColorMap3.SetPixel(1, 1, _settings.SampleColor3);
-            _sampleColorMap3.Apply();
+            _sampleColorMap3.Apply(false);
 
             _settingsInitialized = true;
         }
@@ -271,19 +269,19 @@ namespace Gui
                         _settings.SampleUv1 = pixelUv;
                         _settings.SampleColor1 = sampledColor;
                         _sampleColorMap1.SetPixel(1, 1, _settings.SampleColor1);
-                        _sampleColorMap1.Apply();
+                        _sampleColorMap1.Apply(false);
                         break;
                     case 2:
                         _settings.SampleUv2 = pixelUv;
                         _settings.SampleColor2 = sampledColor;
                         _sampleColorMap2.SetPixel(1, 1, _settings.SampleColor2);
-                        _sampleColorMap2.Apply();
+                        _sampleColorMap2.Apply(false);
                         break;
                     case 3:
                         _settings.SampleUv3 = pixelUv;
                         _settings.SampleColor3 = sampledColor;
                         _sampleColorMap3.SetPixel(1, 1, _settings.SampleColor3);
-                        _sampleColorMap3.Apply();
+                        _sampleColorMap3.Apply(false);
                         break;
                     default:
                         throw new InvalidOperationException();
@@ -361,11 +359,13 @@ namespace Gui
                     GUI.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 70), _settings.LumWeight1, 1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 180, offsetY, 250, 30), "Low");
-                _settings.MaskLow1 = GUI.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 70), _settings.MaskLow1,
+                _settings.MaskLow1 = GUI.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 70),
+                    _settings.MaskLow1,
                     1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 210, offsetY, 250, 30), "High");
-                _settings.MaskHigh1 = GUI.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 70), _settings.MaskHigh1,
+                _settings.MaskHigh1 = GUI.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 70),
+                    _settings.MaskHigh1,
                     1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 240, offsetY, 250, 30), "Smooth");
@@ -416,11 +416,13 @@ namespace Gui
                     GUI.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 70), _settings.LumWeight2, 1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 180, offsetY, 250, 30), "Low");
-                _settings.MaskLow2 = GUI.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 70), _settings.MaskLow2,
+                _settings.MaskLow2 = GUI.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 70),
+                    _settings.MaskLow2,
                     1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 210, offsetY, 250, 30), "High");
-                _settings.MaskHigh2 = GUI.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 70), _settings.MaskHigh2,
+                _settings.MaskHigh2 = GUI.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 70),
+                    _settings.MaskHigh2,
                     1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 240, offsetY, 250, 30), "Smooth");
@@ -459,7 +461,8 @@ namespace Gui
                 out _settings.FinalBias, -0.5f, 0.5f);
             offsetY += 50;
 
-            if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Set as Smoothness")) StartCoroutine(ProcessSmoothness());
+            if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Set as Smoothness"))
+                ProcessSmoothness();
 
             GUI.DragWindow();
         }
@@ -495,10 +498,10 @@ namespace Gui
 
             CleanUpTextures();
 
-            _diffuseMap = MainGuiScript.DiffuseMap;
-            _diffuseMapOriginal = MainGuiScript.DiffuseMapOriginal;
+            _diffuseMap = TextureManager.Instance.DiffuseMap;
+            _diffuseMapOriginal = TextureManager.Instance.DiffuseMapOriginal;
 
-            _metallicMap = MainGuiScript.MetallicMap;
+            _metallicMap = TextureManager.Instance.MetallicMap;
             ThisMaterial.SetTexture(MetallicTex, _metallicMap != null ? _metallicMap : DefaultMetallicMap);
 
             if (_diffuseMap)
@@ -519,15 +522,12 @@ namespace Gui
 
             Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
-            _tempMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGB32,
-                RenderTextureReadWrite.Linear) ;
-            _blurMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGB32,
-                RenderTextureReadWrite.Linear) ;
-            _overlayBlurMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGB32,
-                RenderTextureReadWrite.Linear) ;
+            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _blurMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _overlayBlurMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
         }
 
-        public IEnumerator ProcessSmoothness()
+        public void ProcessSmoothness()
         {
             Busy = true;
 
@@ -535,7 +535,8 @@ namespace Gui
 
             _blitSmoothnessMaterial.SetVector("_ImageSize", new Vector4(_imageSizeX, _imageSizeY, 0, 0));
 
-            _blitSmoothnessMaterial.SetTexture("_MetallicTex", _metallicMap != null ? _metallicMap : DefaultMetallicMap);
+            _blitSmoothnessMaterial.SetTexture("_MetallicTex",
+                _metallicMap != null ? _metallicMap : DefaultMetallicMap);
 
 
             _blitSmoothnessMaterial.SetTexture("_BlurTex", _blurMap);
@@ -584,21 +585,12 @@ namespace Gui
             _blitSmoothnessMaterial.SetFloat("_FinalBias", _settings.FinalBias);
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGB32,
-                RenderTextureReadWrite.Linear) ;
+            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             Graphics.Blit(_settings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal, _tempMap,
                 _blitSmoothnessMaterial, 0);
 
-            RenderTexture.active = _tempMap;
-
-            if (MainGuiScript.SmoothnessMap) Destroy(MainGuiScript.SmoothnessMap);
-
-            MainGuiScript.SmoothnessMap = new Texture2D(_tempMap.width, _tempMap.height, TextureFormat.ARGB32, true, true);
-            MainGuiScript.SmoothnessMap.ReadPixels(new Rect(0, 0, _tempMap.width, _tempMap.height), 0, 0);
-            MainGuiScript.SmoothnessMap.Apply();
-
-            yield return new WaitForSeconds(0.01f);
+            TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Smoothness);
 
             RenderTexture.ReleaseTemporary(_tempMap);
 

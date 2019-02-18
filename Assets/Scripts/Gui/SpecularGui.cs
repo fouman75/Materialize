@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Collections;
+using General;
 using UnityEngine;
 
 #endregion
@@ -219,7 +220,7 @@ namespace Gui
 
             CleanupTextures();
 
-            _diffuseMap = MainGui.Instance.DiffuseMapOriginal;
+            _diffuseMap = TextureManager.Instance.DiffuseMapOriginal;
 
             ThisMaterial.SetTexture(MainTex, _diffuseMap);
 
@@ -228,8 +229,8 @@ namespace Gui
 
             Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
-            _tempMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGBHalf);
-            _blurMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGBHalf);
+            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _blurMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
         }
 
         private IEnumerator ProcessRoughSpec(Textures whichTexture)
@@ -261,7 +262,7 @@ namespace Gui
             _blitMaterial.SetFloat("_Saturation", _saturation);
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGB32);
+            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             Graphics.Blit(_diffuseMap, _tempMap, _blitMaterial, 10);
 
@@ -270,19 +271,25 @@ namespace Gui
             switch (whichTexture)
             {
                 case Textures.Roughness:
-                    MainGui.Instance.SmoothnessMap = new Texture2D(_tempMap.width, _tempMap.height);
-                    MainGui.Instance.SmoothnessMap.ReadPixels(new Rect(0, 0, _tempMap.width, _tempMap.height), 0, 0);
-                    MainGui.Instance.SmoothnessMap.Apply();
+                    TextureManager.Instance.SmoothnessMap =
+                        TextureManager.Instance.GetStandardTexture(_tempMap.width, _tempMap.height);
+                    TextureManager.Instance.SmoothnessMap.ReadPixels(new Rect(0, 0, _tempMap.width, _tempMap.height), 0,
+                        0);
+                    TextureManager.Instance.SmoothnessMap.Apply(false);
                     break;
                 case Textures.Specular:
-                    MainGui.Instance.MetallicMap = new Texture2D(_tempMap.width, _tempMap.height);
-                    MainGui.Instance.MetallicMap.ReadPixels(new Rect(0, 0, _tempMap.width, _tempMap.height), 0, 0);
-                    MainGui.Instance.MetallicMap.Apply();
+                    TextureManager.Instance.MetallicMap =
+                        TextureManager.Instance.GetStandardTexture(_tempMap.width, _tempMap.height);
+                    TextureManager.Instance.MetallicMap.ReadPixels(new Rect(0, 0, _tempMap.width, _tempMap.height), 0,
+                        0);
+                    TextureManager.Instance.MetallicMap.Apply(false);
                     break;
                 default:
-                    MainGui.Instance.DiffuseMap = new Texture2D(_tempMap.width, _tempMap.height);
-                    MainGui.Instance.DiffuseMap.ReadPixels(new Rect(0, 0, _tempMap.width, _tempMap.height), 0, 0);
-                    MainGui.Instance.DiffuseMap.Apply();
+                    TextureManager.Instance.DiffuseMap =
+                        TextureManager.Instance.GetStandardTexture(_tempMap.width, _tempMap.height);
+                    TextureManager.Instance.DiffuseMap.ReadPixels(new Rect(0, 0, _tempMap.width, _tempMap.height), 0,
+                        0);
+                    TextureManager.Instance.DiffuseMap.Apply(false);
                     break;
             }
 

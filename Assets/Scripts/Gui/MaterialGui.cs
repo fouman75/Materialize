@@ -1,7 +1,8 @@
 ﻿#region
 
+using General;
+using Settings;
 using UnityEngine;
-using Utility;
 
 namespace Gui
 {
@@ -18,21 +19,16 @@ namespace Gui
         private static readonly int SmoothnessRemapMinId = Shader.PropertyToID("_SmoothnessRemapMin");
         private static readonly int SmoothnessRemapMaxId = Shader.PropertyToID("_SmoothnessRemapMax");
         private static readonly int DisplacementAmplitudeId = Shader.PropertyToID("_HeightOffset");
-        private static readonly int HeightMapId = Shader.PropertyToID("_HeightMap");
-        private static readonly int BaseColorId = Shader.PropertyToID("_BaseColorMap");
-        private static readonly int NormalMapId = Shader.PropertyToID("_NormalMap");
         private static readonly int HeightMin = Shader.PropertyToID("_HeightMin");
         private static readonly int HeightMax = Shader.PropertyToID("_HeightMax");
         private static readonly int HeightAmplitude = Shader.PropertyToID("_HeightAmplitude");
-        private static readonly int MaskMapId = Shader.PropertyToID("_MaskMap");
+
         private bool _cubeShown;
         private bool _cylinderShown;
         private Texture2D _diffuseMap;
 
         private Texture2D _heightMap;
         private Light _light;
-
-        private MainGui _mainGuiScript;
 
         private MaterialSettings _materialSettings;
 
@@ -61,7 +57,7 @@ namespace Gui
 
         private void OnDisable()
         {
-            if (!_mainGuiScript.IsGuiHidden || TestObjectParent == null) return;
+            if (!MainGui.Instance.IsGuiHidden || TestObjectParent == null) return;
             if (!TestObjectParent.activeSelf) TestRotator.Reset();
 
             TestObjectParent.SetActive(true);
@@ -105,7 +101,7 @@ namespace Gui
             if (_settingsInitialized) return;
             Debug.Log("Initializing MaterialSettings");
             _materialSettings = new MaterialSettings(_light);
-            _myColorTexture = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+            _myColorTexture = TextureManager.Instance.GetStandardTexture(1, 1);
             _settingsInitialized = true;
         }
 
@@ -131,7 +127,7 @@ namespace Gui
             {
                 if (_materialSettings.Metallic.Changed) _thisMaterial.SetFloat(MetallicId, _materialSettings.Metallic);
                 else _materialSettings.Metallic.Anonymous = temp;
-            }    
+            }
 
 
             _thisMaterial.SetFloat(AoRemapMinId, _materialSettings.AoRemapMin);
@@ -144,10 +140,11 @@ namespace Gui
             _light.color = new Color(_materialSettings.LightR, _materialSettings.LightG, _materialSettings.LightB);
             _light.intensity = _materialSettings.LightIntensity;
 
-            TestObjectParent.SetActive(_planeShown);
-            TestObjectCube.SetActive(_cubeShown);
-            TestObjectCylinder.SetActive(_cylinderShown);
-            TestObjectSphere.SetActive(_sphereShown);
+            if (TestObjectParent.activeSelf != _planeShown) TestObjectParent.SetActive(_planeShown);
+            if (TestObjectCube.activeSelf != _planeShown) TestObjectCube.SetActive(_cubeShown);
+            if (TestObjectCylinder.activeSelf != _planeShown) TestObjectCylinder.SetActive(_cylinderShown);
+            if (TestObjectSphere.activeSelf != _planeShown) TestObjectSphere.SetActive(_sphereShown);
+
             var half = _materialSettings.DisplacementAmplitude / 2f;
             _thisMaterial.SetFloat(HeightMin, -half);
             _thisMaterial.SetFloat(HeightMax, half);
@@ -186,7 +183,7 @@ namespace Gui
                 1.0f);
 
             _myColorTexture.SetPixels(colorArray);
-            _myColorTexture.Apply();
+            _myColorTexture.Apply(false);
         }
 
         private void DoMyWindow(int windowId)
@@ -302,44 +299,7 @@ namespace Gui
         public void Initialize()
         {
             InitializeSettings();
-
-            _mainGuiScript = MainGui.Instance;
-            _thisMaterial = _mainGuiScript.FullMaterialCopy;
-
-            _heightMap = _mainGuiScript.HeightMap;
-
-            _diffuseMap = _mainGuiScript.DiffuseMap != null
-                ? _mainGuiScript.DiffuseMap
-                : _mainGuiScript.DiffuseMapOriginal;
-            _normalMap = _mainGuiScript.NormalMap;
-            _maskMap = _mainGuiScript.MaskMap;
-
-            if (_heightMap != null)
-            {
-                _thisMaterial.EnableKeyword("_TESSELLATION_DISPLACEMENT");
-                _thisMaterial.EnableKeyword("_HEIGHTMAP");
-                _thisMaterial.SetTexture(HeightMapId, _heightMap);
-            }
-
-            if (_diffuseMap != null)
-            {
-                _thisMaterial.SetTexture(BaseColorId, _diffuseMap);
-            }
-
-            if (_normalMap != null)
-            {
-                // ReSharper disable once StringLiteralTypo
-                _thisMaterial.EnableKeyword("_NORMALMAP");
-                _thisMaterial.SetTexture(NormalMapId, _normalMap);
-            }
-
-            if (_maskMap != null)
-            {
-                // ReSharper disable once StringLiteralTypo
-                _thisMaterial.EnableKeyword("_MASKMAP");
-                _thisMaterial.SetTexture(MaskMapId, _maskMap);
-            }
-
+            _thisMaterial = TextureManager.Instance.FullMaterialInstance;
 
             TestObject.GetComponent<Renderer>().material = _thisMaterial;
             TestObjectCube.GetComponent<Renderer>().material = _thisMaterial;

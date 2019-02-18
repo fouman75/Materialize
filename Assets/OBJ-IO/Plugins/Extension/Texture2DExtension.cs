@@ -1,11 +1,7 @@
-﻿
-using System;
-using System.IO;
-using System.Collections.Generic;
-
+﻿using System.IO;
 using UnityEngine;
 
-namespace UnityExtension
+namespace Plugins.Extension
 {
     public static class Texture2DExt
     {

@@ -1,8 +1,9 @@
 #region
 
 using System.Collections;
+using General;
+using Settings;
 using UnityEngine;
-using Utility;
 
 #endregion
 
@@ -51,11 +52,10 @@ namespace Gui
 
         private Rect _windowRect = new Rect(30, 300, 300, 450);
 
-        public MainGui MainGuiScript;
-
         public GameObject TestObject;
 
         public Material ThisMaterial;
+        private Material _material;
 
         public EditDiffuseGui(RenderTexture avgTempMap)
         {
@@ -92,11 +92,16 @@ namespace Gui
             _settingsInitialized = true;
         }
 
+        private void OnDisable()
+        {
+            _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
+        }
 
         // Use this for initialization
         private void Start()
         {
-            TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
+            _material = new Material(ThisMaterial);
+            TestObject.GetComponent<Renderer>().material = _material;
 
             _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
 
@@ -129,25 +134,25 @@ namespace Gui
             }
 
 
-            ThisMaterial.SetFloat(Slider, _slider);
+            _material.SetFloat(Slider, _slider);
 
-            ThisMaterial.SetFloat(BlurContrast, _eds.BlurContrast);
+            _material.SetFloat(BlurContrast, _eds.BlurContrast);
 
-            ThisMaterial.SetFloat(LightMaskPow, _eds.LightMaskPow);
-            ThisMaterial.SetFloat(LightPow, _eds.LightPow);
+            _material.SetFloat(LightMaskPow, _eds.LightMaskPow);
+            _material.SetFloat(LightPow, _eds.LightPow);
 
-            ThisMaterial.SetFloat(DarkMaskPow, _eds.DarkMaskPow);
-            ThisMaterial.SetFloat(DarkPow, _eds.DarkPow);
+            _material.SetFloat(DarkMaskPow, _eds.DarkMaskPow);
+            _material.SetFloat(DarkPow, _eds.DarkPow);
 
-            ThisMaterial.SetFloat(HotSpot, _eds.HotSpot);
-            ThisMaterial.SetFloat(DarkSpot, _eds.DarkSpot);
+            _material.SetFloat(HotSpot, _eds.HotSpot);
+            _material.SetFloat(DarkSpot, _eds.DarkSpot);
 
-            ThisMaterial.SetFloat(FinalContrast, _eds.FinalContrast);
-            ThisMaterial.SetFloat(FinalBias, _eds.FinalBias);
+            _material.SetFloat(FinalContrast, _eds.FinalContrast);
+            _material.SetFloat(FinalBias, _eds.FinalBias);
 
-            ThisMaterial.SetFloat(ColorLerp, _eds.ColorLerp);
+            _material.SetFloat(ColorLerp, _eds.ColorLerp);
 
-            ThisMaterial.SetFloat(Saturation, _eds.Saturation);
+            _material.SetFloat(Saturation, _eds.Saturation);
         }
 
         private void DoMyWindow(int windowId)
@@ -206,7 +211,7 @@ namespace Gui
             offsetY += 50;
 
             if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set as Diffuse"))
-                StartCoroutine(ProcessDiffuse());
+                ProcessDiffuse();
 
             GUI.DragWindow();
         }
@@ -235,26 +240,24 @@ namespace Gui
 
         private void InitializeTextures()
         {
-            TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
+            TestObject.GetComponent<Renderer>().sharedMaterial = _material;
 
             CleanupTextures();
 
-            _diffuseMapOriginal = MainGuiScript.DiffuseMapOriginal;
+            _diffuseMapOriginal = TextureManager.Instance.DiffuseMapOriginal;
 
-            ThisMaterial.SetTexture(MainTex, _diffuseMapOriginal);
+            _material.SetTexture(MainTex, _diffuseMapOriginal);
 
             _imageSizeX = _diffuseMapOriginal.width;
             _imageSizeY = _diffuseMapOriginal.height;
 
             Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
-            _blurMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGBHalf,
-                RenderTextureReadWrite.Linear);
-            _avgMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGBHalf,
-                RenderTextureReadWrite.Linear);
+            _blurMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _avgMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
         }
 
-        private IEnumerator ProcessDiffuse()
+        private void ProcessDiffuse()
         {
             Debug.Log("Processing Diffuse");
 
@@ -285,24 +288,11 @@ namespace Gui
             _blitMaterial.SetFloat(Saturation, _eds.Saturation);
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGB32,
-                RenderTextureReadWrite.Linear);
+            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             Graphics.Blit(_diffuseMapOriginal, _tempMap, _blitMaterial, 11);
 
-            RenderTexture.active = _tempMap;
-
-            if (MainGuiScript.DiffuseMap)
-            {
-                Destroy(MainGuiScript.DiffuseMap);
-                MainGuiScript.DiffuseMap = null;
-            }
-
-            MainGuiScript.DiffuseMap = new Texture2D(_tempMap.width, _tempMap.height, TextureFormat.ARGB32, true, true);
-            MainGuiScript.DiffuseMap.ReadPixels(new Rect(0, 0, _tempMap.width, _tempMap.height), 0, 0);
-            MainGuiScript.DiffuseMap.Apply();
-
-            yield return new WaitForSeconds(0.1f);
+            TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Diffuse);
 
             RenderTexture.ReleaseTemporary(_tempMap);
         }
@@ -312,8 +302,7 @@ namespace Gui
             Debug.Log("Processing Blur");
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGBHalf,
-                RenderTextureReadWrite.Linear);
+            _tempMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
             _blitMaterial.SetFloat(BlurContrast, 1.0f);
@@ -325,7 +314,7 @@ namespace Gui
             Graphics.Blit(_diffuseMapOriginal, _tempMap, _blitMaterial, 1);
             _blitMaterial.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
             Graphics.Blit(_tempMap, _blurMap, _blitMaterial, 1);
-            ThisMaterial.SetTexture(BlurTex, _blurMap);
+            _material.SetTexture(BlurTex, _blurMap);
 
 
             _blitMaterial.SetTexture(MainTex, _diffuseMapOriginal);
@@ -341,7 +330,7 @@ namespace Gui
             _blitMaterial.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
             Graphics.Blit(_tempMap, _avgMap, _blitMaterial, 1);
 
-            ThisMaterial.SetTexture(AvgTex, _avgMap);
+            _material.SetTexture(AvgTex, _avgMap);
 
             RenderTexture.ReleaseTemporary(_tempMap);
             RenderTexture.ReleaseTemporary(_avgTempMap);

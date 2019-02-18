@@ -1,9 +1,9 @@
 ﻿#region
 
 using System.Collections;
+using General;
 using JetBrains.Annotations;
 using UnityEngine;
-using Utility;
 
 #endregion
 
@@ -39,7 +39,6 @@ namespace Gui
 
         private RenderTexture _lensMap;
 
-        private MainGui _mainGui;
         private RenderTexture _perspectiveMap;
 
         private float _perspectiveX;
@@ -70,21 +69,24 @@ namespace Gui
         public void Initialize()
         {
             gameObject.SetActive(true);
-            _mainGui = MainGui.Instance;
             TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
             _blitMaterial = new Material(Shader.Find("Hidden/Blit_Alignment")) {hideFlags = HideFlags.HideAndDontSave};
 
-            if (_mainGui.DiffuseMapOriginal != null)
-                _textureToAlign = _mainGui.DiffuseMapOriginal;
-            else if (_mainGui.HeightMap != null)
-                _textureToAlign = _mainGui.HeightMap;
-            else if (_mainGui.MetallicMap != null)
-                _textureToAlign = _mainGui.MetallicMap;
-            else if (_mainGui.SmoothnessMap != null)
-                _textureToAlign = _mainGui.SmoothnessMap;
-            else if (_mainGui.MaskMap != null)
-                _textureToAlign = _mainGui.MaskMap;
-            else if (_mainGui.AoMap != null) _textureToAlign = _mainGui.AoMap;
+            if (TextureManager.Instance.DiffuseMapOriginal != null)
+                _textureToAlign = TextureManager.Instance.DiffuseMapOriginal;
+            else if (TextureManager.Instance.HeightMap != null)
+                _textureToAlign = TextureManager.Instance.HeightMap;
+            else if (TextureManager.Instance.MetallicMap != null)
+                _textureToAlign = TextureManager.Instance.MetallicMap;
+            else if (TextureManager.Instance.SmoothnessMap != null)
+                _textureToAlign = TextureManager.Instance.SmoothnessMap;
+            else if (TextureManager.Instance.MaskMap != null)
+                _textureToAlign = TextureManager.Instance.MaskMap;
+            else if (TextureManager.Instance.AoMap != null) _textureToAlign = TextureManager.Instance.AoMap;
+            else
+            {
+                gameObject.SetActive(false);
+            }
 
 
             _doStuff = true;
@@ -259,59 +261,59 @@ namespace Gui
             GUI.Label(new Rect(offsetX, offsetY, 250, 30), "Preview Map");
             offsetY += 30;
 
-            GUI.enabled = _mainGui.DiffuseMapOriginal != null;
+            GUI.enabled = TextureManager.Instance.DiffuseMapOriginal != null;
             if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Original Diffuse Map"))
             {
-                _textureToAlign = _mainGui.DiffuseMapOriginal;
+                _textureToAlign = TextureManager.Instance.DiffuseMapOriginal;
                 _doStuff = true;
             }
 
-            GUI.enabled = _mainGui.DiffuseMap != null;
+            GUI.enabled = TextureManager.Instance.DiffuseMap != null;
             if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Diffuse Map"))
             {
-                _textureToAlign = _mainGui.DiffuseMap;
+                _textureToAlign = TextureManager.Instance.DiffuseMap;
                 _doStuff = true;
             }
 
             offsetY += 40;
 
 
-            GUI.enabled = _mainGui.HeightMap != null;
+            GUI.enabled = TextureManager.Instance.HeightMap != null;
             if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Height Map"))
             {
-                _textureToAlign = _mainGui.HeightMap;
+                _textureToAlign = TextureManager.Instance.HeightMap;
                 _doStuff = true;
             }
 
             offsetY += 40;
 
-            GUI.enabled = _mainGui.MetallicMap != null;
+            GUI.enabled = TextureManager.Instance.MetallicMap != null;
             if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Metallic Map"))
             {
-                _textureToAlign = _mainGui.MetallicMap;
+                _textureToAlign = TextureManager.Instance.MetallicMap;
                 _doStuff = true;
             }
 
-            GUI.enabled = _mainGui.SmoothnessMap != null;
+            GUI.enabled = TextureManager.Instance.SmoothnessMap != null;
             if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Smoothness Map"))
             {
-                _textureToAlign = _mainGui.SmoothnessMap;
+                _textureToAlign = TextureManager.Instance.SmoothnessMap;
                 _doStuff = true;
             }
 
             offsetY += 40;
 
-            GUI.enabled = _mainGui.MaskMap != null;
+            GUI.enabled = TextureManager.Instance.MaskMap != null;
             if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Mask Map"))
             {
-                _textureToAlign = _mainGui.MaskMap;
+                _textureToAlign = TextureManager.Instance.MaskMap;
                 _doStuff = true;
             }
 
-            GUI.enabled = _mainGui.AoMap != null;
+            GUI.enabled = TextureManager.Instance.AoMap != null;
             if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "AO Map"))
             {
-                _textureToAlign = _mainGui.AoMap;
+                _textureToAlign = TextureManager.Instance.AoMap;
                 _doStuff = true;
             }
 
@@ -361,12 +363,11 @@ namespace Gui
             var height = textureTarget.height;
 
             if (_lensMap == null)
-                _lensMap = RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                _lensMap = TextureManager.GetTempRenderTexture(width, height);
             if (_alignMap == null)
-                _alignMap = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                _alignMap = TextureManager.GetTempRenderTexture(width, height);
             if (_perspectiveMap == null)
-                _perspectiveMap =
-                    new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                _perspectiveMap = TextureManager.GetTempRenderTexture(width, height);
 
             Graphics.Blit(textureTarget, _lensMap, _blitMaterial, 0);
             Graphics.Blit(_lensMap, _alignMap, _blitMaterial, 1);
@@ -382,10 +383,9 @@ namespace Gui
             RenderTexture.ReleaseTemporary(_alignMap);
             RenderTexture.ReleaseTemporary(_perspectiveMap);
 
-            _lensMap = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
-            _alignMap = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
-            _perspectiveMap =
-                new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            _lensMap = TextureManager.GetTempRenderTexture(width, height);
+            _alignMap = TextureManager.GetTempRenderTexture(width, height);
+            _perspectiveMap = TextureManager.GetTempRenderTexture(width, height);
 
             Graphics.Blit(textureTarget, _lensMap, _blitMaterial, 0);
             Graphics.Blit(_lensMap, _alignMap, _blitMaterial, 1);
@@ -398,9 +398,9 @@ namespace Gui
             textureTarget = null;
 
             RenderTexture.active = _perspectiveMap;
-            textureTarget = new Texture2D(width, height, TextureFormat.ARGB32, false, true);
+            textureTarget = TextureManager.Instance.GetStandardTexture(width, height);
             textureTarget.ReadPixels(new Rect(0, 0, width, height), 0, 0);
-            textureTarget.Apply();
+            textureTarget.Apply(false);
 
             RenderTexture.active = null;
 
@@ -426,7 +426,8 @@ namespace Gui
 
             _lensMap = new RenderTexture(width, height, 0, RenderTextureFormat.RHalf, RenderTextureReadWrite.Linear);
             _alignMap = new RenderTexture(width, height, 0, RenderTextureFormat.RHalf, RenderTextureReadWrite.Linear);
-            _perspectiveMap = new RenderTexture(width, height, 0, RenderTextureFormat.RHalf, RenderTextureReadWrite.Linear);
+            _perspectiveMap =
+                new RenderTexture(width, height, 0, RenderTextureFormat.RHalf, RenderTextureReadWrite.Linear);
 
             Graphics.Blit(textureTarget, _lensMap, _blitMaterial, 0);
             Graphics.Blit(_lensMap, _alignMap, _blitMaterial, 1);
@@ -451,72 +452,72 @@ namespace Gui
 
         private IEnumerator SetMaps()
         {
-            if (_mainGui.HeightMap != null)
+            if (TextureManager.Instance.HeightMap != null)
             {
                 Debug.Log("Setting Height");
-                _mainGui.HeightMap = SetMap(_mainGui.HeightMap);
+                TextureManager.Instance.HeightMap = SetMap(TextureManager.Instance.HeightMap);
             }
 
-            if (_mainGui.HdHeightMap != null)
+            if (TextureManager.Instance.HdHeightMap != null)
             {
                 Debug.Log("Setting HD Height");
-                _mainGui.HdHeightMap = SetMap(_mainGui.HdHeightMap);
+                TextureManager.Instance.HdHeightMap = SetMap(TextureManager.Instance.HdHeightMap);
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            if (_mainGui.DiffuseMap != null)
+            if (TextureManager.Instance.DiffuseMap != null)
             {
                 Debug.Log("Setting Diffuse");
-                _mainGui.DiffuseMap = SetMap(_mainGui.DiffuseMap);
+                TextureManager.Instance.DiffuseMap = SetMap(TextureManager.Instance.DiffuseMap);
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            if (_mainGui.DiffuseMapOriginal != null)
+            if (TextureManager.Instance.DiffuseMapOriginal != null)
             {
                 Debug.Log("Setting Diffuse Original");
-                _mainGui.DiffuseMapOriginal = SetMap(_mainGui.DiffuseMapOriginal);
+                TextureManager.Instance.DiffuseMapOriginal = SetMap(TextureManager.Instance.DiffuseMapOriginal);
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            if (_mainGui.NormalMap != null)
+            if (TextureManager.Instance.NormalMap != null)
             {
                 Debug.Log("Setting Normal");
-                _mainGui.NormalMap = SetMap(_mainGui.NormalMap);
+                TextureManager.Instance.NormalMap = SetMap(TextureManager.Instance.NormalMap);
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            if (_mainGui.MetallicMap != null)
+            if (TextureManager.Instance.MetallicMap != null)
             {
                 Debug.Log("Setting Metallic");
-                _mainGui.MetallicMap = SetMap(_mainGui.MetallicMap);
+                TextureManager.Instance.MetallicMap = SetMap(TextureManager.Instance.MetallicMap);
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            if (_mainGui.SmoothnessMap != null)
+            if (TextureManager.Instance.SmoothnessMap != null)
             {
                 Debug.Log("Setting Smoothness");
-                _mainGui.SmoothnessMap = SetMap(_mainGui.SmoothnessMap);
+                TextureManager.Instance.SmoothnessMap = SetMap(TextureManager.Instance.SmoothnessMap);
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            if (_mainGui.MaskMap != null)
+            if (TextureManager.Instance.MaskMap != null)
             {
                 Debug.Log("Setting MaskMap");
-                _mainGui.MaskMap = SetMap(_mainGui.MaskMap);
+                TextureManager.Instance.MaskMap = SetMap(TextureManager.Instance.MaskMap);
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            if (_mainGui.AoMap != null)
+            if (TextureManager.Instance.AoMap != null)
             {
                 Debug.Log("Setting AO");
-                _mainGui.AoMap = SetMap(_mainGui.AoMap);
+                TextureManager.Instance.AoMap = SetMap(TextureManager.Instance.AoMap);
             }
 
             yield return new WaitForSeconds(0.1f);

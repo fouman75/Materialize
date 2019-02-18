@@ -2,8 +2,8 @@
 
 using System;
 using System.Collections;
+using General;
 using UnityEngine;
-using Utility;
 using Random = UnityEngine.Random;
 
 #endregion
@@ -111,7 +111,7 @@ namespace Gui
 
         public void Initialize()
         {
-            _thisMaterial = MainGui.Instance.FullMaterialCopy;
+            _thisMaterial = TextureManager.Instance.FullMaterialInstance;
 
             TestObject.GetComponent<Renderer>().material = _thisMaterial;
             _doStuff = true;
@@ -420,9 +420,9 @@ namespace Gui
         private Texture2D SetMap(Texture2D textureTarget, RenderTexture textureToSet)
         {
             RenderTexture.active = textureToSet;
-            textureTarget = new Texture2D(_newTexSizeX, _newTexSizeY, TextureFormat.ARGB32, true, true);
+            textureTarget = TextureManager.Instance.GetStandardTexture(_newTexSizeX, _newTexSizeY);
             textureTarget.ReadPixels(new Rect(0, 0, _newTexSizeX, _newTexSizeY), 0, 0);
-            textureTarget.Apply();
+            textureTarget.Apply(false);
             return textureTarget;
         }
 
@@ -430,92 +430,94 @@ namespace Gui
         private RenderTexture SetMapRt(RenderTexture textureTarget, Texture textureToSet)
         {
             textureTarget = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.RHalf,
-                RenderTextureReadWrite.Linear) ;
+                RenderTextureReadWrite.Linear);
             Graphics.Blit(textureToSet, textureTarget);
             return textureTarget;
         }
 
         private IEnumerator SetMaps()
         {
-            if (!MainGui.Instance.HeightMap) yield break;
+            if (!TextureManager.Instance.HeightMap) yield break;
 
-            if (MainGui.Instance.DiffuseMap)
+            if (TextureManager.Instance.DiffuseMap)
             {
                 Debug.Log("Setting Diffuse");
-                Destroy(MainGui.Instance.DiffuseMap);
-                MainGui.Instance.DiffuseMap = null;
-                MainGui.Instance.DiffuseMap = SetMap(MainGui.Instance.DiffuseMap, _diffuseMapTemp);
+                Destroy(TextureManager.Instance.DiffuseMap);
+                TextureManager.Instance.DiffuseMap = null;
+                TextureManager.Instance.DiffuseMap = SetMap(TextureManager.Instance.DiffuseMap, _diffuseMapTemp);
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            if (MainGui.Instance.DiffuseMapOriginal)
+            if (TextureManager.Instance.DiffuseMapOriginal)
             {
                 Debug.Log("Setting Original Diffuse");
-                Destroy(MainGui.Instance.DiffuseMapOriginal);
-                MainGui.Instance.DiffuseMapOriginal = null;
-                MainGui.Instance.DiffuseMapOriginal = SetMap(MainGui.Instance.DiffuseMapOriginal, _diffuseMapOriginalTemp);
+                Destroy(TextureManager.Instance.DiffuseMapOriginal);
+                TextureManager.Instance.DiffuseMapOriginal = null;
+                TextureManager.Instance.DiffuseMapOriginal =
+                    SetMap(TextureManager.Instance.DiffuseMapOriginal, _diffuseMapOriginalTemp);
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            if (MainGui.Instance.MetallicMap != null)
+            if (TextureManager.Instance.MetallicMap != null)
             {
                 Debug.Log("Setting Specular");
-                Destroy(MainGui.Instance.MetallicMap);
-                MainGui.Instance.MetallicMap = null;
-                MainGui.Instance.MetallicMap = SetMap(MainGui.Instance.MetallicMap, _metallicMapTemp);
+                Destroy(TextureManager.Instance.MetallicMap);
+                TextureManager.Instance.MetallicMap = null;
+                TextureManager.Instance.MetallicMap = SetMap(TextureManager.Instance.MetallicMap, _metallicMapTemp);
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            if (MainGui.Instance.SmoothnessMap != null)
+            if (TextureManager.Instance.SmoothnessMap != null)
             {
                 Debug.Log("Setting Roughness");
-                Destroy(MainGui.Instance.SmoothnessMap);
-                MainGui.Instance.SmoothnessMap = null;
-                MainGui.Instance.SmoothnessMap = SetMap(MainGui.Instance.SmoothnessMap, _smoothnessMapTemp);
+                Destroy(TextureManager.Instance.SmoothnessMap);
+                TextureManager.Instance.SmoothnessMap = null;
+                TextureManager.Instance.SmoothnessMap =
+                    SetMap(TextureManager.Instance.SmoothnessMap, _smoothnessMapTemp);
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            if (MainGui.Instance.NormalMap)
+            if (TextureManager.Instance.NormalMap)
             {
                 Debug.Log("Setting Normal");
-                Destroy(MainGui.Instance.NormalMap);
-                MainGui.Instance.NormalMap = null;
-                MainGui.Instance.NormalMap = SetMap(MainGui.Instance.NormalMap, _normalMapTemp);
+                Destroy(TextureManager.Instance.NormalMap);
+                TextureManager.Instance.NormalMap = null;
+                TextureManager.Instance.NormalMap = SetMap(TextureManager.Instance.NormalMap, _normalMapTemp);
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            if (MainGui.Instance.AoMap)
+            if (TextureManager.Instance.AoMap)
             {
                 Debug.Log("Setting AO");
-                Destroy(MainGui.Instance.AoMap);
-                MainGui.Instance.AoMap = null;
-                MainGui.Instance.AoMap = SetMap(MainGui.Instance.AoMap, _aoMapTemp);
+                Destroy(TextureManager.Instance.AoMap);
+                TextureManager.Instance.AoMap = null;
+                TextureManager.Instance.AoMap = SetMap(TextureManager.Instance.AoMap, _aoMapTemp);
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            if (MainGui.Instance.HeightMap)
+            if (TextureManager.Instance.HeightMap)
             {
                 Debug.Log("Setting Height");
-                Destroy(MainGui.Instance.HeightMap);
-                MainGui.Instance.HeightMap = null;
-                MainGui.Instance.HeightMap = SetMap(MainGui.Instance.HeightMap, _heightMapTemp);
+                Destroy(TextureManager.Instance.HeightMap);
+                TextureManager.Instance.HeightMap = null;
+                TextureManager.Instance.HeightMap = SetMap(TextureManager.Instance.HeightMap, _heightMapTemp);
             }
 
             yield return new WaitForSeconds(0.1f);
 
 
-            if (MainGui.Instance.HdHeightMap)
+            if (TextureManager.Instance.HdHeightMap)
             {
                 Debug.Log("Setting Height");
-                MainGui.Instance.HdHeightMap.Release();
-                MainGui.Instance.HdHeightMap = null;
-                MainGui.Instance.HdHeightMap = SetMapRt(MainGui.Instance.HdHeightMap, _hdHeightMapTemp);
+                TextureManager.Instance.HdHeightMap.Release();
+                TextureManager.Instance.HdHeightMap = null;
+                TextureManager.Instance.HdHeightMap = SetMapRt(TextureManager.Instance.HdHeightMap, _hdHeightMapTemp);
             }
 
             yield return new WaitForSeconds(0.1f);
@@ -557,8 +559,7 @@ namespace Gui
         private RenderTexture TileTexture(Texture textureToTile, RenderTexture textureTarget, string texName)
         {
             CleanupTexture(_tileTemp);
-            _tileTemp = RenderTexture.GetTemporary(textureToTile.width, textureToTile.height, 0, RenderTextureFormat.ARGBHalf,
-                RenderTextureReadWrite.Linear) ;
+            _tileTemp = TextureManager.GetTempRenderTexture(textureToTile.width, textureToTile.height);
             _blitMaterial.SetTexture(MainTex, textureToTile);
             Graphics.Blit(textureToTile, _tileTemp);
 
@@ -595,26 +596,26 @@ namespace Gui
             if (texName == "_HDDisplacementMap")
             {
                 _splatTemp = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.ARGBHalf,
-                    RenderTextureReadWrite.Linear) ;
+                    RenderTextureReadWrite.Linear);
                 _splatTempAlt = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.ARGBHalf,
-                    RenderTextureReadWrite.Linear) ;
+                    RenderTextureReadWrite.Linear);
                 textureTarget = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.ARGBHalf,
-                    RenderTextureReadWrite.Linear) ;
+                    RenderTextureReadWrite.Linear);
             }
             else
             {
                 _splatTemp = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.ARGB32,
-                    RenderTextureReadWrite.Linear) ;
+                    RenderTextureReadWrite.Linear);
                 _splatTempAlt = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.ARGB32,
-                    RenderTextureReadWrite.Linear) ;
+                    RenderTextureReadWrite.Linear);
                 textureTarget = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.ARGB32,
-                    RenderTextureReadWrite.Linear) ;
+                    RenderTextureReadWrite.Linear);
             }
 
             textureTarget.wrapMode = TextureWrapMode.Repeat;
 
             _blitMaterial.SetTexture(MainTex, textureToTile);
-            _blitMaterial.SetTexture(HeightTex, MainGui.Instance.HeightMap);
+            _blitMaterial.SetTexture(HeightTex, TextureManager.Instance.HeightMap);
             _blitMaterial.SetVector(ObjectScale, _objectScale);
 
             _blitMaterial.SetFloat(FlipY, SettingsGui.Instance.ProgramSettings.NormalMapMayaStyle ? 1.0f : 0.0f);
@@ -623,8 +624,9 @@ namespace Gui
             Graphics.Blit(Texture2D.blackTexture, _splatTemp, _blitMaterial, 2);
             Graphics.Blit(Texture2D.blackTexture, _splatTempAlt, _blitMaterial, 2);
 
-            var texArWidth = MainGui.Instance.HeightMap.width / (float) MainGui.Instance.HeightMap.height;
-            var texArHeight = MainGui.Instance.HeightMap.height / (float) MainGui.Instance.HeightMap.width;
+            var texArWidth = TextureManager.Instance.HeightMap.width / (float) TextureManager.Instance.HeightMap.height;
+            var texArHeight = TextureManager.Instance.HeightMap.height /
+                              (float) TextureManager.Instance.HeightMap.width;
             var texAr = Vector2.one;
             if (texArWidth < texArHeight)
                 texAr.x = texArWidth;
@@ -693,16 +695,9 @@ namespace Gui
                 textureTarget = null;
             }
 
-            if (texName == "_HDDisplacementMap")
-            {
-                textureTarget = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.RHalf,
-                    RenderTextureReadWrite.Linear) ;
-            }
-            else
-            {
-                textureTarget = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.ARGB32,
-                    RenderTextureReadWrite.Linear) ;
-            }
+            textureTarget = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0,
+                texName == "_HDDisplacementMap" ? RenderTextureFormat.RHalf : RenderTextureFormat.ARGB32,
+                RenderTextureReadWrite.Linear);
 
             textureTarget.wrapMode = TextureWrapMode.Repeat;
 
@@ -724,62 +719,65 @@ namespace Gui
             _blitMaterial.SetFloat("_OverlapX", _overlapX);
             _blitMaterial.SetFloat("_OverlapY", _overlapY);
 
-            if (MainGui.Instance.HeightMap == null)
+            if (TextureManager.Instance.HeightMap == null)
             {
                 yield break;
             }
 
-            _blitMaterial.SetTexture("_HeightTex", MainGui.Instance.HeightMap);
+            _blitMaterial.SetTexture("_HeightTex", TextureManager.Instance.HeightMap);
             _blitMaterial.SetFloat("_IsHeight", 1.0f);
-            _heightMapTemp = TileTexture(MainGui.Instance.HeightMap, _heightMapTemp, "_DisplacementMap");
+            _heightMapTemp = TileTexture(TextureManager.Instance.HeightMap, _heightMapTemp, "_DisplacementMap");
 
 
-            if (MainGui.Instance.HdHeightMap != null)
+            if (TextureManager.Instance.HdHeightMap != null)
             {
                 _blitMaterial.SetFloat("_IsHeight", 1.0f);
-                _hdHeightMapTemp = TileTexture(MainGui.Instance.HdHeightMap, _hdHeightMapTemp, "_HDDisplacementMap");
+                _hdHeightMapTemp = TileTexture(TextureManager.Instance.HdHeightMap, _hdHeightMapTemp,
+                    "_HDDisplacementMap");
             }
 
 
             _blitMaterial.SetFloat("_IsHeight", 0.0f);
 
-            if (MainGui.Instance.DiffuseMapOriginal != null)
+            if (TextureManager.Instance.DiffuseMapOriginal != null)
             {
                 _diffuseMapOriginalTemp =
-                    TileTexture(MainGui.Instance.DiffuseMapOriginal, _diffuseMapOriginalTemp, "_DiffuseMapOriginal");
+                    TileTexture(TextureManager.Instance.DiffuseMapOriginal, _diffuseMapOriginalTemp,
+                        "_DiffuseMapOriginal");
                 _thisMaterial.SetTexture("_DiffuseMap", _diffuseMapOriginalTemp);
             }
 
-            if (MainGui.Instance.DiffuseMap != null)
+            if (TextureManager.Instance.DiffuseMap != null)
             {
-                _diffuseMapTemp = TileTexture(MainGui.Instance.DiffuseMap, _diffuseMapTemp, "_DiffuseMap");
+                _diffuseMapTemp = TileTexture(TextureManager.Instance.DiffuseMap, _diffuseMapTemp, "_DiffuseMap");
                 _thisMaterial.SetTexture("_DiffuseMap", _diffuseMapTemp);
             }
 
-            if (MainGui.Instance.MetallicMap != null)
+            if (TextureManager.Instance.MetallicMap != null)
             {
-                _metallicMapTemp = TileTexture(MainGui.Instance.MetallicMap, _metallicMapTemp, "_MetallicMap");
+                _metallicMapTemp = TileTexture(TextureManager.Instance.MetallicMap, _metallicMapTemp, "_MetallicMap");
                 _thisMaterial.SetTexture("_MetallicMap", _metallicMapTemp);
             }
 
-            if (MainGui.Instance.SmoothnessMap != null)
+            if (TextureManager.Instance.SmoothnessMap != null)
             {
-                _smoothnessMapTemp = TileTexture(MainGui.Instance.SmoothnessMap, _smoothnessMapTemp, "_SmoothnessMap");
+                _smoothnessMapTemp = TileTexture(TextureManager.Instance.SmoothnessMap, _smoothnessMapTemp,
+                    "_SmoothnessMap");
                 _thisMaterial.SetTexture("_SmoothnessMap", _smoothnessMapTemp);
             }
 
-            if (MainGui.Instance.NormalMap != null)
+            if (TextureManager.Instance.NormalMap != null)
             {
                 _blitMaterial.SetFloat("_IsNormal", 1.0f);
-                _normalMapTemp = TileTexture(MainGui.Instance.NormalMap, _normalMapTemp, "_NormalMap");
+                _normalMapTemp = TileTexture(TextureManager.Instance.NormalMap, _normalMapTemp, "_NormalMap");
                 _thisMaterial.SetTexture("_NormalMap", _normalMapTemp);
             }
 
             _blitMaterial.SetFloat("_IsNormal", 0.0f);
 
-            if (MainGui.Instance.AoMap != null)
+            if (TextureManager.Instance.AoMap != null)
             {
-                _aoMapTemp = TileTexture(MainGui.Instance.AoMap, _aoMapTemp, "_AOMap");
+                _aoMapTemp = TileTexture(TextureManager.Instance.AoMap, _aoMapTemp, "_AOMap");
                 _thisMaterial.SetTexture("_AOMap", _aoMapTemp);
             }
 

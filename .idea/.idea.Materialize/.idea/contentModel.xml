@@ -7,7 +7,6 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="AtStart.cs" t="Include" />
         <e p="OBJ-IO" t="Include">
           <e p="Editor" t="Include">
             <e p="OBJEditor.cs" t="Include" />
@@ -44,16 +43,22 @@
           <e p="Readme.txt" t="Include" />
         </e>
         <e p="Scripts" t="Include">
-          <e p="AoSettings.cs" t="Include" />
-          <e p="BashRunner.cs" t="Include" />
-          <e p="CameraPanZoom.cs" t="Include" />
           <e p="ClipboardHelper.cs" t="Include" />
           <e p="CommandListExecutor.cs" t="Include" />
-          <e p="CopyScale.cs" t="Include" />
           <e p="CountLocker.cs" t="Include" />
           <e p="CubemapPicker.cs" t="Include" />
           <e p="Editor" t="Include">
+            <e p="FindMissingScripts.cs" t="Include" />
+            <e p="FindMissingScriptsRecursively.cs" t="Include" />
+            <e p="SaveOnPlay.cs" t="Include" />
             <e p="TextureImportTest.cs" t="Include" />
+          </e>
+          <e p="General" t="Include">
+            <e p="ProgramEnums.cs" t="Include" />
+            <e p="ProgramManager.cs" t="Include" />
+            <e p="SaveLoadProject.cs" t="Include" />
+            <e p="TextureManager.cs" t="Include" />
+            <e p="TrackableProperty.cs" t="Include" />
           </e>
           <e p="Gui" t="Include">
             <e p="AlignmentGui.cs" t="Include" />
@@ -70,24 +75,41 @@
             <e p="SettingsGui.cs" t="Include" />
             <e p="SmoothnessGui.cs" t="Include" />
             <e p="SpecularGui.cs" t="Include" />
+            <e p="TexturePanel.cs" t="Include" />
             <e p="TilingTextureMakerGui.cs" t="Include" />
-            <e p="TrackableProperty.cs" t="Include" />
-            <e p="WelcomeGui.cs" t="Include" />
+            <e p="WelcomeScreen.cs" t="Include" />
           </e>
-          <e p="MetallicSettings.cs" t="Include" />
-          <e p="ObjRotator.cs" t="Include" />
           <e p="PropChannelMap.cs" t="Include" />
           <e p="SampleProbeTex.cs" t="Include" />
-          <e p="SaveLoadProject.cs" t="Include" />
           <e p="Settings" t="Include">
+            <e p="AoSettings.cs" t="Include" />
             <e p="EditDiffuseSettings.cs" t="Include" />
             <e p="HeightFromDiffuseSettings.cs" t="Include" />
+            <e p="MetallicSettings.cs" t="Include" />
             <e p="NormalFromHeightSettings.cs" t="Include" />
             <e p="ProgramSettings.cs" t="Include" />
+            <e p="ProjectObject.cs" t="Include" />
             <e p="SmoothnessSettings.cs" t="Include" />
           </e>
+          <e p="SimpleLightProbePlacer" t="Include">
+            <e p="Editor" t="Include">
+              <e p="LightProbeGroupControlEditor.cs" t="Include" />
+              <e p="LightProbeVolumeEditor.cs" t="Include" />
+            </e>
+            <e p="Scripts" t="Include">
+              <e p="LightProbeGroupControl.cs" t="Include" />
+              <e p="LightProbeVolume.cs" t="Include" />
+              <e p="TransformVolume.cs" t="Include" />
+              <e p="Volume.cs" t="Include" />
+            </e>
+          </e>
           <e p="Utillity" t="Include">
+            <e p="BashRunner.cs" t="Include" />
+            <e p="CameraPanZoom.cs" t="Include" />
+            <e p="CopyScale.cs" t="Include" />
             <e p="GuiHelper.cs" t="Include" />
+            <e p="ObjRotator.cs" t="Include" />
+            <e p="TGALoader.cs" t="Include" />
             <e p="TextureProcessing.cs" t="Include" />
           </e>
         </e>
@@ -152,7 +174,31 @@
           <e p="StandaloneFileBrowserMac.cs" t="Include" />
           <e p="StandaloneFileBrowserWindows.cs" t="Include" />
         </e>
-        <e p="favorites.txt" t="Include" />
+        <e p="TextMesh Pro" t="Include">
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+              <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+              <e p="TMP_Bitmap.shader" t="Include" />
+              <e p="TMP_SDF Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface.shader" t="Include" />
+              <e p="TMP_SDF.shader" t="Include" />
+              <e p="TMP_Sprite.shader" t="Include" />
+              <e p="TMPro.cginc" t="Include" />
+              <e p="TMPro_Properties.cginc" t="Include" />
+              <e p="TMPro_Surface.cginc" t="Include" />
+            </e>
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
+        </e>
         <e p="packages" t="ExcludeRecursive" />
       </e>
       <e p="Library" t="ExcludeRecursive" />
@@ -208,6 +254,7 @@
       <e p="Unity.RenderPipelines.Core.Runtime.asmdef" t="Include" />
       <e p="Utilities" t="Include">
         <e p="ColorUtils.cs" t="Include" />
+        <e p="CoreRenderPipelinePreferences.cs" t="Include" />
         <e p="CoreUtils.cs" t="Include" />
         <e p="HableCurve.cs" t="Include" />
         <e p="HaltonSequence.cs" t="Include" />
@@ -1240,6 +1287,7 @@
         <e p="CameraSettings.cs" t="Include" />
         <e p="CameraSettingsUtilities.cs" t="Include" />
         <e p="HDBakingUtilities.cs" t="Include" />
+        <e p="HDRenderPipelinePreferences.cs" t="Include" />
         <e p="HDRenderUtilities.cs" t="Include" />
         <e p="HDTextureUtilities.cs" t="Include" />
         <e p="ProbeCapturePositionSettings.cs" t="Include" />

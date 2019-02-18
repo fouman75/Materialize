@@ -3,7 +3,6 @@
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
-using Utility;
 
 //using UnityEngine.Rendering.PostProcessing;
 
@@ -76,6 +75,11 @@ namespace Gui
             SceneVolume.enabled = false;
         }
 
+        public void TogglePostProcessGui()
+        {
+            gameObject.SetActive(!gameObject.activeSelf);
+        }
+
         private void Update()
         {
             if (_enablePostProcess)
@@ -89,7 +93,8 @@ namespace Gui
             const int offsetX = 10;
             var offsetY = 30;
 
-            _enablePostProcess = GUI.Toggle(new Rect(offsetX, offsetY, 280, 30), _enablePostProcess, "Enable Post Process");
+            _enablePostProcess = GUI.Toggle(new Rect(offsetX, offsetY, 280, 30), _enablePostProcess,
+                "Enable Post Process");
             offsetY += 40;
 
 
@@ -113,7 +118,8 @@ namespace Gui
                 out _vignetteSmoothness, 0.0f, 1.0f);
             offsetY += 60;
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Ambient Occlusion Intensity", _ambientOcclusionIntensity,
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Ambient Occlusion Intensity",
+                _ambientOcclusionIntensity,
                 out _ambientOcclusionIntensity, 0.0f, 4.0f);
             offsetY += 60;
 

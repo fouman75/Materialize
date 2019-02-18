@@ -1,43 +1,45 @@
-
 using System;
 using System.Globalization;
 
-public static class StringExt
+namespace Plugins.Extension
 {
-    //------------------------------------------------------------------------------------------------------------
-    public static float ParseInvariantFloat(this string floatString)
+    public static class StringExt
     {
-        return float.Parse(floatString, CultureInfo.InvariantCulture.NumberFormat);
-    }
-
-    //------------------------------------------------------------------------------------------------------------
-    public static int ParseInvariantInt(this string intString)
-    {
-        return int.Parse(intString, CultureInfo.InvariantCulture.NumberFormat);
-    }
-
-    //------------------------------------------------------------------------------------------------------------
-    public static bool EqualsInvariantCultureIgnoreCase(this string str, string s)
-    {
-        return str.Equals(s, StringComparison.InvariantCultureIgnoreCase);
-    }
-
-    //------------------------------------------------------------------------------------------------------------
-    public static bool IsNullOrEmpty(this string str)
-    {
-        return string.IsNullOrEmpty(str);
-    }
-
-    //------------------------------------------------------------------------------------------------------------
-    public static bool IsNullOrWhiteSpace(string value)
-    {
-        if (value == null)
-            return true;
-        for (int index = 0; index < value.Length; ++index)
+        //------------------------------------------------------------------------------------------------------------
+        public static float ParseInvariantFloat(this string floatString)
         {
-            if (!char.IsWhiteSpace(value[index]))
-                return false;
+            return float.Parse(floatString, CultureInfo.InvariantCulture.NumberFormat);
         }
-        return true;
+
+        //------------------------------------------------------------------------------------------------------------
+        public static int ParseInvariantInt(this string intString)
+        {
+            return int.Parse(intString, CultureInfo.InvariantCulture.NumberFormat);
+        }
+
+        //------------------------------------------------------------------------------------------------------------
+        public static bool EqualsInvariantCultureIgnoreCase(this string str, string s)
+        {
+            return str.Equals(s, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        //------------------------------------------------------------------------------------------------------------
+        public static bool IsNullOrEmpty(this string str)
+        {
+            return string.IsNullOrEmpty(str);
+        }
+
+        //------------------------------------------------------------------------------------------------------------
+        public static bool IsNullOrWhiteSpace(string value)
+        {
+            if (value == null)
+                return true;
+            for (int index = 0; index < value.Length; ++index)
+            {
+                if (!char.IsWhiteSpace(value[index]))
+                    return false;
+            }
+            return true;
+        }
     }
 }

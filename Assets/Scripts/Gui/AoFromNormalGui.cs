@@ -1,8 +1,9 @@
 ﻿#region
 
 using System.Collections;
+using General;
+using Settings;
 using UnityEngine;
-using Utility;
 
 #endregion
 
@@ -39,8 +40,6 @@ namespace Gui
         [HideInInspector] public bool Busy;
         public Texture2D DefaultHeight;
 
-        private MainGui _mainGui;
-
         public GameObject TestObject;
 
         public Material ThisMaterial;
@@ -52,7 +51,6 @@ namespace Gui
         {
             _testObjectRenderer = TestObject.GetComponent<Renderer>();
             ThisMaterial = new Material(ThisMaterial.shader);
-            _mainGui = MainGui.Instance;
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -79,7 +77,7 @@ namespace Gui
         private void InitializeSettings()
         {
             if (_settingsInitialized) return;
-            _aos = new AoSettings {Blend = _mainGui && _mainGui.HeightMap ? 1.0f : 0.0f};
+            _aos = new AoSettings {Blend = TextureManager.Instance && TextureManager.Instance.HeightMap ? 1.0f : 0.0f};
 
             _settingsInitialized = true;
         }
@@ -171,8 +169,8 @@ namespace Gui
 
             CleanupTextures();
 
-            _imageSizeX = _mainGui.NormalMap.width;
-            _imageSizeY = _mainGui.NormalMap.height;
+            _imageSizeX = TextureManager.Instance.NormalMap.width;
+            _imageSizeY = TextureManager.Instance.NormalMap.height;
 
             Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
@@ -184,14 +182,6 @@ namespace Gui
         {
             CleanupTextures();
             gameObject.SetActive(false);
-        }
-
-        private static void CleanupTexture(RenderTexture texture)
-        {
-            if (!texture) return;
-            texture.Release();
-            // ReSharper disable once RedundantAssignment
-            texture = null;
         }
 
         private void CleanupTextures()
@@ -206,8 +196,7 @@ namespace Gui
 
             Debug.Log("Processing AO Map");
 
-            var tempAoMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGB32,
-                RenderTextureReadWrite.Linear);
+            var tempAoMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             _blitMaterial.SetFloat(FinalBias, _aos.FinalBias);
             _blitMaterial.SetFloat(FinalContrast, _aos.FinalContrast);
@@ -216,19 +205,15 @@ namespace Gui
 
             Graphics.Blit(_blendedAoMap, tempAoMap, _blitMaterial, 8);
 
-
-            if (_mainGui.AoMap) Destroy(_mainGui.AoMap);
-
-            RenderTexture.active = tempAoMap;
-            _mainGui.AoMap = new Texture2D(tempAoMap.width, tempAoMap.height, TextureFormat.ARGB32, false, true);
-            _mainGui.AoMap.ReadPixels(new Rect(0, 0, tempAoMap.width, tempAoMap.height), 0, 0);
-            _mainGui.AoMap.Apply(false);
+            TextureManager.Instance.GetTextureFromRender(tempAoMap, ProgramEnums.MapType.Ao);
             RenderTexture.ReleaseTemporary(tempAoMap);
 
             yield return new WaitForSeconds(0.1f);
 
             Busy = false;
         }
+
+
 
         public IEnumerator ProcessNormalDepth()
         {
@@ -238,12 +223,12 @@ namespace Gui
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
             _blitMaterial.SetFloat(Spread, _aos.Spread);
 
-            _blitMaterial.SetTexture(MainTex, _mainGui.NormalMap);
+            _blitMaterial.SetTexture(MainTex, TextureManager.Instance.NormalMap);
 
-            if (_mainGui.HdHeightMap)
-                _blitMaterial.SetTexture(HeightTex, _mainGui.HdHeightMap);
-            else if (_mainGui.HeightMap)
-                _blitMaterial.SetTexture(HeightTex, _mainGui.HeightMap);
+            if (TextureManager.Instance.HdHeightMap)
+                _blitMaterial.SetTexture(HeightTex, TextureManager.Instance.HdHeightMap);
+            else if (TextureManager.Instance.HeightMap)
+                _blitMaterial.SetTexture(HeightTex, TextureManager.Instance.HeightMap);
             else
                 _blitMaterial.SetTexture(HeightTex, DefaultHeight);
 
@@ -257,7 +242,7 @@ namespace Gui
                 _blitMaterial.SetFloat(Progress, i / 100.0f);
 
 
-                Graphics.Blit(_mainGui.NormalMap, _blendedAoMap, _blitMaterial, 7);
+                Graphics.Blit(TextureManager.Instance.NormalMap, _blendedAoMap, _blitMaterial, 7);
 
                 if (i % 10 == 0) yield return null;
             }

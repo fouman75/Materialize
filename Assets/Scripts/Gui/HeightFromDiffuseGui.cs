@@ -2,8 +2,9 @@
 
 using System;
 using System.Collections;
+using General;
+using Settings;
 using UnityEngine;
-using Utility;
 
 #endregion
 
@@ -121,8 +122,6 @@ namespace Gui
 
         [HideInInspector] public bool Busy;
 
-        public MainGui MainGuiScript;
-
         public GameObject TestObject;
 
         public Material ThisMaterial;
@@ -147,10 +146,10 @@ namespace Gui
             }
 
             _sampleColorMap1.SetPixel(1, 1, _heightFromDiffuseSettings.SampleColor1);
-            _sampleColorMap1.Apply();
+            _sampleColorMap1.Apply(false);
 
             _sampleColorMap2.SetPixel(1, 1, _heightFromDiffuseSettings.SampleColor2);
-            _sampleColorMap2.Apply();
+            _sampleColorMap2.Apply(false);
 
             _doStuff = true;
         }
@@ -163,14 +162,14 @@ namespace Gui
             _heightFromDiffuseSettings = new HeightFromDiffuseSettings();
 
             if (_sampleColorMap1) Destroy(_sampleColorMap1);
-            _sampleColorMap1 = new Texture2D(1, 1, TextureFormat.ARGB32, false, true);
+            _sampleColorMap1 = TextureManager.Instance.GetStandardTexture(1, 1);
             _sampleColorMap1.SetPixel(1, 1, _heightFromDiffuseSettings.SampleColor1);
-            _sampleColorMap1.Apply();
+            _sampleColorMap1.Apply(false);
 
             if (_sampleColorMap2) Destroy(_sampleColorMap2);
-            _sampleColorMap2 = new Texture2D(1, 1, TextureFormat.ARGB32, false, true);
+            _sampleColorMap2 = TextureManager.Instance.GetStandardTexture(1, 1);
             _sampleColorMap2.SetPixel(1, 1, _heightFromDiffuseSettings.SampleColor2);
-            _sampleColorMap2.Apply();
+            _sampleColorMap2.Apply(false);
 
             _settingsInitialized = true;
         }
@@ -181,7 +180,7 @@ namespace Gui
             _camera = Camera.main;
             Resources.UnloadUnusedAssets();
 
-            //MainGuiScript = MainGui.instance;
+            //TextureManager.Instance = MainGui.instance;
 
             TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
             _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
@@ -208,42 +207,43 @@ namespace Gui
 
         private void FixUseMaps()
         {
-            if (!MainGuiScript.DiffuseMapOriginal && _heightFromDiffuseSettings.UseOriginalDiffuse)
+            if (!TextureManager.Instance.DiffuseMapOriginal && _heightFromDiffuseSettings.UseOriginalDiffuse)
             {
                 _heightFromDiffuseSettings.UseAdjustedDiffuse = true;
                 _heightFromDiffuseSettings.UseOriginalDiffuse = false;
                 _heightFromDiffuseSettings.UseNormal = false;
             }
 
-            if (!MainGuiScript.DiffuseMap && _heightFromDiffuseSettings.UseAdjustedDiffuse)
+            if (!TextureManager.Instance.DiffuseMap && _heightFromDiffuseSettings.UseAdjustedDiffuse)
             {
                 _heightFromDiffuseSettings.UseAdjustedDiffuse = false;
                 _heightFromDiffuseSettings.UseOriginalDiffuse = true;
                 _heightFromDiffuseSettings.UseNormal = false;
             }
 
-            if (!MainGuiScript.NormalMap && _heightFromDiffuseSettings.UseNormal)
+            if (!TextureManager.Instance.NormalMap && _heightFromDiffuseSettings.UseNormal)
             {
                 _heightFromDiffuseSettings.UseAdjustedDiffuse = true;
                 _heightFromDiffuseSettings.UseOriginalDiffuse = false;
                 _heightFromDiffuseSettings.UseNormal = false;
             }
 
-            if ((MainGuiScript.DiffuseMapOriginal == null) & (MainGuiScript.NormalMap == null))
+            if ((TextureManager.Instance.DiffuseMapOriginal == null) & (TextureManager.Instance.NormalMap == null))
             {
                 _heightFromDiffuseSettings.UseAdjustedDiffuse = true;
                 _heightFromDiffuseSettings.UseOriginalDiffuse = false;
                 _heightFromDiffuseSettings.UseNormal = false;
             }
 
-            if (MainGuiScript.DiffuseMap == null && MainGuiScript.NormalMap == null)
+            if (TextureManager.Instance.DiffuseMap == null && TextureManager.Instance.NormalMap == null)
             {
                 _heightFromDiffuseSettings.UseAdjustedDiffuse = false;
                 _heightFromDiffuseSettings.UseOriginalDiffuse = true;
                 _heightFromDiffuseSettings.UseNormal = false;
             }
 
-            if (MainGuiScript.DiffuseMap != null || MainGuiScript.DiffuseMapOriginal != null) return;
+            if (TextureManager.Instance.DiffuseMap != null ||
+                TextureManager.Instance.DiffuseMapOriginal != null) return;
             _heightFromDiffuseSettings.UseAdjustedDiffuse = false;
             _heightFromDiffuseSettings.UseOriginalDiffuse = false;
             _heightFromDiffuseSettings.UseNormal = true;
@@ -357,8 +357,8 @@ namespace Gui
 
                 var useAdjusted = _heightFromDiffuseSettings.UseAdjustedDiffuse;
                 var sampledColor = useAdjusted
-                    ? MainGuiScript.DiffuseMap.GetPixelBilinear(pixelUv.x, pixelUv.y)
-                    : MainGuiScript.DiffuseMapOriginal.GetPixelBilinear(pixelUv.x, pixelUv.y);
+                    ? TextureManager.Instance.DiffuseMap.GetPixelBilinear(pixelUv.x, pixelUv.y)
+                    : TextureManager.Instance.DiffuseMapOriginal.GetPixelBilinear(pixelUv.x, pixelUv.y);
 
                 switch (_currentSelection)
                 {
@@ -366,13 +366,13 @@ namespace Gui
                         _heightFromDiffuseSettings.SampleUv1 = pixelUv;
                         _heightFromDiffuseSettings.SampleColor1 = sampledColor;
                         _sampleColorMap1.SetPixel(1, 1, _heightFromDiffuseSettings.SampleColor1);
-                        _sampleColorMap1.Apply();
+                        _sampleColorMap1.Apply(false);
                         break;
                     case 2:
                         _heightFromDiffuseSettings.SampleUv2 = pixelUv;
                         _heightFromDiffuseSettings.SampleColor2 = sampledColor;
                         _sampleColorMap2.SetPixel(1, 1, _heightFromDiffuseSettings.SampleColor2);
-                        _sampleColorMap2.Apply();
+                        _sampleColorMap2.Apply(false);
                         break;
                     default:
                         throw new InvalidOperationException();
@@ -478,7 +478,7 @@ namespace Gui
             var offsetX = 10;
             var offsetY = 30;
 
-            GUI.enabled = MainGuiScript.DiffuseMap != null;
+            GUI.enabled = TextureManager.Instance.DiffuseMap != null;
             _heightFromDiffuseSettings.UseAdjustedDiffuse = GUI.Toggle(new Rect(offsetX, offsetY, 80, 30),
                 _heightFromDiffuseSettings.UseAdjustedDiffuse, " Diffuse");
             if (_heightFromDiffuseSettings.UseAdjustedDiffuse)
@@ -491,7 +491,7 @@ namespace Gui
                 _heightFromDiffuseSettings.UseAdjustedDiffuse = true;
             }
 
-            GUI.enabled = MainGuiScript.DiffuseMapOriginal != null;
+            GUI.enabled = TextureManager.Instance.DiffuseMapOriginal != null;
             _heightFromDiffuseSettings.UseOriginalDiffuse = GUI.Toggle(new Rect(offsetX + 80, offsetY, 120, 30),
                 _heightFromDiffuseSettings.UseOriginalDiffuse,
                 "Original Diffuse");
@@ -505,7 +505,7 @@ namespace Gui
                 _heightFromDiffuseSettings.UseOriginalDiffuse = true;
             }
 
-            GUI.enabled = MainGuiScript.NormalMap;
+            GUI.enabled = TextureManager.Instance.NormalMap;
             _heightFromDiffuseSettings.UseNormal = GUI.Toggle(new Rect(offsetX + 210, offsetY, 80, 30),
                 _heightFromDiffuseSettings.UseNormal, " Normal");
             if (_heightFromDiffuseSettings.UseNormal)
@@ -792,18 +792,18 @@ namespace Gui
 
             if (_heightFromDiffuseSettings.UseAdjustedDiffuse)
             {
-                _imageSizeX = MainGuiScript.DiffuseMap.width;
-                _imageSizeY = MainGuiScript.DiffuseMap.height;
+                _imageSizeX = TextureManager.Instance.DiffuseMap.width;
+                _imageSizeY = TextureManager.Instance.DiffuseMap.height;
             }
             else if (_heightFromDiffuseSettings.UseOriginalDiffuse)
             {
-                _imageSizeX = MainGuiScript.DiffuseMapOriginal.width;
-                _imageSizeY = MainGuiScript.DiffuseMapOriginal.height;
+                _imageSizeX = TextureManager.Instance.DiffuseMapOriginal.width;
+                _imageSizeY = TextureManager.Instance.DiffuseMapOriginal.height;
             }
             else if (_heightFromDiffuseSettings.UseNormal)
             {
-                _imageSizeX = MainGuiScript.NormalMap.width;
-                _imageSizeY = MainGuiScript.NormalMap.height;
+                _imageSizeX = TextureManager.Instance.NormalMap.width;
+                _imageSizeY = TextureManager.Instance.NormalMap.height;
             }
 
 
@@ -862,8 +862,7 @@ namespace Gui
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
 
             RenderTexture.ReleaseTemporary(_tempHeightMap);
-            _tempHeightMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGB32,
-                RenderTextureReadWrite.Linear);
+            _tempHeightMap = TextureManager.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             _blitMaterial.SetFloat(FinalContrast, _heightFromDiffuseSettings.FinalContrast);
             _blitMaterial.SetFloat(FinalBias, _heightFromDiffuseSettings.FinalBias);
@@ -917,25 +916,22 @@ namespace Gui
             }
 
 
-            if (MainGuiScript.HeightMap) Destroy(MainGuiScript.HeightMap);
+            if (TextureManager.Instance.HeightMap) Destroy(TextureManager.Instance.HeightMap);
 
             RenderTexture.active = _tempHeightMap;
-            MainGuiScript.HeightMap =
-                new Texture2D(_tempHeightMap.width, _tempHeightMap.height, TextureFormat.ARGB32, true, true);
-            MainGuiScript.HeightMap.ReadPixels(new Rect(0, 0, _tempHeightMap.width, _tempHeightMap.height), 0, 0);
-            MainGuiScript.HeightMap.Apply();
+            TextureManager.Instance.GetTextureFromRender(_tempHeightMap, ProgramEnums.MapType.Height);
             RenderTexture.active = null;
 
             // Save high fidelity for normal making
-            if (MainGuiScript.HdHeightMap)
+            if (TextureManager.Instance.HdHeightMap)
             {
-                MainGuiScript.HdHeightMap.Release();
-                MainGuiScript.HdHeightMap = null;
+                TextureManager.Instance.HdHeightMap.Release();
+                TextureManager.Instance.HdHeightMap = null;
             }
 
-            MainGuiScript.HdHeightMap = RenderTexture.GetTemporary(_tempHeightMap.width, _tempHeightMap.height, 0,
-                RenderTextureFormat.RHalf, RenderTextureReadWrite.Linear);
-            Graphics.Blit(_blurMap0, MainGuiScript.HdHeightMap, _blitMaterial, 2);
+            TextureManager.Instance.HdHeightMap =
+                TextureManager.GetTempRenderTexture(_tempHeightMap.width, _tempHeightMap.width);
+            Graphics.Blit(_blurMap0, TextureManager.Instance.HdHeightMap, _blitMaterial, 2);
 
             RenderTexture.ReleaseTemporary(_tempHeightMap);
 
@@ -954,13 +950,13 @@ namespace Gui
             _blitMaterialNormal.SetFloat(Spread, _heightFromDiffuseSettings.Spread);
             _blitMaterialNormal.SetFloat(SpreadBoost, _heightFromDiffuseSettings.SpreadBoost);
             _blitMaterialNormal.SetFloat(Samples, (int) _heightFromDiffuseSettings.Spread);
-            _blitMaterialNormal.SetTexture(MainTex, MainGuiScript.NormalMap);
+            _blitMaterialNormal.SetTexture(MainTex, TextureManager.Instance.NormalMap);
             _blitMaterialNormal.SetTexture(BlendTex, _blurMap1);
 
             ThisMaterial.SetFloat(IsNormal, 1.0f);
             ThisMaterial.SetTexture(BlurTex0, _blurMap0);
             ThisMaterial.SetTexture(BlurTex1, _blurMap1);
-            ThisMaterial.SetTexture(MainTex, MainGuiScript.NormalMap);
+            ThisMaterial.SetTexture(MainTex, TextureManager.Instance.NormalMap);
 
             var yieldCountDown = 5;
 
@@ -969,7 +965,7 @@ namespace Gui
                 _blitMaterialNormal.SetFloat(BlendAmount, 1.0f / i);
                 _blitMaterialNormal.SetFloat(Progress, i / 100.0f);
 
-                Graphics.Blit(MainGuiScript.NormalMap, _blurMap0, _blitMaterialNormal, 0);
+                Graphics.Blit(TextureManager.Instance.NormalMap, _blurMap0, _blitMaterialNormal, 0);
                 Graphics.Blit(_blurMap0, _blurMap1);
 
                 yieldCountDown -= 1;
@@ -1020,8 +1016,8 @@ namespace Gui
 
             Graphics.Blit(
                 _heightFromDiffuseSettings.UseOriginalDiffuse
-                    ? MainGuiScript.DiffuseMapOriginal
-                    : MainGuiScript.DiffuseMap,
+                    ? TextureManager.Instance.DiffuseMapOriginal
+                    : TextureManager.Instance.DiffuseMap,
                 _blurMap0, _blitMaterialSample, 0);
 
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
@@ -1095,8 +1091,8 @@ namespace Gui
 
             ThisMaterial.SetTexture(MainTex,
                 _heightFromDiffuseSettings.UseOriginalDiffuse
-                    ? MainGuiScript.DiffuseMapOriginal
-                    : MainGuiScript.DiffuseMap);
+                    ? TextureManager.Instance.DiffuseMapOriginal
+                    : TextureManager.Instance.DiffuseMap);
 
             ThisMaterial.SetTexture(BlurTex0, _blurMap0);
             ThisMaterial.SetTexture(BlurTex1, _blurMap1);
