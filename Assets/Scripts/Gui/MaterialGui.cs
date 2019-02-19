@@ -20,6 +20,7 @@ namespace Gui
         private static readonly int SmoothnessRemapMaxId = Shader.PropertyToID("_SmoothnessRemapMax");
         private static readonly int HeightAmplitudeId = Shader.PropertyToID("_HeightAmplitude");
         private static readonly int TessAmplitudeId = Shader.PropertyToID("_HeightTessAmplitude");
+        private static readonly int HeightCenterId = Shader.PropertyToID("_HeightCenter");
 
 
         private bool _cubeShown;
@@ -152,6 +153,7 @@ namespace Gui
             if (TestObjectSphere.activeSelf != _planeShown) TestObjectSphere.SetActive(_sphereShown);
 
             _thisMaterial.SetFloat(HeightAmplitudeId, _materialSettings.DisplacementAmplitude);
+            _thisMaterial.SetFloat(HeightCenterId, _materialSettings.DisplacementAmplitude / 4f);
             _thisMaterial.SetFloat(TessAmplitudeId, _materialSettings.DisplacementAmplitude * 100f);
 
 

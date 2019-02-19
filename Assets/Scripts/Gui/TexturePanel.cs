@@ -43,6 +43,7 @@ namespace Gui
             CopyButton.interactable = TextureManager.Instance.NotNull(MapType);
             CreateButton.interactable = TextureManager.Instance.GetCreationCondition(MapType);
             var tex = TextureManager.Instance.GetTexture(MapType);
+            if (!tex) TextureFrame.texture = null;
             if (tex && TextureFrame.texture != tex) TextureFrame.texture = tex;
             TextureFrame.color = TextureFrame.texture ? Color.white : Color.black;
         }
