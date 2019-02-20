@@ -72,10 +72,10 @@ namespace Gui
             var title = "Open " + MapType + " Map";
             var lastPath = ProgramManager.Instance.LastPath;
             StandaloneFileBrowser.StandaloneFileBrowser.OpenFilePanelAsync(title, lastPath, ProgramManager.ImageLoadFilter, false,
-                OpenTextureCallback);
+                LoadTextureCallback);
         }
 
-        private void OpenTextureCallback(string[] path)
+        private void LoadTextureCallback(string[] path)
         {
             if (path[0].IsNullOrEmpty()) return;
             var lastBar = path[0].LastIndexOf(ProgramManager.Instance.PathChar);

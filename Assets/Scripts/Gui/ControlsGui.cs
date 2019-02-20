@@ -1,5 +1,6 @@
 ﻿#region
 
+using General;
 using UnityEngine;
 
 #endregion
@@ -11,6 +12,11 @@ namespace Gui
         private bool _windowOpen;
 
         private Rect _windowRect = new Rect(Screen.width - 520, Screen.height - 320, 300, 600);
+
+        private void Awake()
+        {
+            ProgramManager.Instance.SceneObjects.Add(gameObject);
+        }
 
         private void DoMyWindow(int windowId)
         {

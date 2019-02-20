@@ -38,6 +38,7 @@ public static class TextureProcessing
         maskMap.ReadPixels(new Rect(0, 0, map.width, map.height), 0, 0);
         maskMap.Apply(false);
         RenderTexture.ReleaseTemporary(map);
+
         return maskMap;
     }
 
@@ -57,16 +58,31 @@ public static class TextureProcessing
         return normalMap;
     }
 
+    public static Texture2D ConvertToGama(Texture2D texture)
+    {
+        var mat = new Material(Shader.Find("Hidden/ConvertToGama"));
+        var renderTexture = TextureManager.Instance.GetTempRenderTexture(texture.width, texture.height);
+        Graphics.Blit(texture, renderTexture, mat);
+        RenderTexture.active = renderTexture;
+        var tex = TextureManager.Instance.GetStandardTexture(texture.width, texture.height);
+        tex.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+        tex.Apply(false);
+        RenderTexture.ReleaseTemporary(renderTexture);
+
+        return tex;
+    }
+
     private static Texture2D LoadPngBmpJpg(string path)
     {
-        var newTexture = new Texture2D(2, 2, TextureFormat.RGBAHalf, false, true);
+        var newTexture = new Texture2D(2, 2);
         if (!File.Exists(path)) return null;
 
         var fileData = File.ReadAllBytes(path);
 
         newTexture.LoadImage(fileData);
+//        newTexture = ConvertToLinear(newTexture);
 
-        return newTexture;
+        return TextureProcessing.ConvertToStandard(newTexture);
     }
 
 
@@ -84,6 +100,8 @@ public static class TextureProcessing
 
     public static Texture2D GetTextureFromFile(string pathToFile)
     {
+        pathToFile = Uri.UnescapeDataString(pathToFile);
+
         var fileFormat = TextureProcessing.GetFormat(pathToFile);
 
         Texture2D newTexture = null;

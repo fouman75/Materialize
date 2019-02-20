@@ -59,7 +59,6 @@ namespace Gui
         private bool _clearTextures;
         private bool _exrSelected;
         private bool _jpgSelected;
-        private string _lastDirectory = "";
         private List<GameObject> _objectsToUnhide;
 
         private bool _pngSelected = true;
@@ -115,6 +114,7 @@ namespace Gui
         private void Awake()
         {
             Instance = this;
+            ProgramManager.Instance.SceneObjects.Add(gameObject);
         }
 
         private IEnumerator Start()
@@ -182,10 +182,11 @@ namespace Gui
 
             #region Map Saving Options
 
-            var offsetXm = Screen.width - 230;
+            const int rectWidth = 220;
+            var offsetXm = Screen.width - rectWidth - 10;
             const int offsetY = 50;
 
-            GUI.Box(new Rect(offsetXm, offsetY, 220, 250), "Saving Options");
+            GUI.Box(new Rect(offsetXm, offsetY, rectWidth, 250), "Saving Options");
             offsetXm -= 5;
 
             GUI.Label(new Rect(offsetXm + 20, offsetY + 20, 100, 25), "File Format");
@@ -216,17 +217,15 @@ namespace Gui
             if (GUI.Button(new Rect(offsetXm + 10, offsetY + 180, 100, 25), "Save Project"))
             {
                 const string defaultName = "baseName.mtz";
-                StandaloneFileBrowser.StandaloneFileBrowser.SaveFilePanelAsync("Save Project", _lastDirectory,
-                    defaultName, "mtz",
-                    SaveProjectCallback);
+                StandaloneFileBrowser.StandaloneFileBrowser.SaveFilePanelAsync("Save Project",
+                    ProgramManager.Instance.LastPath, defaultName, "mtz", SaveProjectCallback);
             }
 
             //Load Project
             if (GUI.Button(new Rect(offsetXm + 10, offsetY + 215, 100, 25), "Load Project"))
             {
-                StandaloneFileBrowser.StandaloneFileBrowser.OpenFilePanelAsync("Load Project", _lastDirectory, "mtz",
-                    false,
-                    LoadProjectCallback);
+                StandaloneFileBrowser.StandaloneFileBrowser.OpenFilePanelAsync("Load Project",
+                    ProgramManager.Instance.LastPath, "mtz", false, LoadProjectCallback);
             }
 
             #endregion
@@ -410,7 +409,7 @@ namespace Gui
             if (path.IsNullOrEmpty()) return;
 
             var lastBar = path.LastIndexOf(ProgramManager.Instance.PathChar);
-            _lastDirectory = path.Substring(0, lastBar + 1);
+            ProgramManager.Instance.LastPath = path.Substring(0, lastBar + 1);
 
             _saveLoadProjectScript.SaveProject(path);
         }
@@ -420,7 +419,7 @@ namespace Gui
             if (path[0].IsNullOrEmpty()) return;
 
             var lastBar = path[0].LastIndexOf(ProgramManager.Instance.PathChar);
-            _lastDirectory = path[0].Substring(0, lastBar + 1);
+            ProgramManager.Instance.LastPath = path[0].Substring(0, lastBar + 1);
 
             _saveLoadProjectScript.LoadProject(path[0]);
         }
@@ -749,60 +748,6 @@ namespace Gui
         }
 
         public void LoadImage(ProgramEnums.MapType mapType)
-        {
-            switch (mapType)
-            {
-                case ProgramEnums.MapType.Height:
-                    break;
-                case ProgramEnums.MapType.Diffuse:
-                    break;
-                case ProgramEnums.MapType.DiffuseOriginal:
-                    break;
-                case ProgramEnums.MapType.Metallic:
-                    break;
-                case ProgramEnums.MapType.Smoothness:
-                    break;
-                case ProgramEnums.MapType.Normal:
-                    break;
-                case ProgramEnums.MapType.Ao:
-                    break;
-                case ProgramEnums.MapType.Property:
-                    break;
-                case ProgramEnums.MapType.MaskMap:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
-            }
-        }
-
-        public void PasteImage(ProgramEnums.MapType mapType)
-        {
-            switch (mapType)
-            {
-                case ProgramEnums.MapType.Height:
-                    break;
-                case ProgramEnums.MapType.Diffuse:
-                    break;
-                case ProgramEnums.MapType.DiffuseOriginal:
-                    break;
-                case ProgramEnums.MapType.Metallic:
-                    break;
-                case ProgramEnums.MapType.Smoothness:
-                    break;
-                case ProgramEnums.MapType.Normal:
-                    break;
-                case ProgramEnums.MapType.Ao:
-                    break;
-                case ProgramEnums.MapType.Property:
-                    break;
-                case ProgramEnums.MapType.MaskMap:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
-            }
-        }
-
-        public void CopyImage(ProgramEnums.MapType mapType)
         {
             switch (mapType)
             {

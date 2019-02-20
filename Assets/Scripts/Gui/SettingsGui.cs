@@ -23,6 +23,11 @@ namespace Gui
         [HideInInspector] public ProgramSettings ProgramSettings = new ProgramSettings();
         private bool _invalidSettings;
 
+        private void Awake()
+        {
+            ProgramManager.Instance.SceneObjects.Add(gameObject);
+        }
+
         private void Start()
         {
             Instance = this;

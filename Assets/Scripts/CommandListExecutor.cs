@@ -54,6 +54,11 @@ public class CommandListExecutor : MonoBehaviour
     public SettingsGui SettingsGui;
 
     // Use this for initialization
+    private void Awake()
+    {
+        ProgramManager.Instance.SceneObjects.Add(gameObject);
+    }
+
     private void Start()
     {
         _saveLoad = SaveLoadProjectObject.GetComponent<SaveLoadProject>();

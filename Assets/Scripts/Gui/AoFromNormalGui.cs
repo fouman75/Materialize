@@ -220,7 +220,6 @@ namespace Gui
         {
             Busy = true;
 
-            var blitMaterial = ProgramManager.Instance.RenderPipeline.GetBlitMaterial();
             Debug.Log("Processing Normal Depth to AO");
 
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));

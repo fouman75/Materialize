@@ -63,13 +63,14 @@ namespace General
 
         public void SaveProject(string pathToFile)
         {
-            if (pathToFile.Contains("."))
+            var projectName = Path.GetFileNameWithoutExtension(pathToFile);
+            if (Path.HasExtension(pathToFile))
                 pathToFile = pathToFile.Substring(0, pathToFile.LastIndexOf(".", StringComparison.Ordinal));
 
             Debug.Log("Saving Project: " + pathToFile);
 
             var extension = MainGui.Instance.SelectedFormat.ToString().ToLower();
-            var projectName = pathToFile.Substring(pathToFile.LastIndexOf(_pathChar) + 1);
+
             Debug.Log("Project Name " + projectName);
 
             MainGui.Instance.HeightFromDiffuseGuiScript.GetValues(_thisProject);
@@ -230,11 +231,14 @@ namespace General
 //            var isHdr = textureToSave.format == TextureFormat.RGBAFloat ||
 //                        textureToSave.format == TextureFormat.RGBAHalf;
 
-            var renderTexture = TextureManager.Instance.GetTempRenderTexture(textureToSave.width, textureToSave.height);
+            var renderTexture =
+                TextureManager.Instance.GetTempRenderTexture(textureToSave.width, textureToSave.height);
             Graphics.Blit(textureToSave, renderTexture);
             RenderTexture.active = renderTexture;
             textureToSave.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0, false);
             textureToSave.Apply(false);
+
+            textureToSave = TextureProcessing.ConvertToGama(textureToSave);
 
 
             byte[] bytes;

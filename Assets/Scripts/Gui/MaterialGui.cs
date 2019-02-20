@@ -69,6 +69,7 @@ namespace Gui
         private void Awake()
         {
             _light = LightObject.GetComponent<Light>();
+            ProgramManager.Instance.SceneObjects.Add(gameObject);
         }
 
         private void Start()
@@ -84,7 +85,6 @@ namespace Gui
 
         public void SetValues(ProjectObject projectObject)
         {
-            InitializeSettings();
             if (projectObject.MaterialSettings != null)
             {
                 _materialSettings = projectObject.MaterialSettings;
@@ -98,6 +98,7 @@ namespace Gui
 
         private void InitializeSettings()
         {
+            _thisMaterial = TextureManager.Instance.FullMaterialInstance;
             if (_settingsInitialized) return;
             Debug.Log("Initializing MaterialSettings");
             _materialSettings = new MaterialSettings();
@@ -159,7 +160,7 @@ namespace Gui
 
 //            
         }
-        
+
         private void ChooseLightColor(int posX, int posY)
         {
             _materialSettings.LightR =
@@ -304,7 +305,6 @@ namespace Gui
 
         public void Initialize()
         {
-            _thisMaterial = TextureManager.Instance.FullMaterialInstance;
             InitializeSettings();
             TestObject.GetComponent<Renderer>().material = _thisMaterial;
             TestObjectCube.GetComponent<Renderer>().material = _thisMaterial;

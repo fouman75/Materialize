@@ -217,6 +217,7 @@ namespace General
             }
 
             ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = FullMaterialInstance;
+            ProgramManager.Instance.MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
         }
 
         public Texture2D GetStandardTexture(int width, int height, bool linear = true)
@@ -256,7 +257,7 @@ namespace General
         {
             var rt = forceGama
                 ? RenderTexture.GetTemporary(width, height, 24, RenderTextureFormat, RenderTextureReadWrite.sRGB)
-                : RenderTexture.GetTemporary(width, height, 24, RenderTextureFormat, RenderTextureReadWrite.Default);
+                : RenderTexture.GetTemporary(width, height, 24, RenderTextureFormat, RenderTextureReadWrite.Linear);
 
 
             rt.Create();
