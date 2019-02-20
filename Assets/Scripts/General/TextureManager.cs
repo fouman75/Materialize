@@ -254,16 +254,20 @@ namespace General
 
         public RenderTexture GetTempRenderTexture(int width, int height, bool forceGama = false)
         {
-            return forceGama
-                ? RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat, RenderTextureReadWrite.sRGB)
-                : RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat, RenderTextureReadWrite.Default);
+            var rt = forceGama
+                ? RenderTexture.GetTemporary(width, height, 24, RenderTextureFormat, RenderTextureReadWrite.sRGB)
+                : RenderTexture.GetTemporary(width, height, 24, RenderTextureFormat, RenderTextureReadWrite.Default);
+
+
+            rt.Create();
+
+            return rt;
         }
 
         public void GetTextureFromRender(RenderTexture input, ProgramEnums.MapType mapType)
         {
             GetTextureFromRender(input, mapType, out _);
         }
-
         public void GetTextureFromRender(RenderTexture input, out Texture2D outTexture)
         {
             GetTextureFromRender(input, ProgramEnums.MapType.None, out outTexture);

@@ -129,14 +129,14 @@ namespace Gui
             if (!_thisMaterial || _materialSettings == null) return;
 
 
-            var temp = _thisMaterial.GetFloat(MetallicId);
-            if (Mathf.Abs(temp - _materialSettings.Metallic.Anonymous) > 0.001f)
-            {
-                if (_materialSettings.Metallic.Changed) _thisMaterial.SetFloat(MetallicId, _materialSettings.Metallic);
-                else _materialSettings.Metallic.Anonymous = temp;
-            }
+//            var temp = _thisMaterial.GetFloat(MetallicId);
+//            if (Mathf.Abs(temp - _materialSettings.Metallic.Anonymous) > 0.001f)
+//            {
+//                if (_materialSettings.Metallic.Changed) _thisMaterial.SetFloat(MetallicId, _materialSettings.Metallic);
+//                else _materialSettings.Metallic.Anonymous = temp;
+//            }
 
-
+            _thisMaterial.SetFloat(MetallicId, _materialSettings.Metallic);
             _thisMaterial.SetFloat(AoRemapMinId, _materialSettings.AoRemapMin);
             _thisMaterial.SetFloat(AoRemapMaxId, _materialSettings.AoRemapMax);
             _thisMaterial.SetFloat(SmoothnessRemapMinId, _materialSettings.SmoothnessRemapMin);
@@ -159,7 +159,7 @@ namespace Gui
 
 //            
         }
-
+        
         private void ChooseLightColor(int posX, int posY)
         {
             _materialSettings.LightR =

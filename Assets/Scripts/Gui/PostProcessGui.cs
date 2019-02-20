@@ -43,7 +43,7 @@ namespace Gui
 
             Profile.TryGet(out _depthOfField);
 
-            _dofFocusDistance = _depthOfField.focusDistance.value;
+            _dofFocusDistance = _depthOfField ? _depthOfField.focusDistance.value : 0;
 
             Profile.TryGet(out _vignette);
             _vignetteIntensity = _vignette.intensity.value;
@@ -59,7 +59,8 @@ namespace Gui
             _bloom.intensity.value = _bloomIntensity;
             _bloom.scatter.value = _bloomScatter;
             _bloom.dirtIntensity.value = _lensDirtIntensity;
-            _depthOfField.focusDistance.value = _dofFocusDistance;
+            if (_depthOfField != null)
+                _depthOfField.focusDistance.value = _dofFocusDistance;
             _vignette.intensity.value = _vignetteIntensity;
             _vignette.smoothness.value = _vignetteSmoothness;
             _ambientOcclusion.intensity.value = _ambientOcclusionIntensity;
@@ -123,8 +124,10 @@ namespace Gui
                 out _ambientOcclusionIntensity, 0.0f, 4.0f);
             offsetY += 60;
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "DOF Focus Distance", _dofFocusDistance,
-                out _dofFocusDistance, 0.0f, 20.0f);
+            if (_depthOfField)
+                GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "DOF Focus Distance", _dofFocusDistance,
+                    out _dofFocusDistance, 0.0f, 20.0f);
+
             offsetY += 50;
 
             if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Close")) gameObject.SetActive(false);

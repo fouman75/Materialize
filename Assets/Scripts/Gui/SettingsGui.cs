@@ -179,8 +179,10 @@ namespace Gui
             _windowRect = new Rect(Screen.width - 300, Screen.height - 320, 280, 230);
 
             if (_windowOpen) _windowRect = GUI.Window(20, _windowRect, DoMyWindow, "Setting and Preferences");
+        }
 
-            if (!GUI.Button(new Rect(Screen.width - 280, Screen.height - 40, 80, 30), "Settings")) return;
+        public void SettingsButtonCallBack()
+        {
             if (_windowOpen)
             {
                 SaveSettings();

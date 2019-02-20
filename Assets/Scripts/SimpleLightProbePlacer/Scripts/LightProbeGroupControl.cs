@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace SimpleLightProbePlacer
 {
-#if UNITY_EDITOR
     [RequireComponent(typeof(LightProbeGroup))]
     [AddComponentMenu("Rendering/Light Probe Group Control")]
     public class LightProbeGroupControl : MonoBehaviour
@@ -12,7 +11,7 @@ namespace SimpleLightProbePlacer
         [SerializeField] private float m_mergeDistance = 0.5f;
         [SerializeField] private bool m_usePointLights = true;
         [SerializeField] private float m_pointLightRange = 1;
-
+#if UNITY_EDITOR
         public float MergeDistance
         {
             get { return m_mergeDistance; }
@@ -171,6 +170,6 @@ namespace SimpleLightProbePlacer
 
             return corners.Select(x => transform.TransformPoint(x * range)).ToList();
         }
-    }
 #endif
+    }
 }

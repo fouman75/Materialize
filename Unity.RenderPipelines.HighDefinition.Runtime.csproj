@@ -1,0 +1,1145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <CscToolPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Tools/RoslynScripts</CscToolPath>
+    <CscToolExe>unity_csc.sh</CscToolExe>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <_TargetFrameworkDirectories>non_empty_path_generated_by_rider_editor_plugin</_TargetFrameworkDirectories>
+    <_FullFrameworkReferenceAssemblyPaths>non_empty_path_generated_by_rider_editor_plugin</_FullFrameworkReferenceAssemblyPaths>
+    <DisableHandlePackageFileConflicts>true</DisableHandlePackageFileConflicts>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace></RootNamespace>
+    <ProjectGuid>{95A43A97-9673-A4F6-4E56-BBEA3999EF66}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>Unity.RenderPipelines.HighDefinition.Runtime</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>.</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;UNITY_2019_1_0;UNITY_2019_1;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2019_1_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_TEXTURE_STREAMING;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_VIDEO;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_LOCALIZATION;PLATFORM_STANDALONE_LINUX;PLATFORM_STANDALONE;UNITY_STANDALONE_LINUX;UNITY_STANDALONE;UNITY_STANDALONE_LINUX_API;PLAYERPREFS_SERIALIZE_TO_XML;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_SCRIPTING_GC_WBARRIERS;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_SPATIALTRACKING;ENABLE_MODULAR_UNITYENGINE_ASSEMBLIES;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_LINUX;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;HDRP_1_OR_NEWER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoConfig>true</NoConfig>
+    <NoStdLib>true</NoStdLib>
+    <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
+    <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
+    <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\AssemblyInfo.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Camera\HDRayTracingFilter.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Camera\CameraSwitcher.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Camera\FreeCamera.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Common\ComponentSingleton.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Common\CoreUnsafeUtils.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Common\ObjectPools.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Common\ObservableList.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Common\RectInt.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Common\SerializedDictionary.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\CoreResources\GPUCopy.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\DebugManager.Actions.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\DebugManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\DebugShapes.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\DebugUI.Containers.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\DebugUI.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\DebugUI.Fields.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\DebugUI.Panel.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\DebugUpdater.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\FrameSettingsFieldAttribute.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\MousePositionDebug.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerBitField.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerButton.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerCanvas.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerColor.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerContainer.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerEnumField.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerEnumHistory.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerFloatField.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerFoldout.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerGroup.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerHBox.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerIndirectFloatField.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerIndirectToggle.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerIntField.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerPanel.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerPersistentCanvas.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerToggle.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerToggleHistory.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerUIntField.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerValue.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerVBox.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerVector2.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerVector3.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerVector4.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\DebugUIHandlerWidget.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Debugging\Prefabs\Scripts\UIFoldout.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Inputs\InputRegistering.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Migration\IVersionable.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Migration\MigrationDescription.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Migration\MigrationStep.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Script\Profiler\MiniProfiler.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\ShaderGenerator\ShaderGeneratorAttributes.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Textures\BufferedRTHandleSystem.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Textures\DepthBits.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Textures\EncodeBC6H.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Textures\RTCategory.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Textures\RTHandles.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Textures\RTHandleSystem.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Textures\RTHandleSystem.RTHandle.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Textures\TextureCache.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Textures\TextureCache2D.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Textures\TextureCacheCubemap.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Textures\TextureSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Utilities\BitArray.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Utilities\DelegateUtility.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Utilities\GeometryUtils.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Utilities\SceneRenderPipeline.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Utilities\TileLayoutUtils.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\ColorPickerDebug.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\DebugDisplay.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\DebugLightVolumes.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\DecalsDebug.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\FalseColorDebug.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\LightingDebug.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\MaterialDebug.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\MipMapDebug.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\RayCountManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\AtmosphericScattering\AtmosphericScattering.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\AtmosphericScattering\ExponentialFog.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\AtmosphericScattering\LinearFog.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\AtmosphericScattering\ShaderVariablesAtmosphericScattering.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\AtmosphericScattering\VolumetricFog.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\GlobalIlluminationUtils.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\IndirectLightingController.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Light\HDAdditionalLightData.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Light\HDAdditionalShadowData.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightDefinition.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\GlobalLightLoopSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\LightLoop.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\ShaderVariablesLightLoop.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightUtils.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\HDAdditionalReflectionData.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\HDAdditionalReflectionData.Legacy.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\HDAdditionalReflectionData.Migration.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\HDProbe.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\HDProbe.Migration.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\HDProbeCullingResults.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\HDProbeCullState.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\HDProbeSystem.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\HDRuntimeReflectionSystem.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\PlanarReflectionProbe.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\PlanarReflectionProbe.Migration.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\PlanarReflectionProbeCache.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\ReflectionProbeCache.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\ReflectionSystemParameters.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\Volume\InfluenceVolume.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\Volume\InfluenceVolume.Editor.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\Volume\InfluenceVolume.Migration.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\Volume\ProxyVolume.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\Volume\ProxyVolume.Migration.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\Volume\ReflectionProxyVolumeComponent.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\Volume\ShapeType.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\ScreenSpaceLighting\AmbientOcclusion.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\ScreenSpaceLighting\ScreenSpaceReflection.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\ScreenSpaceLighting\ScreenSpaceRefraction.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\ScreenSpaceLighting\ShaderVariablesScreenSpaceLighting.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\AdditionalShadowData.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\ContactShadows.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\HDShadowAtlas.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\HDShadowManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\HDShadowSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\HDShadowUtils.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\MicroShadowing.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\SphericalHarmonics.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\VolumetricLighting\DensityVolume.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\VolumetricLighting\DensityVolumeManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\VolumetricLighting\Texture3DAtlas.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\VolumetricLighting\VolumetricLighting.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\VolumetricLighting\VolumetricLightingController.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\AxF.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\AxFLTCAreaLight\LtcData.GGX2.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Builtin\BuiltinData.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\DBufferManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\Decal.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\DecalProjectorComponent.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\DecalSystem.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\GlobalDecalSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\ShaderVariablesDecal.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\DiffusionProfile\DiffusionProfileSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Fabric\Fabric.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Fabric\IBLFilterCharlie.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\GBufferManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\GGXConvolution\GGXConvolution.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\GGXConvolution\IBLFilterGGX.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Hair\Hair.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\IBLFilterBSDF.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\Lit.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\LTCAreaLight\LTCAreaLight.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\LTCAreaLight\LTCAreaLightCookieManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\LTCAreaLight\LtcData.DisneyDiffuse.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\LTCAreaLight\LtcData.GGX.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\PreIntegratedFGD\PreIntegratedFGD.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\RenderPipelineMaterial.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\SharedRTManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\SphericalCapPivot\PivotData.GGX.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\SphericalCapPivot\SPTDistribution.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\StackLit\StackLit.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\SubsurfaceScattering\ShaderVariablesSubsurfaceScattering.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\SubsurfaceScattering\SubsurfaceScatteringManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Unlit\Unlit.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\Bloom.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\ChannelMixer.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\ChromaticAberration.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\ColorAdjustments.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\ColorCurves.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\ColorLookup.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\DepthOfField.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\Exposure.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\FilmGrain.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\LensDistortion.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\LiftGammaGain.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\MotionBlur.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\PaniniProjection.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\ShadowsMidtonesHighlights.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\SplitToning.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\Tonemapping.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\Vignette.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Components\WhiteBalance.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\GlobalPostProcessSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\IPostProcessComponent.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\PostProcessSystem.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\UberPostFeatures.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\TextureCurve.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Camera\HDAdditionalCameraData.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Camera\HDAdditionalCameraData.Migration.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Camera\HDCamera.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Camera\HDCameraFrameHistoryType.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\CullingGroupManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\GlobalDynamicResolutionSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\HDCustomSamplerId.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\HDDynamicResolutionHandler.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\HDGPUAsyncTask.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\HDRenderPipeline.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\HDRenderPipelineAsset.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\HDRenderPipelineAsset.Migration.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\HDRenderPipelineEditorResources.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\HDRenderPipelineEditorResources.Migration.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\HDRenderQueue.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\HDStringConstants.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\MRTBufferManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\HDRaytracingAmbientOcclusion.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\HDRaytracingEnvironment.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\HDRaytracingLightCluster.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\HDRaytracingManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\HDRaytracingReflection.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\HDRaytracingRenderer.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\HDRaytracingShadowManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\RenderPass\MipGenerator.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\RenderPipelineResources.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\RenderPipelineResources.Migration.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\SceneViewDrawMode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Settings\CaptureSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Settings\FrameSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Settings\FrameSettings.Migration.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Settings\FrameSettingsHistory.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Settings\RenderPipelineSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\ShaderPass.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Utility\BlueNoise.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Utility\HDUtils.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Utility\Texture2DAtlas.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\ShaderLibrary\ShaderConfig.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\GradientSky\GradientSky.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\GradientSky\GradientSkyRenderer.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\HDRISky\HDRISky.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\HDRISky\HDRISkyRenderer.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\ProceduralSky\ProceduralSky.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\ProceduralSky\ProceduralSkyRenderer.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\SkyManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\SkyRenderer.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\SkyRenderingContext.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\SkySettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\SkyUpdateContext.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\StaticLightingSky.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\VisualEnvironment.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Utilities\CameraPositionSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Utilities\CameraSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Utilities\CameraSettingsUtilities.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Utilities\HDBakingUtilities.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Utilities\HDRenderUtilities.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Utilities\HDTextureUtilities.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Utilities\ProbeCapturePositionSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Utilities\ProbeSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Utilities\ProbeSettingsUtilities.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Utilities\SceneObjectIDMap.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Utilities\TypeInfo.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Wind\ShaderWindSettings.cs" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\BloomPrefilter.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\VolumetricLighting\VolumetricLighting.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\AxFData.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\SkyUtils.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingReflections.raytrace" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\ShaderLibrary\ShaderConfig.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Material.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\LitTessellation.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\DiffusionProfile\DiffusionProfile.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\LutBuilder3D.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\ShaderVariablesLightLoop.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\SurfaceShading.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingAmbientOcclusion.raytrace" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\ScreenSpaceShadow.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\lightlistbuild-clustered.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\LitBuiltinData.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\ShaderPassRaytracingReflection.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Unlit\UnlitData.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\ScreenSpaceLighting\AmbientOcclusionDownsample1.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\HDShadowAlgorithms.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\ScreenSpaceLighting\AmbientOcclusionRender.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\DebugViewRayCount.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\RenderPass\ColorPyramid.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\ShaderPassGBuffer.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\BloomUpsample.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Fabric\Fabric.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\AxF.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\DecalUtilities.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\ShaderLibrary\CopyStencilBuffer.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\DecalNormalBuffer.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\SortingComputeUtils.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\LitProperties.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Hair\Hair.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\MotionBlurCommon.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Builtin\BuiltinData.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\OnlineVariance.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\DebugDisplay.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\AtmosphericScattering\OpaqueAtmosphericScattering.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\ShaderPassVelocity.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Unlit\ShaderPass\UnlitSharePass.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\GGXConvolution\GGXConvolve.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\TessellationShare.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\CoreResources\BlitCubeTextureFace.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\HDShadow.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\ShaderLibrary\ShaderVariablesMatrixDefsLegacyUnity.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\DebugFullScreen.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingLightLoop.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\PBRValidator.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\BlitCubemap.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\MomentShadows.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\ShaderLibrary\ShaderVariablesFunctions.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\SubsurfaceScattering\CombineLighting.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\CoreResources\EncodeBC6H.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\ShaderPassForwardUnlit.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\DepthOfFieldCoCDilate.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\SubsurfaceScattering\SubsurfaceScattering.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Fabric\Fabric.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\LitReference.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightEvaluation.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\SubsurfaceScattering\SubsurfaceScattering.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Builtin\BuiltinData.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\AxFPreIntegratedFGD.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingAreaShadows.raytrace" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\HDShadowContext.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\LitDataDisplacement.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\RenderPass\Distortion\ApplyDistorsion.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\ShaderPass\AxFSharePass.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\GGXConvolution\BuildProbabilityTables.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Fabric\FabricReference.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\LightingConvexHullUtils.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\ShaderPassForward.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\lightlistbuild.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\DebugLightCluster.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\MipMapDebug.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingBuiltinData.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\HDRaytracingLightCluster.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\Decal.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\ShadowBlurMoments.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\LightLoop.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingConsts.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\DepthOfFieldCommon.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\HDRISky\IntegrateHDRISky.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\DecalData.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\ShaderPass.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\PreIntegratedFGD\preIntegratedFGD_CharlieFabricLambert.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\MaterialGBufferMacros.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\HDIMS.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\Decal.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\DepthOfFieldTileMax.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\materialflags.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\MaterialUtilities.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\DecalProperties.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\LightingDebug.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\PreIntegratedFGD\preIntegratedFGD_GGXDisneyDiffuse.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\DebugDisplay.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\Lit.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingIntersection.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\ShaderPass\LitDepthPass.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\AxF.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\AtmosphericScattering\ShaderVariablesAtmosphericScattering.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\TerrainLit\TerrainLitSplatCommon.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\FragInputs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\CountTracedRays.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\LayeredLit\LayeredLit.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Unlit\UnlitProperties.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\scrbound.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingFlagMask.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\RenderPass\MotionVectors\CameraMotionVectors.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\PreIntegratedFGD\PreIntegratedFGD.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\DiffusionProfile\DiffusionProfileSettings.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\lightlistbuild-bigtile.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\LTCAreaLight\LTCAreaLight.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\HDShadowSampling.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\SubsurfaceScattering\ShaderVariablesSubsurfaceScattering.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\DebugColorPicker.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\ShaderVariablesDecal.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\ShaderVariablesDecal.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\DebugViewTiles.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Fabric\CharlieConvolve.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\SubsurfaceScattering\ShaderVariablesSubsurfaceScattering.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\ShaderPassDistortion.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Unlit\Unlit.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\HDPCSS.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Unlit\Unlit.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\TerrainLit\TerrainLitSharePass.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\Deferred.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\ShaderPass\LitSharePass.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\Decal.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\TerrainLit\TerrainLit_Basemap_Gen.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\ScreenSpaceLighting\ScreenSpaceReflections.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\ShaderLibrary\ShaderVariablesMatrixDefsHDCamera.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingReflectionFilter.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\UberPost.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\ScreenSpaceLighting\ShaderVariablesScreenSpaceLighting.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\builddispatchindirect.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\BloomBlur.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\ShaderPassDepthOnly.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\LightLoop.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\LitRaytracingData.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\FXAA.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\NormalBuffer.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\DepthOfFieldCombine.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\GGXConvolution\GGXConvolution.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\LightLoopDef.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingSampling.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Unity.RenderPipelines.HighDefinition.Runtime.asmdef" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\ScreenSpaceLighting\ScreenSpaceTracing.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\AtmosphericScattering\AtmosphericScattering.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\RenderPass\MSAA\ColorResolve.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\ScreenSpaceLighting\ScreenSpaceLighting.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\PreIntegratedFGD_CookTorrance.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\DepthOfFieldPrefilter.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\DebugDisplayLatlong.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\StackLit\StackLit.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\ScreenSpaceLighting\ShaderVariablesScreenSpaceLighting.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\VolumetricLighting\VolumetricLighting.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingFragInputs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\LitRaytracing.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Unlit\UnlitRaytracingData.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\TerrainLit\TerrainLitData.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingLightCluster.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\LTCAreaLight\FilterAreaLightCookies.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\DebugDisplayHDShadowMap.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\RenderPass\ColorPyramidPS.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\TerrainLit\TerrainLitDataMeshModification.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\PCSS.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\LitData.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\cleardispatchindirect.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\ShaderPassDBuffer.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\ShaderVariablesLightLoop.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingMacros.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\StackLit\StackLitDecalData.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\PreIntegratedFGD_Ward.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\ShaderVariablesRaytracing.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\ShaderPass\LitVelocityPass.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\TerrainLit\TerrainLit_Basemap.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\SphericalRectangle.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\TerrainLit\TerrainLitData_Basemap.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\AxFProperties.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\ShaderLibrary\ShaderGraphFunctions.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\DepthOfFieldCoCReproject.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\AxFLTCAreaLight\AxFLTCAreaLight.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\CoreResources\GPUCopy.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\DeferredTile.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\DebugViewMaterialGBuffer.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\MotionBlurVelocityPrep.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\ScreenSpaceLighting\AmbientOcclusionDownsample2.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\GradientSky\GradientSky.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Reflection\VolumeProjection.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\AtmosphericScattering\ShaderVariablesAtmosphericScattering.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\LayeredLit\LayeredLitData.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\DepthOfFieldCoC.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\ShaderLibrary\ShaderVariables.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\ShaderBase.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\ShaderVariablesRaytracingLightLoop.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\DepthOfFieldMipSafe.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\AmbientProbeConvolution.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\Lit.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Hair\Hair.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\ShaderPass\LitDistortionPass.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\RenderPass\DepthPyramid.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\GGXConvolution\ComputeGgxIblSampleData.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\Utilities\GeometryUtils.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\AreaBilateralShadow.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\FinalPass.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\PaniniProjection.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Unlit\ShaderPass\UnlitDepthPass.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\MaterialDebug.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\LitDataMeshModification.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\DepthOfFieldKernel.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\Lit.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\AxF.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\MotionBlur.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\ShaderLibrary\Blit.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Core\CoreResources\CubeToPano.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Decal\ShaderPass\DecalSharePass.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\LitDecalData.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\VolumetricLighting\VolumeVoxelization.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\TemporalAntialiasing.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\DepthOfFieldGather.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\RaytracingRenderer.raytrace" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\RenderPass\MSAA\DepthValues.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\VaryingMesh.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\VolumetricLighting\VBuffer.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\ShaderPassRaytracingVisibility.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\ClusteredUtils.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\MaterialEvaluation.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\RTUpscale.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Lighting.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\LayeredLit\LayeredLitTessellation.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\AtmosphericScattering\AtmosphericScattering.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightLoop\LightCullUtils.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\SphericalCapPivot\SPTDistribution.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\BuiltinUtilities.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\ShaderPassLightTransport.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\Raytracing\Shaders\JointBilateralFilter.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\DebugLightVolumes.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Deferred.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\MotionBlurTilePass.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Unlit\ShaderPass\UnlitDistortionPass.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\StackLit\StackLit.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\ShaderPass\AxFDepthPass.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\TerrainLit\TerrainLit.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\HDRISky\HDRISky.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\LightDefinition.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\ScreenSpaceLighting\AmbientOcclusionUpsample.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\HDShadowManager.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\LayeredLit\LayeredLitDataDisplacement.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\ShaderPassRaytracingForward.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\Exposure.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\DepthOfFieldMip.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\ColorPickerDebug.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\SimpleLit.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Unlit\Unlit.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\PreIntegratedFGD\PreIntegratedFGD.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\Lit\LitDataIndividualLayer.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Debug\DebugLightVolumes.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\UberPostFeatures.cs.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\ShadowClear.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Sky\ProceduralSky\ProceduralSky.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Lighting\Shadow\ShadowMoments.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\ShaderLibrary\CopyDepthBuffer.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\PostProcessing\Shaders\FXAA.compute" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\Material\AxF\ShaderPass\AxFDistortionPass.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\ShaderPass\VertMesh.hlsl" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.high-definition\Runtime\RenderPipeline\RenderPass\MSAA\AmbientOcclusionResolve.shader" />
+    <Reference Include="UnityEngine.AIModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ARModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ARModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CrashReportingModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.FileSystemHttpModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.FileSystemHttpModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GameCenterModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HotReloadModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.HotReloadModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.LocalizationModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.LocalizationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PerformanceReportingModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ProfilerModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ProfilerModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteShapeModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteShapeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StreamingModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.StreamingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StyleSheetsModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.StyleSheetsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SubstanceModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.SubstanceModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TLSModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.TLSModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UNETModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UNETModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UmbraModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UmbraModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityTestProtocolModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityTestProtocolModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VFXModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.VFXModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.XRModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Locator">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/Unity.Locator.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TestRunner">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.LinuxStandalone.Extensions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Ookii.Dialogs">
+      <HintPath>/home/maikeu/GitClones/Materialize/Assets/StandaloneFileBrowser/Plugins/Ookii.Dialogs.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>/home/maikeu/GitClones/Materialize/Assets/StandaloneFileBrowser/Plugins/System.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Rider.Unity.Editor.Plugin.Repacked">
+      <HintPath>/home/maikeu/GitClones/Materialize/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>/home/maikeu/Downloads/ScriptableRenderPipeline-6.0.0/com.unity.render-pipelines.high-definition/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="netstandard">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.AppContext">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.AppContext.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Concurrent">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Collections.Concurrent.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.NonGeneric">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Collections.NonGeneric.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Specialized">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Collections.Specialized.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.EventBasedAsync">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ComponentModel.EventBasedAsync.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ComponentModel.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.TypeConverter">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ComponentModel.TypeConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ComponentModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Console">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Common">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Data.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Contracts">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Debug">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Debug.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.FileVersionInfo">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.FileVersionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Process">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Process.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.StackTrace">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.StackTrace.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.TextWriterTraceListener">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.TextWriterTraceListener.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Tools">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.TraceSource">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.TraceSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Tracing">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Tracing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Drawing.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Dynamic.Runtime">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Dynamic.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Calendars">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Globalization.Calendars.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Extensions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Globalization.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Globalization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.ZipFile">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.DriveInfo">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.FileSystem.DriveInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Watcher">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.FileSystem.Watcher.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.IsolatedStorage">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.IsolatedStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.MemoryMappedFiles">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.MemoryMappedFiles.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Pipes">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.Pipes.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.UnmanagedMemoryStream">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.UnmanagedMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Expressions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Linq.Expressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Parallel">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Linq.Parallel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Queryable">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Linq.Queryable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.NameResolution">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.NameResolution.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.NetworkInformation">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.NetworkInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Ping">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Ping.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Requests">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Requests.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Security">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Sockets">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebHeaderCollection">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.WebHeaderCollection.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebSockets.Client">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.WebSockets.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebSockets">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.WebSockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ObjectModel">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Extensions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Reflection.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Reflection.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.Reader">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Resources.Reader.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.ResourceManager">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Resources.ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.Writer">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Resources.Writer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.VisualC">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.CompilerServices.VisualC.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Extensions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Handles">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Handles.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.InteropServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Numerics">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Formatters">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Serialization.Formatters.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Json">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Serialization.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Serialization.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Xml">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Serialization.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Claims">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Claims.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Csp">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.Csp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Principal.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.SecureString">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.SecureString.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.Extensions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Text.Encoding.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Text.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.RegularExpressions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Text.RegularExpressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Overlapped">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Overlapped.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Parallel">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Tasks.Parallel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Thread">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Thread.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.ThreadPool">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.ThreadPool.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Timer">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Timer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.ReaderWriter">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.ReaderWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XDocument">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XPath.XDocument">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XPath.XDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XPath">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XPath.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XmlDocument">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XmlDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XmlSerializer">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XmlSerializer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/Extensions/2.0.0/System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.WindowsRuntime">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/Extensions/2.0.0/System.Runtime.InteropServices.WindowsRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.ComponentModel.Composition.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.IO.Compression.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.ServiceModel.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Transactions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Serialization">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/mscorlib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Unity.RenderPipelines.Core.Runtime.csproj">
+      <Project>{7ECB8609-5C03-9341-BD69-AAB66D2B9F2E}</Project>
+      <Name>Unity.RenderPipelines.Core.Runtime</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

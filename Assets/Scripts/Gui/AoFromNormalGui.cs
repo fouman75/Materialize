@@ -4,6 +4,8 @@ using System.Collections;
 using General;
 using Settings;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.HDPipeline;
+using UnityEngine.Rendering;
 
 #endregion
 
@@ -214,10 +216,11 @@ namespace Gui
         }
 
 
-
         public IEnumerator ProcessNormalDepth()
         {
             Busy = true;
+
+            var blitMaterial = ProgramManager.Instance.RenderPipeline.GetBlitMaterial();
             Debug.Log("Processing Normal Depth to AO");
 
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
@@ -241,12 +244,11 @@ namespace Gui
                 _blitMaterial.SetFloat(BlendAmount, 1.0f / i);
                 _blitMaterial.SetFloat(Progress, i / 100.0f);
 
-
                 Graphics.Blit(TextureManager.Instance.NormalMap, _blendedAoMap, _blitMaterial, 7);
 
                 if (i % 10 == 0) yield return null;
             }
-
+            
             Busy = false;
         }
     }

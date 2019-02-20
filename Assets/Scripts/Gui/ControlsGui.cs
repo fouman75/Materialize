@@ -50,8 +50,10 @@ namespace Gui
             _windowRect = new Rect(Screen.width - 480, Screen.height - 370, 170, 280);
 
             if (_windowOpen) _windowRect = GUI.Window(22, _windowRect, DoMyWindow, "Controls");
+        }
 
-            if (!GUI.Button(new Rect(Screen.width - 370, Screen.height - 40, 80, 30), "Controls")) return;
+        public void ButtonCallback()
+        {
             _windowOpen = !_windowOpen;
         }
     }

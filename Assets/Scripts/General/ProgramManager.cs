@@ -1,7 +1,9 @@
+using System.Collections;
 using Gui;
 using StandaloneFileBrowser;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
+using UnityEngine.Rendering;
 
 namespace General
 {
@@ -68,7 +70,6 @@ namespace General
         private void Awake()
         {
             Instance = this;
-            QualitySettings.vSyncCount = 0;
             Application.targetFrameRate = TargetFps;
             Shader.SetGlobalFloat(GamaCorrectionId, GamaCorrection);
             LastPath = PlayerPrefs.HasKey(LastPathKey) ? PlayerPrefs.GetString(LastPathKey) : null;
@@ -79,11 +80,10 @@ namespace General
             else PathChar = '/';
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
             ActivateObjects();
-            RenderPipeline = UnityEngine.Rendering.RenderPipelineManager.currentPipeline as HDRenderPipeline;
-            RenderPipeline?.RequestSkyEnvironmentUpdate();
+            yield return StartCoroutine(GetHDRPCoroutine());
         }
 
         void Update()
@@ -110,6 +110,21 @@ namespace General
             TextureManager.Instance.SetFullMaterial();
             MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
             MaterialGuiObject.SetActive(true);
+        }
+
+        private IEnumerator GetHDRPCoroutine()
+        {
+            RenderPipeline = RenderPipelineManager.currentPipeline as HDRenderPipeline;
+            var maxTries = 10;
+            while (RenderPipeline == null)
+            {
+                RenderPipeline = RenderPipelineManager.currentPipeline as HDRenderPipeline;
+                yield return new WaitForSeconds(0.1f);
+                maxTries--;
+
+                if (maxTries != 0) continue;
+                yield break;
+            }
         }
     }
 }

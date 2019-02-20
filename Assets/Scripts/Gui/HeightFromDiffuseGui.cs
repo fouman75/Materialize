@@ -5,6 +5,7 @@ using System.Collections;
 using General;
 using Settings;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 #endregion
 
@@ -125,6 +126,8 @@ namespace Gui
         public GameObject TestObject;
 
         public Material ThisMaterial;
+
+        public ComputeShader NormalToHeightComputeShader;
 
         public void GetValues(ProjectObject projectObject)
         {
@@ -873,54 +876,49 @@ namespace Gui
             else
                 realGain = realGain + 1.0f;
             _blitMaterial.SetFloat(FinalGain, realGain);
+            
+            _blitMaterial.SetFloat(Blur0Weight, _heightFromDiffuseSettings.Blur0Weight);
+            _blitMaterial.SetFloat(Blur1Weight, _heightFromDiffuseSettings.Blur1Weight);
+            _blitMaterial.SetFloat(Blur2Weight, _heightFromDiffuseSettings.Blur2Weight);
+            _blitMaterial.SetFloat(Blur3Weight, _heightFromDiffuseSettings.Blur3Weight);
+            _blitMaterial.SetFloat(Blur4Weight, _heightFromDiffuseSettings.Blur4Weight);
+            _blitMaterial.SetFloat(Blur5Weight, _heightFromDiffuseSettings.Blur5Weight);
+            _blitMaterial.SetFloat(Blur6Weight, _heightFromDiffuseSettings.Blur6Weight);
+
+            _blitMaterial.SetFloat(Blur0Contrast, _heightFromDiffuseSettings.Blur0Contrast);
+            _blitMaterial.SetFloat(Blur1Contrast, _heightFromDiffuseSettings.Blur1Contrast);
+            _blitMaterial.SetFloat(Blur2Contrast, _heightFromDiffuseSettings.Blur2Contrast);
+            _blitMaterial.SetFloat(Blur3Contrast, _heightFromDiffuseSettings.Blur3Contrast);
+            _blitMaterial.SetFloat(Blur4Contrast, _heightFromDiffuseSettings.Blur4Contrast);
+            _blitMaterial.SetFloat(Blur5Contrast, _heightFromDiffuseSettings.Blur5Contrast);
+            _blitMaterial.SetFloat(Blur6Contrast, _heightFromDiffuseSettings.Blur6Contrast);
+
+            _blitMaterial.SetTexture(BlurTex0, _blurMap0);
+            _blitMaterial.SetTexture(BlurTex1, _blurMap1);
+            _blitMaterial.SetTexture(BlurTex2, _blurMap2);
+            _blitMaterial.SetTexture(BlurTex3, _blurMap3);
+            _blitMaterial.SetTexture(BlurTex4, _blurMap4);
+            _blitMaterial.SetTexture(BlurTex5, _blurMap5);
+            _blitMaterial.SetTexture(BlurTex6, _blurMap6);
+            
+            _blitMaterial.SetTexture(AvgTex, _avgMap);
 
             if (_heightFromDiffuseSettings.UseNormal)
             {
-                _blitMaterial.SetTexture(BlurTex0, _blurMap0);
                 _blitMaterial.SetFloat(HeightFromNormal, 1.0f);
-                // Save low fidelity for texture 2d
-                Graphics.Blit(_blurMap0, _tempHeightMap, _blitMaterial, 2);
             }
             else
             {
                 _blitMaterial.SetFloat(HeightFromNormal, 0.0f);
-
-                _blitMaterial.SetFloat(Blur0Weight, _heightFromDiffuseSettings.Blur0Weight);
-                _blitMaterial.SetFloat(Blur1Weight, _heightFromDiffuseSettings.Blur1Weight);
-                _blitMaterial.SetFloat(Blur2Weight, _heightFromDiffuseSettings.Blur2Weight);
-                _blitMaterial.SetFloat(Blur3Weight, _heightFromDiffuseSettings.Blur3Weight);
-                _blitMaterial.SetFloat(Blur4Weight, _heightFromDiffuseSettings.Blur4Weight);
-                _blitMaterial.SetFloat(Blur5Weight, _heightFromDiffuseSettings.Blur5Weight);
-                _blitMaterial.SetFloat(Blur6Weight, _heightFromDiffuseSettings.Blur6Weight);
-
-                _blitMaterial.SetFloat(Blur0Contrast, _heightFromDiffuseSettings.Blur0Contrast);
-                _blitMaterial.SetFloat(Blur1Contrast, _heightFromDiffuseSettings.Blur1Contrast);
-                _blitMaterial.SetFloat(Blur2Contrast, _heightFromDiffuseSettings.Blur2Contrast);
-                _blitMaterial.SetFloat(Blur3Contrast, _heightFromDiffuseSettings.Blur3Contrast);
-                _blitMaterial.SetFloat(Blur4Contrast, _heightFromDiffuseSettings.Blur4Contrast);
-                _blitMaterial.SetFloat(Blur5Contrast, _heightFromDiffuseSettings.Blur5Contrast);
-                _blitMaterial.SetFloat(Blur6Contrast, _heightFromDiffuseSettings.Blur6Contrast);
-
-                _blitMaterial.SetTexture(BlurTex0, _blurMap0);
-                _blitMaterial.SetTexture(BlurTex1, _blurMap1);
-                _blitMaterial.SetTexture(BlurTex2, _blurMap2);
-                _blitMaterial.SetTexture(BlurTex3, _blurMap3);
-                _blitMaterial.SetTexture(BlurTex4, _blurMap4);
-                _blitMaterial.SetTexture(BlurTex5, _blurMap5);
-                _blitMaterial.SetTexture(BlurTex6, _blurMap6);
-
-                _blitMaterial.SetTexture(AvgTex, _avgMap);
-
-                // Save low fidelity for texture 2d
-                Graphics.Blit(_blurMap0, _tempHeightMap, _blitMaterial, 2);
             }
+
+            // Save low fidelity for texture 2d
+            Graphics.Blit(_blurMap0, _tempHeightMap, _blitMaterial, 2);
 
 
             if (TextureManager.Instance.HeightMap) Destroy(TextureManager.Instance.HeightMap);
 
-            RenderTexture.active = _tempHeightMap;
             TextureManager.Instance.GetTextureFromRender(_tempHeightMap, ProgramEnums.MapType.Height);
-            RenderTexture.active = null;
 
             // Save high fidelity for normal making
             if (TextureManager.Instance.HdHeightMap)
@@ -950,15 +948,7 @@ namespace Gui
             _blitMaterialNormal.SetFloat(Spread, _heightFromDiffuseSettings.Spread);
             _blitMaterialNormal.SetFloat(SpreadBoost, _heightFromDiffuseSettings.SpreadBoost);
             _blitMaterialNormal.SetFloat(Samples, (int) _heightFromDiffuseSettings.Spread);
-            _blitMaterialNormal.SetTexture(MainTex, TextureManager.Instance.NormalMap);
             _blitMaterialNormal.SetTexture(BlendTex, _blurMap1);
-
-            ThisMaterial.SetFloat(IsNormal, 1.0f);
-            ThisMaterial.SetTexture(BlurTex0, _blurMap0);
-            ThisMaterial.SetTexture(BlurTex1, _blurMap1);
-            ThisMaterial.SetTexture(MainTex, TextureManager.Instance.NormalMap);
-
-            var yieldCountDown = 5;
 
             for (var i = 1; i < 100; i++)
             {
@@ -966,12 +956,9 @@ namespace Gui
                 _blitMaterialNormal.SetFloat(Progress, i / 100.0f);
 
                 Graphics.Blit(TextureManager.Instance.NormalMap, _blurMap0, _blitMaterialNormal, 0);
-                Graphics.Blit(_blurMap0, _blurMap1);
 
-                yieldCountDown -= 1;
-                if (yieldCountDown > 0) continue;
-                yieldCountDown = 5;
-                yield return new WaitForSeconds(0.01f);
+                Graphics.Blit(_blurMap0, _blurMap1);
+                if (i % 10 == 0) yield return null;
             }
 
             Busy = false;
@@ -980,6 +967,7 @@ namespace Gui
         public IEnumerator ProcessDiffuse()
         {
             Busy = true;
+
             ThisMaterial.SetFloat(IsNormal, 0.0f);
 
             _blitMaterialSample.SetInt(IsolateSample1, _heightFromDiffuseSettings.IsolateSample1 ? 1 : 0);

@@ -5,7 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using General;
 using Plugins.Extension;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
 
@@ -75,6 +77,7 @@ namespace Gui
 
         public Cubemap[] CubeMaps;
 
+        public GameObject[] ObjectsToHide;
         [HideInInspector] public Material FullMaterialCopy;
 
         // ReSharper disable once RedundantDefaultMemberInitializer
@@ -167,47 +170,6 @@ namespace Gui
 
         private void OnGUI()
         {
-            #region Unhideable Buttons
-
-            //==================================================//
-            // 					Unhidable Buttons				//
-            //==================================================//
-
-            if (GUI.Button(new Rect(Screen.width - 80, Screen.height - 40, 70, 30), "Quit")) Application.Quit();
-
-            GUI.enabled = false;
-            if (Screen.fullScreen)
-            {
-                if (GUI.Button(new Rect(Screen.width - 190, Screen.height - 40, 100, 30), "Windowed")) Fullscreen();
-            }
-            else
-            {
-                if (GUI.Button(new Rect(Screen.width - 190, Screen.height - 40, 100, 30), "Full Screen")) Fullscreen();
-            }
-
-            GUI.enabled = true;
-
-//        if (GUI.Button(new Rect(Screen.width - 260, 10, 140, 30), "Make Suggestion"))
-//            SuggestionGuiObject.SetActive(true);
-
-            if (IsGuiHidden)
-            {
-                if (GUI.Button(new Rect(Screen.width - 110, 10, 100, 30), "Show Gui"))
-                {
-                    IsGuiHidden = false;
-                }
-                else return;
-            }
-            else
-            {
-                if (GUI.Button(new Rect(Screen.width - 110, 10, 100, 30), "Hide Gui"))
-                {
-                    IsGuiHidden = true;
-                }
-            }
-
-            #endregion
-
             #region Main Gui
 
             //==================================================//
@@ -413,6 +375,35 @@ namespace Gui
             ReflectionProbe.RequestRenderNextUpdate();
         }
 
+        public void Quit()
+        {
+            Application.Quit();
+        }
+
+        public void Fullscreen()
+        {
+            Screen.fullScreen = !Screen.fullScreen;
+            var text = Screen.fullScreen ? "Windowed" : "Full Screen";
+            EventSystem.current.currentSelectedGameObject.GetComponentInChildren<TextMeshProUGUI>().text = text;
+        }
+
+        public void HideGuiButtonClickEvent()
+        {
+            string text;
+            if (IsGuiHidden)
+            {
+                IsGuiHidden = false;
+                text = "Hide Gui";
+            }
+            else
+            {
+                IsGuiHidden = true;
+                text = "Show Gui";
+            }
+
+            EventSystem.current.currentSelectedGameObject.GetComponentInChildren<TextMeshProUGUI>().text = text;
+        }
+
 
         private void SaveProjectCallback(string path)
         {
@@ -436,12 +427,17 @@ namespace Gui
 
         private void ShowGui()
         {
+            foreach (var objToHide in ObjectsToHide)
+                objToHide.SetActive(true);
+
             foreach (var objToHide in _objectsToUnhide)
                 objToHide.SetActive(true);
         }
 
         private void HideGui()
         {
+            foreach (var objToHide in ObjectsToHide)
+                objToHide.SetActive(false);
             HideWindows();
         }
 
@@ -516,11 +512,6 @@ namespace Gui
             MaterialGuiObject.SetActive(false);
             PostProcessGuiObject.SetActive(false);
             TilingTextureMakerGuiObject.SetActive(false);
-        }
-
-        private static void Fullscreen()
-        {
-            Screen.fullScreen = !Screen.fullScreen;
         }
 
         #endregion

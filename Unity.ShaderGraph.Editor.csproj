@@ -1,0 +1,1084 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <CscToolPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Tools/RoslynScripts</CscToolPath>
+    <CscToolExe>unity_csc.sh</CscToolExe>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <_TargetFrameworkDirectories>non_empty_path_generated_by_rider_editor_plugin</_TargetFrameworkDirectories>
+    <_FullFrameworkReferenceAssemblyPaths>non_empty_path_generated_by_rider_editor_plugin</_FullFrameworkReferenceAssemblyPaths>
+    <DisableHandlePackageFileConflicts>true</DisableHandlePackageFileConflicts>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace></RootNamespace>
+    <ProjectGuid>{19DF1B7F-0DE8-2A1D-F49D-02A019454F51}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>Unity.ShaderGraph.Editor</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>.</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;UNITY_2019_1_0;UNITY_2019_1;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2019_1_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_TEXTURE_STREAMING;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_VIDEO;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_LOCALIZATION;PLATFORM_STANDALONE_LINUX;PLATFORM_STANDALONE;UNITY_STANDALONE_LINUX;UNITY_STANDALONE;UNITY_STANDALONE_LINUX_API;PLAYERPREFS_SERIALIZE_TO_XML;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_SCRIPTING_GC_WBARRIERS;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_SPATIALTRACKING;ENABLE_MODULAR_UNITYENGINE_ASSEMBLIES;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_LINUX;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoConfig>true</NoConfig>
+    <NoStdLib>true</NoStdLib>
+    <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
+    <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
+    <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\AssemblyInfo.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\AssetCallbacks\CreatePBRShaderGraph.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\AssetCallbacks\CreateShaderSubGraph.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\AssetCallbacks\CreateUnlitShaderGraph.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\AbstractMaterialGraphAsset.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\AbstractShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\BitangentMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\BooleanMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\BooleanShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\ColorMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\ColorRGBMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\ColorShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\CubemapInputMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\CubemapMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\CubemapShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\DynamicMatrixMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\DynamicValueMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\DynamicVectorMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\GradientInputMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\GradientMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\GradientShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\GraphData.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\GroupData.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\IMaterialGraphAsset.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\IMaterialSlotHasValue.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\MaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Matrix2MaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Matrix2ShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Matrix3MaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Matrix3ShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Matrix4MaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Matrix4ShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\MatrixShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\NodeGroupChange.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\NormalMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\PositionMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Precision.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\PreviewMode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\PreviewProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\SamplerStateMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\SamplerStateShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\ScreenPositionMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\SerializableCubemap.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\SerializableGuid.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\SerializableMesh.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\SerializableTexture.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\SerializableTextureArray.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\ShaderGraphRequirements.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\SpaceMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\TangentMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Texture2DArrayInputMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Texture2DArrayMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Texture2DArrayShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Texture2DInputMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Texture2DMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Texture3DInputMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Texture3DMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Texture3DShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\TextureSamplerState.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\TextureShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\UVMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Vector1MaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Vector1ShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Vector2MaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Vector2ShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Vector3MaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Vector3ShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Vector4MaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\Vector4ShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\VectorShaderProperty.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\VertexColorMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Graphs\ViewDirectionMaterialSlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Implementation\Edge.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Implementation\GraphObject.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Implementation\NodeUtils.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Implementation\SlotType.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\GenerationMode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\Graph\DrawState.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\Graph\GraphDrawingData.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\Graph\IEdge.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\Graph\INode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\Graph\IOnAssetEnabled.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\Graph\ISlot.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\Graph\SlotReference.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IGeneratesBodyCode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IGeneratesFunction.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IHasSettings.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IMayRequireBitangent.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IMayRequireCameraOpaqueTexture.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IMayRequireDepthTexture.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IMayRequireFaceSign.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IMayRequireMeshUV.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IMayRequireNormal.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IMayRequirePosition.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IMayRequireScreenPosition.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IMayRequireTangent.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IMayRequireTime.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IMayRequireVertexColor.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\IMayRequireViewDirection.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Interfaces\NeededCoordinateSpace.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\LightweightPipeline\LightweightFastBlinnMasterNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\MasterNodes\AlphaMode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\MasterNodes\DistortionMode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\MasterNodes\DoubleSidedMode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\MasterNodes\EmissionGIMode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\MasterNodes\IPBRSubShader.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\MasterNodes\ISubShader.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\MasterNodes\IUnlitSubShader.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\MasterNodes\PBRMasterNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\MasterNodes\SpecularOcclusionMode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\MasterNodes\UnlitMasterNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\AbstractMaterialNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Adjustment\ChannelMixerNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Adjustment\ContrastNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Adjustment\HueNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Adjustment\InvertColorsNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Adjustment\ReplaceColorNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Adjustment\SaturationNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Adjustment\WhiteBalanceNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Blend\BlendMode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Blend\BlendNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Filter\DitherNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Mask\ChannelMaskNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Mask\ColorMaskNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Normal\NormalBlendNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Normal\NormalFromHeightNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Normal\NormalFromTextureNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Normal\NormalReconstructZNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Normal\NormalStrengthNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Normal\NormalUnpackNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Utility\ColorspaceConversion.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Channel\CombineNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Channel\FlipNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Channel\SplitNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Channel\SwizzleNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\CodeFunctionNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\FormerNameAttribute.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\FunctionMultiInput.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\GeometryNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\GuidEncoder.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\IMasterNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Basic\BooleanNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Basic\ColorNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Basic\ConstantNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Basic\IntegerNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Basic\SliderNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Basic\TimeNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Basic\Vector1Node.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Basic\Vector2Node.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Basic\Vector3Node.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Basic\Vector4Node.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Geometry\BitangentVectorNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Geometry\NormalVectorNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Geometry\PositionNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Geometry\ScreenPositionNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Geometry\TangentVectorNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Geometry\UVNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Geometry\VertexColorNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Geometry\ViewDirectionNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Gradient\GradientNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Gradient\SampleGradientNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Lighting\AmbientNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Lighting\BakedGINode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Lighting\ReflectionProbeNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Matrix\Matrix2Node.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Matrix\Matrix3Node.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Matrix\Matrix4Node.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Matrix\TransformationMatrixNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\PBR\DielectricSpecularNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\PBR\MetalReflectanceNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\PropertyNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Scene\CameraNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Scene\FogNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Scene\ObjectNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Scene\SceneColorNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Scene\SceneDepthNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Scene\ScreenNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Texture\CubemapAssetNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Texture\SampleCubemapNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Texture\SamplerStateNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Texture\SampleTexture2DArrayNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Texture\SampleTexture2DLODNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Texture\SampleTexture2DNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Texture\SampleTexture3DNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Texture\TexelSizeNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Texture\Texture2DArrayAssetNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Texture\Texture2DAssetNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Input\Texture\Texture3DAssetNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\IPropertyFromNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\MasterNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Advanced\AbsoluteNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Advanced\ExponentialNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Advanced\LengthNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Advanced\LogNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Advanced\ModuloNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Advanced\NegateNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Advanced\NormalizeNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Advanced\PosterizeNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Advanced\ReciprocalNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Advanced\ReciprocalSquareRootNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Basic\AddNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Basic\DivideNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Basic\MultiplyNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Basic\PowerNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Basic\SquareRootNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Basic\SubtractNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Derivative\DDXNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Derivative\DDXYNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Derivative\DDYNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Interpolation\InverseLerpNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Interpolation\LerpNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Interpolation\SmoothstepNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Matrix\MatrixConstructionNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Matrix\MatrixDeterminantNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Matrix\MatrixSplitNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Matrix\MatrixTransposeNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Range\ClampNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Range\FractionNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Range\MaximumNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Range\MinimumNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Range\OneMinusNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Range\RandomRangeNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Range\RemapNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Range\SaturateNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Round\CeilingNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Round\FloorNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Round\RoundNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Round\SignNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Round\StepNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Round\TruncateNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Trigonometry\ArccosineNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Trigonometry\ArcsineNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Trigonometry\Arctangent2Node.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Trigonometry\ArctangentNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Trigonometry\CosineNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Trigonometry\DegreesToRadiansNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Trigonometry\HyperbolicCosineNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Trigonometry\HyperbolicSineNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Trigonometry\HyperbolicTangentNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Trigonometry\RadiansToDegreesNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Trigonometry\SineNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Trigonometry\TangentNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Vector\CrossProductNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Vector\DistanceNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Vector\DotProductNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Vector\FresnelEffectNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Vector\ProjectionNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Vector\ReflectionNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Vector\RejectionNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Vector\RotateAboutAxisNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Vector\SphereMaskNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Vector\TransformNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Wave\NoiseSineWaveNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Wave\SawtoothWaveNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Wave\SquareWaveNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Math\Wave\TriangleWaveNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\NormalMapSpace.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Procedural\CheckerboardNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Procedural\Noise\GradientNoiseNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Procedural\Noise\SimpleNoiseNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Procedural\Noise\VoronoiNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Procedural\Shape\EllipseNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Procedural\Shape\PolygonNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Procedural\Shape\RectangleNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Procedural\Shape\RoundedRectangleNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\PropertyType.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\ShaderStage.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\SlotValue.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\TitleAttribute.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Utility\Logic\AllNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Utility\Logic\AndNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Utility\Logic\AnyNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Utility\Logic\BranchNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Utility\Logic\ComparisonNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Utility\Logic\IsFrontFaceNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Utility\Logic\IsInfiniteNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Utility\Logic\IsNanNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Utility\Logic\NandNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Utility\Logic\NotNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Utility\Logic\OrNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Utility\PreviewNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\Utility\SubGraphNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\UV\FlipbookNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\UV\PolarCoordinatesNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\UV\RadialShearNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\UV\RotateNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\UV\SpherizeNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\UV\TilingAndOffsetNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\UV\TriplanarNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Nodes\UV\TwirlNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\SubGraph\MaterialSubGraphAsset.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\SubGraph\SubGraphOutputNode.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\SurfaceModel\SurfaceMaterialOptions.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\SurfaceModel\SurfaceMaterialTags.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\CubemapPropertyChunk.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\DictionaryPool.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\FunctionRegistry.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\GenerationResults.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\GraphContext.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\GraphUtil.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\Identifier.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\ListPool.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\Logging.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\MatrixNames.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\ObjectPool.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\PooledObject.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\PropertyCollector.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\QueuePool.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\ScreenSpaceType.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\SerializationHelper.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\ShaderGenerator.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\ShaderGeneratorNames.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\ShaderSourceMap.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\ShaderStringBuilder.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\StackPool.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\TextureType.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Data\Util\UvChannel.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\DefaultShaderIncludes.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Blackboard\BlackboardFieldPropertyView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Blackboard\BlackboardProvider.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\ButtonControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\ChannelEnumControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\ChannelEnumMaskControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\ChannelMixerControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\ColorControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\CubemapControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\DefaultControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\DielectricSpecularControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\EnumControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\EnumConversionControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\GradientControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\IControlAttribute.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\IntegerControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\ObjectControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\PopupControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\SliderControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\Texture3DControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\TextureArrayControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\TextureControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\ToggleControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Controls\VectorControl.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\EdgeConnectorListener.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\INodeModificationListener.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Inspector\MasterPreviewView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Inspector\WindowDockingLayout.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Manipulators\Draggable.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Manipulators\ResizeBorderFrame.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Manipulators\ResizeSideHandle.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Manipulators\Scrollable.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Manipulators\WindowDraggable.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\MaterialGraphEditWindow.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\MaterialGraphPreviewGenerator.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\PreviewManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\PreviewRate.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\SearchWindowProvider.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\FloatField.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\GradientEdge.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\GraphEditorView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\IShaderNodeView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\MaterialGraphView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\MaterialNodeView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\NodeSettingsView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\PBRSettingsView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\PortInputView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\PreviewSceneResources.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\PropertyNodeView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\PropertyRow.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\PropertySheet.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\ShaderGroup.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\ShaderPort.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\Slots\BooleanSlotControlView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\Slots\ColorRGBSlotControlView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\Slots\ColorSlotControlView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\Slots\CubemapSlotControlView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\Slots\GradientSlotControlView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\Slots\LabelSlotControlView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\Slots\MultiFloatSlotControlView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\Slots\ScreenPositionSlotControlView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\Slots\Texture3DSlotControlView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\Slots\TextureArraySlotControlView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\Slots\TextureSlotControlView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\Slots\UVSlotControlView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Drawing\Views\UnlitSettingsView.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Importers\ShaderGraphAssetPostProcessor.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Importers\ShaderGraphImporter.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Importers\ShaderGraphImporterEditor.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Importers\ShaderSubGraphImporter.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Importers\ShaderSubGraphImporterEditor.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\ShaderGUI\PBRMasterGUI.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Util\CompatibilityExtensions.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Util\CopyPasteGraph.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Util\CreateSerializableGraph.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Util\IndexSet.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Util\MessageManager.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Util\TypeMapper.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Util\TypeMapping.cs" />
+    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Util\UIUtilities.cs" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\CubemapSlotControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\PortInputView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\Texture3DSlotControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\UVSlotControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\MultiFloatSlotControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\GraphEditorView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\ColorRGBSlotControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Shaders\BlitNoAlpha.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Templates\shader.template" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\GradientSlotControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\MasterPreviewView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\IntegerControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\PropertyNameReferenceField.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\EnumControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\ChannelMixerControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\UXML\GraphView\Blackboard.uxml" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\BooleanSlotControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\MaterialGraph.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\SliderControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\MultiFloatControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\ScreenPositionSlotControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\NodeSettings.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\ColorControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\ShaderPort.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Shaders\Checkerboard.shader" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\GradientControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\UXML\NodeSettings.uxml" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\PixelCacheProfiler.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\ToggleControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\PopupControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\UXML\GraphView\BlackboardSection.uxml" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\ShaderPropertyView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\UXML\GraphView\BlackboardRow.uxml" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Templates\subshader.template" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Blackboard.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\ColorRGBASlotControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\MaterialGraphView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\ShaderGraphBlackboard.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\UXML\GraphView\BlackboardField.uxml" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\EnumConversionControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Templates\tesselationSubshader.template" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\DielectricSpecularControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Unity.ShaderGraph.Editor.asmdef" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\PropertySheet.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\TextureArraySlotControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\PropertyNodeView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\ChannelEnumControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\MaterialNodeView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\TextureSlotControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\Controls\ChannelEnumMaskControlView.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\Styles\PropertyRow.uss" />
+    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\Editor\Resources\UXML\PixelCacheProfiler.uxml" />
+    <Reference Include="UnityEngine.AIModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ARModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ARModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CrashReportingModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.FileSystemHttpModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.FileSystemHttpModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GameCenterModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HotReloadModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.HotReloadModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.LocalizationModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.LocalizationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PerformanceReportingModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ProfilerModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ProfilerModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteShapeModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteShapeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StreamingModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.StreamingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StyleSheetsModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.StyleSheetsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SubstanceModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.SubstanceModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TLSModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.TLSModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UNETModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UNETModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UmbraModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UmbraModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityTestProtocolModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityTestProtocolModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VFXModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.VFXModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.XRModule">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Locator">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/Unity.Locator.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TestRunner">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.LinuxStandalone.Extensions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Ookii.Dialogs">
+      <HintPath>/home/maikeu/GitClones/Materialize/Assets/StandaloneFileBrowser/Plugins/Ookii.Dialogs.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>/home/maikeu/GitClones/Materialize/Assets/StandaloneFileBrowser/Plugins/System.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Rider.Unity.Editor.Plugin.Repacked">
+      <HintPath>/home/maikeu/GitClones/Materialize/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>/home/maikeu/Downloads/ScriptableRenderPipeline-6.0.0/com.unity.render-pipelines.high-definition/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Xml.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Microsoft.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.AppContext">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.AppContext.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Concurrent">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Collections.Concurrent.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.NonGeneric">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Collections.NonGeneric.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Specialized">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Collections.Specialized.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.EventBasedAsync">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ComponentModel.EventBasedAsync.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ComponentModel.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.TypeConverter">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ComponentModel.TypeConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ComponentModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Console">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Common">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Data.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Contracts">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Debug">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.Debug.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.FileVersionInfo">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.FileVersionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Process">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.Process.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.StackTrace">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.StackTrace.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.TextWriterTraceListener">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.TextWriterTraceListener.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Tools">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.TraceSource">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.TraceSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Drawing.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Dynamic.Runtime">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Dynamic.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Calendars">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Globalization.Calendars.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Extensions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Globalization.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Globalization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.ZipFile">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.DriveInfo">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.FileSystem.DriveInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Watcher">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.FileSystem.Watcher.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.IsolatedStorage">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.IsolatedStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.MemoryMappedFiles">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.MemoryMappedFiles.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Pipes">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.Pipes.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.UnmanagedMemoryStream">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.UnmanagedMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Expressions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Linq.Expressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Parallel">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Linq.Parallel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Queryable">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Linq.Queryable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Rtc">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.Http.Rtc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.NameResolution">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.NameResolution.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.NetworkInformation">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.NetworkInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Ping">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.Ping.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Requests">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.Requests.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Security">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Sockets">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebHeaderCollection">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.WebHeaderCollection.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebSockets.Client">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.WebSockets.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebSockets">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.WebSockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ObjectModel">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Emit.ILGeneration">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Reflection.Emit.ILGeneration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Emit.Lightweight">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Reflection.Emit.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Emit">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Reflection.Emit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Extensions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Reflection.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Reflection.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.Reader">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Resources.Reader.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.ResourceManager">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Resources.ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.Writer">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Resources.Writer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.VisualC">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.CompilerServices.VisualC.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Extensions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Handles">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Handles.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.WindowsRuntime">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.InteropServices.WindowsRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.InteropServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Numerics">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Formatters">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Serialization.Formatters.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Json">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Serialization.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Serialization.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Xml">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Serialization.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Claims">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Claims.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Csp">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Cryptography.Csp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Principal.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.SecureString">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.SecureString.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Duplex">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ServiceModel.Duplex.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Http">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ServiceModel.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.NetTcp">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ServiceModel.NetTcp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Primitives">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ServiceModel.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Security">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ServiceModel.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.Extensions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Text.Encoding.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Text.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.RegularExpressions">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Text.RegularExpressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Overlapped">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.Overlapped.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Parallel">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.Tasks.Parallel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Thread">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.Thread.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.ThreadPool">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.ThreadPool.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Timer">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.Timer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.ReaderWriter">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.ReaderWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XDocument">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XPath.XDocument">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XPath.XDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XPath">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XPath.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XmlDocument">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XmlDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XmlSerializer">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XmlSerializer.dll</HintPath>
+    </Reference>
+    <Reference Include="netstandard">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/netstandard.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityScript">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/UnityScript.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityScript.Lang">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/UnityScript.Lang.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang">
+      <HintPath>/home/maikeu/Unity/Hub/Editor/2019.1.0b4/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
