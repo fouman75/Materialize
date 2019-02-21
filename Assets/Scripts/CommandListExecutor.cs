@@ -236,7 +236,7 @@ public class CommandListExecutor : MonoBehaviour
                         MainGui.Instance.HeightFromDiffuseGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
                         yield return StartCoroutine(MainGui.Instance.HeightFromDiffuseGuiScript.ProcessDiffuse());
-                        yield return StartCoroutine(MainGui.Instance.HeightFromDiffuseGuiScript.ProcessHeight());
+                        yield return StartCoroutine(MainGui.Instance.HeightFromDiffuseGuiScript.Process());
                         MainGui.Instance.HeightFromDiffuseGuiScript.Close();
                         break;
                     }
@@ -248,7 +248,7 @@ public class CommandListExecutor : MonoBehaviour
                         MainGui.Instance.NormalFromHeightGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
                         yield return StartCoroutine(MainGui.Instance.NormalFromHeightGuiScript.ProcessHeight());
-                        MainGui.Instance.NormalFromHeightGuiScript.ProcessNormal();
+                        MainGui.Instance.NormalFromHeightGuiScript.Process();
 
                         MainGui.Instance.NormalFromHeightGuiScript.Close();
                         break;
@@ -261,7 +261,7 @@ public class CommandListExecutor : MonoBehaviour
                         MainGui.Instance.MetallicGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
                         yield return StartCoroutine(MainGui.Instance.MetallicGuiScript.ProcessBlur());
-                        yield return StartCoroutine(MainGui.Instance.MetallicGuiScript.ProcessMetallic());
+                        yield return StartCoroutine(MainGui.Instance.MetallicGuiScript.Process());
                         MainGui.Instance.MetallicGuiScript.Close();
                         break;
                     }
@@ -273,7 +273,7 @@ public class CommandListExecutor : MonoBehaviour
                         MainGui.Instance.SmoothnessGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
                         yield return StartCoroutine(MainGui.Instance.SmoothnessGuiScript.ProcessBlur());
-                        MainGui.Instance.SmoothnessGuiScript.ProcessSmoothness();
+                        MainGui.Instance.SmoothnessGuiScript.Process();
                         MainGui.Instance.SmoothnessGuiScript.Close();
                         break;
                     }
@@ -285,7 +285,7 @@ public class CommandListExecutor : MonoBehaviour
                         MainGui.Instance.AoFromNormalGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
                         yield return StartCoroutine(MainGui.Instance.AoFromNormalGuiScript.ProcessNormalDepth());
-                        yield return StartCoroutine(MainGui.Instance.AoFromNormalGuiScript.ProcessAo());
+                        yield return StartCoroutine(MainGui.Instance.AoFromNormalGuiScript.Process());
                         MainGui.Instance.AoFromNormalGuiScript.Close();
                         break;
                     }

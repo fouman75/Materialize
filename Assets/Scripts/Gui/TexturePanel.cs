@@ -71,7 +71,8 @@ namespace Gui
         {
             var title = "Open " + MapType + " Map";
             var lastPath = ProgramManager.Instance.LastPath;
-            StandaloneFileBrowser.StandaloneFileBrowser.OpenFilePanelAsync(title, lastPath, ProgramManager.ImageLoadFilter, false,
+            StandaloneFileBrowser.StandaloneFileBrowser.OpenFilePanelAsync(title, lastPath,
+                ProgramManager.ImageLoadFilter, false,
                 LoadTextureCallback);
         }
 
@@ -98,7 +99,7 @@ namespace Gui
 
         public void CreateImage()
         {
-            MainGui.Instance.CreateImage(MapType);
+            MainGui.Instance.CreateImage(MapType, CreateButton);
         }
 
         public void ClearImage()

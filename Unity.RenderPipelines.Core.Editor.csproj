@@ -59,24 +59,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\CoreEditorStyles.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\CoreEditorUtils.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\FilterWindow.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\MaterialUpgrader.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\PropertyFetcher.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\Volume\Drawers\ColorParameterDrawer.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\Volume\Drawers\FloatParameterDrawer.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\Volume\Drawers\IntParameterDrawer.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\Volume\Drawers\Vector4ParameterDrawer.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\Volume\SerializedDataParameter.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\Volume\VolumeComponentEditor.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\Volume\VolumeComponentListEditor.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\Volume\VolumeComponentProvider.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\Volume\VolumeEditor.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\Volume\VolumeParameterDrawer.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\Volume\VolumeProfileEditor.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\Volume\VolumeProfileFactory.cs" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Editor\Unity.RenderPipelines.Core.Editor.asmdef" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\CoreEditorStyles.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\CoreEditorUtils.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\FilterWindow.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\MaterialUpgrader.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\PropertyFetcher.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\Volume\Drawers\ColorParameterDrawer.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\Volume\Drawers\FloatParameterDrawer.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\Volume\Drawers\IntParameterDrawer.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\Volume\Drawers\Vector4ParameterDrawer.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\Volume\SerializedDataParameter.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\Volume\VolumeComponentEditor.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\Volume\VolumeComponentListEditor.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\Volume\VolumeComponentProvider.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\Volume\VolumeEditor.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\Volume\VolumeParameterDrawer.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\Volume\VolumeProfileEditor.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\Volume\VolumeProfileFactory.cs" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Editor\Unity.RenderPipelines.Core.Editor.asmdef" />
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/home/maikeu/Unity/Hub/Editor/2019.2.0a4/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -282,7 +282,7 @@
       <HintPath>/home/maikeu/GitClones/Materialize/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>/home/maikeu/Downloads/ScriptableRenderPipeline-6.0.0/com.unity.render-pipelines.high-definition/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+      <HintPath>/home/maikeu/GitClones/ScriptableRenderPipeline/com.unity.render-pipelines.high-definition/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>/home/maikeu/Unity/Hub/Editor/2019.2.0a4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

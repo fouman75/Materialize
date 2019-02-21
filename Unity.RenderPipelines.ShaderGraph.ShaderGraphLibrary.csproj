@@ -59,14 +59,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\ShaderGraphLibrary\DummyShaderGraphLibrary.cs" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\ShaderGraphLibrary\ShaderVariables.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\ShaderGraphLibrary\ShaderVariablesFunctions.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\ShaderGraphLibrary\ShaderConfig.cs.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\ShaderGraphLibrary\Functions.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\ShaderGraphLibrary\GeometricTools.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\ShaderGraphLibrary\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.asmdef" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.shadergraph\ShaderGraphLibrary\ShaderVariablesMatrixDefsLegacyUnity.hlsl" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.shadergraph\ShaderGraphLibrary\DummyShaderGraphLibrary.cs" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.shadergraph\ShaderGraphLibrary\ShaderVariables.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.shadergraph\ShaderGraphLibrary\ShaderVariablesFunctions.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.shadergraph\ShaderGraphLibrary\ShaderConfig.cs.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.shadergraph\ShaderGraphLibrary\Functions.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.shadergraph\ShaderGraphLibrary\GeometricTools.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.shadergraph\ShaderGraphLibrary\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.asmdef" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.shadergraph\ShaderGraphLibrary\ShaderVariablesMatrixDefsLegacyUnity.hlsl" />
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/home/maikeu/Unity/Hub/Editor/2019.2.0a4/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -272,7 +272,7 @@
       <HintPath>/home/maikeu/GitClones/Materialize/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>/home/maikeu/Downloads/ScriptableRenderPipeline-6.0.0/com.unity.render-pipelines.high-definition/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+      <HintPath>/home/maikeu/GitClones/ScriptableRenderPipeline/com.unity.render-pipelines.high-definition/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>/home/maikeu/Unity/Hub/Editor/2019.2.0a4/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

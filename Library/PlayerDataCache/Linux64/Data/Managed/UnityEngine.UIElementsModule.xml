@@ -601,6 +601,13 @@
       <param name="eventHandler">The element for which the menu is displayed.</param>
       <param name="evt">The event to inspect.</param>
     </member>
+    <member name="M:UnityEngine.UIElements.ContextualMenuManager.DoDisplayMenu(UnityEngine.UIElements.DropdownMenu,UnityEngine.UIElements.EventBase)">
+      <summary>
+        <para>Displays the contextual menu.</para>
+      </summary>
+      <param name="menu">The menu to display.</param>
+      <param name="triggerEvent">The event that triggers the display of the contextual menu.</param>
+    </member>
     <member name="T:UnityEngine.UIElements.ContextualMenuManipulator">
       <summary>
         <para>Manipulator that displays a contextual menu when the user clicks the right mouse button or presses the menu key on the keyboard.</para>
@@ -4606,6 +4613,11 @@
       </summary>
       <param name="v"></param>
       <param name="keyword"></param>
+    </member>
+    <member name="T:UnityEngine.UIElements.StyleSheet">
+      <summary>
+        <para>Style sheets are applied to visual elements in order to control the layout and visual appearance of the user interface.</para>
+      </summary>
     </member>
     <member name="T:UnityEngine.UIElements.TemplateContainer">
       <summary>

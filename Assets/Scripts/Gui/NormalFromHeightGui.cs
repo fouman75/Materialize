@@ -10,15 +10,15 @@ using UnityEngine;
 
 namespace Gui
 {
-    public class NormalFromHeightGui : MonoBehaviour
+    public class NormalFromHeightGui : MonoBehaviour, IProcessor
     {
-        private static readonly int Blur0Weight = Shader.PropertyToID("_Blur0Weight");
-
-        private void Awake()
+        public bool Active
         {
-            _testMaterialRenderer = TestObject.GetComponent<Renderer>();
+            get => gameObject.activeSelf;
+            set => gameObject.SetActive(value);
         }
-
+        
+        private static readonly int Blur0Weight = Shader.PropertyToID("_Blur0Weight");
         private static readonly int Blur1Weight = Shader.PropertyToID("_Blur1Weight");
         private static readonly int Blur2Weight = Shader.PropertyToID("_Blur2Weight");
         private static readonly int Blur3Weight = Shader.PropertyToID("_Blur3Weight");
@@ -51,7 +51,7 @@ namespace Gui
 
         private RenderTexture _tempBlurMap;
 
-        private Rect _windowRect = new Rect(30, 300, 300, 450);
+        private Rect _windowRect;
 
         [HideInInspector] public bool Busy;
 
@@ -87,6 +87,17 @@ namespace Gui
         private static readonly int DiffuseTex = Shader.PropertyToID("_DiffuseTex");
         private Material _previewMaterial;
 
+        private void Awake()
+        {
+            _testMaterialRenderer = TestObject.GetComponent<Renderer>();
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+        }
+        
+        private void OnDisable()
+        {
+            CleanupTextures();
+        }
+        
         public void GetValues(ProjectObject projectObject)
         {
             InitializeSettings();
@@ -225,11 +236,11 @@ namespace Gui
             GUI.Label(new Rect(offsetX, offsetY, 250, 30), "Normal Reveal Slider");
             _slider = GUI.HorizontalSlider(new Rect(offsetX, offsetY + 20, 280, 10), _slider, 0.0f, 1.0f);
 
-            offsetY += 40;
+            offsetY += 35;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Pre Contrast", _settings.Blur0Contrast,
                 out _settings.Blur0Contrast, 0.0f, 50.0f)) _doStuff = true;
-            offsetY += 50;
+            offsetY += 45;
 
             GUI.Label(new Rect(offsetX, offsetY, 250, 30), "Frequency Equalizer");
             GUI.Label(new Rect(offsetX + 225, offsetY, 100, 30), "Presets");
@@ -237,7 +248,7 @@ namespace Gui
             if (GUI.Button(new Rect(offsetX + 215, offsetY + 60, 60, 20), "Smooth")) SetWeightEqSmooth();
             if (GUI.Button(new Rect(offsetX + 215, offsetY + 90, 60, 20), "Crisp")) SetWeightEqCrisp();
             if (GUI.Button(new Rect(offsetX + 215, offsetY + 120, 60, 20), "Mids")) SetWeightEqMids();
-            offsetY += 30;
+            offsetY += 25;
             offsetX += 10;
             _settings.Blur0Weight =
                 GUI.VerticalSlider(new Rect(offsetX + 180, offsetY, 10, 100), _settings.Blur0Weight, 1.0f, 0.0f);
@@ -254,15 +265,15 @@ namespace Gui
             _settings.Blur6Weight =
                 GUI.VerticalSlider(new Rect(offsetX + 0, offsetY, 10, 100), _settings.Blur6Weight, 1.0f, 0.0f);
             offsetX -= 10;
-            offsetY += 120;
+            offsetY += 115;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Angular Intensity", _settings.AngularIntensity,
                 out _settings.AngularIntensity, 0.0f, 1.0f);
-            offsetY += 40;
+            offsetY += 35;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Angularity Amount", _settings.Angularity,
                 out _settings.Angularity, 0.0f, 1.0f);
-            offsetY += 40;
+            offsetY += 35;
 
             if (TextureManager.Instance.DiffuseMapOriginal)
             {
@@ -278,39 +289,36 @@ namespace Gui
             _settings.UseDiffuse = GUI.Toggle(new Rect(offsetX, offsetY, 280, 30), _settings.UseDiffuse,
                 " Shape from Diffuse (Unchecked from Height)");
             if (tempBool != _settings.UseDiffuse) _doStuff = true;
-            offsetY += 30;
+            offsetY += 25;
 
             GUI.enabled = true;
 
             GUI.Label(new Rect(offsetX, offsetY, 280, 30), " Shape Recognition, Rotation, Spread, Bias");
-            offsetY += 30;
+            offsetY += 25;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.ShapeRecognition,
                 out _settings.ShapeRecognition, 0.0f, 1.0f)) _doStuff = true;
-            offsetY += 25;
+            offsetY += 20;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.LightRotation,
                 out _settings.LightRotation, -3.14f, 3.14f)) _doStuff = true;
-            offsetY += 25;
+            offsetY += 20;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.SlopeBlur,
                 out _settings.SlopeBlur, 5, 100)) _doStuff = true;
-            offsetY += 25;
+            offsetY += 20;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.ShapeBias,
                 out _settings.ShapeBias, 0.0f, 1.0f)) _doStuff = true;
-            offsetY += 25;
+            offsetY += 20;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Contrast", _settings.FinalContrast,
                 out _settings.FinalContrast, 0.0f, 10.0f);
-            offsetY += 40;
-
-            if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set as Normal Map"))
-                ProcessNormal();
+            offsetY += 30;
 
             GUI.DragWindow();
         }
 
         private void OnGUI()
         {
-            _windowRect.width = 300;
-            _windowRect.height = 590;
+            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
             _windowRect = GUI.Window(16, _windowRect, DoMyWindow, "Normal From Height");
         }
@@ -374,7 +382,7 @@ namespace Gui
             RenderTexture.ReleaseTemporary(_blurMap6);
         }
 
-        public void ProcessNormal()
+        public IEnumerator Process()
         {
             Busy = true;
 
@@ -414,6 +422,7 @@ namespace Gui
             RenderTexture.ReleaseTemporary(tempNormalMap);
 
             Busy = false;
+            yield break;
         }
 
         public IEnumerator ProcessHeight()

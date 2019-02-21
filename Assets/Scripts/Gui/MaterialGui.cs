@@ -42,7 +42,7 @@ namespace Gui
 
         private Material _thisMaterial;
 
-        private Rect _windowRect = new Rect(30, 300, 300, 530);
+        private Rect _windowRect;
 
         public GameObject LightObject;
         public GameObject TestObject;
@@ -64,12 +64,14 @@ namespace Gui
             TestObjectCube.SetActive(false);
             TestObjectCylinder.SetActive(false);
             TestObjectSphere.SetActive(false);
+            
         }
 
         private void Awake()
         {
             _light = LightObject.GetComponent<Light>();
             ProgramManager.Instance.SceneObjects.Add(gameObject);
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
         }
 
         private void Start()
@@ -297,8 +299,8 @@ namespace Gui
 
         private void OnGUI()
         {
-            _windowRect.width = 300;
-            _windowRect.height = 620;
+            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
             _windowRect = GUI.Window(14, _windowRect, DoMyWindow, "Full Material");
         }

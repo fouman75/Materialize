@@ -66,23 +66,11 @@
     <Compile Include="Assets\Scripts\Editor\TextureImportTest.cs" />
     <Compile Include="Assets\Scripts\SimpleLightProbePlacer\Editor\LightProbeGroupControlEditor.cs" />
     <Compile Include="Assets\Scripts\SimpleLightProbePlacer\Editor\LightProbeVolumeEditor.cs" />
-    <Reference Include="Unity.VectorGraphics">
-      <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.VectorGraphics.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.InternalAPIEditorBridge.003">
-      <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.003.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VectorGraphics.Editor">
-      <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.VectorGraphics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
@@ -292,7 +280,7 @@
       <HintPath>/home/maikeu/GitClones/Materialize/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>/home/maikeu/Downloads/ScriptableRenderPipeline-6.0.0/com.unity.render-pipelines.high-definition/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+      <HintPath>/home/maikeu/GitClones/ScriptableRenderPipeline/com.unity.render-pipelines.high-definition/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>/home/maikeu/Unity/Hub/Editor/2019.2.0a4/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

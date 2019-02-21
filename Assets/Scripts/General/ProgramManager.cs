@@ -14,10 +14,19 @@ namespace General
         public static ProgramManager Instance;
         public char PathChar { get; private set; }
         public Light MainLight;
+        public Vector2 GuiScale = new Vector2(1, 1);
         private const string LastPathKey = nameof(LastPathKey);
         [HideInInspector] public string LastPath;
         private static readonly int GamaCorrectionId = Shader.PropertyToID("_GamaCorrection");
         public HDRenderPipeline RenderPipeline;
+        public Vector2 GuiReferenceSize = new Vector2(1440, 810);
+        private int _windowId;
+        private int _myWindowId;
+
+        public int GetWindowId
+        {
+            get => _windowId++;
+        }
 
         //Nao remover, alguns shaders dependem disso
         private const float GamaCorrection = 1f;
@@ -84,6 +93,9 @@ namespace General
                 Application.platform == RuntimePlatform.WindowsPlayer)
                 PathChar = '\\';
             else PathChar = '/';
+
+            GuiScale = new Vector2(Screen.width / GuiReferenceSize.x, Screen.height / GuiReferenceSize.y);
+            _myWindowId = GetWindowId;
         }
 
         private IEnumerator Start()
@@ -112,6 +124,7 @@ namespace General
 
         private void Update()
         {
+            GuiScale = new Vector2(Screen.width / GuiReferenceSize.x, Screen.height / GuiReferenceSize.y);
         }
 
         private void SlowUpdate()

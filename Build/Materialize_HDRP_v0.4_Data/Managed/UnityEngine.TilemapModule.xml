@@ -242,7 +242,7 @@ Only one class at any one time should set defaultBrush to true.</para>
     </member>
     <member name="T:UnityEngine.Tilemaps.ITilemap">
       <summary>
-        <para>Class passed onto Tiles when information is queried from the Tiles.</para>
+        <para>Class passed onto when information is queried from the tiles.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Tilemaps.ITilemap.cellBounds">
@@ -267,7 +267,7 @@ Only one class at any one time should set defaultBrush to true.</para>
     </member>
     <member name="M:UnityEngine.Tilemaps.ITilemap.GetColor(UnityEngine.Vector3Int)">
       <summary>
-        <para>Gets the color of a Tile given the XYZ coordinates of a cell in the Tilemap.</para>
+        <para>Gets the color of a.</para>
       </summary>
       <param name="position">Position of the Tile on the Tilemap.</param>
       <returns>
@@ -284,7 +284,7 @@ Only one class at any one time should set defaultBrush to true.</para>
     </member>
     <member name="M:UnityEngine.Tilemaps.ITilemap.GetSprite(UnityEngine.Vector3Int)">
       <summary>
-        <para>Gets the Sprite used in a Tile given the XYZ coordinates of a cell in the Tilemap.</para>
+        <para>Gets the.</para>
       </summary>
       <param name="position">Position of the Tile on the Tilemap.</param>
       <returns>
@@ -293,7 +293,7 @@ Only one class at any one time should set defaultBrush to true.</para>
     </member>
     <member name="M:UnityEngine.Tilemaps.ITilemap.GetTile(UnityEngine.Vector3Int)">
       <summary>
-        <para>Gets the Tile at the given XYZ coordinates of a cell in the|Tilemap.</para>
+        <para>Gets the.</para>
       </summary>
       <param name="position">Position of the Tile on the Tilemap.</param>
       <returns>
@@ -302,7 +302,7 @@ Only one class at any one time should set defaultBrush to true.</para>
     </member>
     <member name="M:UnityEngine.Tilemaps.ITilemap.GetTile(UnityEngine.Vector3Int)">
       <summary>
-        <para>Gets the Tile of type T at the given XYZ coordinates of a cell in the Tilemap.</para>
+        <para>Gets the.</para>
       </summary>
       <param name="position">Position of the Tile on the Tilemap.</param>
       <returns>
@@ -311,7 +311,7 @@ Only one class at any one time should set defaultBrush to true.</para>
     </member>
     <member name="M:UnityEngine.Tilemaps.ITilemap.GetTileFlags(UnityEngine.Vector3Int)">
       <summary>
-        <para>Gets the Tile Flags of the Tile at the given position.</para>
+        <para>Gets the TileFlags of the Tile at the given position.</para>
       </summary>
       <param name="position">Position of the Tile on the Tilemap.</param>
       <returns>
@@ -320,7 +320,7 @@ Only one class at any one time should set defaultBrush to true.</para>
     </member>
     <member name="M:UnityEngine.Tilemaps.ITilemap.GetTransformMatrix(UnityEngine.Vector3Int)">
       <summary>
-        <para>Gets the transform matrix of a Tile given the XYZ coordinates of a cell in the Tilemap.</para>
+        <para>Gets the transform matrix of a.</para>
       </summary>
       <param name="position">Position of the Tile on the Tilemap.</param>
       <returns>
@@ -329,7 +329,7 @@ Only one class at any one time should set defaultBrush to true.</para>
     </member>
     <member name="M:UnityEngine.Tilemaps.ITilemap.RefreshTile(UnityEngine.Vector3Int)">
       <summary>
-        <para>Refreshes a Tile at the given XYZ coordinates of a cell in the :Tilemap.</para>
+        <para>Refreshes a.</para>
       </summary>
       <param name="position">Position of the Tile on the Tilemap.</param>
     </member>

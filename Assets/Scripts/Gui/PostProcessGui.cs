@@ -1,5 +1,6 @@
 ﻿#region
 
+using General;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
@@ -20,7 +21,7 @@ namespace Gui
         private float _vignetteSmoothness;
         private float _ambientOcclusionIntensity;
 
-        private Rect _windowRect = new Rect(360, 330, 300, 530);
+        private Rect _windowRect;
 
         public Volume SceneVolume;
         [HideInInspector] public VolumeProfile Profile;
@@ -52,6 +53,8 @@ namespace Gui
 
             Profile.TryGet(out _ambientOcclusion);
             _ambientOcclusionIntensity = _ambientOcclusion.intensity.value;
+            
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
         }
 
         private void UpdateValues()
@@ -138,8 +141,8 @@ namespace Gui
 
         private void OnGUI()
         {
-            _windowRect.width = 300;
-            _windowRect.height = 510;
+            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
             _windowRect = GUI.Window(19, _windowRect, DoMyWindow, "Post Process");
         }

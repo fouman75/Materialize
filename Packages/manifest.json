@@ -1,12 +1,10 @@
 {
   "dependencies": {
-    "com.unity.collab-proxy": "1.2.15",
     "com.unity.package-manager-ui": "2.1.1",
-    "com.unity.render-pipelines.core": "file:/home/maikeu/Downloads/ScriptableRenderPipeline-6.0.0/com.unity.render-pipelines.core",
-    "com.unity.render-pipelines.high-definition": "file:/home/maikeu/Downloads/ScriptableRenderPipeline-6.0.0/com.unity.render-pipelines.high-definition",
-    "com.unity.shadergraph": "file:/home/maikeu/Downloads/ScriptableRenderPipeline-6.0.0/com.unity.shadergraph",
+    "com.unity.render-pipelines.core": "file:/home/maikeu/GitClones/ScriptableRenderPipeline/com.unity.render-pipelines.core",
+    "com.unity.render-pipelines.high-definition": "file:/home/maikeu/GitClones/ScriptableRenderPipeline/com.unity.render-pipelines.high-definition",
+    "com.unity.shadergraph": "file:/home/maikeu/GitClones/ScriptableRenderPipeline/com.unity.shadergraph",
     "com.unity.textmeshpro": "1.4.0-preview.1b",
-    "com.unity.vectorgraphics": "1.0.0-preview.23",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.assetbundle": "1.0.0",

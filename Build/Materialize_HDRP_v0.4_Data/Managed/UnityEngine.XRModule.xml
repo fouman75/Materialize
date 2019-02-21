@@ -764,6 +764,74 @@
         <para>Class providing information about XRDisplaySubsystem registration.</para>
       </summary>
     </member>
+    <member name="T:UnityEngine.Experimental.XR.XRExperienceSubsystem">
+      <summary>
+        <para>Provides methods and properties that allow for querying information specific to the platform experience.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.XR.XRExperienceSubsystem.experienceType">
+      <summary>
+        <para>Instance of XRExperienceSubsystem.ExperienceType that describes the experience the current session is running in.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.XR.XRExperienceSubsystem.trackingOrigin">
+      <summary>
+        <para>Used to get the current XRExperienceSubsystem.TrackingOrigin that determines the origin of the current XR space.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEngine.Experimental.XR.XRExperienceSubsystem.BoundaryChanged(System.Action)">
+      <summary>
+        <para>Event fired if a provider detects a boundary change. Clients subscribing to this event should call into XRExperienceSubsystem.GetAllBoundaryPoints to refresh their data.</para>
+      </summary>
+      <param name="value">Event handler to be called back on.</param>
+    </member>
+    <member name="T:UnityEngine.Experimental.XR.XRExperienceSubsystem.ExperienceType">
+      <summary>
+        <para>Enumeration describing the different experience types that could be returned from XRExperienceSubsystem.eperienceType.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.XRExperienceSubsystem.ExperienceType.Bounded">
+      <summary>
+        <para>Experience type associated with a user that can move within a bounded area.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.XRExperienceSubsystem.ExperienceType.Local">
+      <summary>
+        <para>Experience type associated with a user that should be experiencing the session in either a seated or stationary standing mode.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.XRExperienceSubsystem.ExperienceType.UnBounded">
+      <summary>
+        <para>Experience type associated with a user that can move freely with no constraints.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEngine.Experimental.XR.XRExperienceSubsystem.ExperienceTypeChanged(System.Action)">
+      <summary>
+        <para>Event fired if a provider detects a boundary change. Clients subscribing to this event should access XRExperienceSubsystem.experienceType to refresh their data.</para>
+      </summary>
+      <param name="value">Event handler to be called back on.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.XR.XRExperienceSubsystem.GetAllBoundaryPoints(System.Collections.Generic.List`1&lt;UnityEngine.Vector3&gt;)">
+      <summary>
+        <para>If the current expereince is XRExperienceSubsystem.ExperienceType.Bounded, this will return the set of points that describe the bounded area the user can move within. For any other experience type this will return an empty list.</para>
+      </summary>
+      <param name="boundaryPointsOut"></param>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.XRExperienceSubsystem.TrackingOrigin.Device">
+      <summary>
+        <para>Represents a Device relative tracking origin. A Device relative tracking origin defines a Local Origin at the position of the device in space at some previous point in time, usually at a recenter event, power-on or XR session start. Pose data provided by the device will be in this space relative to the local origin. This means that poses returned in this mode will not include the user height (for VR) or the device height (for AR) and any camera tracking from the XR Device will need to be manually offset accordingly.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.XRExperienceSubsystem.TrackingOrigin.Floor">
+      <summary>
+        <para>Represents the tracking origin whereby 0,0,0 is on the "floor" or other surface determined by the XR Device being used. The pose values reported by an XR Device in this mode will include the height of the XR Device above this surface, removing the need to offset the position of the camera tracking the XR Device by the height of the user (VR) or the height of the device above the floor (AR).</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.XR.XRExperienceSubsystemDescriptor">
+      <summary>
+        <para>Class providing information about XRExperienceSubsystem registration.</para>
+      </summary>
+    </member>
     <member name="T:UnityEngine.Experimental.XR.XRInputSubsystem">
       <summary>
         <para>XRInputSubsystem
@@ -1818,7 +1886,8 @@ Instance is used to enable and disable the inputs coming from a specific plugin.
     </member>
     <member name="M:UnityEngine.XR.InputTracking.GetLocalPosition(UnityEngine.XR.XRNode)">
       <summary>
-        <para>Gets the position of a specific node.</para>
+        <para>Note: This API has been marked as obsolete in code, and is no longer in use. Please use InputTracking.GetNodeStates and look for the XRNodeState with the corresponding XRNode type instead.
+Gets the position of a specific node.</para>
       </summary>
       <param name="node">Specifies which node's position should be returned.</param>
       <returns>
@@ -1827,7 +1896,8 @@ Instance is used to enable and disable the inputs coming from a specific plugin.
     </member>
     <member name="M:UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode)">
       <summary>
-        <para>Gets the rotation of a specific node.</para>
+        <para>Note: This API has been marked as obsolete in code, and is no longer in use. Please use InputTracking.GetNodeStates and look for the XRNodeState with the corresponding XRNode type instead.
+Gets the rotation of a specific node.</para>
       </summary>
       <param name="node">Specifies which node's rotation should be returned.</param>
       <returns>

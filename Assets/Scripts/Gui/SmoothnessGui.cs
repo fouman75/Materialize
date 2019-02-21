@@ -12,8 +12,14 @@ using UnityEngine;
 
 namespace Gui
 {
-    public class SmoothnessGui : MonoBehaviour
+    public class SmoothnessGui : MonoBehaviour, IProcessor
     {
+        public bool Active
+        {
+            get => gameObject.activeSelf;
+            set => gameObject.SetActive(value);
+        }
+
         private static readonly int MetalSmoothness = Shader.PropertyToID("_MetalSmoothness");
         private static readonly int IsolateSample1 = Shader.PropertyToID("_IsolateSample1");
         private static readonly int UseSample1 = Shader.PropertyToID("_UseSample1");
@@ -87,7 +93,7 @@ namespace Gui
 
         private RenderTexture _tempMap;
 
-        private Rect _windowRect = new Rect(30, 300, 300, 530);
+        private Rect _windowRect;
 
         [HideInInspector] public bool Busy;
 
@@ -99,6 +105,12 @@ namespace Gui
         private void Awake()
         {
             _camera = Camera.main;
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+        }
+        
+        private void OnDisable()
+        {
+            CleanUpTextures();
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -461,20 +473,17 @@ namespace Gui
                 out _settings.FinalBias, -0.5f, 0.5f);
             offsetY += 50;
 
-            if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Set as Smoothness"))
-                ProcessSmoothness();
-
             GUI.DragWindow();
         }
 
         private void OnGUI()
         {
-            _windowRect.width = 300;
-            _windowRect.height = 490;
-
-            if (_settings.UseSample1) _windowRect.height += 110;
+           if (_settings.UseSample1) _windowRect.height += 110;
 
             if (_settings.UseSample2) _windowRect.height += 110;
+            
+            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
             _windowRect = GUI.Window(17, _windowRect, DoMyWindow, "Smoothness From Diffuse");
         }
@@ -527,7 +536,7 @@ namespace Gui
             _overlayBlurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
         }
 
-        public void ProcessSmoothness()
+        public IEnumerator Process()
         {
             Busy = true;
 
@@ -595,6 +604,7 @@ namespace Gui
             RenderTexture.ReleaseTemporary(_tempMap);
 
             Busy = false;
+            yield break;
         }
 
         public IEnumerator ProcessBlur()

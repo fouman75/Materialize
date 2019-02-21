@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Collections;
+using System.Runtime.InteropServices.WindowsRuntime;
 using General;
 using Settings;
 using UnityEngine;
@@ -11,8 +12,14 @@ using UnityEngine.Rendering;
 
 namespace Gui
 {
-    public class AoFromNormalGui : MonoBehaviour
+    public class AoFromNormalGui : MonoBehaviour, IProcessor
     {
+        public bool Active
+        {
+            get => gameObject.activeSelf;
+            set => gameObject.SetActive(value);
+        }
+        
         private static readonly int FinalContrast = Shader.PropertyToID("_FinalContrast");
         private static readonly int FinalBias = Shader.PropertyToID("_FinalBias");
         private static readonly int AoBlend = Shader.PropertyToID("_AOBlend");
@@ -37,7 +44,7 @@ namespace Gui
 
         private bool _settingsInitialized;
 
-        private Rect _windowRect = new Rect(30, 300, 300, 230);
+        private Rect _windowRect;
 
         [HideInInspector] public bool Busy;
         public Texture2D DefaultHeight;
@@ -53,6 +60,12 @@ namespace Gui
         {
             _testObjectRenderer = TestObject.GetComponent<Renderer>();
             ThisMaterial = new Material(ThisMaterial.shader);
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+        }
+        
+        private void OnDisable()
+        {
+            CleanupTextures();
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -147,20 +160,13 @@ namespace Gui
                 out _aos.FinalBias, -1.0f, 1.0f);
             offsetY += 50;
 
-            GUI.enabled = !Busy;
-            if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set as AO Map"))
-            {
-                _processingAoCoroutine = StartCoroutine(ProcessAo());
-            }
-
             GUI.enabled = true;
-            GUI.DragWindow();
-        }
+            GUI.DragWindow(new Rect(0, 0, 10000, 20));        }
 
         private void OnGUI()
         {
-            _windowRect.width = 300;
-            _windowRect.height = 280;
+            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
             _windowRect = GUI.Window(10, _windowRect, DoMyWindow, "Normal + Depth to AO");
         }
@@ -191,7 +197,7 @@ namespace Gui
             RenderTexture.ReleaseTemporary(_blendedAoMap);
         }
 
-        public IEnumerator ProcessAo()
+        public IEnumerator Process()
         {
             yield return _processingNormalCoroutine;
             Busy = true;

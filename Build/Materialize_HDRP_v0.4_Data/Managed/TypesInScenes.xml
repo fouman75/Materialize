@@ -1,6 +1,5 @@
 <linker>
 	<assembly fullname="UnityEngine">
-		<type fullname="UnityEngine.MonoBehaviour" preserve="nothing"/>
 		<type fullname="UnityEngine.Object" preserve="nothing"/>
 		<type fullname="UnityEngine.Material" preserve="nothing"/>
 		<type fullname="UnityEngine.Behaviour" preserve="nothing"/>
@@ -8,6 +7,7 @@
 		<type fullname="UnityEngine.Sprite" preserve="nothing"/>
 		<type fullname="UnityEngine.Texture2D" preserve="nothing"/>
 		<type fullname="UnityEditor.MonoScript" preserve="nothing"/>
+		<type fullname="UnityEngine.MonoBehaviour" preserve="nothing"/>
 		<type fullname="UnityEngine.Texture" preserve="nothing"/>
 		<type fullname="UnityEditor.UnityConnectSettings" preserve="nothing"/>
 		<type fullname="UnityEngine.ComputeShader" preserve="nothing"/>
@@ -43,6 +43,7 @@
 		<type fullname="UnityEngine.ReflectionProbe" preserve="nothing"/>
 		<type fullname="UnityEngine.LightProbeGroup" preserve="nothing"/>
 		<type fullname="UnityEngine.RenderSettings" preserve="nothing"/>
+		<type fullname="UnityEngine.LightProbes" preserve="nothing"/>
 	</assembly>
 	<assembly fullname="Assembly-CSharp">
 		<type fullname="CameraPanZoom" preserve="nothing"/>
@@ -93,6 +94,7 @@
 		<type fullname="UnityEngine.Experimental.Rendering.HDPipeline.LiftGammaGain" preserve="nothing"/>
 		<type fullname="UnityEngine.Experimental.Rendering.HDPipeline.MicroShadowing" preserve="nothing"/>
 		<type fullname="UnityEngine.Experimental.Rendering.HDPipeline.ProceduralSky" preserve="nothing"/>
+		<type fullname="UnityEngine.Experimental.Rendering.HDPipeline.ReflectionProxyVolumeComponent" preserve="nothing"/>
 		<type fullname="UnityEngine.Experimental.Rendering.HDPipeline.RenderPipelineResources" preserve="nothing"/>
 		<type fullname="UnityEngine.Experimental.Rendering.HDPipeline.SceneObjectIDMapSceneAsset" preserve="nothing"/>
 		<type fullname="UnityEngine.Experimental.Rendering.HDPipeline.StaticLightingSky" preserve="nothing"/>
@@ -132,9 +134,6 @@
 		<type fullname="TMPro.TMP_SpriteAsset" preserve="nothing"/>
 		<type fullname="TMPro.TMP_StyleSheet" preserve="nothing"/>
 		<type fullname="TMPro.TextMeshProUGUI" preserve="nothing"/>
-	</assembly>
-	<assembly fullname="UnityEditor.TestRunner">
-		<type fullname="UnityEditor.TestTools.TestRunner.TestListCacheData" preserve="nothing"/>
 	</assembly>
 	<assembly fullname="UnityEngine.UI">
 		<type fullname="UnityEngine.EventSystems.EventSystem" preserve="nothing"/>

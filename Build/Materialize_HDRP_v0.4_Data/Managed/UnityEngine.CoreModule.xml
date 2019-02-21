@@ -1692,7 +1692,7 @@ Note: Using raw JNI functions requires advanced knowledge of the Android Java Na
     </member>
     <member name="P:UnityEngine.Application.absoluteURL">
       <summary>
-        <para>The URL of the document (what is shown in a browser's address bar) for WebGL (Read Only).</para>
+        <para>The URL of the document. For WebGL, this a web URL. For Android, iOS, or Universal Windows Platform (UWP) this is a deep link URL. (Read Only)</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Application.backgroundLoadingPriority">
@@ -1724,6 +1724,12 @@ Note: Using raw JNI functions requires advanced knowledge of the Android Java Na
       <summary>
         <para>Contains the path to the game data folder (Read Only).</para>
       </summary>
+    </member>
+    <member name="?:UnityEngine.Application.deepLinkActivated(System.Action`1&lt;System.String&gt;)">
+      <summary>
+        <para>This event is raised when an application running on Android, iOS, or the Universal Windows Platform (UWP) is activated using a deep link URL.</para>
+      </summary>
+      <param name="value">The deep link URL that activated the application.</param>
     </member>
     <member name="?:UnityEngine.Application.focusChanged(System.Action`1&lt;System.Boolean&gt;)">
       <summary>
@@ -1891,7 +1897,7 @@ Here is an example of handling the callback:</para>
     </member>
     <member name="P:UnityEngine.Application.streamingAssetsPath">
       <summary>
-        <para>The path to the StreamingAssets folder (Read Only).</para>
+        <para>Contains the path to the StreamingAssets folder (Read Only).</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Application.systemLanguage">
@@ -6995,14 +7001,14 @@ The default value is Camera.MonoOrStereoscopicEye.Left, so Camera.MonoOrStereosc
     </member>
     <member name="M:UnityEngine.Debug.Log(System.Object)">
       <summary>
-        <para>Logs a message to the Unity Console.</para>
+        <para>Logs message to the Unity Console.</para>
       </summary>
       <param name="message">String or object to be converted to string representation for display.</param>
       <param name="context">Object to which the message applies.</param>
     </member>
     <member name="M:UnityEngine.Debug.Log(System.Object,UnityEngine.Object)">
       <summary>
-        <para>Logs a message to the Unity Console.</para>
+        <para>Logs message to the Unity Console.</para>
       </summary>
       <param name="message">String or object to be converted to string representation for display.</param>
       <param name="context">Object to which the message applies.</param>
@@ -15006,11 +15012,6 @@ Only usable on Android, Windows Phone or Windows Tablets.</para>
         <para>The multiplier that defines the strength of the bounce lighting.</para>
       </summary>
     </member>
-    <member name="P:UnityEngine.Light.boundingSphereOverride">
-      <summary>
-        <para>Bounding sphere used to override the regular light bounding sphere during culling.</para>
-      </summary>
-    </member>
     <member name="P:UnityEngine.Light.color">
       <summary>
         <para>The color of the light.</para>
@@ -15096,11 +15097,6 @@ Only usable on Android, Windows Phone or Windows Tablets.</para>
         <para>The custom resolution of the shadow map.</para>
       </summary>
     </member>
-    <member name="P:UnityEngine.Light.shadowMatrixOverride">
-      <summary>
-        <para>Projection matrix used to override the regular light matrix during shadow culling.</para>
-      </summary>
-    </member>
     <member name="P:UnityEngine.Light.shadowNearPlane">
       <summary>
         <para>Near plane value to use for shadow frustums.</para>
@@ -15134,16 +15130,6 @@ Only usable on Android, Windows Phone or Windows Tablets.</para>
     <member name="P:UnityEngine.Light.type">
       <summary>
         <para>The type of the light.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Light.useBoundingSphereOverride">
-      <summary>
-        <para>Set to true to override light bounding sphere for culling.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Light.useShadowMatrixOverride">
-      <summary>
-        <para>Set to true to enable custom matrix for culling during shadows.</para>
       </summary>
     </member>
     <member name="M:UnityEngine.Light.AddCommandBuffer(UnityEngine.Rendering.LightEvent,UnityEngine.Rendering.CommandBuffer)">
@@ -18185,6 +18171,16 @@ Only usable on Android, Windows Phone or Windows Tablets.</para>
         <para>Returns a row of the matrix.</para>
       </summary>
       <param name="index"></param>
+    </member>
+    <member name="M:UnityEngine.Matrix4x4.Inverse3DAffine(UnityEngine.Matrix4x4,UnityEngine.Matrix4x4&amp;)">
+      <summary>
+        <para>Computes the inverse of a 3D affine matrix.</para>
+      </summary>
+      <param name="input">Input matrix to invert.</param>
+      <param name="result">The result of the inversion. Equal to the input matrix if the function fails.</param>
+      <returns>
+        <para>Returns true and a valid result if the function succeeds, false and a copy of the input matrix if the function fails.</para>
+      </returns>
     </member>
     <member name="M:UnityEngine.Matrix4x4.LookAt(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3)">
       <summary>
@@ -22144,14 +22140,14 @@ frame. Minimum value is 1 and maximum is 33.</para>
     </member>
     <member name="M:UnityEngine.Random.Range(System.Single,System.Single)">
       <summary>
-        <para>Return a random float number between min [inclusive] and max [inclusive] (Read Only).</para>
+        <para>Returns a random float number between and min [inclusive] and max [inclusive] (Read Only).</para>
       </summary>
       <param name="min"></param>
       <param name="max"></param>
     </member>
     <member name="M:UnityEngine.Random.Range(System.Int32,System.Int32)">
       <summary>
-        <para>Return a random integer number between min [inclusive] and max [exclusive] (Read Only).</para>
+        <para>Returns a random integer number between min [inclusive] and max [exclusive] (Read Only).</para>
       </summary>
       <param name="min"></param>
       <param name="max"></param>
@@ -22269,6 +22265,21 @@ frame. Minimum value is 1 and maximum is 33.</para>
         <para>Get a point that lies a given distance along a ray.</para>
       </summary>
       <param name="distance">Distance of the desired point along the path of the ray.</param>
+    </member>
+    <member name="T:UnityEngine.ReceiveGI">
+      <summary>
+        <para>Determines if the object receives Global Illumination from its surroundings through either Lightmaps or LightProbes. Forced to LightProbes if Contribute GI is turned off.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.ReceiveGI.Lightmaps">
+      <summary>
+        <para>Makes the GameObject use lightmaps to receive Global Illumination.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.ReceiveGI.LightProbes">
+      <summary>
+        <para>The object will have the option to use Light Probes to receive Global Illumination. See Rendering.LightProbeUsage.</para>
+      </summary>
     </member>
     <member name="T:UnityEngine.Rect">
       <summary>
@@ -23565,38 +23576,17 @@ See Also: ReflectionProbeTimeSlicingMode.</para>
       <summary>
         <para>Adds a new batch to the group.</para>
       </summary>
+      <param name="associatedSceneObject">The GameObject to select when you pick an object that the batch renders.</param>
       <param name="mesh">The Mesh to draw.</param>
       <param name="subMeshIndex">Specifies which subset of the mesh to draw. This applies only to meshes that are composed of several materials.</param>
       <param name="material">Material to use.</param>
       <param name="layer"> to use.</param>
       <param name="castShadows">Whether the meshes cast shadows.</param>
       <param name="receiveShadows">Whether the meshes receive shadows.</param>
-      <param name="invertCulling">Specify whether to invert the backface culling (true) or not (false). This flag can "flip" the culling mode of all rendered objects. Major use case: rendering reflections for mirrors, water etc. Since virtual camera for rendering the reflection is mirrored, the culling order has to be inverted. You can see how the Water script in Effects standard package does that.</param>
+      <param name="invertCulling">Whether to invert culling for rendering.</param>
       <param name="bounds">Bounds to use. Should specify the combined bounds of all the instances.</param>
       <param name="instanceCount">The number of instances to draw.</param>
       <param name="customProps">Additional material properties to apply. See MaterialPropertyBlock.</param>
-      <param name="associatedSceneObject">The GameObject to select when you pick an object that the batch renders.</param>
-      <param name="sceneCullingMask">Additional culling mask usually used for scene based culling. See Also: EditorSceneManager.GetSceneCullingMask.</param>
-      <returns>
-        <para>The batch's index in the BatchedRendererGroup.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.Rendering.BatchRendererGroup.AddBatch(UnityEngine.Mesh,System.Int32,UnityEngine.Material,System.Int32,UnityEngine.Rendering.ShadowCastingMode,System.Boolean,System.Boolean,UnityEngine.Bounds,System.Int32,UnityEngine.MaterialPropertyBlock,UnityEngine.GameObject,System.UInt64)">
-      <summary>
-        <para>Adds a new batch to the group.</para>
-      </summary>
-      <param name="mesh">The Mesh to draw.</param>
-      <param name="subMeshIndex">Specifies which subset of the mesh to draw. This applies only to meshes that are composed of several materials.</param>
-      <param name="material">Material to use.</param>
-      <param name="layer"> to use.</param>
-      <param name="castShadows">Whether the meshes cast shadows.</param>
-      <param name="receiveShadows">Whether the meshes receive shadows.</param>
-      <param name="invertCulling">Specify whether to invert the backface culling (true) or not (false). This flag can "flip" the culling mode of all rendered objects. Major use case: rendering reflections for mirrors, water etc. Since virtual camera for rendering the reflection is mirrored, the culling order has to be inverted. You can see how the Water script in Effects standard package does that.</param>
-      <param name="bounds">Bounds to use. Should specify the combined bounds of all the instances.</param>
-      <param name="instanceCount">The number of instances to draw.</param>
-      <param name="customProps">Additional material properties to apply. See MaterialPropertyBlock.</param>
-      <param name="associatedSceneObject">The GameObject to select when you pick an object that the batch renders.</param>
-      <param name="sceneCullingMask">Additional culling mask usually used for scene based culling. See Also: EditorSceneManager.GetSceneCullingMask.</param>
       <returns>
         <para>The batch's index in the BatchedRendererGroup.</para>
       </returns>
@@ -23639,7 +23629,7 @@ See Also: BatchRendererGroup.OnPerformCulling.</param>
     </member>
     <member name="M:UnityEngine.Rendering.BatchRendererGroup.RemoveBatch(System.Int32)">
       <summary>
-        <para>Removes a batch from the group and frees the batch index to be reused by future AddBatch calls.  It will not modify the batchIndex of any other batches.</para>
+        <para>Removes a batch from the group.</para>
       </summary>
       <param name="index">Batch index.</param>
     </member>
@@ -23665,17 +23655,17 @@ See Also: BatchRendererGroup.OnPerformCulling.</param>
     </member>
     <member name="F:UnityEngine.Rendering.BatchVisibility.instancesCount">
       <summary>
-        <para>Input property specifying the total number of instances in the batch. (readonly).</para>
+        <para>The total number of instances in the batch.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Rendering.BatchVisibility.offset">
       <summary>
-        <para>Input property specifying the offset into the BatchCullingContext.visibleIndices where the batch's visibile indices start. (readonly).</para>
+        <para>Offset into the BatchCullingContext.visibleIndices where the batch starts.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Rendering.BatchVisibility.visibleCount">
       <summary>
-        <para>Output property that has to be set to the number of visible instances in the batch after culling.</para>
+        <para>The number of visible instances in the batch.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.Rendering.BlendMode">
@@ -27477,39 +27467,16 @@ Updating a probe's cubemap is a costly operation. Unity needs to render the enti
         <para>When the IRenderPipeline is invalid or destroyed this returns true.</para>
       </summary>
     </member>
-    <member name="M:UnityEngine.Rendering.RenderPipeline.BeginCameraRendering(UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera)">
+    <member name="M:UnityEngine.Rendering.RenderPipeline.BeginCameraRendering(UnityEngine.Camera)">
       <summary>
         <para>Call the delegate used during SRP rendering before a single camera starts rendering.</para>
       </summary>
-      <param name="context"></param>
       <param name="camera"></param>
     </member>
     <member name="M:UnityEngine.Rendering.RenderPipeline.BeginFrameRendering(UnityEngine.Camera[])">
       <summary>
         <para>Call the delegate used during SRP rendering before a render begins.</para>
       </summary>
-      <param name="cameras"></param>
-      <param name="context"></param>
-    </member>
-    <member name="M:UnityEngine.Rendering.RenderPipeline.BeginFrameRendering(UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera[])">
-      <summary>
-        <para>Call the delegate used during SRP rendering before a render begins.</para>
-      </summary>
-      <param name="cameras"></param>
-      <param name="context"></param>
-    </member>
-    <member name="M:UnityEngine.Rendering.RenderPipeline.EndCameraRendering(UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera)">
-      <summary>
-        <para>Call the delegate used during SRP rendering after a single camera ends rendering.</para>
-      </summary>
-      <param name="context"></param>
-      <param name="camera"></param>
-    </member>
-    <member name="M:UnityEngine.Rendering.RenderPipeline.EndFrameRendering(UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera[])">
-      <summary>
-        <para>Call the delegate used during SRP rendering after a render ends.</para>
-      </summary>
-      <param name="context"></param>
       <param name="cameras"></param>
     </member>
     <member name="M:UnityEngine.Rendering.RenderPipeline.Render(UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera[])">
@@ -27628,6 +27595,21 @@ Updating a probe's cubemap is a costly operation. Unity needs to render the enti
         <para>Array of 32 Rendering Layer Mask names.</para>
       </returns>
     </member>
+    <member name="P:UnityEngine.Rendering.RenderPipelineAsset.terrainDetailGrassBillboardShader">
+      <summary>
+        <para>Return the detail grass billboard Shader for this pipeline.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Rendering.RenderPipelineAsset.terrainDetailGrassShader">
+      <summary>
+        <para>Return the detail grass Shader for this pipeline.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Rendering.RenderPipelineAsset.terrainDetailLitShader">
+      <summary>
+        <para>Return the detail lit Shader for this pipeline.</para>
+      </summary>
+    </member>
     <member name="M:UnityEngine.Rendering.RenderPipelineAsset.CreatePipeline">
       <summary>
         <para>Create a IRenderPipeline specific to this asset.</para>
@@ -27651,13 +27633,13 @@ Updating a probe's cubemap is a costly operation. Unity needs to render the enti
         <para>Render Pipeline manager.</para>
       </summary>
     </member>
-    <member name="?:UnityEngine.Rendering.RenderPipelineManager.beginCameraRendering(System.Action`2&lt;UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera&gt;)">
+    <member name="?:UnityEngine.Rendering.RenderPipelineManager.beginCameraRendering(System.Action`1&lt;UnityEngine.Camera&gt;)">
       <summary>
         <para>Call that should be issued by an SRP when the SRP begins to render a Camera so that other systems can inject per camera render logic.</para>
       </summary>
       <param name="value"></param>
     </member>
-    <member name="?:UnityEngine.Rendering.RenderPipelineManager.beginFrameRendering(System.Action`2&lt;UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera[]&gt;)">
+    <member name="?:UnityEngine.Rendering.RenderPipelineManager.beginFrameRendering(System.Action`1&lt;UnityEngine.Camera[]&gt;)">
       <summary>
         <para>Call that should be issued by an SRP when the SRP begins to render so that other systems can inject 'pre render' logic.</para>
       </summary>
@@ -27667,18 +27649,6 @@ Updating a probe's cubemap is a costly operation. Unity needs to render the enti
       <summary>
         <para>Returns the instance of the currently used Render Pipeline.</para>
       </summary>
-    </member>
-    <member name="?:UnityEngine.Rendering.RenderPipelineManager.endCameraRendering(System.Action`2&lt;UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera&gt;)">
-      <summary>
-        <para>Call that should be issued by an SRP after the SRP ends to render a Camera so that other systems can inject per camera render logic.</para>
-      </summary>
-      <param name="value"></param>
-    </member>
-    <member name="?:UnityEngine.Rendering.RenderPipelineManager.endFrameRendering(System.Action`2&lt;UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera[]&gt;)">
-      <summary>
-        <para>Call that should be issued by an SRP when the SRP ends to render so that other systems can inject 'post render' logic.</para>
-      </summary>
-      <param name="value"></param>
     </member>
     <member name="T:UnityEngine.Rendering.RenderQueue">
       <summary>
@@ -31332,6 +31302,11 @@ Note: This flag does not unload assets which can be referenced by other scenes.<
         <para>The current screen resolution (Read Only).</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Screen.cutouts">
+      <summary>
+        <para>Returns a list of screen areas that are not functional for displaying content (Read Only).</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.Screen.dpi">
       <summary>
         <para>The current DPI of the screen / device (Read Only).</para>
@@ -32623,11 +32598,6 @@ Returns NULL if there is no associated alpha texture for the source sprite. This
     <member name="P:UnityEngine.Sprite.rect">
       <summary>
         <para>Location of the Sprite on the original Texture, specified in pixels.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Sprite.spriteAtlasTextureScale">
-      <summary>
-        <para>The Variant scale of texture used by the Sprite. This is useful to check when a Variant SpriteAtlas is being used by Sprites.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Sprite.texture">
@@ -34860,7 +34830,7 @@ This constructor creates a TextAsset, which is not the same as a plain text file
     </member>
     <member name="P:UnityEngine.Time.deltaTime">
       <summary>
-        <para>The completion time in seconds since the last frame (Read Only).</para>
+        <para>The completion time in seconds since the last frame. (Read Only).</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Time.fixedDeltaTime">
@@ -35099,7 +35069,7 @@ This constructor creates a TextAsset, which is not the same as a plain text file
         <para>Checks if the text within an input field can be selected and modified while TouchScreenKeyboard is open.</para>
       </summary>
       <returns>
-        <para>Returns true when the input field can be selected and modified. Returns false otherwise.</para>
+        <para>Returns true when you are able to select and modify the input field, returns false otherwise.</para>
       </returns>
     </member>
     <member name="P:UnityEngine.TouchScreenKeyboard.isSupported">
@@ -37392,7 +37362,7 @@ See Also: JobHandle.CombineDependencies.</para>
         <para>Initializes a new instance of UnityAPICompatibilityVersionAttribute. This constructor is used by internal tooling.</para>
       </summary>
       <param name="version">Unity version that this assembly is compatible with.</param>
-      <param name="configurationAssembliesHashes">Comma separated list of hash of the contents of all referenced assemblies (by the assembly the attribute is applied to) that contains updater configurations in the form "assemblyname:hash,assemblyname:hash...".</param>
+      <param name="configurationAssembliesHashes">A comma-separated list comprised of the assembly name and attribute hash pairs. For example, assemblyname:hash,assemblyname:hash.</param>
     </member>
     <member name="A:UnityEngine.CoreModule">
       <summary>
@@ -38110,14 +38080,11 @@ See Also: JobHandle.CombineDependencies.</para>
     </member>
     <member name="M:UnityEngine.Vector3.MoveTowards(UnityEngine.Vector3,UnityEngine.Vector3,System.Single)">
       <summary>
-        <para>Calculate a position between the points specified by current and target, moving no farther than the distance specified by maxDistanceDelta.</para>
+        <para>Moves a point current in a straight line towards a target point.</para>
       </summary>
-      <param name="current">The position to move from.</param>
-      <param name="target">The position to move towards.</param>
-      <param name="maxDistanceDelta">Distance to move current per call.</param>
-      <returns>
-        <para>The new position.</para>
-      </returns>
+      <param name="current"></param>
+      <param name="target"></param>
+      <param name="maxDistanceDelta"></param>
     </member>
     <member name="M:UnityEngine.Vector3.Normalize(UnityEngine.Vector3)">
       <summary>
@@ -38811,6 +38778,11 @@ See Also: JobHandle.CombineDependencies.</para>
         <para>This enum describes how the RenderTexture is used as a VR eye texture. Instead of using the values of this enum manually, use the value returned by XR.XRSettings.eyeTextureDesc|eyeTextureDesc or other VR functions returning a RenderTextureDescriptor.</para>
       </summary>
     </member>
+    <member name="F:UnityEngine.VRTextureUsage.DeviceSpecific">
+      <summary>
+        <para>The texture used by an external XR provider.  The provider is responsible for defining the texture's layout and use.</para>
+      </summary>
+    </member>
     <member name="F:UnityEngine.VRTextureUsage.None">
       <summary>
         <para>The RenderTexture is not a VR eye texture. No special rendering behavior will occur.</para>
@@ -38843,9 +38815,9 @@ See Also: JobHandle.CombineDependencies.</para>
     </member>
     <member name="M:UnityEngine.WaitForSeconds.#ctor(System.Single)">
       <summary>
-        <para>Suspends the coroutine execution for the given amount of seconds using scaled time.</para>
+        <para>Creates a yield instruction to wait for a given number of seconds using scaled time.</para>
       </summary>
-      <param name="seconds">Delay execution by the amount of time in seconds.</param>
+      <param name="seconds"></param>
     </member>
     <member name="T:UnityEngine.WaitForSecondsRealtime">
       <summary>

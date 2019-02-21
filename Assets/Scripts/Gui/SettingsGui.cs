@@ -182,6 +182,8 @@ namespace Gui
         private void OnGUI()
         {
             _windowRect = new Rect(Screen.width - 300, Screen.height - 320, 280, 230);
+            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
             if (_windowOpen) _windowRect = GUI.Window(20, _windowRect, DoMyWindow, "Setting and Preferences");
         }

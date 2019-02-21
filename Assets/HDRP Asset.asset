@@ -13,48 +13,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cf1dab834d4ec34195b920ea7bbf9ec, type: 3}
   m_Name: HDRP Asset
   m_EditorClassIdentifier: 
-  m_RenderPipelineResources: {fileID: 11400000, guid: 00000000000000000000000000000000,
-    type: 0}
+  m_RenderPipelineResources: {fileID: 11400000, guid: 3ce144cff5783da45aa5d4fdc2da14b7,
+    type: 2}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 68171630442501
-      data2: 4035225266123964416
+      data1: 69275674214173
+      data2: 4539628424389459968
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
-      data1: 68171655608325
-      data2: 4035225266123964416
+      data1: 69277821697821
+      data2: 4539628424389459968
   m_RenderingPathDefaultRealtimeReflectionFrameSettings:
     bitDatas:
-      data1: 68171634579460
-      data2: 4035225266123964416
+      data1: 69277821697821
+      data2: 4539628424389459968
   m_RenderPipelineSettings:
     supportShadowMask: 1
-    supportSSR: 0
-    supportSSAO: 0
+    supportSSR: 1
+    supportSSAO: 1
     supportSubsurfaceScattering: 0
     increaseSssSampleCount: 0
-    supportVolumetrics: 0
+    supportVolumetrics: 1
     increaseResolutionOfVolumetrics: 0
     supportLightLayers: 0
-    supportDistortion: 0
-    supportTransparentBackface: 0
-    supportTransparentDepthPrepass: 0
-    supportTransparentDepthPostpass: 0
+    supportDistortion: 1
+    supportTransparentBackface: 1
+    supportTransparentDepthPrepass: 1
+    supportTransparentDepthPostpass: 1
     supportedLitShaderMode: 1
-    supportDecals: 0
-    msaaSampleCount: 1
+    supportDecals: 1
+    msaaSampleCount: 4
     supportMotionVectors: 1
     supportRuntimeDebugDisplay: 1
     supportDitheringCrossFade: 1
     supportRayTracing: 0
-    editorRaytracingFilterLayerMask:
-      serializedVersion: 2
-      m_Bits: 4294967295
     lightLoopSettings:
       cookieSize: 128
       cookieTexArraySize: 16
-      pointCookieSize: 256
-      cubeCookieTexArraySize: 8
+      pointCookieSize: 128
+      cubeCookieTexArraySize: 16
       planarReflectionProbeCacheSize: 2
       planarReflectionTextureSize: 1024
       reflectionProbeCacheSize: 64
@@ -66,7 +63,7 @@ MonoBehaviour:
         serializedVersion: 2
         m_Bits: 0
       supportFabricConvolution: 0
-      maxDirectionalLightsOnScreen: 8
+      maxDirectionalLightsOnScreen: 16
       maxPunctualLightsOnScreen: 512
       maxAreaLightsOnScreen: 64
       maxEnvLightsOnScreen: 64
@@ -84,7 +81,7 @@ MonoBehaviour:
       perChannelMask: 0
     postProcessSettings:
       m_LutSize: 32
-      m_LutFormat: 48
+      lutFormat: 48
     dynamicResolutionSettings:
       enabled: 1
       maxPercentage: 100
@@ -95,9 +92,10 @@ MonoBehaviour:
       forcedPercentage: 100
   allowShaderVariantStripping: 1
   enableSRPBatcher: 1
-  shaderVariantLogLevel: 2
+  shaderVariantLogLevel: 0
   diffusionProfileSettings: {fileID: 0}
-  m_Version: 2
+  diffusionProfileSettingsList: []
+  m_Version: 3
   m_ObsoleteFrameSettings:
     overrides: 0
     enableShadow: 0

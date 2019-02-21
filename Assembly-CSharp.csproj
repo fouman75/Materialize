@@ -88,15 +88,14 @@
     <Compile Include="Assets\Scripts\Gui\ControlsGui.cs" />
     <Compile Include="Assets\Scripts\Gui\EditDiffuseGui.cs" />
     <Compile Include="Assets\Scripts\Gui\HeightFromDiffuseGui.cs" />
+    <Compile Include="Assets\Scripts\Gui\IProcessor.cs" />
     <Compile Include="Assets\Scripts\Gui\MainGui.cs" />
     <Compile Include="Assets\Scripts\Gui\MaterialGui.cs" />
-    <Compile Include="Assets\Scripts\Gui\MaterialSettings.cs" />
     <Compile Include="Assets\Scripts\Gui\MetallicGui.cs" />
     <Compile Include="Assets\Scripts\Gui\NormalFromHeightGui.cs" />
     <Compile Include="Assets\Scripts\Gui\PostProcessGui.cs" />
     <Compile Include="Assets\Scripts\Gui\SettingsGui.cs" />
     <Compile Include="Assets\Scripts\Gui\SmoothnessGui.cs" />
-    <Compile Include="Assets\Scripts\Gui\SpecularGui.cs" />
     <Compile Include="Assets\Scripts\Gui\TexturePanel.cs" />
     <Compile Include="Assets\Scripts\Gui\TilingTextureMakerGui.cs" />
     <Compile Include="Assets\Scripts\Gui\WelcomeScreen.cs" />
@@ -105,6 +104,7 @@
     <Compile Include="Assets\Scripts\Settings\AoSettings.cs" />
     <Compile Include="Assets\Scripts\Settings\EditDiffuseSettings.cs" />
     <Compile Include="Assets\Scripts\Settings\HeightFromDiffuseSettings.cs" />
+    <Compile Include="Assets\Scripts\Settings\MaterialSettings.cs" />
     <Compile Include="Assets\Scripts\Settings\MetallicSettings.cs" />
     <Compile Include="Assets\Scripts\Settings\NormalFromHeightSettings.cs" />
     <Compile Include="Assets\Scripts\Settings\ProgramSettings.cs" />
@@ -179,23 +179,11 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\OBJ-IO\Readme.txt" />
-    <Reference Include="Unity.VectorGraphics">
-      <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.VectorGraphics.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.InternalAPIEditorBridge.003">
-      <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.003.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VectorGraphics.Editor">
-      <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.VectorGraphics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>/home/maikeu/GitClones/Materialize/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

@@ -59,23 +59,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Common\CommandBufferPool.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Common\CommonStructs.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Common\XRGraphics.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Debugging\ProfilingSample.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Textures\MSAASamples.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Utilities\ColorUtils.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Utilities\CoreUtils.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Utilities\HableCurve.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Utilities\HaltonSequence.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Utilities\XRUtils.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Volume\Volume.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Volume\VolumeComponent.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Volume\VolumeManager.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Volume\VolumeParameter.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Volume\VolumeProfile.cs" />
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Volume\VolumeStack.cs" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\Runtime\Unity.RenderPipelines.Core.Runtime.asmdef" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Common\CommandBufferPool.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Common\CommonStructs.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Common\XRGraphics.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Debugging\ProfilingSample.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Textures\MSAASamples.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Utilities\ColorUtils.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Utilities\CoreRenderPipelinePreferences.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Utilities\CoreUtils.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Utilities\HableCurve.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Utilities\HaltonSequence.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Utilities\XRUtils.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Volume\Volume.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Volume\VolumeComponent.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Volume\VolumeManager.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Volume\VolumeParameter.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Volume\VolumeProfile.cs" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Volume\VolumeStack.cs" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\Runtime\Unity.RenderPipelines.Core.Runtime.asmdef" />
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/home/maikeu/Unity/Hub/Editor/2019.2.0a4/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -281,7 +282,7 @@
       <HintPath>/home/maikeu/GitClones/Materialize/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>/home/maikeu/Downloads/ScriptableRenderPipeline-6.0.0/com.unity.render-pipelines.high-definition/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+      <HintPath>/home/maikeu/GitClones/ScriptableRenderPipeline/com.unity.render-pipelines.high-definition/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>/home/maikeu/Unity/Hub/Editor/2019.2.0a4/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

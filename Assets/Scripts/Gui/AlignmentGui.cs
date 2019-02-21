@@ -55,7 +55,7 @@ namespace Gui
 
         private Texture2D _textureToAlign;
 
-        private Rect _windowRect = new Rect(30, 300, 300, 530);
+        private Rect _windowRect;
         [UsedImplicitly] public bool NewTexture;
         public GameObject TestObject;
 
@@ -64,6 +64,14 @@ namespace Gui
         private void Awake()
         {
             _camera = Camera.main;
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+        }
+        
+        private void OnDisable()
+        {
+            RenderTexture.ReleaseTemporary(_alignMap);
+            RenderTexture.ReleaseTemporary(_lensMap);
+            RenderTexture.ReleaseTemporary(_perspectiveMap);
         }
 
         public void Initialize()
@@ -351,8 +359,8 @@ namespace Gui
 
         private void OnGUI()
         {
-            _windowRect.width = 300;
-            _windowRect.height = 430;
+            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
             _windowRect = GUI.Window(21, _windowRect, DoMyWindow, "Texture Alignment Adjuster");
         }

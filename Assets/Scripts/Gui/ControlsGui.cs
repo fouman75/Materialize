@@ -54,6 +54,8 @@ namespace Gui
         private void OnGUI()
         {
             _windowRect = new Rect(Screen.width - 480, Screen.height - 370, 170, 280);
+            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
             if (_windowOpen) _windowRect = GUI.Window(22, _windowRect, DoMyWindow, "Controls");
         }

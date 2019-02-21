@@ -333,6 +333,15 @@
         <para>Gets the number of keys in the remote settings configuration.</para>
       </summary>
     </member>
+    <member name="M:UnityEngine.RemoteSettings.GetDictionary(System.String)">
+      <summary>
+        <para>Gets a dictionary corresponding to the remote setting identified by key, if it exists.</para>
+      </summary>
+      <param name="key">The key identifying the setting.</param>
+      <returns>
+        <para>An instance of Dictionary&lt;string, object&gt; containing the corresponding remote value or values.</para>
+      </returns>
+    </member>
     <member name="M:UnityEngine.RemoteSettings.GetFloat(System.String)">
       <summary>
         <para>Gets the value corresponding to remote setting identified by key, if it exists.</para>
@@ -386,6 +395,35 @@
       <param name="defaultValue">The default value to use if the setting identified by the key parameter cannot be found or is unavailable.</param>
       <returns>
         <para>The current value of the setting identified by key, or the default value.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.RemoteSettings.GetObject(System.String)">
+      <summary>
+        <para>Gets the object corresponding to the remote setting identified by key, if it exists.</para>
+      </summary>
+      <param name="key">The key identifying the setting.</param>
+      <returns>
+        <para>An instance of the object with fields assigned the corresponding remote values.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.RemoteSettings.GetObject(System.Type,System.String)">
+      <summary>
+        <para>Gets the object corresponding to the remote setting identified by key, if it exists.</para>
+      </summary>
+      <param name="key">The key identifying the setting.</param>
+      <param name="type">The type of object represented in RemoteSettings.</param>
+      <returns>
+        <para>An instance of the object with fields assigned the corresponding remote values.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.RemoteSettings.GetObject(System.String,System.Object)">
+      <summary>
+        <para>Gets the object corresponding to the remote setting identified by key, if it exists.</para>
+      </summary>
+      <param name="defaultValue">The object that should be for default values.</param>
+      <param name="key">The key identifying the setting.</param>
+      <returns>
+        <para>An instance of the object with fields assigned the corresponding remote values.</para>
       </returns>
     </member>
     <member name="M:UnityEngine.RemoteSettings.GetString(System.String)">

@@ -9,8 +9,14 @@ using UnityEngine;
 
 namespace Gui
 {
-    public class EditDiffuseGui : MonoBehaviour
+    public class EditDiffuseGui : MonoBehaviour, IProcessor
     {
+        public bool Active
+        {
+            get => gameObject.activeSelf;
+            set => gameObject.SetActive(value);
+        }
+
         private static readonly int Slider = Shader.PropertyToID("_Slider");
         private static readonly int BlurContrast = Shader.PropertyToID("_BlurContrast");
         private static readonly int LightMaskPow = Shader.PropertyToID("_LightMaskPow");
@@ -50,17 +56,13 @@ namespace Gui
 
         private RenderTexture _tempMap;
 
-        private Rect _windowRect = new Rect(30, 300, 300, 450);
+        private Rect _windowRect;
 
         public GameObject TestObject;
 
         public Material ThisMaterial;
         private Material _material;
-
-        public EditDiffuseGui(RenderTexture avgTempMap)
-        {
-            _avgTempMap = avgTempMap;
-        }
+        private int _windowId;
 
         public void GetValues(ProjectObject projectObject)
         {
@@ -95,6 +97,7 @@ namespace Gui
         private void OnDisable()
         {
             _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
+            CleanupTextures();
         }
 
         // Use this for initialization
@@ -106,6 +109,10 @@ namespace Gui
             _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
 
             InitializeSettings();
+
+            _windowId = ProgramManager.Instance.GetWindowId;
+            Debug.Log($"Window ID de {name} : {_windowId}");
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
         }
 
         public void DoStuff()
@@ -157,71 +164,75 @@ namespace Gui
 
         private void DoMyWindow(int windowId)
         {
-            const int offsetX = 10;
+            var offsetX = 10;
             var offsetY = 30;
 
+            GUI.enabled = true;
             GUI.Label(new Rect(offsetX, offsetY, 250, 30), "Diffuse Reveal Slider");
             _slider = GUI.HorizontalSlider(new Rect(offsetX, offsetY + 20, 280, 10), _slider, 0.0f, 1.0f);
-            offsetY += 50;
+            offsetY += 35;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Average Color Blur Size", _eds.AvgColorBlurSize,
                 out _eds.AvgColorBlurSize, 5, 100))
                 _doStuff = true;
-            offsetY += 50;
+            offsetY += 35;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlay Blur Size", _eds.BlurSize,
                 out _eds.BlurSize, 5, 100)) _doStuff = true;
-            offsetY += 30;
+            offsetY += 35;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlay Blur Contrast", _eds.BlurContrast,
                 out _eds.BlurContrast, -1.0f, 1.0f);
-            offsetY += 50;
+            offsetY += 35;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Light Mask Power", _eds.LightMaskPow,
                 out _eds.LightMaskPow, 0.0f, 1.0f);
-            offsetY += 30;
+            offsetY += 35;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Remove Light", _eds.LightPow,
                 out _eds.LightPow, 0.0f, 1.0f);
-            offsetY += 50;
+            offsetY += 35;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Shadow Mask Power", _eds.DarkMaskPow,
                 out _eds.DarkMaskPow, 0.0f, 1.0f);
-            offsetY += 30;
+            offsetY += 35;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Remove Shadow", _eds.DarkPow,
                 out _eds.DarkPow, 0.0f, 1.0f);
-            offsetY += 50;
+            offsetY += 35;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Hot Spot Removal", _eds.HotSpot,
                 out _eds.HotSpot, 0.0f, 1.0f);
-            offsetY += 30;
+            offsetY += 35;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Dark Spot Removal", _eds.DarkSpot,
                 out _eds.DarkSpot, 0.0f, 1.0f);
-            offsetY += 50;
+            offsetY += 35;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Contrast", _eds.FinalContrast,
                 out _eds.FinalContrast, -2.0f, 2.0f);
-            offsetY += 30;
+            offsetY += 35;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _eds.FinalBias,
                 out _eds.FinalBias, -0.5f, 0.5f);
-            offsetY += 50;
+            offsetY += 35;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Keep Original Color", _eds.ColorLerp,
                 out _eds.ColorLerp, 0.0f, 1.0f);
-            offsetY += 30;
+            offsetY += 35;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Saturation", _eds.Saturation,
                 out _eds.Saturation, 0.0f, 1.0f);
-            offsetY += 50;
+            offsetY += 35;
 
-            if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set as Diffuse"))
-                ProcessDiffuse();
-
-            GUI.DragWindow();
+            GUI.enabled = true;
+            GUI.DragWindow(new Rect(0, 0, 10000, 20));
         }
 
         private void OnGUI()
         {
-            _windowRect.width = 300;
-            _windowRect.height = 650;
+            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
-            _windowRect = GUI.Window(12, _windowRect, DoMyWindow, "Edit Diffuse");
+
+//            _windowRect.width = 300;
+//            _windowRect.height = 550;
+//
+            _windowRect = GUI.Window(_windowId, _windowRect, DoMyWindow, "Edit Diffuse");
+//            Debug.Log("Rect : " + _windowRect);
         }
 
         public void Close()
@@ -257,7 +268,7 @@ namespace Gui
             _avgMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
         }
 
-        private void ProcessDiffuse()
+        public IEnumerator Process()
         {
             Debug.Log("Processing Diffuse");
 
@@ -295,6 +306,7 @@ namespace Gui
             TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Diffuse);
 
             RenderTexture.ReleaseTemporary(_tempMap);
+            yield break;
         }
 
         private IEnumerator ProcessBlur()

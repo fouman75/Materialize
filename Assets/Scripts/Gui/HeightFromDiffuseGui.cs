@@ -13,8 +13,14 @@ using UnityEngine.Rendering;
 
 namespace Gui
 {
-    public class HeightFromDiffuseGui : MonoBehaviour
+    public class HeightFromDiffuseGui : MonoBehaviour, IProcessor
     {
+        public bool Active
+        {
+            get => gameObject.activeSelf;
+            set => gameObject.SetActive(value);
+        }
+        
         private const float BlurScale = 1.0f;
         private static readonly int BlurScaleId = Shader.PropertyToID("_BlurScale");
         private static readonly int ImageSize = Shader.PropertyToID("_ImageSize");
@@ -119,7 +125,7 @@ namespace Gui
         private RenderTexture _tempBlurMap;
         private RenderTexture _tempHeightMap;
 
-        private Rect _windowRect = new Rect(30, 300, 300, 480);
+        private Rect _windowRect;
 
         [HideInInspector] public bool Busy;
 
@@ -128,6 +134,17 @@ namespace Gui
         public Material ThisMaterial;
 
         public ComputeShader NormalToHeightComputeShader;
+        private int _windowId;
+
+        private void Awake()
+        {
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+        }
+
+        private void OnDisable()
+        {
+            CleanupTextures();
+        }
 
         public void GetValues(ProjectObject projectObject)
         {
@@ -206,6 +223,8 @@ namespace Gui
             _lastBlur0Contrast = _heightFromDiffuseSettings.Blur0Contrast;
 
             SetMaterialValues();
+            
+            _windowId = ProgramManager.Instance.GetWindowId;
         }
 
         private void FixUseMaps()
@@ -479,7 +498,7 @@ namespace Gui
         private void DoMyWindow(int windowId)
         {
             var offsetX = 10;
-            var offsetY = 30;
+            var offsetY = 20;
 
             GUI.enabled = TextureManager.Instance.DiffuseMap != null;
             _heightFromDiffuseSettings.UseAdjustedDiffuse = GUI.Toggle(new Rect(offsetX, offsetY, 80, 30),
@@ -522,11 +541,11 @@ namespace Gui
             }
 
             GUI.enabled = true;
-            offsetY += 30;
+            offsetY += 20;
 
             GUI.Label(new Rect(offsetX, offsetY, 250, 30), "Height Reveal Slider");
             _slider = GUI.HorizontalSlider(new Rect(offsetX, offsetY + 20, 280, 10), _slider, 0.0f, 1.0f);
-            offsetY += 40;
+            offsetY += 35;
 
             if (_heightFromDiffuseSettings.UseNormal)
             {
@@ -534,13 +553,13 @@ namespace Gui
                     _heightFromDiffuseSettings.Spread, out _heightFromDiffuseSettings.Spread, 10.0f, 200.0f))
                     _doStuff = true;
 
-                offsetY += 40;
+                offsetY += 35;
 
                 if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 10), "Sample Spread Boost",
                     _heightFromDiffuseSettings.SpreadBoost, out _heightFromDiffuseSettings.SpreadBoost,
                     1.0f, 5.0f)) _doStuff = true;
 
-                offsetY += 40;
+                offsetY += 35;
             }
             else
             {
@@ -759,10 +778,6 @@ namespace Gui
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _heightFromDiffuseSettings.FinalBias,
                 out _heightFromDiffuseSettings.FinalBias, -1.0f, 1.0f);
             offsetY += 50;
-
-            GUI.enabled = !Busy;
-            if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set as Height Map"))
-                StartCoroutine(ProcessHeight());
             GUI.enabled = true;
 
             GUI.DragWindow();
@@ -770,8 +785,8 @@ namespace Gui
 
         private void OnGUI()
         {
-            _windowRect.width = 300;
-            _windowRect.height = 590;
+            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
             if (_heightFromDiffuseSettings.UseSample1 && !_heightFromDiffuseSettings.UseNormal)
                 _windowRect.height += 110;
@@ -782,7 +797,8 @@ namespace Gui
             if ((_heightFromDiffuseSettings.UseSample1 || _heightFromDiffuseSettings.UseSample2) &&
                 !_heightFromDiffuseSettings.UseNormal) _windowRect.height += 40;
 
-            _windowRect = GUI.Window(13, _windowRect, DoMyWindow, "Height From Diffuse");
+
+            _windowRect = GUI.Window(_windowId, _windowRect, DoMyWindow, "Height From Diffuse");
         }
 
         public void InitializeTextures()
@@ -858,7 +874,7 @@ namespace Gui
             RenderTexture.ReleaseTemporary(_avgTempMap);
         }
 
-        public IEnumerator ProcessHeight()
+        public IEnumerator Process()
         {
             Debug.Log("Processing HeightMap");
             Busy = true;

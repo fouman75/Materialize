@@ -228,19 +228,21 @@ namespace General
 
             if (File.Exists(pathToFile)) File.Delete(pathToFile);
 
-//            var isHdr = textureToSave.format == TextureFormat.RGBAFloat ||
-//                        textureToSave.format == TextureFormat.RGBAHalf;
+            var isHdr = textureToSave.format == TextureFormat.RGBAFloat ||
+                        textureToSave.format == TextureFormat.RGBAHalf;
 
-            var renderTexture =
-                TextureManager.Instance.GetTempRenderTexture(textureToSave.width, textureToSave.height);
+            var renderTexture = TextureManager.Instance.GetTempRenderTexture(textureToSave.width, textureToSave.height);
+
             Graphics.Blit(textureToSave, renderTexture);
             RenderTexture.active = renderTexture;
             textureToSave.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0, false);
             textureToSave.Apply(false);
 
-            textureToSave = TextureProcessing.ConvertToGama(textureToSave);
-
-
+            if (extension != "exr" || !isHdr)
+            {
+                textureToSave = TextureProcessing.ConvertToGama(textureToSave);
+            }
+            
             byte[] bytes;
             switch (extension)
             {

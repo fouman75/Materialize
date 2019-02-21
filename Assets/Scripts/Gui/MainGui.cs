@@ -7,9 +7,11 @@ using General;
 using Plugins.Extension;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 //using UnityEngine.Experimental.Rendering.HDPipeline;
 
@@ -185,6 +187,9 @@ namespace Gui
             const int rectWidth = 220;
             var offsetXm = Screen.width - rectWidth - 10;
             const int offsetY = 50;
+
+            var pivotPoint = new Vector2(offsetXm, offsetY);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
             GUI.Box(new Rect(offsetXm, offsetY, rectWidth, 250), "Saving Options");
             offsetXm -= 5;
@@ -774,28 +779,28 @@ namespace Gui
             }
         }
 
-        public void CreateImage(ProgramEnums.MapType mapType)
+        public void CreateImage(ProgramEnums.MapType mapType, Button button)
         {
             switch (mapType)
             {
                 case ProgramEnums.MapType.Height:
-                    CreateHeight();
+                    StartCoroutine(CreateHeight(button));
                     break;
                 case ProgramEnums.MapType.Diffuse:
                     break;
                 case ProgramEnums.MapType.DiffuseOriginal:
                     break;
                 case ProgramEnums.MapType.Metallic:
-                    CreateMetallic();
+                    StartCoroutine(CreateMetallic(button));
                     break;
                 case ProgramEnums.MapType.Smoothness:
-                    CreateSmoothness();
+                    StartCoroutine(CreateSmoothness(button));
                     break;
                 case ProgramEnums.MapType.Normal:
-                    CreateNormal();
+                    StartCoroutine(CreateNormal(button));
                     break;
                 case ProgramEnums.MapType.Ao:
-                    CreateAo();
+                    StartCoroutine(CreateAo(button));
                     break;
                 case ProgramEnums.MapType.Property:
                     break;
@@ -807,65 +812,64 @@ namespace Gui
                 case ProgramEnums.MapType.Any:
                     break;
                 case ProgramEnums.MapType.AnyDiffuse:
-                    EditDiffuse();
+                    StartCoroutine(EditDiffuse(button));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
             }
         }
 
-        private void CreateHeight()
+        private IEnumerator CreateHeight(Button button)
         {
-            CloseWindows();
-            TextureManager.Instance.FixSize();
-            HeightFromDiffuseGuiObject.SetActive(true);
-            HeightFromDiffuseGuiScript.NewTexture();
-            HeightFromDiffuseGuiScript.DoStuff();
+            yield return StartCoroutine(Create(HeightFromDiffuseGuiScript, button));
         }
 
-        private void EditDiffuse()
+        private IEnumerator EditDiffuse(Button button)
         {
-            CloseWindows();
-            TextureManager.Instance.FixSize();
-            EditDiffuseGuiObject.SetActive(true);
-            EditDiffuseGuiScript.NewTexture();
-            EditDiffuseGuiScript.DoStuff();
+            yield return StartCoroutine(Create(EditDiffuseGuiScript, button));
         }
 
-        private void CreateNormal()
+        private IEnumerator CreateNormal(Button button)
         {
-            CloseWindows();
-            TextureManager.Instance.FixSize();
-            NormalFromHeightGuiObject.SetActive(true);
-            NormalFromHeightGuiScript.NewTexture();
-            NormalFromHeightGuiScript.DoStuff();
+            yield return StartCoroutine(Create(NormalFromHeightGuiScript, button));
         }
 
-        private void CreateMetallic()
+        private IEnumerator CreateMetallic(Button button)
         {
-            CloseWindows();
-            TextureManager.Instance.FixSize();
-            MetallicGuiObject.SetActive(true);
-            MetallicGuiScript.NewTexture();
-            MetallicGuiScript.DoStuff();
+            yield return StartCoroutine(Create(MetallicGuiScript, button));
         }
 
-        private void CreateSmoothness()
+        private IEnumerator CreateSmoothness(Button button)
         {
-            CloseWindows();
-            TextureManager.Instance.FixSize();
-            SmoothnessGuiObject.SetActive(true);
-            SmoothnessGuiScript.NewTexture();
-            SmoothnessGuiScript.DoStuff();
+            yield return StartCoroutine(Create(SmoothnessGuiScript, button));
         }
 
-        private void CreateAo()
+        private IEnumerator CreateAo(Button button)
+        {
+            yield return StartCoroutine(Create(AoFromNormalGuiScript, button));
+        }
+
+        private IEnumerator Create(IProcessor processor, Button button)
         {
             CloseWindows();
             TextureManager.Instance.FixSize();
-            AoFromNormalGuiObject.SetActive(true);
-            AoFromNormalGuiScript.NewTexture();
-            AoFromNormalGuiScript.DoStuff();
+            processor.Active = true;
+            processor.NewTexture();
+            processor.DoStuff();
+
+            var textComp = button.GetComponentInChildren<TextMeshProUGUI>();
+            var oldText = textComp.text;
+            textComp.text = "Apply";
+
+            var onClick = button.onClick;
+            button.onClick.AddListener(() => StartCoroutine(processor.Process()));
+            while (processor.Active)
+            {
+                yield return null;
+            }
+
+            button.onClick = onClick;
+            textComp.text = oldText;
         }
 
         private void CreateMaskMap()

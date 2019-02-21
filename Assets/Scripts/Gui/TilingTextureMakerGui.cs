@@ -82,10 +82,14 @@ namespace Gui
 
         private RenderTexture _tileTemp;
 
-        private Rect _windowRect = new Rect(30, 300, 300, 530);
+        private Rect _windowRect;
 
         public GameObject TestObject;
 
+        private void Awake()
+        {
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+        }
 
         private void Start()
         {
@@ -107,6 +111,11 @@ namespace Gui
             _offsetKernel[6] = new Vector2(1, -1);
             _offsetKernel[7] = new Vector2(1, 0);
             _offsetKernel[8] = new Vector2(1, 1);
+        }
+
+        private void OnDisable()
+        {
+            CleanupTextures();
         }
 
         public void Initialize()
@@ -412,6 +421,8 @@ namespace Gui
         {
             _windowRect.width = 300;
             _windowRect.height = _techniqueSplat ? 610 : 490;
+            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
             _windowRect = GUI.Window(18, _windowRect, DoMyWindow, "Tiling Texture Maker");
         }

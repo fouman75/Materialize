@@ -212,7 +212,7 @@
     </member>
     <member name="T:UnityEngine.ParticleSystem">
       <summary>
-        <para>Script interface for Particle Systems.</para>
+        <para>Script interface for Particle Systems (Shuriken).</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.automaticCullingEnabled">
@@ -3407,7 +3407,7 @@ The Noise Module allows you to apply turbulence to the movement of your particle
     </member>
     <member name="T:UnityEngine.ParticleSystemCurveMode">
       <summary>
-        <para>The particle curve mode.</para>
+        <para>The particle curve mode (Shuriken).</para>
       </summary>
     </member>
     <member name="F:UnityEngine.ParticleSystemCurveMode.Constant">
@@ -3617,7 +3617,7 @@ The Noise Module allows you to apply turbulence to the movement of your particle
     </member>
     <member name="T:UnityEngine.ParticleSystemGameObjectFilter">
       <summary>
-        <para>The particle GameObject filtering mode that specifies which objects are used by specific Particle System modules.</para>
+        <para>The particle GameObject filtering mode that specifies which objects are used by specific Particle System modules (Shuriken).</para>
       </summary>
     </member>
     <member name="F:UnityEngine.ParticleSystemGameObjectFilter.LayerMask">
@@ -3637,7 +3637,7 @@ The Noise Module allows you to apply turbulence to the movement of your particle
     </member>
     <member name="T:UnityEngine.ParticleSystemGradientMode">
       <summary>
-        <para>The particle gradient mode.</para>
+        <para>The particle gradient mode (Shuriken).</para>
       </summary>
     </member>
     <member name="F:UnityEngine.ParticleSystemGradientMode.Color">
@@ -3742,7 +3742,7 @@ The Noise Module allows you to apply turbulence to the movement of your particle
     </member>
     <member name="T:UnityEngine.ParticleSystemRenderer">
       <summary>
-        <para>Renders particles on to the screen.</para>
+        <para>Renders particles on to the screen (Shuriken).</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystemRenderer.activeVertexStreamsCount">
@@ -3977,7 +3977,7 @@ The position stream is always enabled, and any attempts to remove it will be ign
     </member>
     <member name="T:UnityEngine.ParticleSystemRenderMode">
       <summary>
-        <para>The rendering mode for particle systems.</para>
+        <para>The rendering mode for particle systems (Shuriken).</para>
       </summary>
     </member>
     <member name="F:UnityEngine.ParticleSystemRenderMode.Billboard">
@@ -4084,7 +4084,7 @@ The position stream is always enabled, and any attempts to remove it will be ign
     </member>
     <member name="T:UnityEngine.ParticleSystemShapeMultiModeValue">
       <summary>
-        <para>The mode used to generate new points in a shape.</para>
+        <para>The mode used to generate new points in a shape (Shuriken).</para>
       </summary>
     </member>
     <member name="F:UnityEngine.ParticleSystemShapeMultiModeValue.BurstSpread">
@@ -4109,7 +4109,7 @@ The position stream is always enabled, and any attempts to remove it will be ign
     </member>
     <member name="T:UnityEngine.ParticleSystemShapeTextureChannel">
       <summary>
-        <para>The texture channel.</para>
+        <para>The texture channel (Shuriken).</para>
       </summary>
     </member>
     <member name="F:UnityEngine.ParticleSystemShapeTextureChannel.Alpha">
@@ -4134,7 +4134,7 @@ The position stream is always enabled, and any attempts to remove it will be ign
     </member>
     <member name="T:UnityEngine.ParticleSystemShapeType">
       <summary>
-        <para>The emission shape.</para>
+        <para>The emission shape (Shuriken).</para>
       </summary>
     </member>
     <member name="F:UnityEngine.ParticleSystemShapeType.Box">

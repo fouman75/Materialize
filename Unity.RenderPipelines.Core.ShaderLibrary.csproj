@@ -59,52 +59,52 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\DummyShaderLibrary.cs" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\API\XBoxOne.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Random.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\SpaceTransforms.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\CommonLighting.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Sampling\SampleUVMappingNormalInternal.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\AreaLighting.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\GeometricTools.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Refraction.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Common.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Wind.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Sampling\SampleUVMappingInternal.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\ACES.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\API\Vulkan.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\API\GLCore.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\BC6H.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\EntityLighting.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\CommonMaterial.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\API\Validate.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\API\Metal.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\API\D3D11.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Macros.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\API\PSSL.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Tessellation.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\BSDF.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\UnityInstancing.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\CommonShadow.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Filtering.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Sampling\Fibonacci.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\NormalSurfaceGradient.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Shadow\ShadowSamplingTent.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Packing.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Sampling\Hammersley.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Color.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\API\GLES3.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\PhysicalCamera.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Sampling\SampleUVMapping.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\PerPixelDisplacement.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Unity.RenderPipelines.Core.ShaderLibrary.asmdef" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\SpaceFillingCurves.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\API\GLES2.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Sampling\Sampling.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\VolumeRendering.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\Debug.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\ImageBasedLighting.hlsl" />
-    <None Include="\home\maikeu\Downloads\ScriptableRenderPipeline-6.0.0\com.unity.render-pipelines.core\ShaderLibrary\API\Switch.hlsl" />
+    <Compile Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\DummyShaderLibrary.cs" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\API\XBoxOne.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Random.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\SpaceTransforms.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\CommonLighting.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Sampling\SampleUVMappingNormalInternal.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\AreaLighting.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\GeometricTools.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Refraction.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Common.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Wind.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Sampling\SampleUVMappingInternal.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\ACES.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\API\Vulkan.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\API\GLCore.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\BC6H.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\EntityLighting.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\CommonMaterial.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\API\Validate.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\API\Metal.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\API\D3D11.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Macros.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\API\PSSL.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Tessellation.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\BSDF.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\UnityInstancing.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\CommonShadow.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Filtering.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Sampling\Fibonacci.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\NormalSurfaceGradient.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Shadow\ShadowSamplingTent.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Packing.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Sampling\Hammersley.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Color.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\API\GLES3.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\PhysicalCamera.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Sampling\SampleUVMapping.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\PerPixelDisplacement.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Unity.RenderPipelines.Core.ShaderLibrary.asmdef" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\SpaceFillingCurves.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\API\GLES2.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Sampling\Sampling.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\VolumeRendering.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\Debug.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\ImageBasedLighting.hlsl" />
+    <None Include="\home\maikeu\GitClones\ScriptableRenderPipeline\com.unity.render-pipelines.core\ShaderLibrary\API\Switch.hlsl" />
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/home/maikeu/Unity/Hub/Editor/2019.2.0a4/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -310,7 +310,7 @@
       <HintPath>/home/maikeu/GitClones/Materialize/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>/home/maikeu/Downloads/ScriptableRenderPipeline-6.0.0/com.unity.render-pipelines.high-definition/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+      <HintPath>/home/maikeu/GitClones/ScriptableRenderPipeline/com.unity.render-pipelines.high-definition/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>/home/maikeu/Unity/Hub/Editor/2019.2.0a4/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

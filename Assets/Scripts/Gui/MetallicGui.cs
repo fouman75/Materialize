@@ -11,8 +11,14 @@ using UnityEngine;
 
 namespace Gui
 {
-    public class MetallicGui : MonoBehaviour
+    public class MetallicGui : MonoBehaviour, IProcessor
     {
+        public bool Active
+        {
+            get => gameObject.activeSelf;
+            set => gameObject.SetActive(value);
+        }
+        
         private static readonly int MetalColor = Shader.PropertyToID("_MetalColor");
         private static readonly int SampleUv = Shader.PropertyToID("_SampleUV");
         private static readonly int HueWeight = Shader.PropertyToID("_HueWeight");
@@ -54,13 +60,23 @@ namespace Gui
 
         private RenderTexture _tempMap;
 
-        private Rect _windowRect = new Rect(30, 300, 300, 530);
+        private Rect _windowRect;
 
         [HideInInspector] public bool Busy = true;
 
         public GameObject TestObject;
 
         public Material ThisMaterial;
+
+        private void Awake()
+        {
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+        }
+        
+        private void OnDisable()
+        {
+            CleanupTextures();
+        }
 
         public void GetValues(ProjectObject projectObject)
         {
@@ -273,17 +289,13 @@ namespace Gui
                 out _metallicSettings.FinalBias, -0.5f, 0.5f);
             offsetY += 50;
 
-            if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set as Metallic"))
-                StartCoroutine(ProcessMetallic());
-
-
             GUI.DragWindow();
         }
 
         private void OnGUI()
         {
-            _windowRect.width = 300;
-            _windowRect.height = 500;
+            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
             _windowRect = GUI.Window(15, _windowRect, DoMyWindow, "Metallic From Diffuse");
         }
@@ -333,7 +345,7 @@ namespace Gui
             _overlayBlurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
         }
 
-        public IEnumerator ProcessMetallic()
+        public IEnumerator Process()
         {
             Busy = true;
 

@@ -16,11 +16,11 @@ MonoBehaviour:
   m_RenderPipelineResources: {fileID: 0}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 69275665694493
+      data1: 69275665825565
       data2: 4539628424389459968
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
-      data1: 69275665694493
+      data1: 69275665825565
       data2: 4539628424389459968
   m_RenderingPathDefaultRealtimeReflectionFrameSettings:
     bitDatas:
@@ -46,9 +46,6 @@ MonoBehaviour:
     supportRuntimeDebugDisplay: 1
     supportDitheringCrossFade: 1
     supportRayTracing: 0
-    editorRaytracingFilterLayerMask:
-      serializedVersion: 2
-      m_Bits: 4294967295
     lightLoopSettings:
       cookieSize: 128
       cookieTexArraySize: 16
@@ -73,7 +70,7 @@ MonoBehaviour:
     hdShadowInitParams:
       shadowAtlasResolution: 4096
       maxShadowRequests: 128
-      shadowMapsDepthBits: 24
+      shadowMapsDepthBits: 32
       useDynamicViewportRescale: 1
       shadowQuality: 0
     decalSettings:
@@ -83,7 +80,7 @@ MonoBehaviour:
       perChannelMask: 0
     postProcessSettings:
       m_LutSize: 32
-      m_LutFormat: 48
+      lutFormat: 48
     dynamicResolutionSettings:
       enabled: 1
       maxPercentage: 100
@@ -95,9 +92,11 @@ MonoBehaviour:
   allowShaderVariantStripping: 1
   enableSRPBatcher: 1
   shaderVariantLogLevel: 0
-  diffusionProfileSettings: {fileID: 11400000, guid: 182e1219682623e699ef675a39ab68ae,
-    type: 2}
-  m_Version: 2
+  diffusionProfileSettings: {fileID: 0}
+  diffusionProfileSettingsList:
+  - {fileID: 11400000, guid: f90ca74e589ea880eb1bd318e1f5eb47, type: 2}
+  - {fileID: 11400000, guid: fac333e713771cd5b8282b49486783d4, type: 2}
+  m_Version: 3
   m_ObsoleteFrameSettings:
     overrides: 0
     enableShadow: 0
