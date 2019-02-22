@@ -36,7 +36,6 @@ namespace Gui
         private static readonly int BlurSpread = Shader.PropertyToID("_BlurSpread");
         private static readonly int BlurSamples = Shader.PropertyToID("_BlurSamples");
         private static readonly int BlurDirection = Shader.PropertyToID("_BlurDirection");
-        private readonly RenderTexture _avgTempMap;
         private RenderTexture _avgMap;
         private Material _blitMaterial;
         private RenderTexture _blurMap;
@@ -68,6 +67,11 @@ namespace Gui
         {
             InitializeSettings();
             projectObject.EditDiffuseSettings = _eds;
+        }
+
+        private void Awake()
+        {
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
         }
 
         public void SetValues(ProjectObject projectObject)
@@ -112,7 +116,6 @@ namespace Gui
 
             _windowId = ProgramManager.Instance.GetWindowId;
             Debug.Log($"Window ID de {name} : {_windowId}");
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
         }
 
         public void DoStuff()
@@ -216,7 +219,6 @@ namespace Gui
             offsetY += 35;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Saturation", _eds.Saturation,
                 out _eds.Saturation, 0.0f, 1.0f);
-            offsetY += 35;
 
             GUI.enabled = true;
             GUI.DragWindow(new Rect(0, 0, 10000, 20));
@@ -224,16 +226,10 @@ namespace Gui
 
         private void OnGUI()
         {
-            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
-
-
-//            _windowRect.width = 300;
-//            _windowRect.height = 550;
-//
-            _windowRect = GUI.Window(_windowId, _windowRect, DoMyWindow, "Edit Diffuse");
-//            Debug.Log("Rect : " + _windowRect);
+            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Edit Diffuse");
         }
+
+
 
         public void Close()
         {
@@ -246,7 +242,6 @@ namespace Gui
             RenderTexture.ReleaseTemporary(_blurMap);
             RenderTexture.ReleaseTemporary(_tempMap);
             RenderTexture.ReleaseTemporary(_avgMap);
-            RenderTexture.ReleaseTemporary(_avgTempMap);
         }
 
         private void InitializeTextures()
@@ -345,7 +340,6 @@ namespace Gui
             _material.SetTexture(AvgTex, _avgMap);
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            RenderTexture.ReleaseTemporary(_avgTempMap);
 
             yield return new WaitForSeconds(0.01f);
         }

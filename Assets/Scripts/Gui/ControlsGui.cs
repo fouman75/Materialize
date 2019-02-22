@@ -12,10 +12,16 @@ namespace Gui
         private bool _windowOpen;
 
         private Rect _windowRect = new Rect(Screen.width - 520, Screen.height - 320, 300, 600);
+        private int _windowId;
 
         private void Awake()
         {
             ProgramManager.Instance.SceneObjects.Add(gameObject);
+        }
+
+        private void Start()
+        {
+            _windowId = ProgramManager.Instance.GetWindowId;
         }
 
         private void DoMyWindow(int windowId)
@@ -53,11 +59,9 @@ namespace Gui
 
         private void OnGUI()
         {
-            _windowRect = new Rect(Screen.width - 480, Screen.height - 370, 170, 280);
-            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
+            _windowRect = new Rect(1185, 485, 170, 280);
+            if (_windowOpen)  MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Controls");
 
-            if (_windowOpen) _windowRect = GUI.Window(22, _windowRect, DoMyWindow, "Controls");
         }
 
         public void ButtonCallback()

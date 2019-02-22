@@ -185,13 +185,13 @@ namespace Gui
             #region Map Saving Options
 
             const int rectWidth = 220;
-            var offsetXm = Screen.width - rectWidth - 10;
-            const int offsetY = 50;
+            var offsetXm = 1440 - rectWidth - 10;
+            var offsetY = 10;
 
-            var pivotPoint = new Vector2(offsetXm, offsetY);
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
-
-            GUI.Box(new Rect(offsetXm, offsetY, rectWidth, 250), "Saving Options");
+            var rect = new Rect(offsetXm, offsetY, rectWidth, 250);
+            var newRect = MakeScaledBox(rect, "Saving Options");
+            offsetXm = (int) newRect.x;
+            offsetY = (int) newRect.y;
             offsetXm -= 5;
 
             GUI.Label(new Rect(offsetXm + 20, offsetY + 20, 100, 25), "File Format");
@@ -861,14 +861,16 @@ namespace Gui
             var oldText = textComp.text;
             textComp.text = "Apply";
 
-            var onClick = button.onClick;
-            button.onClick.AddListener(() => StartCoroutine(processor.Process()));
+            var action = new UnityAction(() => StartCoroutine(processor.Process()));
+            var oldDelegate = button.onClick;
+            button.onClick = new Button.ButtonClickedEvent();
+            button.onClick.AddListener(action);
             while (processor.Active)
             {
                 yield return null;
             }
 
-            button.onClick = onClick;
+            button.onClick = oldDelegate;
             textComp.text = oldText;
         }
 
@@ -877,6 +879,36 @@ namespace Gui
             CloseWindows();
             TextureManager.Instance.FixSize();
             TextureManager.Instance.MakeMaskMap();
+        }
+
+        public static void MakeScaledWindow(Rect windowRect, int id, GUI.WindowFunction callback, string title)
+        {
+            var posX = windowRect.x * ProgramManager.Instance.GuiScale.x;
+            var posY = windowRect.y * ProgramManager.Instance.GuiScale.y;
+            var pivotPoint = new Vector2(posX, posY);
+
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
+
+            var newWindowRect = new Rect(posX, posY, windowRect.width, windowRect.height);
+            newWindowRect = GUI.Window(id, newWindowRect, callback, title);
+            posX = newWindowRect.x / ProgramManager.Instance.GuiScale.x;
+            posY = newWindowRect.y / ProgramManager.Instance.GuiScale.y;
+            windowRect.x = posX;
+            windowRect.y = posY;
+        }
+
+        public static Rect MakeScaledBox(Rect windowRect, string title)
+        {
+            var posX = windowRect.x * ProgramManager.Instance.GuiScale.x;
+            var posY = windowRect.y * ProgramManager.Instance.GuiScale.y;
+            var pivotPoint = new Vector2(posX, posY);
+
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
+
+            var newWindowRect = new Rect(posX, posY, windowRect.width, windowRect.height);
+            GUI.Box(newWindowRect, title);
+
+            return newWindowRect;
         }
     }
 }

@@ -83,6 +83,7 @@ namespace Gui
         private RenderTexture _tileTemp;
 
         private Rect _windowRect;
+        private int _windowId;
 
         public GameObject TestObject;
 
@@ -111,6 +112,8 @@ namespace Gui
             _offsetKernel[6] = new Vector2(1, -1);
             _offsetKernel[7] = new Vector2(1, 0);
             _offsetKernel[8] = new Vector2(1, 1);
+
+            _windowId = ProgramManager.Instance.GetWindowId;
         }
 
         private void OnDisable()
@@ -421,10 +424,7 @@ namespace Gui
         {
             _windowRect.width = 300;
             _windowRect.height = _techniqueSplat ? 610 : 490;
-            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
-
-            _windowRect = GUI.Window(18, _windowRect, DoMyWindow, "Tiling Texture Maker");
+            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Tiling Texture Maker");
         }
 
         // ReSharper disable once RedundantAssignment

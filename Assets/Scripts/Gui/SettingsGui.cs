@@ -22,6 +22,7 @@ namespace Gui
         public PostProcessGui PostProcessGui;
         [HideInInspector] public ProgramSettings ProgramSettings = new ProgramSettings();
         private bool _invalidSettings;
+        private int _windowId;
 
         private void Awake()
         {
@@ -33,6 +34,7 @@ namespace Gui
             Instance = this;
 
             LoadSettings();
+            _windowId = ProgramManager.Instance.GetWindowId;
         }
 
         public void LoadSettings()
@@ -182,10 +184,7 @@ namespace Gui
         private void OnGUI()
         {
             _windowRect = new Rect(Screen.width - 300, Screen.height - 320, 280, 230);
-            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
-
-            if (_windowOpen) _windowRect = GUI.Window(20, _windowRect, DoMyWindow, "Setting and Preferences");
+            if (_windowOpen) MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Setting and Preferences");
         }
 
         public void SettingsButtonCallBack()

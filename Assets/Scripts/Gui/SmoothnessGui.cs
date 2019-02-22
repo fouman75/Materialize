@@ -94,6 +94,7 @@ namespace Gui
         private RenderTexture _tempMap;
 
         private Rect _windowRect;
+        private int _windowId;
 
         [HideInInspector] public bool Busy;
 
@@ -105,9 +106,9 @@ namespace Gui
         private void Awake()
         {
             _camera = Camera.main;
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 450f);
         }
-        
+
         private void OnDisable()
         {
             CleanUpTextures();
@@ -173,6 +174,7 @@ namespace Gui
             _blitSmoothnessMaterial = new Material(Shader.Find("Hidden/Blit_Smoothness"));
 
             InitializeSettings();
+            _windowId = ProgramManager.Instance.GetWindowId;
         }
 
         public void DoStuff()
@@ -478,14 +480,11 @@ namespace Gui
 
         private void OnGUI()
         {
-           if (_settings.UseSample1) _windowRect.height += 110;
+            if (_settings.UseSample1) _windowRect.height += 110;
 
             if (_settings.UseSample2) _windowRect.height += 110;
-            
-            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
-            _windowRect = GUI.Window(17, _windowRect, DoMyWindow, "Smoothness From Diffuse");
+            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Smoothness From Diffuse");
         }
 
         public void Close()

@@ -52,6 +52,7 @@ namespace Gui
         private RenderTexture _tempBlurMap;
 
         private Rect _windowRect;
+        private int _windowId;
 
         [HideInInspector] public bool Busy;
 
@@ -90,7 +91,7 @@ namespace Gui
         private void Awake()
         {
             _testMaterialRenderer = TestObject.GetComponent<Renderer>();
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 520f);
         }
         
         private void OnDisable()
@@ -135,9 +136,9 @@ namespace Gui
             _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
 
             InitializeSettings();
-
-
             InitializeTextures();
+
+            _windowId = ProgramManager.Instance.GetWindowId;
         }
 
         public void DoStuff()
@@ -273,7 +274,7 @@ namespace Gui
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Angularity Amount", _settings.Angularity,
                 out _settings.Angularity, 0.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 40;
 
             if (TextureManager.Instance.DiffuseMapOriginal)
             {
@@ -289,24 +290,24 @@ namespace Gui
             _settings.UseDiffuse = GUI.Toggle(new Rect(offsetX, offsetY, 280, 30), _settings.UseDiffuse,
                 " Shape from Diffuse (Unchecked from Height)");
             if (tempBool != _settings.UseDiffuse) _doStuff = true;
-            offsetY += 25;
+            offsetY += 30;
 
             GUI.enabled = true;
 
             GUI.Label(new Rect(offsetX, offsetY, 280, 30), " Shape Recognition, Rotation, Spread, Bias");
-            offsetY += 25;
+            offsetY += 30;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.ShapeRecognition,
                 out _settings.ShapeRecognition, 0.0f, 1.0f)) _doStuff = true;
-            offsetY += 20;
+            offsetY += 22;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.LightRotation,
                 out _settings.LightRotation, -3.14f, 3.14f)) _doStuff = true;
-            offsetY += 20;
+            offsetY += 22;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.SlopeBlur,
                 out _settings.SlopeBlur, 5, 100)) _doStuff = true;
-            offsetY += 20;
+            offsetY += 22;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.ShapeBias,
                 out _settings.ShapeBias, 0.0f, 1.0f)) _doStuff = true;
-            offsetY += 20;
+            offsetY += 22;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Contrast", _settings.FinalContrast,
                 out _settings.FinalContrast, 0.0f, 10.0f);
@@ -317,10 +318,7 @@ namespace Gui
 
         private void OnGUI()
         {
-            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
-
-            _windowRect = GUI.Window(16, _windowRect, DoMyWindow, "Normal From Height");
+            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Normal From Height");
         }
 
         public void InitializeTextures()

@@ -53,6 +53,7 @@ namespace Gui
         public GameObject TestObjectSphere;
         public ObjRotator TestRotator;
         private Texture2D _maskMap;
+        private int _windowId;
 
 
         private void OnDisable()
@@ -77,6 +78,7 @@ namespace Gui
         private void Start()
         {
             InitializeSettings();
+            _windowId = ProgramManager.Instance.GetWindowId;
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -299,10 +301,7 @@ namespace Gui
 
         private void OnGUI()
         {
-            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
-
-            _windowRect = GUI.Window(14, _windowRect, DoMyWindow, "Full Material");
+            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Full Material");
         }
 
         public void Initialize()

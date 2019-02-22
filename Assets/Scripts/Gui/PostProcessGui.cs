@@ -22,6 +22,7 @@ namespace Gui
         private float _ambientOcclusionIntensity;
 
         private Rect _windowRect;
+        private int _windowId;
 
         public Volume SceneVolume;
         [HideInInspector] public VolumeProfile Profile;
@@ -55,6 +56,11 @@ namespace Gui
             _ambientOcclusionIntensity = _ambientOcclusion.intensity.value;
             
             _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+        }
+
+        private void Start()
+        {
+            _windowId = ProgramManager.Instance.GetWindowId;
         }
 
         private void UpdateValues()
@@ -141,10 +147,7 @@ namespace Gui
 
         private void OnGUI()
         {
-            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
-
-            _windowRect = GUI.Window(19, _windowRect, DoMyWindow, "Post Process");
+            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Post Process");
         }
     }
 }

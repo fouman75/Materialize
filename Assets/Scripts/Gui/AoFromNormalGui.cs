@@ -19,7 +19,7 @@ namespace Gui
             get => gameObject.activeSelf;
             set => gameObject.SetActive(value);
         }
-        
+
         private static readonly int FinalContrast = Shader.PropertyToID("_FinalContrast");
         private static readonly int FinalBias = Shader.PropertyToID("_FinalBias");
         private static readonly int AoBlend = Shader.PropertyToID("_AOBlend");
@@ -54,15 +54,15 @@ namespace Gui
         public Material ThisMaterial;
         private Coroutine _processingNormalCoroutine;
         private Renderer _testObjectRenderer;
-        private Coroutine _processingAoCoroutine;
+        private int _windowId;
 
         private void Awake()
         {
             _testObjectRenderer = TestObject.GetComponent<Renderer>();
             ThisMaterial = new Material(ThisMaterial.shader);
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 235f);
         }
-        
+
         private void OnDisable()
         {
             CleanupTextures();
@@ -100,7 +100,7 @@ namespace Gui
         private void Start()
         {
             _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
-
+            _windowId = ProgramManager.Instance.GetWindowId;
             InitializeSettings();
         }
 
@@ -124,8 +124,7 @@ namespace Gui
 
             if (_doStuff)
             {
-                if (_processingNormalCoroutine != null) StopCoroutine(_processingNormalCoroutine);
-                if (_processingAoCoroutine != null) StopCoroutine(_processingAoCoroutine);
+                StopAllCoroutines();
                 _processingNormalCoroutine = StartCoroutine(ProcessNormalDepth());
                 _doStuff = false;
             }
@@ -161,14 +160,12 @@ namespace Gui
             offsetY += 50;
 
             GUI.enabled = true;
-            GUI.DragWindow(new Rect(0, 0, 10000, 20));        }
+            GUI.DragWindow(new Rect(0, 0, 10000, 20));
+        }
 
         private void OnGUI()
         {
-            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
-
-            _windowRect = GUI.Window(10, _windowRect, DoMyWindow, "Normal + Depth to AO");
+            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Normal + Depth to AO");
         }
 
         public void InitializeTextures()
@@ -253,7 +250,7 @@ namespace Gui
 
                 if (i % 10 == 0) yield return null;
             }
-            
+
             Busy = false;
         }
     }

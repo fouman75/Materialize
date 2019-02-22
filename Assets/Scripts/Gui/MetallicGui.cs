@@ -61,6 +61,7 @@ namespace Gui
         private RenderTexture _tempMap;
 
         private Rect _windowRect;
+        private int _windowId;
 
         [HideInInspector] public bool Busy = true;
 
@@ -70,8 +71,9 @@ namespace Gui
 
         private void Awake()
         {
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 460f);
         }
+        
         
         private void OnDisable()
         {
@@ -127,6 +129,7 @@ namespace Gui
             _metallicBlitMaterial = new Material(Shader.Find("Hidden/Blit_Metallic"));
 
             InitializeSettings();
+            _windowId = ProgramManager.Instance.GetWindowId;
         }
 
         public void DoStuff()
@@ -294,10 +297,7 @@ namespace Gui
 
         private void OnGUI()
         {
-            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
-
-            _windowRect = GUI.Window(15, _windowRect, DoMyWindow, "Metallic From Diffuse");
+            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Metallic From Diffuse");
         }
 
         public void Close()

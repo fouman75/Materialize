@@ -20,7 +20,7 @@ namespace Gui
             get => gameObject.activeSelf;
             set => gameObject.SetActive(value);
         }
-        
+
         private const float BlurScale = 1.0f;
         private static readonly int BlurScaleId = Shader.PropertyToID("_BlurScale");
         private static readonly int ImageSize = Shader.PropertyToID("_ImageSize");
@@ -138,7 +138,7 @@ namespace Gui
 
         private void Awake()
         {
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 520f);
         }
 
         private void OnDisable()
@@ -223,7 +223,7 @@ namespace Gui
             _lastBlur0Contrast = _heightFromDiffuseSettings.Blur0Contrast;
 
             SetMaterialValues();
-            
+
             _windowId = ProgramManager.Instance.GetWindowId;
         }
 
@@ -785,8 +785,6 @@ namespace Gui
 
         private void OnGUI()
         {
-            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
             if (_heightFromDiffuseSettings.UseSample1 && !_heightFromDiffuseSettings.UseNormal)
                 _windowRect.height += 110;
@@ -798,7 +796,7 @@ namespace Gui
                 !_heightFromDiffuseSettings.UseNormal) _windowRect.height += 40;
 
 
-            _windowRect = GUI.Window(_windowId, _windowRect, DoMyWindow, "Height From Diffuse");
+            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Height From Diffuse");
         }
 
         public void InitializeTextures()
@@ -872,6 +870,8 @@ namespace Gui
             RenderTexture.ReleaseTemporary(_tempHeightMap);
             RenderTexture.ReleaseTemporary(_avgMap);
             RenderTexture.ReleaseTemporary(_avgTempMap);
+            Destroy(_sampleColorMap1);
+            Destroy(_sampleColorMap2);
         }
 
         public IEnumerator Process()
@@ -892,7 +892,7 @@ namespace Gui
             else
                 realGain = realGain + 1.0f;
             _blitMaterial.SetFloat(FinalGain, realGain);
-            
+
             _blitMaterial.SetFloat(Blur0Weight, _heightFromDiffuseSettings.Blur0Weight);
             _blitMaterial.SetFloat(Blur1Weight, _heightFromDiffuseSettings.Blur1Weight);
             _blitMaterial.SetFloat(Blur2Weight, _heightFromDiffuseSettings.Blur2Weight);
@@ -916,7 +916,7 @@ namespace Gui
             _blitMaterial.SetTexture(BlurTex4, _blurMap4);
             _blitMaterial.SetTexture(BlurTex5, _blurMap5);
             _blitMaterial.SetTexture(BlurTex6, _blurMap6);
-            
+
             _blitMaterial.SetTexture(AvgTex, _avgMap);
 
             if (_heightFromDiffuseSettings.UseNormal)
