@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 
 #endregion
 
-public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler,
+public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,
+    IPointerEnterHandler,
     IPointerExitHandler
 {
     private Vector2 _lastMousePos;
@@ -66,7 +67,7 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
             Physics.Raycast(ray, out var hit);
             var direction = hit.point - _camera.transform.position;
             var scrollWheel = Input.GetAxis("Mouse ScrollWheel");
-            _camera.transform.Translate(direction * scrollWheel * 3f);
+            _camera.transform.Translate(direction * -scrollWheel * 3f);
         }
     }
 

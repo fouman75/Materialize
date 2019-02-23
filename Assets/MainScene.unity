@@ -1317,7 +1317,6 @@ GameObject:
   - component: {fileID: 1433099826}
   - component: {fileID: 1433099825}
   - component: {fileID: 1433099822}
-  - component: {fileID: 1433099828}
   - component: {fileID: 1433099824}
   - component: {fileID: 1433099823}
   m_Layer: 0
@@ -1503,21 +1502,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1433099828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1433099821}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: ce1a852aa7cacc84dbd3f3ee806d59f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KeyToHold: 
-  MouseButtonPan: 2
 --- !u!1001 &1463534581
 PrefabInstance:
   m_ObjectHideFlags: 0
