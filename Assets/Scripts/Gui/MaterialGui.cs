@@ -14,6 +14,7 @@ namespace Gui
         private const int UpdateDivisor = 4;
         private int _divisorCount = UpdateDivisor;
         private static readonly int MetallicId = Shader.PropertyToID("_Metallic");
+        private static readonly int NormalStrengthId = Shader.PropertyToID("_NormalScale");
         private static readonly int AoRemapMinId = Shader.PropertyToID("_AORemapMin");
         private static readonly int AoRemapMaxId = Shader.PropertyToID("_AORemapMax");
         private static readonly int SmoothnessRemapMinId = Shader.PropertyToID("_SmoothnessRemapMin");
@@ -107,6 +108,7 @@ namespace Gui
             _materialSettings = new MaterialSettings();
             _myColorTexture = TextureManager.Instance.GetStandardTexture(1, 1);
             _materialSettings.DisplacementAmplitude = _thisMaterial.GetFloat(HeightAmplitudeId);
+            _materialSettings.NormalStrength = _thisMaterial.GetFloat(NormalStrengthId);
             _materialSettings.Metallic.Value = _thisMaterial.GetFloat(MetallicId);
             _materialSettings.SmoothnessRemapMin = _thisMaterial.GetFloat(SmoothnessRemapMinId);
             _materialSettings.SmoothnessRemapMax = _thisMaterial.GetFloat(SmoothnessRemapMaxId);
@@ -141,6 +143,7 @@ namespace Gui
 //            }
 
             _thisMaterial.SetFloat(MetallicId, _materialSettings.Metallic);
+            _thisMaterial.SetFloat(NormalStrengthId, _materialSettings.NormalStrength);
             _thisMaterial.SetFloat(AoRemapMinId, _materialSettings.AoRemapMin);
             _thisMaterial.SetFloat(AoRemapMaxId, _materialSettings.AoRemapMax);
             _thisMaterial.SetFloat(SmoothnessRemapMinId, _materialSettings.SmoothnessRemapMin);
@@ -152,9 +155,9 @@ namespace Gui
             _light.intensity = _materialSettings.LightIntensity;
 
             if (TestObjectParent.activeSelf != _planeShown) TestObjectParent.SetActive(_planeShown);
-            if (TestObjectCube.activeSelf != _planeShown) TestObjectCube.SetActive(_cubeShown);
-            if (TestObjectCylinder.activeSelf != _planeShown) TestObjectCylinder.SetActive(_cylinderShown);
-            if (TestObjectSphere.activeSelf != _planeShown) TestObjectSphere.SetActive(_sphereShown);
+            if (TestObjectCube.activeSelf != _cubeShown) TestObjectCube.SetActive(_cubeShown);
+            if (TestObjectCylinder.activeSelf != _cylinderShown) TestObjectCylinder.SetActive(_cylinderShown);
+            if (TestObjectSphere.activeSelf != _sphereShown) TestObjectSphere.SetActive(_sphereShown);
 
             _thisMaterial.SetFloat(HeightAmplitudeId, _materialSettings.DisplacementAmplitude);
             _thisMaterial.SetFloat(HeightCenterId, _materialSettings.DisplacementAmplitude / 4f);
@@ -176,10 +179,10 @@ namespace Gui
                 GUI.VerticalSlider(new Rect(posX + 120, posY + 5, 30, 90), _materialSettings.LightIntensity, 30.0f,
                     0.0f);
 
-            GUI.Label(new Rect(posX + 10, posY + 100, 30, 25), "R");
-            GUI.Label(new Rect(posX + 40, posY + 100, 30, 25), "G");
-            GUI.Label(new Rect(posX + 70, posY + 100, 30, 25), "B");
-            GUI.Label(new Rect(posX + 100, posY + 100, 100, 25), "Intensity");
+            GUI.Label(new Rect(posX + 10, posY + 95, 30, 25), "R");
+            GUI.Label(new Rect(posX + 40, posY + 95, 30, 25), "G");
+            GUI.Label(new Rect(posX + 70, posY + 95, 30, 25), "B");
+            GUI.Label(new Rect(posX + 100, posY + 95, 100, 25), "Intensity");
 
             SetColorTexture();
 
@@ -207,31 +210,35 @@ namespace Gui
             offsetY += 35;
             _materialSettings.Metallic.Value = temp;
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Ambient Occlusion Remap Min",
-                _materialSettings.AoRemapMin, out _materialSettings.AoRemapMin, 0.0f, _materialSettings.AoRemapMax);
-            offsetY += 30;
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Normal Scale", _materialSettings.NormalStrength,
+                out temp, 0.0f, 8.0f);
+            offsetY += 35;
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Ambient Occlusion Remap Max",
-                _materialSettings.AoRemapMax, out _materialSettings.AoRemapMax, 0, 1.0f);
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Ambient Occlusion Remap Min Max",
+                _materialSettings.AoRemapMin, out _materialSettings.AoRemapMin, 0.0f, 1.0f);
+            offsetY += 20;
+
             if (_materialSettings.AoRemapMin > _materialSettings.AoRemapMax)
             {
                 _materialSettings.AoRemapMin = _materialSettings.AoRemapMax;
             }
 
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _materialSettings.AoRemapMax,
+                out _materialSettings.AoRemapMax, 0.0f, 1.0f);
+
             offsetY += 35;
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Smoothness Remap Min",
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Smoothness Remap Min Max",
                 _materialSettings.SmoothnessRemapMin, out _materialSettings.SmoothnessRemapMin, 0.0f, 1.0f);
-            if (_materialSettings.AoRemapMax < _materialSettings.AoRemapMin)
+            if (_materialSettings.SmoothnessRemapMin > _materialSettings.SmoothnessRemapMax)
             {
-                _materialSettings.AoRemapMax = _materialSettings.AoRemapMin;
+                _materialSettings.SmoothnessRemapMin = _materialSettings.SmoothnessRemapMax;
             }
 
-            offsetY += 30;
+            offsetY += 20;
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Smoothness Remap Max",
-                _materialSettings.SmoothnessRemapMax, out _materialSettings.SmoothnessRemapMax,
-                _materialSettings.SmoothnessRemapMin, 1.0f);
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _materialSettings.SmoothnessRemapMax,
+                out _materialSettings.SmoothnessRemapMax, 0.0f, 1.0f);
             offsetY += 35;
 
 
@@ -239,25 +246,25 @@ namespace Gui
                 _materialSettings.DisplacementAmplitude, out _materialSettings.DisplacementAmplitude, 0.0f, 3.0f);
             offsetY += 35;
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Tiling X", _materialSettings.TexTilingX,
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Tiling (X,Y)", _materialSettings.TexTilingX,
                 out _materialSettings.TexTilingX, 0.1f, 5.0f);
-            offsetY += 30;
+            offsetY += 25;
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Tiling Y", _materialSettings.TexTilingY,
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _materialSettings.TexTilingY,
                 out _materialSettings.TexTilingY, 0.1f, 5.0f);
             offsetY += 35;
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Offset X", _materialSettings.TexOffsetX,
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Offset (X,Y)", _materialSettings.TexOffsetX,
                 out _materialSettings.TexOffsetX, -1.0f, 1.0f);
-            offsetY += 30;
+            offsetY += 25;
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Offset Y", _materialSettings.TexOffsetY,
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _materialSettings.TexOffsetY,
                 out _materialSettings.TexOffsetY, -1.0f, 1.0f);
             offsetY += 35;
 
             GUI.Label(new Rect(offsetX, offsetY, 250, 30), "Light Color");
             ChooseLightColor(offsetX, offsetY + 20);
-            offsetY += 145;
+            offsetY += 140;
 
             if (GUI.Button(new Rect(offsetX, offsetY, 60, 30), "Plane"))
             {
@@ -306,10 +313,10 @@ namespace Gui
         public void Initialize()
         {
             InitializeSettings();
-            TestObject.GetComponent<Renderer>().material = _thisMaterial;
-            TestObjectCube.GetComponent<Renderer>().material = _thisMaterial;
-            TestObjectCylinder.GetComponent<Renderer>().material = _thisMaterial;
-            TestObjectSphere.GetComponent<Renderer>().material = _thisMaterial;
+            TestObject.GetComponent<Renderer>().sharedMaterial = _thisMaterial;
+            TestObjectCube.GetComponent<Renderer>().sharedMaterial = _thisMaterial;
+            TestObjectCylinder.GetComponent<Renderer>().sharedMaterial = _thisMaterial;
+            TestObjectSphere.GetComponent<Renderer>().sharedMaterial = _thisMaterial;
         }
     }
 }

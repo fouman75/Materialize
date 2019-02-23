@@ -40,8 +40,9 @@ public static class GuiHelper
         if (!title.IsNullOrEmpty())
         {
             GUI.Label(new Rect(rect.x, rect.y, 250, 30), title);
-            offsetY += 20;
         }
+
+        offsetY += 25;
 
         var isChanged = false;
 

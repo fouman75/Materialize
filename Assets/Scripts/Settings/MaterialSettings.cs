@@ -18,6 +18,7 @@ namespace Gui
         public float LightR;
 
         public TrackableProperty Metallic;
+        public float NormalStrength;
         [DefaultValue(0)] public float AoRemapMin;
         [DefaultValue(1)] public float AoRemapMax;
         [DefaultValue(0)] public float SmoothnessRemapMin;

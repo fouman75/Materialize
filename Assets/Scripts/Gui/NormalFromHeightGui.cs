@@ -17,7 +17,7 @@ namespace Gui
             get => gameObject.activeSelf;
             set => gameObject.SetActive(value);
         }
-        
+
         private static readonly int Blur0Weight = Shader.PropertyToID("_Blur0Weight");
         private static readonly int Blur1Weight = Shader.PropertyToID("_Blur1Weight");
         private static readonly int Blur2Weight = Shader.PropertyToID("_Blur2Weight");
@@ -91,14 +91,14 @@ namespace Gui
         private void Awake()
         {
             _testMaterialRenderer = TestObject.GetComponent<Renderer>();
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 520f);
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 535f);
         }
-        
+
         private void OnDisable()
         {
             CleanupTextures();
         }
-        
+
         public void GetValues(ProjectObject projectObject)
         {
             InitializeSettings();
@@ -270,11 +270,11 @@ namespace Gui
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Angular Intensity", _settings.AngularIntensity,
                 out _settings.AngularIntensity, 0.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Angularity Amount", _settings.Angularity,
                 out _settings.Angularity, 0.0f, 1.0f);
-            offsetY += 40;
+            offsetY += 45;
 
             if (TextureManager.Instance.DiffuseMapOriginal)
             {
@@ -290,28 +290,26 @@ namespace Gui
             _settings.UseDiffuse = GUI.Toggle(new Rect(offsetX, offsetY, 280, 30), _settings.UseDiffuse,
                 " Shape from Diffuse (Unchecked from Height)");
             if (tempBool != _settings.UseDiffuse) _doStuff = true;
-            offsetY += 30;
+            offsetY += 35;
 
             GUI.enabled = true;
 
-            GUI.Label(new Rect(offsetX, offsetY, 280, 30), " Shape Recognition, Rotation, Spread, Bias");
-            offsetY += 30;
-            if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.ShapeRecognition,
+            if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), " Shape Recognition, Rotation, Spread, Bias",
+                _settings.ShapeRecognition,
                 out _settings.ShapeRecognition, 0.0f, 1.0f)) _doStuff = true;
-            offsetY += 22;
+            offsetY += 25;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.LightRotation,
                 out _settings.LightRotation, -3.14f, 3.14f)) _doStuff = true;
-            offsetY += 22;
+            offsetY += 25;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.SlopeBlur,
                 out _settings.SlopeBlur, 5, 100)) _doStuff = true;
-            offsetY += 22;
+            offsetY += 25;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.ShapeBias,
                 out _settings.ShapeBias, 0.0f, 1.0f)) _doStuff = true;
-            offsetY += 22;
+            offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Contrast", _settings.FinalContrast,
                 out _settings.FinalContrast, 0.0f, 10.0f);
-            offsetY += 30;
 
             GUI.DragWindow();
         }

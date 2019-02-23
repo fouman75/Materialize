@@ -168,55 +168,55 @@ namespace Gui
         private void DoMyWindow(int windowId)
         {
             var offsetX = 10;
-            var offsetY = 30;
+            var offsetY = 15;
 
             GUI.enabled = true;
             GUI.Label(new Rect(offsetX, offsetY, 250, 30), "Diffuse Reveal Slider");
             _slider = GUI.HorizontalSlider(new Rect(offsetX, offsetY + 20, 280, 10), _slider, 0.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 37;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Average Color Blur Size", _eds.AvgColorBlurSize,
                 out _eds.AvgColorBlurSize, 5, 100))
                 _doStuff = true;
-            offsetY += 35;
+            offsetY += 37;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlay Blur Size", _eds.BlurSize,
                 out _eds.BlurSize, 5, 100)) _doStuff = true;
-            offsetY += 35;
+            offsetY += 37;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlay Blur Contrast", _eds.BlurContrast,
                 out _eds.BlurContrast, -1.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 37;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Light Mask Power", _eds.LightMaskPow,
                 out _eds.LightMaskPow, 0.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 37;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Remove Light", _eds.LightPow,
                 out _eds.LightPow, 0.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 37;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Shadow Mask Power", _eds.DarkMaskPow,
                 out _eds.DarkMaskPow, 0.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 37;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Remove Shadow", _eds.DarkPow,
                 out _eds.DarkPow, 0.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 37;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Hot Spot Removal", _eds.HotSpot,
                 out _eds.HotSpot, 0.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 37;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Dark Spot Removal", _eds.DarkSpot,
                 out _eds.DarkSpot, 0.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 37;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Contrast", _eds.FinalContrast,
                 out _eds.FinalContrast, -2.0f, 2.0f);
-            offsetY += 35;
+            offsetY += 37;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _eds.FinalBias,
                 out _eds.FinalBias, -0.5f, 0.5f);
-            offsetY += 35;
+            offsetY += 37;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Keep Original Color", _eds.ColorLerp,
                 out _eds.ColorLerp, 0.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 37;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Saturation", _eds.Saturation,
                 out _eds.Saturation, 0.0f, 1.0f);
 
@@ -228,7 +228,6 @@ namespace Gui
         {
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Edit Diffuse");
         }
-
 
 
         public void Close()

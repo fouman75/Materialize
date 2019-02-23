@@ -8,5 +8,6 @@ namespace Gui
         void NewTexture();
         void DoStuff();
         IEnumerator Process();
+        void Close();
     }
 }

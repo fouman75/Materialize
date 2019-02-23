@@ -54,8 +54,8 @@ namespace Gui
 
             Profile.TryGet(out _ambientOcclusion);
             _ambientOcclusionIntensity = _ambientOcclusion.intensity.value;
-            
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 350f);
         }
 
         private void Start()
@@ -87,7 +87,15 @@ namespace Gui
 
         public void TogglePostProcessGui()
         {
-            gameObject.SetActive(!gameObject.activeSelf);
+            if (gameObject.activeSelf)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                MainGui.Instance.CloseWindows();
+                gameObject.SetActive(true);
+            }
         }
 
         private void Update()
@@ -107,18 +115,17 @@ namespace Gui
                 "Enable Post Process");
             offsetY += 40;
 
-
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Bloom Scatter", _bloomScatter,
                 out _bloomScatter, 0.0f, 1.0f);
             offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Bloom Intensity", _bloomIntensity,
                 out _bloomIntensity, 0.0f, 1.0f);
-            offsetY += 40;
+            offsetY += 45;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Lens Dirt Intensity", _lensDirtIntensity,
                 out _lensDirtIntensity, 0.0f, 10.0f);
-            offsetY += 60;
+            offsetY += 45;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Vignette Intensity", _vignetteIntensity,
                 out _vignetteIntensity, 0.0f, 1.0f);
@@ -126,21 +133,16 @@ namespace Gui
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Vignette Smoothness", _vignetteSmoothness,
                 out _vignetteSmoothness, 0.0f, 1.0f);
-            offsetY += 60;
+            offsetY += 45;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Ambient Occlusion Intensity",
                 _ambientOcclusionIntensity,
                 out _ambientOcclusionIntensity, 0.0f, 4.0f);
-            offsetY += 60;
+            offsetY += 45;
 
             if (_depthOfField)
                 GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "DOF Focus Distance", _dofFocusDistance,
                     out _dofFocusDistance, 0.0f, 20.0f);
-
-            offsetY += 50;
-
-            if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Close")) gameObject.SetActive(false);
-
             UpdateValues();
             GUI.DragWindow();
         }

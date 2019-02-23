@@ -60,7 +60,7 @@ namespace Gui
         {
             _testObjectRenderer = TestObject.GetComponent<Renderer>();
             ThisMaterial = new Material(ThisMaterial.shader);
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 235f);
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 240f);
         }
 
         private void OnDisable()

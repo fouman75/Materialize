@@ -10,7 +10,7 @@ namespace Settings
     {
         [DefaultValue(0.5f)] public float AngularIntensity;
 
-        [DefaultValue(0.0f)] public float Angularity;
+        [DefaultValue(0.1f)] public float Angularity;
 
         [DefaultValue(20.0f)] public float Blur0Contrast;
 
@@ -34,7 +34,7 @@ namespace Settings
 
         [DefaultValue(0.5f)] public float ShapeBias;
 
-        [DefaultValue(0.0f)] public float ShapeRecognition;
+        [DefaultValue(0.1f)] public float ShapeRecognition;
 
         [DefaultValue(50.0f)] public int SlopeBlur;
 
@@ -53,11 +53,11 @@ namespace Settings
             Blur0Contrast = 20.0f;
             FinalContrast = 5.0f;
         
-            Angularity = 0.0f;
+            Angularity = 0.1f;
             AngularIntensity = 0.5f;
             UseDiffuse = true;
 
-            ShapeRecognition = 0.0f;
+            ShapeRecognition = 0.1f;
 
             LightRotation = 0.0f;
 

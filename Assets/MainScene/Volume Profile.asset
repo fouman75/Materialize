@@ -74,7 +74,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   compensation:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: -1
   limitMin:
     m_OverrideState: 1
@@ -169,6 +169,52 @@ MonoBehaviour:
   hdriSky:
     m_OverrideState: 1
     m_Value: {fileID: 8900000, guid: d179a5cf97a39ec5c91cb199d742898a, type: 3}
+--- !u!114 &-5821385101070672208
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 56b145d2b9ee1ac4f846968484e7485a, type: 3}
+  m_Name: ContactShadows
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  enable:
+    m_OverrideState: 1
+    m_Value: 1
+  length:
+    m_OverrideState: 0
+    m_Value: 0.15
+    min: 0
+    max: 1
+  opacity:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+    max: 1
+  distanceScaleFactor:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+    max: 1
+  maxDistance:
+    m_OverrideState: 1
+    m_Value: 20
+    min: 0
+  fadeDistance:
+    m_OverrideState: 0
+    m_Value: 1.97
+    min: 0
+  sampleCount:
+    m_OverrideState: 0
+    m_Value: 8
+    min: 4
+    max: 64
 --- !u!114 &-5410610400251578799
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -189,9 +235,9 @@ MonoBehaviour:
     m_Value: 1
   skyAmbientMode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   fogType:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
 --- !u!114 &-3819876013009440890
 MonoBehaviour:
@@ -267,13 +313,13 @@ MonoBehaviour:
     min: 0
     max: 4
   thicknessModifier:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 2
     min: 1
     max: 10
   directLightingStrength:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.2
     min: 0
     max: 1
   noiseFilterTolerance:
@@ -305,20 +351,20 @@ MonoBehaviour:
   m_Name: Bloom
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 1
+  m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.01
     min: 0
     max: 1
   scatter:
-    m_OverrideState: 1
-    m_Value: 0.5
+    m_OverrideState: 0
+    m_Value: 0.896
     min: 0
     max: 1
   tint:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     hdr: 0
     showAlpha: 0
     showEyeDropper: 1
@@ -367,6 +413,7 @@ MonoBehaviour:
   - {fileID: -3819876013009440890}
   - {fileID: 1933352519379937478}
   - {fileID: 4504194829060569667}
+  - {fileID: -5821385101070672208}
 --- !u!114 &191499441628046417
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -394,34 +441,24 @@ MonoBehaviour:
   cascadeShadowSplit0:
     m_OverrideState: 0
     m_Value: 0.05
-    min: 0
-    max: 1
   cascadeShadowSplit1:
     m_OverrideState: 0
     m_Value: 0.15
-    min: 0
-    max: 1
   cascadeShadowSplit2:
     m_OverrideState: 0
     m_Value: 0.3
-    min: 0
-    max: 1
   cascadeShadowBorder0:
     m_OverrideState: 0
     m_Value: 0
-    min: 0
   cascadeShadowBorder1:
     m_OverrideState: 0
     m_Value: 0
-    min: 0
   cascadeShadowBorder2:
     m_OverrideState: 0
     m_Value: 0
-    min: 0
   cascadeShadowBorder3:
     m_OverrideState: 0
     m_Value: 0
-    min: 0
 --- !u!114 &1047035488822904814
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -528,7 +565,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 0.15
     min: -1
     max: 1
   xMultiplier:
@@ -569,6 +606,6 @@ MonoBehaviour:
     m_Value: 1
   opacity:
     m_OverrideState: 1
-    m_Value: 0.731
+    m_Value: 0.9
     min: 0
     max: 1

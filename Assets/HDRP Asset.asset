@@ -17,7 +17,7 @@ MonoBehaviour:
     type: 2}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 69275674214173
+      data1: 69277821697821
       data2: 4539628424389459968
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
@@ -32,17 +32,17 @@ MonoBehaviour:
     supportSSR: 1
     supportSSAO: 1
     supportSubsurfaceScattering: 0
-    increaseSssSampleCount: 0
+    increaseSssSampleCount: 1
     supportVolumetrics: 1
-    increaseResolutionOfVolumetrics: 0
+    increaseResolutionOfVolumetrics: 1
     supportLightLayers: 0
     supportDistortion: 1
-    supportTransparentBackface: 1
-    supportTransparentDepthPrepass: 1
-    supportTransparentDepthPostpass: 1
+    supportTransparentBackface: 0
+    supportTransparentDepthPrepass: 0
+    supportTransparentDepthPostpass: 0
     supportedLitShaderMode: 1
-    supportDecals: 1
-    msaaSampleCount: 4
+    supportDecals: 0
+    msaaSampleCount: 2
     supportMotionVectors: 1
     supportRuntimeDebugDisplay: 1
     supportDitheringCrossFade: 1
@@ -54,26 +54,26 @@ MonoBehaviour:
       cubeCookieTexArraySize: 16
       planarReflectionProbeCacheSize: 2
       planarReflectionTextureSize: 1024
-      reflectionProbeCacheSize: 64
-      reflectionCubemapSize: 256
+      reflectionProbeCacheSize: 4
+      reflectionCubemapSize: 1024
       reflectionCacheCompressed: 0
       planarReflectionCacheCompressed: 0
-      skyReflectionSize: 256
+      skyReflectionSize: 512
       skyLightingOverrideLayerMask:
         serializedVersion: 2
         m_Bits: 0
       supportFabricConvolution: 0
-      maxDirectionalLightsOnScreen: 16
-      maxPunctualLightsOnScreen: 512
-      maxAreaLightsOnScreen: 64
-      maxEnvLightsOnScreen: 64
+      maxDirectionalLightsOnScreen: 4
+      maxPunctualLightsOnScreen: 4
+      maxAreaLightsOnScreen: 4
+      maxEnvLightsOnScreen: 4
       maxDecalsOnScreen: 512
     hdShadowInitParams:
       shadowAtlasResolution: 4096
-      maxShadowRequests: 128
+      maxShadowRequests: 8
       shadowMapsDepthBits: 32
       useDynamicViewportRescale: 1
-      shadowQuality: 0
+      shadowQuality: 1
     decalSettings:
       drawDistance: 1000
       atlasWidth: 4096
@@ -83,7 +83,7 @@ MonoBehaviour:
       m_LutSize: 32
       lutFormat: 48
     dynamicResolutionSettings:
-      enabled: 1
+      enabled: 0
       maxPercentage: 100
       minPercentage: 50
       dynResType: 0
@@ -94,7 +94,8 @@ MonoBehaviour:
   enableSRPBatcher: 1
   shaderVariantLogLevel: 0
   diffusionProfileSettings: {fileID: 0}
-  diffusionProfileSettingsList: []
+  diffusionProfileSettingsList:
+  - {fileID: 0}
   m_Version: 3
   m_ObsoleteFrameSettings:
     overrides: 0
