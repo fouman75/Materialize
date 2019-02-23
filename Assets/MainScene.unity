@@ -1538,7 +1538,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: c2cab6d50c049ad48868752e7c23be91,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7670552336889979498, guid: c2cab6d50c049ad48868752e7c23be91,
         type: 3}
@@ -3017,7 +3017,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 3fb0b8f35da135d469352f5a6e964d3f,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 3fb0b8f35da135d469352f5a6e964d3f,
         type: 3}
@@ -3573,8 +3573,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2017529246}
-        m_MethodName: OpenFullMaterial
+      - m_Target: {fileID: 650021385}
+        m_MethodName: ToggleGui
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

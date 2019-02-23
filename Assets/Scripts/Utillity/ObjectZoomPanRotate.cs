@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 
 #endregion
 
-public class ObjRotator : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler,
+    IPointerExitHandler
 {
     private Vector2 _lastMousePos;
     private Vector3 _lerpRotation;
@@ -30,6 +31,13 @@ public class ObjRotator : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     private Vector3 _lastRaycast;
     private Vector3 _targetDrag;
     private Quaternion _targetRotation;
+    private Camera _camera;
+    private bool _hovering;
+
+    private void Start()
+    {
+        _camera = Camera.main;
+    }
 
     public void Reset()
     {
@@ -50,6 +58,15 @@ public class ObjRotator : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         {
             var rot = Quaternion.Slerp(transform.rotation, _targetRotation, 0.7f);
             transform.rotation = rot;
+        }
+
+        if (_hovering)
+        {
+            var ray = _camera.ScreenPointToRay(Input.mousePosition);
+            Physics.Raycast(ray, out var hit);
+            var direction = hit.point - _camera.transform.position;
+            var scrollWheel = Input.GetAxis("Mouse ScrollWheel");
+            _camera.transform.Translate(direction * scrollWheel * 3f);
         }
     }
 
@@ -114,16 +131,28 @@ public class ObjRotator : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         }
 
         var axis = Vector3.Cross(delta, Vector3.forward).normalized;
-        var position = transform.position;
-        Debug.DrawRay(position, axis, Color.white, 1);
 
-        var amount = Quaternion.AngleAxis(delta.magnitude, axis);
-        _targetRotation = transform.rotation * amount;
-//        transform.Rotate(axis, delta.magnitude, Space.World);
+        var objTransform = transform;
+        var position = objTransform.position;
+        var originalRotation = objTransform.rotation;
+        objTransform.RotateAround(position, axis, delta.magnitude);
+        _targetRotation = objTransform.rotation;
+        _targetRotation.z = 0;
+        transform.rotation = originalRotation;
         _lastMousePos = mousePos;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _hovering = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _hovering = false;
     }
 }

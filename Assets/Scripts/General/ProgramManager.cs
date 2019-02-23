@@ -147,15 +147,6 @@ namespace General
             CommandListExecutorObject.SetActive(true);
         }
 
-        public void OpenFullMaterial()
-        {
-            MainGui.Instance.CloseWindows();
-            TextureManager.Instance.FixSize();
-            TextureManager.Instance.SetFullMaterial();
-            MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
-            MaterialGuiObject.SetActive(true);
-        }
-
         private IEnumerator GetHdrpCoroutine()
         {
             RenderPipeline = RenderPipelineManager.currentPipeline as HDRenderPipeline;

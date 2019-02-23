@@ -52,7 +52,7 @@ namespace Gui
 
         public GameObject TestObjectParent;
         public GameObject TestObjectSphere;
-        public ObjRotator TestRotator;
+        public ObjectZoomPanRotate TestRotator;
         private Texture2D _maskMap;
         private int _windowId;
 
@@ -79,6 +79,23 @@ namespace Gui
         {
             InitializeSettings();
             _windowId = ProgramManager.Instance.GetWindowId;
+        }
+
+        public void ToggleGui()
+        {
+            if (!gameObject.activeSelf)
+            {
+                MainGui.Instance.CloseWindows();
+                TextureManager.Instance.FixSize();
+                TextureManager.Instance.SetFullMaterial();
+                Initialize();
+                gameObject.SetActive(true);
+                TestRotator.Reset();
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
 
         public void GetValues(ProjectObject projectObject)
