@@ -74,6 +74,7 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
     public void OnBeginDrag(PointerEventData eventData)
     {
         _lastMousePos = eventData.position;
+        MainGui.Instance.SaveHideStateAndHideAndLock(this);
     }
 
 
@@ -145,6 +146,7 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        MainGui.Instance.HideGuiLocker.Unlock(this);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

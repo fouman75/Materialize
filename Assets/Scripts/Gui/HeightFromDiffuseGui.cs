@@ -870,8 +870,6 @@ namespace Gui
             RenderTexture.ReleaseTemporary(_tempHeightMap);
             RenderTexture.ReleaseTemporary(_avgMap);
             RenderTexture.ReleaseTemporary(_avgTempMap);
-            Destroy(_sampleColorMap1);
-            Destroy(_sampleColorMap2);
         }
 
         public IEnumerator Process()
