@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Gui
 {
-    public class SmoothnessGui : MonoBehaviour, IProcessor
+    public class SmoothnessGui : MonoBehaviour, IProcessor, IHideable
     {
         public bool Active
         {
@@ -480,6 +480,7 @@ namespace Gui
 
         private void OnGUI()
         {
+            if (Hide) return;
             if (_settings.UseSample1) _windowRect.height += 110;
 
             if (_settings.UseSample2) _windowRect.height += 110;
@@ -528,7 +529,7 @@ namespace Gui
                 _settings.UseOriginalDiffuse = true;
             }
 
-            Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
+            General.Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
             _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
             _blurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
@@ -539,7 +540,7 @@ namespace Gui
         {
             Busy = true;
 
-            Debug.Log("Processing Height");
+            General.Logger.Log("Processing Height");
 
             _blitSmoothnessMaterial.SetVector("_ImageSize", new Vector4(_imageSizeX, _imageSizeY, 0, 0));
 
@@ -610,7 +611,7 @@ namespace Gui
         {
             Busy = true;
 
-            Debug.Log("Processing Blur");
+            General.Logger.Log("Processing Blur");
 
             _blitMaterial.SetVector("_ImageSize", new Vector4(_imageSizeX, _imageSizeY, 0, 0));
             _blitMaterial.SetFloat("_BlurContrast", 1.0f);
@@ -653,5 +654,7 @@ namespace Gui
 
             Busy = false;
         }
+
+        public bool Hide { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using Random = UnityEngine.Random;
 
 namespace Gui
 {
-    public class TilingTextureMakerGui : MonoBehaviour
+    public class TilingTextureMakerGui : MonoBehaviour, IHideable
     {
         private static readonly int Tiling = Shader.PropertyToID("_Tiling");
         private static readonly int MainTex = Shader.PropertyToID("_MainTex");
@@ -422,6 +422,7 @@ namespace Gui
 
         private void OnGUI()
         {
+            if (Hide) return;
             _windowRect.width = 300;
             _windowRect.height = _techniqueSplat ? 610 : 490;
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Tiling Texture Maker");
@@ -452,7 +453,7 @@ namespace Gui
 
             if (TextureManager.Instance.DiffuseMap)
             {
-                Debug.Log("Setting Diffuse");
+                General.Logger.Log("Setting Diffuse");
                 Destroy(TextureManager.Instance.DiffuseMap);
                 TextureManager.Instance.DiffuseMap = null;
                 TextureManager.Instance.DiffuseMap = SetMap(TextureManager.Instance.DiffuseMap, _diffuseMapTemp);
@@ -462,7 +463,7 @@ namespace Gui
 
             if (TextureManager.Instance.DiffuseMapOriginal)
             {
-                Debug.Log("Setting Original Diffuse");
+                General.Logger.Log("Setting Original Diffuse");
                 Destroy(TextureManager.Instance.DiffuseMapOriginal);
                 TextureManager.Instance.DiffuseMapOriginal = null;
                 TextureManager.Instance.DiffuseMapOriginal =
@@ -473,7 +474,7 @@ namespace Gui
 
             if (TextureManager.Instance.MetallicMap != null)
             {
-                Debug.Log("Setting Specular");
+                General.Logger.Log("Setting Specular");
                 Destroy(TextureManager.Instance.MetallicMap);
                 TextureManager.Instance.MetallicMap = null;
                 TextureManager.Instance.MetallicMap = SetMap(TextureManager.Instance.MetallicMap, _metallicMapTemp);
@@ -483,7 +484,7 @@ namespace Gui
 
             if (TextureManager.Instance.SmoothnessMap != null)
             {
-                Debug.Log("Setting Roughness");
+                General.Logger.Log("Setting Roughness");
                 Destroy(TextureManager.Instance.SmoothnessMap);
                 TextureManager.Instance.SmoothnessMap = null;
                 TextureManager.Instance.SmoothnessMap =
@@ -494,7 +495,7 @@ namespace Gui
 
             if (TextureManager.Instance.NormalMap)
             {
-                Debug.Log("Setting Normal");
+                General.Logger.Log("Setting Normal");
                 Destroy(TextureManager.Instance.NormalMap);
                 TextureManager.Instance.NormalMap = null;
                 TextureManager.Instance.NormalMap = SetMap(TextureManager.Instance.NormalMap, _normalMapTemp);
@@ -504,7 +505,7 @@ namespace Gui
 
             if (TextureManager.Instance.AoMap)
             {
-                Debug.Log("Setting AO");
+                General.Logger.Log("Setting AO");
                 Destroy(TextureManager.Instance.AoMap);
                 TextureManager.Instance.AoMap = null;
                 TextureManager.Instance.AoMap = SetMap(TextureManager.Instance.AoMap, _aoMapTemp);
@@ -514,7 +515,7 @@ namespace Gui
 
             if (TextureManager.Instance.HeightMap)
             {
-                Debug.Log("Setting Height");
+                General.Logger.Log("Setting Height");
                 Destroy(TextureManager.Instance.HeightMap);
                 TextureManager.Instance.HeightMap = null;
                 TextureManager.Instance.HeightMap = SetMap(TextureManager.Instance.HeightMap, _heightMapTemp);
@@ -525,7 +526,7 @@ namespace Gui
 
             if (TextureManager.Instance.HdHeightMap)
             {
-                Debug.Log("Setting Height");
+                General.Logger.Log("Setting Height");
                 TextureManager.Instance.HdHeightMap.Release();
                 TextureManager.Instance.HdHeightMap = null;
                 TextureManager.Instance.HdHeightMap = SetMapRt(TextureManager.Instance.HdHeightMap, _hdHeightMapTemp);
@@ -723,7 +724,7 @@ namespace Gui
 
         private IEnumerator TileTextures()
         {
-            Debug.Log("Processing Tile");
+            General.Logger.Log("Processing Tile");
 
             _blitMaterial.SetFloat("_Falloff", 1.0f);
             _blitMaterial.SetFloat("_Falloff", _falloff);
@@ -802,5 +803,7 @@ namespace Gui
             Overlap,
             Splat
         }
+
+        public bool Hide { get; set; }
     }
 }

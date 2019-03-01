@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Gui
 {
-    public class NormalFromHeightGui : MonoBehaviour, IProcessor
+    public class NormalFromHeightGui : MonoBehaviour, IProcessor, IHideable
     {
         public bool Active
         {
@@ -124,7 +124,7 @@ namespace Gui
         private void InitializeSettings()
         {
             if (_settingsInitialized) return;
-            Debug.Log("Initializing Normal From Height Settings");
+            General.Logger.Log("Initializing Normal From Height Settings");
             _settings = new NormalFromHeightSettings();
             _settingsInitialized = true;
         }
@@ -316,6 +316,7 @@ namespace Gui
 
         private void OnGUI()
         {
+            if (Hide) return;
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Normal From Height");
         }
 
@@ -335,7 +336,7 @@ namespace Gui
             _imageSizeX = TextureManager.Instance.HeightMap.width;
             _imageSizeY = TextureManager.Instance.HeightMap.height;
 
-            Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
+            General.Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
             _tempBlurMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.ARGBHalf,
                 RenderTextureReadWrite.Linear);
@@ -382,7 +383,7 @@ namespace Gui
         {
             Busy = true;
 
-            Debug.Log("Processing Normal");
+            General.Logger.Log("Processing Normal");
 
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
 
@@ -425,7 +426,7 @@ namespace Gui
         {
             Busy = true;
 
-            Debug.Log("Processing Height");
+            General.Logger.Log("Processing Height");
 
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
 
@@ -565,5 +566,7 @@ namespace Gui
 
             Busy = false;
         }
+
+        public bool Hide { get; set; }
     }
 }

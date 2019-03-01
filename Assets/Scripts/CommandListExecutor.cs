@@ -125,7 +125,7 @@ public class CommandListExecutor : MonoBehaviour
         serializer.Serialize(stream, commandList);
         ClipboardHelper.ClipBoard = stream.ToString();
 
-        Debug.Log(stream.ToString());
+        General.Logger.Log(stream.ToString());
     }
 
     private void OnApplicationFocus(bool focusStatus)

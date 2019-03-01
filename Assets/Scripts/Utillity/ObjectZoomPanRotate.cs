@@ -24,6 +24,7 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     public bool InvertX;
     public bool InvertY;
+    public bool InvertZoom;
     public KeyCode KeyToHoldToRotate = KeyCode.None;
     public KeyCode KeyToHoldToPan = KeyCode.None;
 
@@ -67,7 +68,8 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
             Physics.Raycast(ray, out var hit);
             var direction = hit.point - _camera.transform.position;
             var scrollWheel = Input.GetAxis("Mouse ScrollWheel");
-            _camera.transform.Translate(direction * -scrollWheel * 3f);
+            if (InvertZoom) scrollWheel = -scrollWheel;
+            _camera.transform.Translate(direction * scrollWheel * 3f);
         }
     }
 
@@ -110,9 +112,9 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
         var delta = mousePos - _lastMousePos;
         if (Mathf.Abs(delta.x) < Filter) delta.x = 0;
         if (Mathf.Abs(delta.y) < Filter) delta.y = 0;
-        Debug.Log("delta : " + delta);
+        General.Logger.Log("delta : " + delta);
         if (delta.magnitude < 0.01f) return;
-        Debug.Log("delta Pass");
+        General.Logger.Log("delta Pass");
 
         if (!AllowX)
         {

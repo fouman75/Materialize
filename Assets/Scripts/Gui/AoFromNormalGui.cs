@@ -12,7 +12,7 @@ using UnityEngine.Rendering;
 
 namespace Gui
 {
-    public class AoFromNormalGui : MonoBehaviour, IProcessor
+    public class AoFromNormalGui : MonoBehaviour, IProcessor, IHideable
     {
         public bool Active
         {
@@ -165,6 +165,7 @@ namespace Gui
 
         private void OnGUI()
         {
+            if (Hide) return;
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Normal + Depth to AO");
         }
 
@@ -177,7 +178,7 @@ namespace Gui
             _imageSizeX = TextureManager.Instance.NormalMap.width;
             _imageSizeY = TextureManager.Instance.NormalMap.height;
 
-            Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
+            General.Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
             _blendedAoMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.RGHalf,
                 RenderTextureReadWrite.Linear);
@@ -199,7 +200,7 @@ namespace Gui
             yield return _processingNormalCoroutine;
             Busy = true;
 
-            Debug.Log("Processing AO Map");
+            General.Logger.Log("Processing AO Map");
 
             var tempAoMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
@@ -223,7 +224,7 @@ namespace Gui
         {
             Busy = true;
 
-            Debug.Log("Processing Normal Depth to AO");
+            General.Logger.Log("Processing Normal Depth to AO");
 
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
             _blitMaterial.SetFloat(Spread, _aos.Spread);
@@ -253,5 +254,7 @@ namespace Gui
 
             Busy = false;
         }
+
+        public bool Hide { get; set; }
     }
 }

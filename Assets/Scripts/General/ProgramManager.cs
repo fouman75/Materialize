@@ -21,12 +21,8 @@ namespace General
         public HDRenderPipeline RenderPipeline;
         public Vector2 GuiReferenceSize = new Vector2(1440, 810);
         private int _windowId;
-        private int _myWindowId;
 
-        public int GetWindowId
-        {
-            get => _windowId++;
-        }
+        public int GetWindowId => _windowId++;
 
         //Nao remover, alguns shaders dependem disso
         private const float GamaCorrection = 1f;
@@ -89,17 +85,14 @@ namespace General
             Shader.SetGlobalFloat(GamaCorrectionId, GamaCorrection);
             LastPath = PlayerPrefs.HasKey(LastPathKey) ? PlayerPrefs.GetString(LastPathKey) : null;
 
-            if (Application.platform == RuntimePlatform.WindowsEditor ||
-                Application.platform == RuntimePlatform.WindowsPlayer)
-                PathChar = '\\';
-            else PathChar = '/';
+            PathChar = Path.DirectorySeparatorChar;
 
             GuiScale = new Vector2(Screen.width / GuiReferenceSize.x, Screen.height / GuiReferenceSize.y);
-            _myWindowId = GetWindowId;
         }
 
         private IEnumerator Start()
         {
+            Logger.Log("Starting " + name);
             ControlsGuiObject = FindMonoBehaviour<ControlsGui>().gameObject;
             MainGuiObject = FindMonoBehaviour<MainGui>().gameObject;
             SettingsGuiObject = FindMonoBehaviour<SettingsGui>().gameObject;

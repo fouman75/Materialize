@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Gui
 {
-    public class EditDiffuseGui : MonoBehaviour, IProcessor
+    public class EditDiffuseGui : MonoBehaviour, IProcessor, IHideable
     {
         public bool Active
         {
@@ -93,7 +93,7 @@ namespace Gui
         private void InitializeSettings()
         {
             if (_settingsInitialized) return;
-            Debug.Log("Initializing Edit Diffuse Settings");
+            General.Logger.Log("Initializing Edit Diffuse Settings");
             _eds = new EditDiffuseSettings();
             _settingsInitialized = true;
         }
@@ -115,7 +115,7 @@ namespace Gui
             InitializeSettings();
 
             _windowId = ProgramManager.Instance.GetWindowId;
-            Debug.Log($"Window ID de {name} : {_windowId}");
+            General.Logger.Log($"Window ID de {name} : {_windowId}");
         }
 
         public void DoStuff()
@@ -226,6 +226,7 @@ namespace Gui
 
         private void OnGUI()
         {
+            if(Hide) return;
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Edit Diffuse");
         }
 
@@ -256,7 +257,7 @@ namespace Gui
             _imageSizeX = _diffuseMapOriginal.width;
             _imageSizeY = _diffuseMapOriginal.height;
 
-            Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
+            General.Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
             _blurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
             _avgMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
@@ -264,7 +265,7 @@ namespace Gui
 
         public IEnumerator Process()
         {
-            Debug.Log("Processing Diffuse");
+            General.Logger.Log("Processing Diffuse");
 
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
 
@@ -305,7 +306,7 @@ namespace Gui
 
         private IEnumerator ProcessBlur()
         {
-            Debug.Log("Processing Blur");
+            General.Logger.Log("Processing Blur");
 
             RenderTexture.ReleaseTemporary(_tempMap);
             _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
@@ -342,5 +343,7 @@ namespace Gui
 
             yield return new WaitForSeconds(0.01f);
         }
+
+        public bool Hide { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Gui
 {
-    public class SettingsGui : MonoBehaviour
+    public class SettingsGui : MonoBehaviour, IHideable
     {
         private const string SettingsKey = "Settings";
         public static SettingsGui Instance;
@@ -60,7 +60,7 @@ namespace Gui
 
         private void InitializeSettings()
         {
-            Debug.Log("Initializing Program Settings");
+            General.Logger.Log("Initializing Program Settings");
             ProgramSettings.NormalMapMaxStyle = true;
             ProgramSettings.NormalMapMayaStyle = false;
             ProgramSettings.PostProcessEnabled = true;
@@ -75,7 +75,7 @@ namespace Gui
         private void Serializer_UnknownNode
             (object sender, XmlNodeEventArgs e)
         {
-            Debug.LogError($"Unknown Node: {e.Name}\te.Text ");
+            General.Logger.LogError($"Unknown Node: {e.Name}\te.Text ");
             _invalidSettings = true;
         }
 
@@ -83,7 +83,7 @@ namespace Gui
             (object sender, XmlAttributeEventArgs e)
         {
             var attr = e.Attr;
-            Debug.LogError($"Unknown attribute {attr.Name} + ='{attr.Value}'");
+            General.Logger.LogError($"Unknown attribute {attr.Name} + ='{attr.Value}'");
             _invalidSettings = true;
         }
 
@@ -91,7 +91,7 @@ namespace Gui
             (object sender, XmlElementEventArgs xmlElementEventArgs)
         {
             var element = xmlElementEventArgs.Element;
-            Debug.LogError($"Unknown element {element.Name} + ='{element.Value}'");
+            General.Logger.LogError($"Unknown element {element.Name} + ='{element.Value}'");
             _invalidSettings = true;
         }
 
@@ -183,6 +183,7 @@ namespace Gui
 
         private void OnGUI()
         {
+            if (Hide) return;
             _windowRect = new Rect(Screen.width - 300, Screen.height - 320, 280, 230);
             if (_windowOpen) MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Setting and Preferences");
         }
@@ -199,5 +200,7 @@ namespace Gui
                 _windowOpen = true;
             }
         }
+
+        public bool Hide { get; set; }
     }
 }

@@ -67,6 +67,7 @@ namespace General
         private void Start()
         {
             ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = FullMaterialInstance;
+            Logger.Log("Starting " + name);
         }
 
         public bool NotNull(ProgramEnums.MapType mapType)
@@ -115,7 +116,7 @@ namespace General
                 case ProgramEnums.MapType.Any:
                 case ProgramEnums.MapType.Diffuse:
                 case ProgramEnums.MapType.DiffuseOriginal:
-                    Debug.Log("A mistake?");
+                    General.Logger.Log("A mistake?");
                     Debug.DebugBreak();
                     return false;
                 case ProgramEnums.MapType.Metallic:

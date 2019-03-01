@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Gui
 {
-    public class ControlsGui : MonoBehaviour
+    public class ControlsGui : MonoBehaviour, IHideable
     {
         private bool _windowOpen;
 
@@ -59,14 +59,16 @@ namespace Gui
 
         private void OnGUI()
         {
+            if (Hide) return;
             _windowRect = new Rect(1185, 485, 170, 280);
-            if (_windowOpen)  MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Controls");
-
+            if (_windowOpen) MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Controls");
         }
 
         public void ButtonCallback()
         {
             _windowOpen = !_windowOpen;
         }
+
+        public bool Hide { get; set; }
     }
 }

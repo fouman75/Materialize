@@ -3,6 +3,7 @@ using System.IO;
 using General;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
+using Logger = General.Logger;
 using Object = UnityEngine.Object;
 
 public static class TextureProcessing
@@ -89,12 +90,12 @@ public static class TextureProcessing
     private static ProgramEnums.FileFormat GetFormat(string path)
     {
         var format = path.Substring(path.LastIndexOf(".", StringComparison.Ordinal) + 1, 3);
-        Debug.Log($"Carregando {format}");
+        Logger.Log($"Carregando {format}");
 
         if (!Enum.TryParse(format, true, out ProgramEnums.FileFormat fileFormat))
             return ProgramEnums.FileFormat.Invalid;
 
-        Debug.Log("Tipo encontrado : " + fileFormat);
+        Logger.Log("Tipo encontrado : " + fileFormat);
         return fileFormat;
     }
 
@@ -117,7 +118,7 @@ public static class TextureProcessing
                 break;
             case ProgramEnums.FileFormat.Exr:
             case ProgramEnums.FileFormat.Invalid:
-                Debug.Log("Tipo de arquivo invalido " + fileFormat);
+                Logger.Log("Tipo de arquivo invalido " + fileFormat);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -131,7 +132,7 @@ public static class TextureProcessing
         var converted = TextureManager.Instance.GetStandardTexture(newTexture.width, newTexture.height, linear);
         var result = Graphics.ConvertTexture(newTexture, converted);
         Object.Destroy(newTexture);
-        Debug.Log(result ? "Sucesso na conversao" : "Erro na conversao");
+        Logger.Log(result ? "Sucesso na conversao" : "Erro na conversao");
         newTexture = converted;
         return newTexture;
     }

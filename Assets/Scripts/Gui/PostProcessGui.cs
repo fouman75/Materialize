@@ -11,7 +11,7 @@ using UnityEngine.Rendering;
 
 namespace Gui
 {
-    public class PostProcessGui : MonoBehaviour
+    public class PostProcessGui : MonoBehaviour, IHideable
     {
         private float _bloomIntensity;
         private float _bloomScatter;
@@ -149,7 +149,10 @@ namespace Gui
 
         private void OnGUI()
         {
+            if (Hide) return;
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Post Process");
         }
+
+        public bool Hide { get; set; }
     }
 }

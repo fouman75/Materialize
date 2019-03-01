@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Gui
 {
-    public class MetallicGui : MonoBehaviour, IProcessor
+    public class MetallicGui : MonoBehaviour, IProcessor, IHideable
     {
         public bool Active
         {
@@ -108,7 +108,7 @@ namespace Gui
         private void InitializeSettings()
         {
             if (_settingsInitialized) return;
-            Debug.Log("Initializing Metallic Settings");
+            General.Logger.Log("Initializing Metallic Settings");
             _metallicSettings = new MetallicSettings();
 
             _metalColorMap = TextureManager.Instance.GetStandardTexture(1, 1);
@@ -297,6 +297,7 @@ namespace Gui
 
         private void OnGUI()
         {
+            if (Hide) return;
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Metallic From Diffuse");
         }
 
@@ -338,7 +339,7 @@ namespace Gui
                 _metallicSettings.UseOriginalDiffuse = true;
             }
 
-            Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
+            General.Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
             _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
             _blurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
@@ -349,7 +350,7 @@ namespace Gui
         {
             Busy = true;
 
-            Debug.Log("Processing Height");
+            General.Logger.Log("Processing Height");
 
             _metallicBlitMaterial.SetVector("_ImageSize", new Vector4(_imageSizeX, _imageSizeY, 0, 0));
 
@@ -395,7 +396,7 @@ namespace Gui
         {
             Busy = true;
 
-            Debug.Log("Processing Blur");
+            General.Logger.Log("Processing Blur");
 
             _blitMaterial.SetVector("_ImageSize", new Vector4(_imageSizeX, _imageSizeY, 0, 0));
             _blitMaterial.SetFloat("_BlurContrast", 1.0f);
@@ -440,5 +441,7 @@ namespace Gui
 
             Busy = false;
         }
+
+        public bool Hide { get; set; }
     }
 }

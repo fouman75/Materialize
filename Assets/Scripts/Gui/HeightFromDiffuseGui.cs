@@ -13,7 +13,7 @@ using UnityEngine.Rendering;
 
 namespace Gui
 {
-    public class HeightFromDiffuseGui : MonoBehaviour, IProcessor
+    public class HeightFromDiffuseGui : MonoBehaviour, IProcessor, IHideable
     {
         public bool Active
         {
@@ -177,7 +177,7 @@ namespace Gui
         private void InitializeSettings()
         {
             if (_settingsInitialized) return;
-            Debug.Log("Initializing Height From Diffuse Settings");
+            General.Logger.Log("Initializing Height From Diffuse Settings");
 
             _heightFromDiffuseSettings = new HeightFromDiffuseSettings();
 
@@ -785,7 +785,7 @@ namespace Gui
 
         private void OnGUI()
         {
-
+            if (Hide) return;
             if (_heightFromDiffuseSettings.UseSample1 && !_heightFromDiffuseSettings.UseNormal)
                 _windowRect.height += 110;
 
@@ -824,7 +824,7 @@ namespace Gui
             }
 
 
-//        Debug.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
+//        General.Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
             _tempBlurMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.RFloat,
                 RenderTextureReadWrite.Linear);
@@ -874,7 +874,7 @@ namespace Gui
 
         public IEnumerator Process()
         {
-            Debug.Log("Processing HeightMap");
+            General.Logger.Log("Processing HeightMap");
             Busy = true;
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
 
@@ -956,7 +956,7 @@ namespace Gui
         {
             Busy = true;
 
-            Debug.Log("Processing Normal");
+            General.Logger.Log("Processing Normal");
 
             _blitMaterialNormal.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
             _blitMaterialNormal.SetFloat(Spread, _heightFromDiffuseSettings.Spread);
@@ -1109,5 +1109,7 @@ namespace Gui
 
             Busy = false;
         }
+
+        public bool Hide { get; set; }
     }
 }

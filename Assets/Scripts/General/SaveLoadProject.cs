@@ -31,18 +31,13 @@ namespace General
 
         private void Start()
         {
-            if (Application.platform == RuntimePlatform.WindowsEditor ||
-                Application.platform == RuntimePlatform.WindowsPlayer)
-                _pathChar = '\\';
-            else
-                _pathChar = '/';
-
+            _pathChar = ProgramManager.Instance.PathChar;
             _thisProject = new ProjectObject();
         }
 
         public void LoadProject(string pathToFile)
         {
-            Debug.Log("Loading Project: " + pathToFile);
+            Logger.Log("Loading Project: " + pathToFile);
 
             var serializer = new XmlSerializer(typeof(ProjectObject));
             var stream = new FileStream(pathToFile, FileMode.Open);
@@ -67,11 +62,11 @@ namespace General
             if (Path.HasExtension(pathToFile))
                 pathToFile = pathToFile.Substring(0, pathToFile.LastIndexOf(".", StringComparison.Ordinal));
 
-            Debug.Log("Saving Project: " + pathToFile);
+            Logger.Log("Saving Project: " + pathToFile);
 
             var extension = MainGui.Instance.SelectedFormat.ToString().ToLower();
 
-            Debug.Log("Project Name " + projectName);
+            Logger.Log("Project Name " + projectName);
 
             MainGui.Instance.HeightFromDiffuseGuiScript.GetValues(_thisProject);
             if (TextureManager.Instance.HeightMap != null)
@@ -129,7 +124,7 @@ namespace General
             SaveAllFiles(pathToFile);
         }
 
-        public void SaveAllFiles(string pathToFile)
+        private void SaveAllFiles(string pathToFile)
         {
             StartCoroutine(SaveAllTextures(pathToFile));
         }
@@ -149,7 +144,7 @@ namespace General
             BashRunner.Run($"xclip -selection clipboard -t TARGETS -o > {pathToTextFile}");
             var bashOut = File.ReadAllText(pathToTextFile);
 
-//            Debug.Log($"Out : {bashOut}");
+//            General.Logger.Log($"Out : {bashOut}");
             File.Delete(pathToTextFile);
 
             if (bashOut.Contains("image/png"))
@@ -218,8 +213,8 @@ namespace General
         private IEnumerator SaveTexture(Texture2D textureToSave, string pathToFile)
         {
             if (!textureToSave || StringExt.IsNullOrEmpty(pathToFile)) yield break;
-            Debug.Log($"Salvando {textureToSave} como {pathToFile}");
-            if (!textureToSave.isReadable) Debug.LogError($"Texture {pathToFile} somente leitura");
+            Logger.Log($"Salvando {textureToSave} como {pathToFile}");
+            if (!textureToSave.isReadable) Logger.LogError($"Texture {pathToFile} somente leitura");
 
             if (!pathToFile.Contains(".")) pathToFile = $"{pathToFile}.{MainGui.Instance.SelectedFormat}";
 
@@ -242,7 +237,7 @@ namespace General
             {
                 textureToSave = TextureProcessing.ConvertToGama(textureToSave);
             }
-            
+
             byte[] bytes;
             switch (extension)
             {

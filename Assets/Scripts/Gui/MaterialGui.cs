@@ -9,7 +9,7 @@ namespace Gui
 
     #endregion
 
-    public class MaterialGui : MonoBehaviour
+    public class MaterialGui : MonoBehaviour,IHideable
     {
         private const int UpdateDivisor = 4;
         private int _divisorCount = UpdateDivisor;
@@ -121,7 +121,7 @@ namespace Gui
         {
             _thisMaterial = TextureManager.Instance.FullMaterialInstance;
             if (_settingsInitialized) return;
-            Debug.Log("Initializing MaterialSettings");
+            General.Logger.Log("Initializing MaterialSettings");
             _materialSettings = new MaterialSettings();
             _myColorTexture = TextureManager.Instance.GetStandardTexture(1, 1);
             _materialSettings.DisplacementAmplitude = _thisMaterial.GetFloat(HeightAmplitudeId);
@@ -324,6 +324,7 @@ namespace Gui
 
         private void OnGUI()
         {
+            if(Hide) return;
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Full Material");
         }
 
@@ -335,5 +336,7 @@ namespace Gui
             TestObjectCylinder.GetComponent<Renderer>().sharedMaterial = _thisMaterial;
             TestObjectSphere.GetComponent<Renderer>().sharedMaterial = _thisMaterial;
         }
+
+        public bool Hide { get; set; }
     }
 }

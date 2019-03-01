@@ -49,6 +49,7 @@ namespace Gui
         [HideInInspector] public AoFromNormalGui AoFromNormalGuiScript;
 
         public GameObject PostProcessGuiObject;
+        [HideInInspector] public PostProcessGui PostProcessGuiScript;
 
         private TilingTextureMakerGui _tilingTextureMakerGuiScript;
         private SaveLoadProject _saveLoadProjectScript;
@@ -61,7 +62,7 @@ namespace Gui
         private bool _clearTextures;
         private bool _exrSelected;
         private bool _jpgSelected;
-        private List<GameObject> _objectsToUnhide;
+        private List<IHideable> _objectsToUnhide;
 
         private bool _pngSelected = true;
         private bool _propBlueChoose;
@@ -96,7 +97,6 @@ namespace Gui
 
         #endregion
 
-        public ReflectionProbe ReflectionProbe;
         [HideInInspector] public Material SampleMaterial;
         public Material SampleMaterialRef;
 
@@ -139,6 +139,7 @@ namespace Gui
             MaterialGuiScript = MaterialGuiObject.GetComponent<MaterialGui>();
             _tilingTextureMakerGuiScript = TilingTextureMakerGuiObject.GetComponent<TilingTextureMakerGui>();
             _saveLoadProjectScript = SaveLoadProjectObject.GetComponent<SaveLoadProject>();
+            PostProcessGuiScript = PostProcessGuiObject.GetComponent<PostProcessGui>();
 
             HideGuiLocker.LockEmpty += LoadHideState;
             VolumeProfile.TryGet(out HdriSky);
@@ -161,9 +162,21 @@ namespace Gui
             }
 
             hdrp.RequestSkyEnvironmentUpdate();
-            Debug.Log("HDRI Sky Atualizado");
+            General.Logger.Log("HDRI Sky Atualizado");
 
-            ReflectionProbe.RequestRenderNextUpdate();
+            RenderProbe();
+        }
+
+        private static void RenderProbe()
+        {
+            var probes = FindObjectsOfType<ReflectionProbe>();
+
+            foreach (var probe in probes)
+            {
+                var isRealTime = probe.mode == ReflectionProbeMode.Realtime;
+                var needsRefresh = probe.refreshMode == ReflectionProbeRefreshMode.ViaScripting;
+                if (isRealTime && needsRefresh) probe.RequestRenderNextUpdate();
+            }
         }
 
         #endregion
@@ -357,7 +370,6 @@ namespace Gui
             CloseWindows();
             TextureManager.Instance.FixSize();
             AlignmentGuiScript.Initialize();
-            
         }
 
         public void OpenTileMaps()
@@ -375,9 +387,8 @@ namespace Gui
 
             HdriSky.hdriSky.value = CubeMaps[_selectedCubemap];
 
-            var hdrp = UnityEngine.Rendering.RenderPipelineManager.currentPipeline as HDRenderPipeline;
-            hdrp.RequestSkyEnvironmentUpdate();
-            ReflectionProbe.RequestRenderNextUpdate();
+            ProgramManager.Instance.RenderPipeline.RequestSkyEnvironmentUpdate();
+            RenderProbe();
         }
 
         public void Quit()
@@ -436,7 +447,7 @@ namespace Gui
                 objToHide.SetActive(true);
 
             foreach (var objToHide in _objectsToUnhide)
-                objToHide.SetActive(true);
+                objToHide.Hide = false;
         }
 
         private void HideGui()
@@ -488,35 +499,57 @@ namespace Gui
 
         private void HideWindows()
         {
-            _objectsToUnhide = new List<GameObject>();
+            _objectsToUnhide = new List<IHideable>();
 
-            if (HeightFromDiffuseGuiObject.activeSelf) _objectsToUnhide.Add(HeightFromDiffuseGuiObject);
+            if (HeightFromDiffuseGuiObject.activeSelf)
+            {
+                _objectsToUnhide.Add(HeightFromDiffuseGuiScript);
+            }
 
-            if (NormalFromHeightGuiObject.activeSelf) _objectsToUnhide.Add(NormalFromHeightGuiObject);
+            if (NormalFromHeightGuiObject.activeSelf)
+            {
+                _objectsToUnhide.Add(NormalFromHeightGuiScript);
+            }
 
-            if (AoFromNormalGuiObject.activeSelf) _objectsToUnhide.Add(AoFromNormalGuiObject);
+            if (AoFromNormalGuiObject.activeSelf)
+            {
+                _objectsToUnhide.Add(AoFromNormalGuiScript);
+            }
 
-            if (EditDiffuseGuiObject.activeSelf) _objectsToUnhide.Add(EditDiffuseGuiObject);
+            if (EditDiffuseGuiObject.activeSelf)
+            {
+                _objectsToUnhide.Add(EditDiffuseGuiScript);
+            }
 
-            if (MetallicGuiObject.activeSelf) _objectsToUnhide.Add(MetallicGuiObject);
+            if (MetallicGuiObject.activeSelf)
+            {
+                _objectsToUnhide.Add(MetallicGuiScript);
+            }
 
-            if (SmoothnessGuiObject.activeSelf) _objectsToUnhide.Add(SmoothnessGuiObject);
+            if (SmoothnessGuiObject.activeSelf)
+            {
+                _objectsToUnhide.Add(SmoothnessGuiScript);
+            }
 
-            if (MaterialGuiObject.activeSelf) _objectsToUnhide.Add(MaterialGuiObject);
+            if (MaterialGuiObject.activeSelf)
+            {
+                _objectsToUnhide.Add(MaterialGuiScript);
+            }
 
-            if (PostProcessGuiObject.activeSelf) _objectsToUnhide.Add(PostProcessGuiObject);
+            if (PostProcessGuiObject.activeSelf)
+            {
+                _objectsToUnhide.Add(PostProcessGuiScript);
+            }
 
-            if (TilingTextureMakerGuiObject.activeSelf) _objectsToUnhide.Add(TilingTextureMakerGuiObject);
+            if (TilingTextureMakerGuiObject.activeSelf)
+            {
+                _objectsToUnhide.Add(_tilingTextureMakerGuiScript);
+            }
 
-            HeightFromDiffuseGuiObject.SetActive(false);
-            NormalFromHeightGuiObject.SetActive(false);
-            AoFromNormalGuiObject.SetActive(false);
-            EditDiffuseGuiObject.SetActive(false);
-            MetallicGuiObject.SetActive(false);
-            SmoothnessGuiObject.SetActive(false);
-            MaterialGuiObject.SetActive(false);
-            PostProcessGuiObject.SetActive(false);
-            TilingTextureMakerGuiObject.SetActive(false);
+            foreach (var hideable in _objectsToUnhide)
+            {
+                hideable.Hide = true;
+            }
         }
 
         #endregion
@@ -707,7 +740,7 @@ namespace Gui
             {
                 if (HideGuiLocker.IsLocked)
                 {
-                    Debug.Log("Tentando modificar IsGuiHidden quando travado");
+                    General.Logger.Log("Tentando modificar IsGuiHidden quando travado");
                     return;
                 }
 

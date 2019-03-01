@@ -20,5 +20,5 @@ EditorSettings:
   m_ProjectGenerationRootNamespace: 
   m_CollabEditorSettings:
     inProgressEnabled: 1
-  m_EnableTextureStreamingInEditMode: 1
+  m_EnableTextureStreamingInEditMode: 0
   m_EnableTextureStreamingInPlayMode: 0

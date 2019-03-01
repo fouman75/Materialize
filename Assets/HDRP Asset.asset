@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 0cf1dab834d4ec34195b920ea7bbf9ec, type: 3}
   m_Name: HDRP Asset
   m_EditorClassIdentifier: 
@@ -25,7 +24,7 @@ MonoBehaviour:
       data2: 4539628424389459968
   m_RenderingPathDefaultRealtimeReflectionFrameSettings:
     bitDatas:
-      data1: 69277821697821
+      data1: 69277821697823
       data2: 4539628424389459968
   m_RenderPipelineSettings:
     supportShadowMask: 1
@@ -37,10 +36,10 @@ MonoBehaviour:
     increaseResolutionOfVolumetrics: 1
     supportLightLayers: 0
     supportDistortion: 1
-    supportTransparentBackface: 0
-    supportTransparentDepthPrepass: 0
-    supportTransparentDepthPostpass: 0
-    supportedLitShaderMode: 1
+    supportTransparentBackface: 1
+    supportTransparentDepthPrepass: 1
+    supportTransparentDepthPostpass: 1
+    supportedLitShaderMode: 2
     supportDecals: 0
     msaaSampleCount: 2
     supportMotionVectors: 1
@@ -54,9 +53,9 @@ MonoBehaviour:
       cubeCookieTexArraySize: 16
       planarReflectionProbeCacheSize: 2
       planarReflectionTextureSize: 1024
-      reflectionProbeCacheSize: 4
-      reflectionCubemapSize: 1024
-      reflectionCacheCompressed: 0
+      reflectionProbeCacheSize: 8
+      reflectionCubemapSize: 512
+      reflectionCacheCompressed: 1
       planarReflectionCacheCompressed: 0
       skyReflectionSize: 512
       skyLightingOverrideLayerMask:
@@ -91,8 +90,8 @@ MonoBehaviour:
       forceResolution: 0
       forcedPercentage: 100
   allowShaderVariantStripping: 1
-  enableSRPBatcher: 1
-  shaderVariantLogLevel: 0
+  enableSRPBatcher: 0
+  shaderVariantLogLevel: 1
   diffusionProfileSettings: {fileID: 0}
   diffusionProfileSettingsList:
   - {fileID: 0}

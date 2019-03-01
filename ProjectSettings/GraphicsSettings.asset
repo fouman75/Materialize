@@ -33,21 +33,20 @@ GraphicsSettings:
   - {fileID: 15104, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 15105, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 15106, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10770, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10782, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 17000, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10783, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 16000, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 4800000, guid: 854f42d53e0df684db1f6dfa67f7dffd, type: 3}
   - {fileID: 16001, guid: 0000000000000000f000000000000000, type: 0}
   m_PreloadedShaders: []
   m_SpritesDefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000,
     type: 0}
-  m_CustomRenderPipeline: {fileID: 11400000, guid: a0c9a5d132a5dcbcda3febfae0c47db3,
+  m_CustomRenderPipeline: {fileID: 11400000, guid: 944344443105800f1b981de20fb713e5,
     type: 2}
   m_TransparencySortMode: 0
   m_TransparencySortAxis: {x: 0, y: 0, z: 1}
-  m_DefaultRenderingPath: 3
-  m_DefaultMobileRenderingPath: 3
+  m_DefaultRenderingPath: 1
+  m_DefaultMobileRenderingPath: 1
   m_TierSettings: []
   m_LightmapStripping: 0
   m_FogStripping: 0

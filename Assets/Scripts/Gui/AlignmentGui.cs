@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Gui
 {
-    public class AlignmentGui : MonoBehaviour
+    public class AlignmentGui : MonoBehaviour, IHideable
     {
         private static readonly int TargetPoint = Shader.PropertyToID("_TargetPoint");
         private static readonly int MainTex = Shader.PropertyToID("_MainTex");
@@ -359,6 +359,7 @@ namespace Gui
 
         private void OnGUI()
         {
+            if(Hide) return;
             var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
             GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
@@ -462,13 +463,13 @@ namespace Gui
         {
             if (TextureManager.Instance.HeightMap != null)
             {
-                Debug.Log("Setting Height");
+                General.Logger.Log("Setting Height");
                 TextureManager.Instance.HeightMap = SetMap(TextureManager.Instance.HeightMap);
             }
 
             if (TextureManager.Instance.HdHeightMap != null)
             {
-                Debug.Log("Setting HD Height");
+                General.Logger.Log("Setting HD Height");
                 TextureManager.Instance.HdHeightMap = SetMap(TextureManager.Instance.HdHeightMap);
             }
 
@@ -476,7 +477,7 @@ namespace Gui
 
             if (TextureManager.Instance.DiffuseMap != null)
             {
-                Debug.Log("Setting Diffuse");
+                General.Logger.Log("Setting Diffuse");
                 TextureManager.Instance.DiffuseMap = SetMap(TextureManager.Instance.DiffuseMap);
             }
 
@@ -484,7 +485,7 @@ namespace Gui
 
             if (TextureManager.Instance.DiffuseMapOriginal != null)
             {
-                Debug.Log("Setting Diffuse Original");
+                General.Logger.Log("Setting Diffuse Original");
                 TextureManager.Instance.DiffuseMapOriginal = SetMap(TextureManager.Instance.DiffuseMapOriginal);
             }
 
@@ -492,7 +493,7 @@ namespace Gui
 
             if (TextureManager.Instance.NormalMap != null)
             {
-                Debug.Log("Setting Normal");
+                General.Logger.Log("Setting Normal");
                 TextureManager.Instance.NormalMap = SetMap(TextureManager.Instance.NormalMap);
             }
 
@@ -500,7 +501,7 @@ namespace Gui
 
             if (TextureManager.Instance.MetallicMap != null)
             {
-                Debug.Log("Setting Metallic");
+                General.Logger.Log("Setting Metallic");
                 TextureManager.Instance.MetallicMap = SetMap(TextureManager.Instance.MetallicMap);
             }
 
@@ -508,7 +509,7 @@ namespace Gui
 
             if (TextureManager.Instance.SmoothnessMap != null)
             {
-                Debug.Log("Setting Smoothness");
+                General.Logger.Log("Setting Smoothness");
                 TextureManager.Instance.SmoothnessMap = SetMap(TextureManager.Instance.SmoothnessMap);
             }
 
@@ -516,7 +517,7 @@ namespace Gui
 
             if (TextureManager.Instance.MaskMap != null)
             {
-                Debug.Log("Setting MaskMap");
+                General.Logger.Log("Setting MaskMap");
                 TextureManager.Instance.MaskMap = SetMap(TextureManager.Instance.MaskMap);
             }
 
@@ -524,7 +525,7 @@ namespace Gui
 
             if (TextureManager.Instance.AoMap != null)
             {
-                Debug.Log("Setting AO");
+                General.Logger.Log("Setting AO");
                 TextureManager.Instance.AoMap = SetMap(TextureManager.Instance.AoMap);
             }
 
@@ -532,5 +533,7 @@ namespace Gui
 
             Resources.UnloadUnusedAssets();
         }
+
+        public bool Hide { get; set; }
     }
 }
