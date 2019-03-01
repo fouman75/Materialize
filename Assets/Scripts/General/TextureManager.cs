@@ -270,6 +270,7 @@ namespace General
         {
             GetTextureFromRender(input, mapType, out _);
         }
+
         public void GetTextureFromRender(RenderTexture input, out Texture2D outTexture)
         {
             GetTextureFromRender(input, ProgramEnums.MapType.None, out outTexture);

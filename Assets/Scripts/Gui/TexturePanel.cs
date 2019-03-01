@@ -17,6 +17,13 @@ namespace Gui
         public Button CopyButton;
         public Button CreateButton;
         public Button ClearButton;
+        public TextMeshProUGUI Title;
+        public int LeftBorder = 5;
+        public int TopBorder = -5;
+        public int Width = 125;
+        public int Height = 215;
+        public int NumberOfPanels = 7;
+        public int PanelSlot = 0;
 
         private void Awake()
         {
@@ -109,6 +116,20 @@ namespace Gui
             MainGui.Instance.CloseWindows();
             TextureManager.Instance.SetFullMaterial();
             TextureManager.Instance.FixSize();
+        }
+
+        private void OnValidate()
+        {
+            var rectTransform = GetComponent<RectTransform>();
+            var posX = LeftBorder + PanelSlot * Width;
+            var pos = rectTransform.anchoredPosition;
+            pos.x = posX;
+            rectTransform.anchoredPosition = pos;
+            var title = MapType == ProgramEnums.MapType.AnyDiffuse
+                ? nameof(ProgramEnums.MapType.Diffuse)
+                : MapType.ToString();
+            Title.text = title;
+            name = title + " Panel";
         }
     }
 }

@@ -35,28 +35,35 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
     private Quaternion _targetRotation;
     private Camera _camera;
     private bool _hovering;
+    private Vector3 _startPosition;
+    private Quaternion _startRotation;
 
     private void Start()
     {
         _camera = Camera.main;
+        var transform1 = transform;
+        _startPosition = transform1.position;
+        _startRotation = transform1.rotation;
+        Reset();
     }
 
     public void Reset()
     {
-        transform.rotation = Quaternion.identity;
+        _targetDrag = _startPosition;
+        _targetRotation = _startRotation;
     }
 
     private void Update()
     {
         var distanceFromTarget = (_targetDrag - transform.position).magnitude;
-        if (_targetDrag.magnitude > 0.1f && distanceFromTarget > 0.1f)
+        if (distanceFromTarget > 0.1f)
         {
             var pos = Vector3.Slerp(transform.position, _targetDrag, 0.6f);
             transform.position = pos;
         }
 
         var distanceFromAngle = Quaternion.Angle(_targetRotation, transform.rotation);
-        if (_targetRotation.eulerAngles.magnitude > 1f && distanceFromAngle > 1f)
+        if (Mathf.Abs(distanceFromAngle) > 1f)
         {
             var rot = Quaternion.Slerp(transform.rotation, _targetRotation, 0.7f);
             transform.rotation = rot;
