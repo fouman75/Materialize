@@ -167,6 +167,18 @@ ShaderVariantCollection:
         passType: 0
       - keywords: APPLY_AFTER_POST DITHER FXAA
         passType: 0
+  - first: {fileID: 4800000, guid: 13e4cd830c77cf24092bb553140cea37, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 1438665ce21c4ee44b377e98d5bcb9e7, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 19fa402a9db6edf4dbd182194973fa8c, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 23a7a7e878ec4b745a9aabfc06f4d3ea, type: 3}
+    second:
+      variants: []
   - first: {fileID: 4800000, guid: 36f058d3da46e1d4fb6fb41de9a4037f, type: 3}
     second:
       variants:
@@ -177,6 +189,9 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
+  - first: {fileID: 4800000, guid: 6786267c189d65746ac173bc100103a6, type: 3}
+    second:
+      variants: []
   - first: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
     second:
       variants:
@@ -237,6 +252,9 @@ ShaderVariantCollection:
       - keywords: DECALS_3RT _DISABLE_DECALS _ENABLE_GEOMETRIC_SPECULAR_AA _HEIGHTMAP
           _MASKMAP _NORMALMAP _TESSELLATION_DISPLACEMENT _TESSELLATION_PHONG
         passType: 13
+  - first: {fileID: 4800000, guid: 75db3be1e919e864aa2ebd0973ac8644, type: 3}
+    second:
+      variants: []
   - first: {fileID: 4800000, guid: 7fc9f809ab74e9143a3adb85011dfe7a, type: 3}
     second:
       variants:
@@ -247,6 +265,18 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
+  - first: {fileID: 4800000, guid: 996fe0c4ad1d31a4cbbaf30e260a084f, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: b866c95124f22e8428ab65cadc3e006b, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: ba1c3acaeb4411545b0cb01c9d84e434, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: bd6f623fef22c1043ac44ee24f76592b, type: 3}
+    second:
+      variants: []
   - first: {fileID: 4800000, guid: d46c30cd1601d8047b7d18b1b69b911d, type: 3}
     second:
       variants:
@@ -257,6 +287,15 @@ ShaderVariantCollection:
       variants:
       - keywords: SHADOWS_DEPTH
         passType: 8
+  - first: {fileID: 4800000, guid: e1dd421eddb611940a3c3c3043f5f4d8, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: e1df56203f647fb478eed490855b4c03, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: e287b65cc83e57242baaf9af82a2347c, type: 3}
+    second:
+      variants: []
   - first: {fileID: 4800000, guid: edad1f5389aa096c7b53cfe3bfa4ef7b, type: 3}
     second:
       variants:
@@ -267,3 +306,9 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
+  - first: {fileID: 4800000, guid: f8a74d41c7cc5cd4887692360e1e4f15, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 886e700cc3fe81444b713b85e3d28ee2, type: 3}
+    second:
+      variants: []

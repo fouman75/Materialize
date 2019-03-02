@@ -30,7 +30,7 @@ MonoBehaviour:
     supportShadowMask: 1
     supportSSR: 1
     supportSSAO: 1
-    supportSubsurfaceScattering: 0
+    supportSubsurfaceScattering: 1
     increaseSssSampleCount: 1
     supportVolumetrics: 1
     increaseResolutionOfVolumetrics: 1
@@ -82,7 +82,7 @@ MonoBehaviour:
       m_LutSize: 32
       lutFormat: 48
     dynamicResolutionSettings:
-      enabled: 0
+      enabled: 1
       maxPercentage: 100
       minPercentage: 50
       dynResType: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   shaderVariantLogLevel: 1
   diffusionProfileSettings: {fileID: 0}
   diffusionProfileSettingsList:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 34f5d0d8ebe5dfa41a899ca985b974bb, type: 2}
   m_Version: 3
   m_ObsoleteFrameSettings:
     overrides: 0

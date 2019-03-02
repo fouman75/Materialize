@@ -27,5 +27,11 @@ namespace General
             Bmp,
             Invalid
         }
+
+        public enum ScreenMode
+        {
+            FullScreen,
+            Windowed
+        }
     }
 }

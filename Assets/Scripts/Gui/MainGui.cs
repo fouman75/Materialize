@@ -398,9 +398,39 @@ namespace Gui
 
         public void Fullscreen()
         {
-            Screen.fullScreen = !Screen.fullScreen;
-            var text = Screen.fullScreen ? "Windowed" : "Full Screen";
+            return;
+            string text;
+            if (Screen.fullScreenMode == FullScreenMode.Windowed)
+            {
+                text = "Windowed";
+                SetScreen(ProgramEnums.ScreenMode.FullScreen);
+            }
+            else
+            {
+                text = "FullScreen";
+                SetScreen(ProgramEnums.ScreenMode.Windowed);
+            }
+
             EventSystem.current.currentSelectedGameObject.GetComponentInChildren<TextMeshProUGUI>().text = text;
+        }
+
+        public void SetScreen(ProgramEnums.ScreenMode screenMode)
+        {
+            switch (screenMode)
+            {
+                case ProgramEnums.ScreenMode.FullScreen:
+                    var fsRes = Screen.resolutions;
+                    var highRes = fsRes[fsRes.Length - 1];
+                    Screen.SetResolution(highRes.width, highRes.height, FullScreenMode.ExclusiveFullScreen);
+                    break;
+                case ProgramEnums.ScreenMode.Windowed:
+                    var winRes = Screen.resolutions;
+                    var midRes = winRes[winRes.Length - 3];
+                    Screen.SetResolution(midRes.width, midRes.height, FullScreenMode.Windowed);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(screenMode), screenMode, null);
+            }
         }
 
         public void HideGuiButtonClickEvent()
