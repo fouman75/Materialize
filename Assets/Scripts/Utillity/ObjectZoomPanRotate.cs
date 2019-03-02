@@ -60,17 +60,18 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     private void Update()
     {
+        const int targetFps = 60;
         var distanceFromTarget = (_targetDrag - transform.position).magnitude;
         if (distanceFromTarget > 0.1f)
         {
-            var pos = Vector3.Slerp(transform.position, _targetDrag, 0.6f);
+            var pos = Vector3.Slerp(transform.position, _targetDrag, 0.6f * targetFps * Time.deltaTime);
             transform.position = pos;
         }
 
         var distanceFromAngle = Quaternion.Angle(_targetRotation, transform.rotation);
         if (Mathf.Abs(distanceFromAngle) > 1f)
         {
-            var rot = Quaternion.Slerp(transform.rotation, _targetRotation, 0.7f);
+            var rot = Quaternion.Slerp(transform.rotation, _targetRotation, 0.7f * targetFps * Time.deltaTime);
             transform.rotation = rot;
         }
 
