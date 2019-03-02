@@ -19,6 +19,7 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
     private Vector3 _rotation;
 
     public float Filter = 2f;
+    public float ZoomSpeed = 10f;
 
     public bool AllowX = true;
     public bool AllowY = true;
@@ -36,7 +37,7 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
     public bool AllowHide = true;
 
     private Vector3 _lastRaycast;
-    private Vector3 _targetDrag;
+    private Vector3 _targetPosition;
     private Quaternion _targetRotation;
     private Camera _camera;
     private bool _hovering;
@@ -54,18 +55,22 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     public void Reset()
     {
-        _targetDrag = _startPosition;
+        _targetPosition = _startPosition;
         _targetRotation = _startRotation;
     }
 
     private void Update()
     {
         const int targetFps = 60;
-        var distanceFromTarget = (_targetDrag - transform.position).magnitude;
+        var distanceFromTarget = (_targetPosition - transform.position).magnitude;
         if (distanceFromTarget > 0.1f)
         {
-            var pos = Vector3.Slerp(transform.position, _targetDrag, 0.6f * targetFps * Time.deltaTime);
+            var pos = Vector3.Lerp(transform.position, _targetPosition, 0.6f * targetFps * Time.deltaTime);
             transform.position = pos;
+        }
+        else
+        {
+            _targetPosition = transform.position;
         }
 
         var distanceFromAngle = Quaternion.Angle(_targetRotation, transform.rotation);
@@ -74,16 +79,24 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
             var rot = Quaternion.Slerp(transform.rotation, _targetRotation, 0.7f * targetFps * Time.deltaTime);
             transform.rotation = rot;
         }
-
-        if (_hovering)
+        else
         {
-            var ray = _camera.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(ray, out var hit);
-            var direction = hit.point - _camera.transform.position;
-            var scrollWheel = Input.GetAxis("Mouse ScrollWheel");
-            if (InvertZoom) scrollWheel = -scrollWheel;
-            _camera.transform.Translate(direction * scrollWheel * 3f);
+            _targetRotation = transform.rotation;
         }
+
+        if (!_hovering) return;
+
+        Zoom();
+    }
+
+    private void Zoom()
+    {
+        var ray = _camera.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(ray, out var hit);
+        var direction = (hit.point - _camera.transform.position).normalized;
+        var scrollWheel = -Input.GetAxis("Mouse ScrollWheel");
+        if (InvertZoom) scrollWheel = -scrollWheel;
+        _targetPosition = transform.position + (direction * scrollWheel * ZoomSpeed);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -108,14 +121,19 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
 
         if (canPan)
         {
-            var pos = eventData.pointerCurrentRaycast.worldPosition;
-            var position = transform.position;
-
-            if (pos.magnitude < 0.001f) return;
-
-            pos.z = position.z;
-            _targetDrag = pos;
+            Pan(eventData);
         }
+    }
+
+    private void Pan(PointerEventData eventData)
+    {
+        var pos = eventData.pointerCurrentRaycast.worldPosition;
+        var position = transform.position;
+
+        if (pos.magnitude < 0.001f) return;
+
+        pos.z = position.z;
+        _targetPosition = pos;
     }
 
 

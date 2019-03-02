@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Full_Material
   m_Shader: {fileID: 4800000, guid: 756bac9090102564582875f4c7e30202, type: 3}
-  m_ShaderKeywords: _DISABLE_DECALS _NORMALMAP_TANGENT_SPACE _TESSELLATION_DISPLACEMENT
+  m_ShaderKeywords: _DISABLE_DECALS _ENABLE_GEOMETRIC_SPECULAR_AA _TESSELLATION_DISPLACEMENT
     _TESSELLATION_PHONG
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -432,7 +432,7 @@ Material:
     - _Metallic1: 0
     - _Metallic2: 0
     - _Metallic3: 0
-    - _NormalMapSpace: 0
+    - _NormalMapSpace: 1
     - _NormalMapSpace0: 0
     - _NormalMapSpace1: 0
     - _NormalMapSpace2: 0

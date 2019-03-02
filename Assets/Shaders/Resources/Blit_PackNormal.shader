@@ -1,4 +1,4 @@
-﻿Shader "Hidden/ConvertToGama"
+﻿Shader "Blit/Blit_PackNormal"
 {
     Properties
     {
@@ -6,15 +6,14 @@
     }
     SubShader
     {
-        // No culling or depth
-        Cull Off ZWrite Off ZTest Always
+        Tags { "RenderType"="Transparent" }
+        LOD 100
 
         Pass
         {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-
             #include "UnityCG.cginc"
 
             struct appdata
@@ -26,27 +25,27 @@
             struct v2f
             {
                 float2 uv : TEXCOORD0;
+                UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
             };
 
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
+            
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv;
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
             }
 
-            sampler2D _MainTex;
-
-            fixed4 frag (v2f i) : SV_Target
+            float4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv);
-                // just invert the colors
-                col.r = pow(col.r, 0.4545);
-                col.g = pow(col.g, 0.4545);
-                col.b = pow(col.b, 0.4545);
-                return col;
+                float4 mainTex = tex2D(_MainTex, i.uv);
+               
+                return float4(0, mainTex.r, 0, mainTex.g);
             }
             ENDCG
         }

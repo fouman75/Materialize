@@ -171,6 +171,12 @@ Shader "Hidden/Blit_Normal_From_Height" {
 		return float4( mainTex.xyz, 1.0 );
 	}
 	
+	float4 fragPackNormal(v2f IN) : SV_Target
+	{
+	   float4 mainTex = tex2Dlod(_MainTex, float4( IN.uv, 0, 0 ) );
+	   return float4(0, mainTex.r, 0, mainTex.g);
+	}
+	
 	ENDCG
 		
 	SubShader {
@@ -217,6 +223,20 @@ Shader "Hidden/Blit_Normal_From_Height" {
 			#pragma glsl
 			ENDCG
 		} 
+		
+	    // Normal Pack
+		Pass {
+			ZTest Always Cull Off ZWrite Off Blend Off
+			Fog { Mode off }      
+
+			CGPROGRAM
+			#pragma target 3.0
+			#pragma vertex vert
+			#pragma fragment fragPackNormal
+			#pragma fragmentoption ARB_precision_hint_fastest
+			#pragma glsl
+			ENDCG
+		}
 		 
 	} 
 	

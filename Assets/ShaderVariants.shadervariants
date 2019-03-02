@@ -1,0 +1,269 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ShaderVariants
+  m_Shaders:
+  - first: {fileID: 66, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 103, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9000, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9001, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9002, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9003, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9004, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9006, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 10770, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 15104, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 15105, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 15106, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 6e4ae4064600d784cac1e41a9e6f2e59, type: 3}
+    second:
+      variants:
+      - keywords: _DISABLE_DECALS _DOUBLESIDED_ON _MATERIAL_FEATURE_CLEAR_COAT _MATERIAL_FEATURE_IRIDESCENCE
+          _NORMALMAP_TANGENT_SPACE _REFRACTION_PLANE
+        passType: 8
+      - keywords: _DISABLE_DECALS _DOUBLESIDED_ON _MATERIAL_FEATURE_CLEAR_COAT _MATERIAL_FEATURE_IRIDESCENCE
+          _NORMALMAP_TANGENT_SPACE _REFRACTION_PLANE
+        passType: 12
+      - keywords: _DISABLE_DECALS _DOUBLESIDED_ON _MATERIAL_FEATURE_CLEAR_COAT _MATERIAL_FEATURE_IRIDESCENCE
+          _NORMALMAP_TANGENT_SPACE _REFRACTION_PLANE
+        passType: 13
+      - keywords: DECALS_3RT _DISABLE_DECALS _DOUBLESIDED_ON _MATERIAL_FEATURE_CLEAR_COAT
+          _MATERIAL_FEATURE_IRIDESCENCE _NORMALMAP_TANGENT_SPACE _REFRACTION_PLANE
+        passType: 13
+  - first: {fileID: 4800000, guid: 2e37131331fbdca449b1a2bc47a639ca, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 035941b63024d1943af48811c1db20d9, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 3d1574f1cdfa0ce4995f9bc79ed7f8ec, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 42dfcc8fe803ece4096c58630689982f, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 370f7a9cc4e362d488af024d371091e8, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 123ed592ad5c2494b8aed301fd609e7b, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 32f724728cf19904291226f239ec16f0, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 9bd32a6ece529fd4f9408b8d7e00c10d, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 123f13d52852ef547b2962de4bd9eaad, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 3b3bf235775cf8b4baae7f3306787ab0, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: d279c46a545b0af4f9f0c4fa82cd489e, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: a6402c19b020b4a4fb7073aaa2e26aba, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: d850d0a2481878d4bbf17e5126b04163, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: e3cab24f27741f44d8af1e94d006267c, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: fd532bf1795188c4daaa66ea798b8b0a, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 5ac9ef0c50282754b93c7692488e7ee7, type: 3}
+    second:
+      variants:
+      - keywords: APPLY_AFTER_POST
+        passType: 0
+      - keywords: APPLY_AFTER_POST DITHER
+        passType: 0
+      - keywords: APPLY_AFTER_POST DITHER FXAA
+        passType: 0
+  - first: {fileID: 4800000, guid: 36f058d3da46e1d4fb6fb41de9a4037f, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 48ab3e2b69cf26548a2ed68d0cf0fa44, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 6fa82e718b9ea3af09c67bf1e58b82cc, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 756bac9090102564582875f4c7e30202, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: _DISABLE_DECALS _HEIGHTMAP _MASKMAP _NORMALMAP _NORMALMAP_TANGENT_SPACE
+          _TESSELLATION_DISPLACEMENT _TESSELLATION_PHONG
+        passType: 8
+      - keywords: INSTANCING_ON _DISABLE_DECALS _HEIGHTMAP _MASKMAP _NORMALMAP _NORMALMAP_TANGENT_SPACE
+          _TESSELLATION_DISPLACEMENT _TESSELLATION_PHONG
+        passType: 8
+      - keywords: _DISABLE_DECALS _ENABLE_GEOMETRIC_SPECULAR_AA _TESSELLATION_DISPLACEMENT
+          _TESSELLATION_PHONG
+        passType: 8
+      - keywords: INSTANCING_ON _DISABLE_DECALS _ENABLE_GEOMETRIC_SPECULAR_AA _TESSELLATION_DISPLACEMENT
+          _TESSELLATION_PHONG
+        passType: 8
+      - keywords: _DISABLE_DECALS _ENABLE_GEOMETRIC_SPECULAR_AA _HEIGHTMAP _MASKMAP
+          _NORMALMAP _TESSELLATION_DISPLACEMENT _TESSELLATION_PHONG
+        passType: 8
+      - keywords: INSTANCING_ON _DISABLE_DECALS _ENABLE_GEOMETRIC_SPECULAR_AA _HEIGHTMAP
+          _MASKMAP _NORMALMAP _TESSELLATION_DISPLACEMENT _TESSELLATION_PHONG
+        passType: 8
+      - keywords: _DISABLE_DECALS _ENABLE_GEOMETRIC_SPECULAR_AA _HEIGHTMAP _MASKMAP
+          _NORMALMAP _TESSELLATION_DISPLACEMENT _TESSELLATION_PHONG
+        passType: 12
+      - keywords: _DISABLE_DECALS _HEIGHTMAP _MASKMAP _NORMALMAP _NORMALMAP_TANGENT_SPACE
+          _TESSELLATION_DISPLACEMENT _TESSELLATION_PHONG
+        passType: 13
+      - keywords: INSTANCING_ON _DISABLE_DECALS _HEIGHTMAP _MASKMAP _NORMALMAP _NORMALMAP_TANGENT_SPACE
+          _TESSELLATION_DISPLACEMENT _TESSELLATION_PHONG
+        passType: 13
+      - keywords: DECALS_3RT _DISABLE_DECALS _HEIGHTMAP _MASKMAP _NORMALMAP _NORMALMAP_TANGENT_SPACE
+          _TESSELLATION_DISPLACEMENT _TESSELLATION_PHONG
+        passType: 13
+      - keywords: DECALS_3RT INSTANCING_ON _DISABLE_DECALS _HEIGHTMAP _MASKMAP _NORMALMAP
+          _NORMALMAP_TANGENT_SPACE _TESSELLATION_DISPLACEMENT _TESSELLATION_PHONG
+        passType: 13
+      - keywords: _DISABLE_DECALS _ENABLE_GEOMETRIC_SPECULAR_AA _TESSELLATION_DISPLACEMENT
+          _TESSELLATION_PHONG
+        passType: 13
+      - keywords: DECALS_3RT _DISABLE_DECALS _ENABLE_GEOMETRIC_SPECULAR_AA _TESSELLATION_DISPLACEMENT
+          _TESSELLATION_PHONG
+        passType: 13
+      - keywords: _DISABLE_DECALS _ENABLE_GEOMETRIC_SPECULAR_AA _HEIGHTMAP _MASKMAP
+          _NORMALMAP _TESSELLATION_DISPLACEMENT _TESSELLATION_PHONG
+        passType: 13
+      - keywords: DECALS_3RT _DISABLE_DECALS _ENABLE_GEOMETRIC_SPECULAR_AA _HEIGHTMAP
+          _MASKMAP _NORMALMAP _TESSELLATION_DISPLACEMENT _TESSELLATION_PHONG
+        passType: 13
+  - first: {fileID: 4800000, guid: 7fc9f809ab74e9143a3adb85011dfe7a, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 854f42d53e0df684db1f6dfa67f7dffd, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: d46c30cd1601d8047b7d18b1b69b911d, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: e08af6e67c58dc745ada3c1e18fb3e6b, type: 3}
+    second:
+      variants:
+      - keywords: SHADOWS_DEPTH
+        passType: 8
+  - first: {fileID: 4800000, guid: edad1f5389aa096c7b53cfe3bfa4ef7b, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: f579dde61f6ce174386eded5fe309fe7, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0

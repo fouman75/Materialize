@@ -135,8 +135,6 @@ namespace Gui
             _settingsInitialized = true;
         }
 
-
-        // Update is called once per frame
         private void Update()
         {
             if (_divisorCount > 0)
@@ -151,21 +149,12 @@ namespace Gui
 
             if (!_thisMaterial || _materialSettings == null) return;
 
-
-//            var temp = _thisMaterial.GetFloat(MetallicId);
-//            if (Mathf.Abs(temp - _materialSettings.Metallic.Anonymous) > 0.001f)
-//            {
-//                if (_materialSettings.Metallic.Changed) _thisMaterial.SetFloat(MetallicId, _materialSettings.Metallic);
-//                else _materialSettings.Metallic.Anonymous = temp;
-//            }
-
             _thisMaterial.SetFloat(MetallicId, _materialSettings.Metallic);
             _thisMaterial.SetFloat(NormalStrengthId, _materialSettings.NormalStrength);
             _thisMaterial.SetFloat(AoRemapMinId, _materialSettings.AoRemapMin);
             _thisMaterial.SetFloat(AoRemapMaxId, _materialSettings.AoRemapMax);
             _thisMaterial.SetFloat(SmoothnessRemapMinId, _materialSettings.SmoothnessRemapMin);
             _thisMaterial.SetFloat(SmoothnessRemapMaxId, _materialSettings.SmoothnessRemapMax);
-//            _thisMaterial.SetFloat(DisplacementOffsetId, _dispOffset);
             _thisMaterial.SetFloat(HeightAmplitudeId, _materialSettings.DisplacementAmplitude);
 
             _light.color = new Color(_materialSettings.LightR, _materialSettings.LightG, _materialSettings.LightB);

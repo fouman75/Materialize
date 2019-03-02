@@ -46,11 +46,11 @@
                 return o;
             }
 
-            fixed4 frag (v2f i) : SV_Target
+            float4 frag (v2f i) : SV_Target
             {
-                fixed4 metallic = tex2D(_MetallicTex, i.uv);
-                fixed4 smoothness = tex2D(_SmoothnessTex, i.uv);
-                fixed4 ao = tex2D(_AoTex, i.uv);
+                float4 metallic = tex2D(_MetallicTex, i.uv);
+                float4 smoothness = tex2D(_SmoothnessTex, i.uv);
+                float4 ao = tex2D(_AoTex, i.uv);
                 
                 float  metallicMean = float(metallic.r + metallic.g + metallic.b);
                 metallicMean = metallicMean / 3; 
@@ -61,7 +61,7 @@
                 float  aoMean = float(ao.r + ao.g + ao.b);
                 aoMean = aoMean / 3; 
 
-                return fixed4(metallicMean, aoMean, 0, smoothnessMean);
+                return float4(metallicMean, aoMean, 0, smoothnessMean);
             }
             ENDCG
         }

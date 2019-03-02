@@ -35,7 +35,7 @@ namespace General
                 PlayerPrefs.SetInt(TargetFrameRateKey, value);
                 //Dont change vSync for now
             }
-            get
+            private get
             {
                 var frameRate = DefaultFrameRate;
                 if (PlayerPrefs.HasKey(TargetFrameRateKey))

@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.03963014, g: 0.037270494, b: 0.032906674, a: 1}
+  m_IndirectSpecularColor: {r: 0.049719114, g: 0.046075467, b: 0.03808772, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -2901,7 +2901,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   volumeAnchorOverride: {fileID: 0}
-  antialiasing: 2
+  antialiasing: 1
   dithering: 1
   stopNaNs: 0
   physicalParameters:
