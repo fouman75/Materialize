@@ -16,20 +16,42 @@ namespace General
         public Light MainLight;
         public Vector2 GuiScale = new Vector2(1, 1);
         private const string LastPathKey = nameof(LastPathKey);
+        private const string TargetFrameRateKey = nameof(TargetFrameRateKey);
+        public const int DefaultFrameRate = 30;
         [HideInInspector] public string LastPath;
         private static readonly int GamaCorrectionId = Shader.PropertyToID("_GamaCorrection");
         public HDRenderPipeline RenderPipeline;
-        public Vector2 GuiReferenceSize = new Vector2(1440, 810);
+        public static Vector2 GuiReferenceSize = new Vector2(1440, 810);
         private int _windowId;
 
         public int GetWindowId => _windowId++;
+
+        public static int FrameRate
+        {
+            set
+            {
+                if (value == FrameRate) return;
+                Application.targetFrameRate = value;
+                PlayerPrefs.SetInt(TargetFrameRateKey, value);
+                //Dont change vSync for now
+            }
+            get
+            {
+                var frameRate = DefaultFrameRate;
+                if (PlayerPrefs.HasKey(TargetFrameRateKey))
+                {
+                    frameRate = PlayerPrefs.GetInt(TargetFrameRateKey);
+                }
+
+                return frameRate;
+            }
+        }
 
         //Nao remover, alguns shaders dependem disso
         private const float GamaCorrection = 1f;
 
         #region Settings
 
-        [Header("Settings")] public int TargetFps = 30;
         public Cubemap StartCubeMap;
 
         #endregion
@@ -81,7 +103,6 @@ namespace General
         private void Awake()
         {
             Instance = this;
-            Application.targetFrameRate = TargetFps;
             Shader.SetGlobalFloat(GamaCorrectionId, GamaCorrection);
             LastPath = PlayerPrefs.HasKey(LastPathKey) ? PlayerPrefs.GetString(LastPathKey) : null;
 
@@ -122,9 +143,9 @@ namespace General
 
         private void SlowUpdate()
         {
-            if (Application.targetFrameRate != TargetFps)
+            if (Application.targetFrameRate != FrameRate)
             {
-                Application.targetFrameRate = TargetFps;
+                FrameRate = FrameRate;
             }
 
             PlayerPrefs.SetString(LastPathKey, LastPath);

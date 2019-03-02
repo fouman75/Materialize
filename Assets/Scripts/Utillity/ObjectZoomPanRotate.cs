@@ -17,19 +17,24 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     private Vector2 _mousePos;
     private Vector3 _rotation;
-    public float Filter = 2f;
-    public bool AllowX = true;
 
+    public float Filter = 2f;
+
+    public bool AllowX = true;
     public bool AllowY = true;
 
     public bool InvertX;
     public bool InvertY;
     public bool InvertZoom;
+
     public KeyCode KeyToHoldToRotate = KeyCode.None;
     public KeyCode KeyToHoldToPan = KeyCode.None;
 
     public PointerEventData.InputButton RotateButton;
     public PointerEventData.InputButton PanButton;
+
+    public bool AllowHide = true;
+
     private Vector3 _lastRaycast;
     private Vector3 _targetDrag;
     private Quaternion _targetRotation;
@@ -83,7 +88,7 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
     public void OnBeginDrag(PointerEventData eventData)
     {
         _lastMousePos = eventData.position;
-        MainGui.Instance.SaveHideStateAndHideAndLock(this);
+        if (AllowHide) MainGui.Instance.SaveHideStateAndHideAndLock(this);
     }
 
 

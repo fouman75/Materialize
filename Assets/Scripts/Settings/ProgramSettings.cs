@@ -5,6 +5,8 @@ namespace Settings
     public class ProgramSettings
     {
         public ProgramEnums.FileFormat FileFormat;
+        public bool HideUiOnRotate;
+        public int FrameRate;
         public bool HDR;
         public bool NormalMapMaxStyle;
         public bool NormalMapMayaStyle;

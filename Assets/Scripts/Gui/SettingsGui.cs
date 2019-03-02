@@ -14,13 +14,18 @@ namespace Gui
     public class SettingsGui : MonoBehaviour, IHideable
     {
         private const string SettingsKey = "Settings";
-        public static SettingsGui Instance;
         private static readonly int FlipNormalY = Shader.PropertyToID("_FlipNormalY");
+
+        public static SettingsGui Instance;
+        public PostProcessGui PostProcessGui;
+        public ObjectZoomPanRotate ObjectHandler;
+        [HideInInspector] public ProgramSettings ProgramSettings = new ProgramSettings();
+
         private bool _windowOpen;
 
-        private Rect _windowRect = new Rect(Screen.width - 300, Screen.height - 320, 280, 600);
-        public PostProcessGui PostProcessGui;
-        [HideInInspector] public ProgramSettings ProgramSettings = new ProgramSettings();
+        private readonly Rect _windowRect = new Rect(ProgramManager.GuiReferenceSize.x - 300,
+            ProgramManager.GuiReferenceSize.y - 400, 280, 300);
+
         private bool _invalidSettings;
         private int _windowId;
 
@@ -35,6 +40,13 @@ namespace Gui
 
             LoadSettings();
             _windowId = ProgramManager.Instance.GetWindowId;
+        }
+
+        private void Update()
+        {
+            ObjectHandler.AllowHide = ProgramSettings.HideUiOnRotate;
+            ProgramManager.FrameRate = ProgramSettings.FrameRate;
+            TextureManager.Instance.Hdr = ProgramSettings.HDR;
         }
 
         public void LoadSettings()
@@ -61,6 +73,9 @@ namespace Gui
         private void InitializeSettings()
         {
             General.Logger.Log("Initializing Program Settings");
+            ProgramSettings.HideUiOnRotate = ObjectHandler.AllowHide;
+            ProgramSettings.FrameRate = ProgramManager.DefaultFrameRate;
+            ProgramSettings.HDR = TextureManager.Instance.Hdr;
             ProgramSettings.NormalMapMaxStyle = true;
             ProgramSettings.NormalMapMayaStyle = false;
             ProgramSettings.PostProcessEnabled = true;
@@ -128,16 +143,27 @@ namespace Gui
             mainGui.PropBlue = ProgramSettings.PropBlue;
 
             mainGui.SetFormat(ProgramSettings.FileFormat);
+
+            ObjectHandler.AllowHide = ProgramSettings.HideUiOnRotate;
+            ProgramManager.FrameRate = ProgramSettings.FrameRate;
+            TextureManager.Instance.Hdr = ProgramSettings.HDR;
         }
+
 
         private void DoMyWindow(int windowId)
         {
             const int offsetX = 10;
-            var offsetY = 30;
+            var offsetY = 20;
+
+            ProgramSettings.HideUiOnRotate = GUI.Toggle(new Rect(offsetX, offsetY, 150, 30),
+                ProgramSettings.HideUiOnRotate,
+                "Hide UI On Rotate");
+
+            offsetY += 30;
 
             GUI.Label(new Rect(offsetX, offsetY, 250, 30), "Normal Map Style");
 
-            offsetY += 30;
+            offsetY += 20;
 
             ProgramSettings.NormalMapMaxStyle =
                 GUI.Toggle(new Rect(offsetX, offsetY, 100, 30), ProgramSettings.NormalMapMaxStyle, " Max Style");
@@ -156,6 +182,31 @@ namespace Gui
                 " Enable Post Process By Default");
 
             offsetY += 30;
+            GUI.Label(new Rect(offsetX + 70, offsetY, 250, 30), "Limit Frame Rate");
+
+            offsetY += 30;
+
+            if (GUI.Button(new Rect(offsetX + 40, offsetY, 30, 30), "30"))
+            {
+                ProgramSettings.FrameRate = 30;
+            }
+
+            if (GUI.Button(new Rect(offsetX + 80, offsetY, 30, 30), "60"))
+            {
+                ProgramSettings.FrameRate = 60;
+            }
+
+            if (GUI.Button(new Rect(offsetX + 120, offsetY, 30, 30), "120"))
+            {
+                ProgramSettings.FrameRate = 120;
+            }
+
+            if (GUI.Button(new Rect(offsetX + 160, offsetY, 40, 30), "None"))
+            {
+                ProgramSettings.FrameRate = 600;
+            }
+
+            offsetY += 40;
 
             if (GUI.Button(new Rect(offsetX, offsetY, 260, 25), "Set Default Property Map Channels"))
             {
@@ -169,7 +220,7 @@ namespace Gui
             if (GUI.Button(new Rect(offsetX, offsetY, 260, 25), "Set Default File Format"))
                 ProgramSettings.FileFormat = ProgramEnums.FileFormat.Png;
 
-            offsetY += 40;
+            offsetY += 30;
 
             if (GUI.Button(new Rect(offsetX + 140, offsetY, 120, 30), "Save and Close"))
             {
@@ -177,14 +228,11 @@ namespace Gui
                 SetNormalMode();
                 _windowOpen = false;
             }
-
-            GUI.DragWindow();
         }
 
         private void OnGUI()
         {
             if (Hide) return;
-            _windowRect = new Rect(Screen.width - 300, Screen.height - 320, 280, 230);
             if (_windowOpen) MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Setting and Preferences");
         }
 
