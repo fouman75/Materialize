@@ -249,11 +249,11 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   mode:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   color:
-    m_OverrideState: 0
-    m_Value: {r: 0, g: 0, b: 0, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 0.15686275, g: 0.15686275, b: 0.15686275, a: 1}
     hdr: 0
     showAlpha: 0
     showEyeDropper: 1
@@ -272,7 +272,7 @@ MonoBehaviour:
     max: 1
   roundness:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.15
     min: 0
     max: 1
   rounded:
@@ -498,7 +498,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   maxShadowDistance:
     m_OverrideState: 1
-    m_Value: 50
+    m_Value: 40
     min: 0
   cascadeShadowSplitCount:
     m_OverrideState: 0
