@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 0cf1dab834d4ec34195b920ea7bbf9ec, type: 3}
   m_Name: HDRenderPipelineAsset
   m_EditorClassIdentifier: 
@@ -82,7 +81,7 @@ MonoBehaviour:
       m_LutSize: 32
       lutFormat: 48
     dynamicResolutionSettings:
-      enabled: 1
+      enabled: 0
       maxPercentage: 100
       minPercentage: 50
       dynResType: 0
@@ -94,8 +93,8 @@ MonoBehaviour:
   shaderVariantLogLevel: 0
   diffusionProfileSettings: {fileID: 0}
   diffusionProfileSettingsList:
-  - {fileID: 11400000, guid: f90ca74e589ea880eb1bd318e1f5eb47, type: 2}
-  - {fileID: 11400000, guid: fac333e713771cd5b8282b49486783d4, type: 2}
+  - {fileID: 11400000, guid: 79edffd7f583dba628536979e6e68fbd, type: 2}
+  - {fileID: 11400000, guid: 34f5d0d8ebe5dfa41a899ca985b974bb, type: 2}
   m_Version: 3
   m_ObsoleteFrameSettings:
     overrides: 0
