@@ -45,7 +45,7 @@ namespace Gui
         private void Update()
         {
             ObjectHandler.AllowHide = ProgramSettings.HideUiOnRotate;
-            ProgramManager.FrameRate = ProgramSettings.FrameRate;
+            ProgramManager.Instance.DesiredFrameRate = ProgramSettings.FrameRate;
             TextureManager.Instance.Hdr = ProgramSettings.HDR;
         }
 
@@ -143,10 +143,6 @@ namespace Gui
             mainGui.PropBlue = ProgramSettings.PropBlue;
 
             mainGui.SetFormat(ProgramSettings.FileFormat);
-
-            ObjectHandler.AllowHide = ProgramSettings.HideUiOnRotate;
-            ProgramManager.FrameRate = ProgramSettings.FrameRate;
-            TextureManager.Instance.Hdr = ProgramSettings.HDR;
         }
 
 
@@ -203,7 +199,7 @@ namespace Gui
 
             if (GUI.Button(new Rect(offsetX + 160, offsetY, 40, 30), "None"))
             {
-                ProgramSettings.FrameRate = 600;
+                ProgramSettings.FrameRate = -1;
             }
 
             offsetY += 40;

@@ -9,7 +9,7 @@ namespace Gui
 
     #endregion
 
-    public class MaterialGui : MonoBehaviour,IHideable
+    public class MaterialGui : MonoBehaviour, IHideable
     {
         private const int UpdateDivisor = 4;
         private int _divisorCount = UpdateDivisor;
@@ -126,6 +126,8 @@ namespace Gui
             _myColorTexture = TextureManager.Instance.GetStandardTexture(1, 1);
             _materialSettings.DisplacementAmplitude = _thisMaterial.GetFloat(HeightAmplitudeId);
             _materialSettings.NormalStrength = _thisMaterial.GetFloat(NormalStrengthId);
+            var center = _thisMaterial.GetFloat(HeightCenterId) / _materialSettings.DisplacementAmplitude;
+            _materialSettings.DisplacementCenter = center;
             _materialSettings.Metallic.Value = _thisMaterial.GetFloat(MetallicId);
             _materialSettings.SmoothnessRemapMin = _thisMaterial.GetFloat(SmoothnessRemapMinId);
             _materialSettings.SmoothnessRemapMax = _thisMaterial.GetFloat(SmoothnessRemapMaxId);
@@ -155,7 +157,6 @@ namespace Gui
             _thisMaterial.SetFloat(AoRemapMaxId, _materialSettings.AoRemapMax);
             _thisMaterial.SetFloat(SmoothnessRemapMinId, _materialSettings.SmoothnessRemapMin);
             _thisMaterial.SetFloat(SmoothnessRemapMaxId, _materialSettings.SmoothnessRemapMax);
-            _thisMaterial.SetFloat(HeightAmplitudeId, _materialSettings.DisplacementAmplitude);
 
             _light.color = new Color(_materialSettings.LightR, _materialSettings.LightG, _materialSettings.LightB);
             _light.intensity = _materialSettings.LightIntensity;
@@ -166,7 +167,8 @@ namespace Gui
             if (TestObjectSphere.activeSelf != _sphereShown) TestObjectSphere.SetActive(_sphereShown);
 
             _thisMaterial.SetFloat(HeightAmplitudeId, _materialSettings.DisplacementAmplitude);
-            _thisMaterial.SetFloat(HeightCenterId, _materialSettings.DisplacementAmplitude / 4f);
+            var center = _materialSettings.DisplacementCenter * _materialSettings.DisplacementAmplitude;
+            _thisMaterial.SetFloat(HeightCenterId, center);
             _thisMaterial.SetFloat(TessAmplitudeId, _materialSettings.DisplacementAmplitude * 100f);
 
 
@@ -313,7 +315,7 @@ namespace Gui
 
         private void OnGUI()
         {
-            if(Hide) return;
+            if (Hide) return;
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Full Material");
         }
 

@@ -6,8 +6,9 @@ namespace Gui
 {
     public class MaterialSettings
     {
-        public const float LightIntensityDefault = 10f;
-        [DefaultValue(1.0f)] public float DisplacementAmplitude;
+        private const float LightIntensityDefault = 10f;
+        public float DisplacementAmplitude;
+        public float DisplacementCenter;
 
         public float LightB;
 
@@ -31,10 +32,6 @@ namespace Gui
         public MaterialSettings()
         {
             var light = ProgramManager.Instance.MainLight;
-            Metallic.Value = 0.5f;
-            DisplacementAmplitude = 0.2f;
-            AoRemapMax = 1.0f;
-            SmoothnessRemapMax = 1.0f;
 
             var color = light != null ? light.color : new Color(1.0f, 1.0f, 1.0f);
 

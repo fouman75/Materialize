@@ -25,27 +25,7 @@ namespace General
         private int _windowId;
 
         public int GetWindowId => _windowId++;
-
-        public static int FrameRate
-        {
-            set
-            {
-                if (value == FrameRate) return;
-                Application.targetFrameRate = value;
-                PlayerPrefs.SetInt(TargetFrameRateKey, value);
-                //Dont change vSync for now
-            }
-            private get
-            {
-                var frameRate = DefaultFrameRate;
-                if (PlayerPrefs.HasKey(TargetFrameRateKey))
-                {
-                    frameRate = PlayerPrefs.GetInt(TargetFrameRateKey);
-                }
-
-                return frameRate;
-            }
-        }
+        public int DesiredFrameRate;
 
         //Nao remover, alguns shaders dependem disso
         private const float GamaCorrection = 1f;
@@ -143,12 +123,15 @@ namespace General
 
         private void SlowUpdate()
         {
-            if (Application.targetFrameRate != FrameRate)
+            Logger.Log("Target : " + Application.targetFrameRate);
+            Logger.Log("Desired FrameRate : " + DesiredFrameRate);
+            if (Application.targetFrameRate != DesiredFrameRate && DesiredFrameRate != 0)
             {
-                FrameRate = FrameRate;
+                Logger.Log("Setando FrameRate para " + DesiredFrameRate);
+                Application.targetFrameRate = DesiredFrameRate;
             }
 
-            PlayerPrefs.SetString(LastPathKey, LastPath);
+            if (LastPath != null) PlayerPrefs.SetString(LastPathKey, LastPath);
         }
 
         private void ActivateObjects()
