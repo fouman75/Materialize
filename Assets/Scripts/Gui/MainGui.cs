@@ -404,20 +404,21 @@ namespace Gui
 
         public void Fullscreen()
         {
-            return;
-            string text;
-            if (Screen.fullScreenMode == FullScreenMode.Windowed)
-            {
-                text = "Windowed";
-                SetScreen(ProgramEnums.ScreenMode.FullScreen);
-            }
-            else
-            {
-                text = "FullScreen";
-                SetScreen(ProgramEnums.ScreenMode.Windowed);
-            }
 
-            EventSystem.current.currentSelectedGameObject.GetComponentInChildren<TextMeshProUGUI>().text = text;
+            //Problema com a versao
+//            string text;
+//            if (Screen.fullScreenMode == FullScreenMode.Windowed)
+//            {
+//                text = "Windowed";
+//                SetScreen(ProgramEnums.ScreenMode.FullScreen);
+//            }
+//            else
+//            {
+//                text = "FullScreen";
+//                SetScreen(ProgramEnums.ScreenMode.Windowed);
+//            }
+//
+//            EventSystem.current.currentSelectedGameObject.GetComponentInChildren<TextMeshProUGUI>().text = text;
         }
 
         public void SetScreen(ProgramEnums.ScreenMode screenMode)

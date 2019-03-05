@@ -28,7 +28,7 @@ namespace General
         public int DesiredFrameRate;
 
         //Nao remover, alguns shaders dependem disso
-        private const float GamaCorrection = 1f;
+        private const float GamaCorrection = 2.2f;
 
         #region Settings
 
