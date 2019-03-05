@@ -12,6 +12,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using Logger = General.Logger;
 
 //using UnityEngine.Experimental.Rendering.HDPipeline;
 
@@ -174,8 +175,13 @@ namespace Gui
             foreach (var probe in probes)
             {
                 var isRealTime = probe.mode == ReflectionProbeMode.Realtime;
-                var needsRefresh = probe.refreshMode == ReflectionProbeRefreshMode.ViaScripting;
-                if (isRealTime && needsRefresh) probe.RequestRenderNextUpdate();
+                var hdProbe = probe.GetComponent<HDAdditionalReflectionData>();
+                var needsRefresh = hdProbe.realtimeMode == ProbeSettings.RealtimeMode.OnDemand;
+
+                if (!isRealTime || !needsRefresh) continue;
+
+                Logger.Log("Refreshing probe " + probe.name);
+                probe.RequestRenderNextUpdate();
             }
         }
 
