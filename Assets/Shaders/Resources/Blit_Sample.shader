@@ -57,11 +57,7 @@ Shader "Hidden/Blit_Sample" {
 	float _FinalBias;
 	
 	float _Slider;
-	
-	float _GamaCorrection;
-	
-	
-	
+		
 	#include "Photoshop.cginc"
 
 	struct v2f {
@@ -135,7 +131,7 @@ Shader "Hidden/Blit_Sample" {
 			finalHeight = sample2Mask;
 		}
 
-		return float4( saturate( pow( finalHeight.xxx, _GamaCorrection ) ), 1.0 );
+		return float4( saturate( finalHeight.xxx ), 1.0 );
 
 	}	
 	

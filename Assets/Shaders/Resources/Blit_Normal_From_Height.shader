@@ -12,8 +12,7 @@ Shader "Hidden/Blit_Normal_From_Height" {
 	
 	float _BlurScale;
 	float4 _ImageSize;
-	float _GamaCorrection;
-	
+
 	sampler2D _BlurTex0;
 	sampler2D _BlurTex1;
 	sampler2D _BlurTex2;

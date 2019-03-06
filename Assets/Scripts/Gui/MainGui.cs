@@ -165,25 +165,10 @@ namespace Gui
             hdrp.RequestSkyEnvironmentUpdate();
             General.Logger.Log("HDRI Sky Atualizado");
 
-            RenderProbe();
+            ProgramManager.RenderProbe();
         }
 
-        private static void RenderProbe()
-        {
-            var probes = FindObjectsOfType<ReflectionProbe>();
 
-            foreach (var probe in probes)
-            {
-                var isRealTime = probe.mode == ReflectionProbeMode.Realtime;
-                var hdProbe = probe.GetComponent<HDAdditionalReflectionData>();
-                var needsRefresh = hdProbe.realtimeMode == ProbeSettings.RealtimeMode.OnDemand;
-
-                if (!isRealTime || !needsRefresh) continue;
-
-                Logger.Log("Refreshing probe " + probe.name);
-                probe.RequestRenderNextUpdate();
-            }
-        }
 
         #endregion
 
@@ -394,7 +379,7 @@ namespace Gui
             HdriSky.hdriSky.value = CubeMaps[_selectedCubemap];
 
             ProgramManager.Instance.RenderPipeline.RequestSkyEnvironmentUpdate();
-            RenderProbe();
+            ProgramManager.RenderProbe();
         }
 
         public void Quit()

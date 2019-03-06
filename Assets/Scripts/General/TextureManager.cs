@@ -21,14 +21,13 @@ namespace General
         public Material FullMaterialInstance { get; private set; }
 
         private static readonly int DiffuseMapId = Shader.PropertyToID("_BaseColorMap");
-//        private static readonly int NormalMapId = Shader.PropertyToID("_NormalMap");
-        private static readonly int NormalMapId = Shader.PropertyToID("_NormalMapOS");
+        private static readonly int NormalMapId = Shader.PropertyToID("_NormalMap");
         private static readonly int MaskMapId = Shader.PropertyToID("_MaskMap");
         private static readonly int HeightMapId = Shader.PropertyToID("_HeightMap");
 
         private Texture2D _blackTexture;
         private Texture2D _packedNormal;
-
+        
         #region Map Variables
 
         public RenderTexture HdHeightMap;
@@ -201,12 +200,9 @@ namespace General
             {
                 // ReSharper disable once StringLiteralTypo
                 FullMaterialInstance.EnableKeyword("_NORMALMAP");
-//                var packMaterial = new Material(Shader.Find("Blit/Blit_PackNormal"));
-//                var tempRenderTexture = GetTempRenderTexture(NormalMap.width, NormalMap.height);
-//                Graphics.Blit(NormalMap, tempRenderTexture, packMaterial);
-//                GetTextureFromRender(tempRenderTexture, out _packedNormal);
-//                FullMaterialInstance.SetTexture(NormalMapId, _packedNormal);
-                FullMaterialInstance.SetTexture(NormalMapId, NormalMap);
+                PackNormal();
+
+                FullMaterialInstance.SetTexture(NormalMapId, _packedNormal);
             }
             else
             {
@@ -226,6 +222,15 @@ namespace General
 
             ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = FullMaterialInstance;
             ProgramManager.Instance.MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
+            ProgramManager.RenderProbe();
+        }
+
+        private void PackNormal()
+        {
+            var packMaterial = new Material(Shader.Find("Blit/Blit_PackNormal"));
+            var tempRenderTexture = GetTempRenderTexture(NormalMap.width, NormalMap.height);
+            Graphics.Blit(NormalMap, tempRenderTexture, packMaterial);
+            GetTextureFromRender(tempRenderTexture, out _packedNormal);
         }
 
         public Texture2D GetStandardTexture(int width, int height, bool linear = true)
@@ -242,7 +247,7 @@ namespace General
 
         public static Texture2D GetStandardHdrTexture(int width, int height, bool linear = true)
         {
-            var texture = new Texture2D(width, height, DefaultHdrTextureFormat, false, linear)
+            var texture = new Texture2D(width, height, DefaultHdrTextureFormat, true, linear)
             {
                 hideFlags = HideFlags.HideAndDontSave,
                 filterMode = FilterMode.Point
@@ -253,7 +258,7 @@ namespace General
 
         public static Texture2D GetStandardLdrTexture(int width, int height, bool linear = true)
         {
-            var texture = new Texture2D(width, height, DefaultLdrTextureFormat, false, linear)
+            var texture = new Texture2D(width, height, DefaultLdrTextureFormat, true, linear)
             {
                 hideFlags = HideFlags.HideAndDontSave,
                 filterMode = FilterMode.Point
@@ -288,7 +293,7 @@ namespace General
             RenderTexture.active = input;
             var texture = GetStandardTexture(input.width, input.height);
             texture.ReadPixels(new Rect(0, 0, input.width, input.height), 0, 0, false);
-            texture.Apply(false);
+            texture.Apply(true);
 
             switch (mapType)
             {

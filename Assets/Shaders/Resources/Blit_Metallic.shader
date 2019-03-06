@@ -32,8 +32,6 @@ Shader "Hidden/Blit_Metallic" {
 	float _FinalContrast;
 	float _FinalBias;
 	
-	float _GamaCorrection;
-	
 	#include "Photoshop.cginc"
 
 	struct v2f {

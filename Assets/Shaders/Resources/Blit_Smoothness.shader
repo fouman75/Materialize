@@ -60,9 +60,7 @@ Shader "Hidden/Blit_Smoothness" {
 	float _FinalBias;
 	
 	float _Slider;
-	
-	float _GamaCorrection;
-	
+
 	#include "Photoshop.cginc"
 
 	struct v2f {

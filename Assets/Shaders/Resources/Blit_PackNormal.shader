@@ -6,7 +6,7 @@
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" }
+        Tags { "RenderType"="Opaque" }
         LOD 100
 
         Pass
@@ -44,8 +44,8 @@
             float4 frag (v2f i) : SV_Target
             {
                 float4 mainTex = tex2D(_MainTex, i.uv);
-               
-                return float4(0, mainTex.r, 0, mainTex.g);
+              
+                return float4(1.0, mainTex.g, mainTex.g, mainTex.r);
             }
             ENDCG
         }

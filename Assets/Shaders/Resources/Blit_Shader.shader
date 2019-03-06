@@ -17,8 +17,7 @@ Shader "Hidden/Blit_Shader" {
 	
 	float _BlurScale;
 	float4 _ImageSize;
-	float _GamaCorrection;
-	
+
 	float4 _BlurDirection;
 	int _BlurSamples;
 	float _BlurSpread;

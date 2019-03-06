@@ -9,9 +9,7 @@ Shader "Hidden/Blit_FlipNormalY" {
 	#include "UnityCG.cginc"
 	
 	sampler2D _MainTex;
-	
-	float _GamaCorrection;
-	
+
 	#include "Photoshop.cginc"
 
 	struct v2f {

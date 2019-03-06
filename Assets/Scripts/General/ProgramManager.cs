@@ -19,16 +19,12 @@ namespace General
         private const string TargetFrameRateKey = nameof(TargetFrameRateKey);
         public const int DefaultFrameRate = 30;
         [HideInInspector] public string LastPath;
-        private static readonly int GamaCorrectionId = Shader.PropertyToID("_GamaCorrection");
         public HDRenderPipeline RenderPipeline;
         public static Vector2 GuiReferenceSize = new Vector2(1440, 810);
         private int _windowId;
 
         public int GetWindowId => _windowId++;
         public int DesiredFrameRate;
-
-        //Nao remover, alguns shaders dependem disso
-        private const float GamaCorrection = 2.2f;
 
         #region Settings
 
@@ -83,7 +79,6 @@ namespace General
         private void Awake()
         {
             Instance = this;
-            Shader.SetGlobalFloat(GamaCorrectionId, GamaCorrection);
             LastPath = PlayerPrefs.HasKey(LastPathKey) ? PlayerPrefs.GetString(LastPathKey) : null;
 
             PathChar = Path.DirectorySeparatorChar;
@@ -127,7 +122,7 @@ namespace General
             Logger.Log("Desired FrameRate : " + DesiredFrameRate);
             if (Application.targetFrameRate != DesiredFrameRate && DesiredFrameRate != 0)
             {
-                Logger.Log("Setando FrameRate para " + DesiredFrameRate);
+                Logger.Log("Setting FrameRate to " + DesiredFrameRate);
                 Application.targetFrameRate = DesiredFrameRate;
             }
 
@@ -156,6 +151,23 @@ namespace General
 
                 if (maxTries != 0) continue;
                 yield break;
+            }
+        }
+        
+        public static void RenderProbe()
+        {
+            var probes = FindObjectsOfType<ReflectionProbe>();
+
+            foreach (var probe in probes)
+            {
+                var isRealTime = probe.mode == ReflectionProbeMode.Realtime;
+                var hdProbe = probe.GetComponent<HDAdditionalReflectionData>();
+                var needsRefresh = hdProbe.realtimeMode == ProbeSettings.RealtimeMode.OnDemand;
+
+                if (!isRealTime || !needsRefresh) continue;
+
+                Logger.Log("Refreshing probe " + probe.name);
+                probe.RequestRenderNextUpdate();
             }
         }
     }

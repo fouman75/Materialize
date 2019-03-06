@@ -22,8 +22,6 @@ Shader "Hidden/Blit_Alignment" {
 	float _PerspectiveX;
 	float _PerspectiveY;
 	
-	float _GamaCorrection;
-
 	struct v2f {
 		float4 pos : SV_POSITION;
 		float2 uv : TEXCOORD0;

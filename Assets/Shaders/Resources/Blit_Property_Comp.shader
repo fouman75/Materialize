@@ -16,8 +16,6 @@ Shader "Hidden/Blit_Property_Comp" {
 	sampler2D _BlueTex;
 	sampler2D _BlueOverlayTex;
 	
-	float _GamaCorrection;
-	
 	#include "Photoshop.cginc"
 
 	struct v2f {

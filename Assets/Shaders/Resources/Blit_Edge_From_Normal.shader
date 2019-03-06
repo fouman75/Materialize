@@ -12,7 +12,6 @@ Shader "Hidden/Blit_Edge_From_Normal" {
 	
 	float _BlurScale;
 	float4 _ImageSize;
-	float _GamaCorrection;
 	
 	sampler2D _BlurTex1;
 	sampler2D _BlurTex2;

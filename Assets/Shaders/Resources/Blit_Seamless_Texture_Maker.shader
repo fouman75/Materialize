@@ -19,8 +19,6 @@ Shader "Hidden/Blit_Seamless_Texture_Maker" {
 	
 	float _SmoothBlend;
 	
-	float _GamaCorrection;
-	
 	float _IsSingleChannel;
 	float _IsHeight;
 	float _IsNormal;
