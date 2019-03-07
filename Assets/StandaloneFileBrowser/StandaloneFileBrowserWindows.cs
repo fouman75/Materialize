@@ -1,10 +1,11 @@
-#if UNITY_STANDALONE_WIN
+#if PLATFORM_STANDALONE_WIN
 
 using System;
 using System.IO;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Ookii.Dialogs;
+using StandaloneFileBrowser;
 
 namespace SFB {
     // For fullscreen support
