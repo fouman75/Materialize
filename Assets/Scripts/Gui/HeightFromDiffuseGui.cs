@@ -961,9 +961,9 @@ namespace Gui
 
                 Graphics.Blit(_blurMap0, _blurMap1);
 
-                if (i % 10 == 0) yield return new WaitForSeconds(0.05f);
+                if (i % 10 == 0) yield return new WaitForSeconds(0.01f);
             }
-
+            
             yield return new WaitForSeconds(0.1f);
 
             Busy = false;

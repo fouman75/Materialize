@@ -1,0 +1,111 @@
+﻿#include "Assets/Shaders/Include/Random.hlsl"
+
+#pragma kernel CSAo
+#pragma kernel CSCombineAo
+
+RWTexture2D<float4> Result;
+Texture2D<float4> ImageInput;
+Texture2D<float4> _HeightTex;
+Texture2D<float4> _BlendTex;;
+
+SamplerState LinearRepeatSample;
+
+float2 _ImageSize;
+bool _FlipNormalY;
+float _Progress;
+
+float _Spread;
+float _Depth;
+float _AOBlend;
+float _BlendAmount;
+
+float _FinalContrast;
+float _FinalBias;
+float _FinalGain;
+
+[numthreads(8,8,1)]
+void CSAo (uint3 id : SV_DispatchThreadID)
+{
+    float2 pixelSize = ( 1.0 / _ImageSize.xy );
+    float2 uv = id.xy / _ImageSize;
+
+    float3 flipTex = float3(1,1,1);
+    if( _FlipNormalY == 0 ){
+        flipTex = float3(1,-1,1);
+    }
+    
+    half3 mainTex = ImageInput[id.xy].xyz;
+    mainTex = normalize( mainTex * 2.0 - 1.0 );
+    mainTex *= flipTex;
+    
+    half mainHeight = _HeightTex[id.xy].x;
+    
+    int AOSamples = 50;
+    float startOffset = rand_1_05(uv);
+    int i;
+    
+    float2 AO = 0;
+    float AOAccum = 0;
+    
+    float2 direction;
+    direction.x = sin( _Progress * 6.28318530718 );
+    direction.y = cos( _Progress * 6.28318530718 );
+
+
+    float oneOverSpread = 1.0 / (float)_Spread;
+    
+    for( i = 1; i <= AOSamples; i++ ){
+        
+        float progress = float(i) / float(AOSamples);
+        float2 randomizer = rand_2_10( uv * i )  * progress * 0.1;
+        float2 uvOffset = direction * _Spread * progress + randomizer;
+        float2 trueDir = normalize( uvOffset );
+
+        float2 sampleUV = uv + pixelSize.xy * uvOffset;
+        half3 sampleTex = ImageInput.SampleLevel(LinearRepeatSample, sampleUV, 0).xyz;
+        half sampleHeight = _HeightTex.SampleLevel(LinearRepeatSample, sampleUV, 0).x;
+        
+        sampleTex = sampleTex * 2.0 - 1.0;
+        sampleTex *= flipTex;
+
+        // Normal Only, same as depth from normal
+        float sampleImportance = sqrt( 1.0 - progress );
+        AO.x += dot( sampleTex.xyz, trueDir ) * sampleImportance;
+        AOAccum += sampleImportance;
+
+        // Depth Only, pure geometric occlusion
+        float3 samplePos = float3( trueDir * _Spread * progress, ( sampleHeight.x - mainHeight.x ) * _Depth );
+        float sampleDist = saturate( length( samplePos ) * 0.1 );
+        float sampleAO = saturate( dot( float3(0,0,1), normalize( samplePos ) ) );
+        AO.y = max( sampleAO * sampleDist, AO.y );
+    }
+    
+    AO.x *= 1.0 / AOAccum;
+    float AOX1 = saturate( AO.x + 1.0 ); // Dark Parts
+    float AOX2 = saturate( AO.x + 0.5 ); // light parts
+    AO.x = pow( AOX1, 5.0 );
+    AO.x *= pow( AOX2, 0.2 );
+    AO.x = sqrt(AO.x);
+
+    AO.y = 1.0 - AO.y;
+    
+    half2 blendTex = _BlendTex[id.xy].xy;
+    
+    AO = lerp( blendTex.xy, AO, _BlendAmount );
+    
+    Result[id.xy] = float4( AO.xy, 1.0, 1.0 );
+}
+
+[numthreads(8,8,1)]
+void CSCombineAo (uint3 id : SV_DispatchThreadID)
+{
+    half2 mainTex = ImageInput[id.xy].xy;
+
+    half AO = lerp( mainTex.x, mainTex.y, _AOBlend);
+    
+    AO += _FinalBias;
+    AO = pow( AO, _FinalContrast );
+    AO = saturate( AO );
+    
+    Result[id.xy] = float4( AO.xxx, 1.0 );
+}
