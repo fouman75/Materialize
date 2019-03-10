@@ -16,23 +16,23 @@ MonoBehaviour:
     type: 2}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 69277821697821
+      data1: 68178310070045
       data2: 4539628424389459968
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
-      data1: 69277821697821
+      data1: 68178310070045
       data2: 4539628424389459968
   m_RenderingPathDefaultRealtimeReflectionFrameSettings:
     bitDatas:
-      data1: 69277821697823
+      data1: 63780263558943
       data2: 4539628424389459968
   m_RenderPipelineSettings:
     supportShadowMask: 1
-    supportSSR: 1
+    supportSSR: 0
     supportSSAO: 1
     supportSubsurfaceScattering: 1
     increaseSssSampleCount: 1
-    supportVolumetrics: 1
+    supportVolumetrics: 0
     increaseResolutionOfVolumetrics: 1
     supportLightLayers: 0
     supportDistortion: 1
@@ -55,21 +55,21 @@ MonoBehaviour:
       planarReflectionTextureSize: 1024
       reflectionProbeCacheSize: 8
       reflectionCubemapSize: 512
-      reflectionCacheCompressed: 1
+      reflectionCacheCompressed: 0
       planarReflectionCacheCompressed: 0
       skyReflectionSize: 512
       skyLightingOverrideLayerMask:
         serializedVersion: 2
         m_Bits: 0
       supportFabricConvolution: 0
-      maxDirectionalLightsOnScreen: 4
+      maxDirectionalLightsOnScreen: 16
       maxPunctualLightsOnScreen: 4
       maxAreaLightsOnScreen: 4
       maxEnvLightsOnScreen: 4
       maxDecalsOnScreen: 512
     hdShadowInitParams:
       shadowAtlasResolution: 4096
-      maxShadowRequests: 8
+      maxShadowRequests: 16
       shadowMapsDepthBits: 32
       useDynamicViewportRescale: 1
       shadowQuality: 1
@@ -80,9 +80,9 @@ MonoBehaviour:
       perChannelMask: 0
     postProcessSettings:
       m_LutSize: 32
-      lutFormat: 48
+      lutFormat: 52
     dynamicResolutionSettings:
-      enabled: 1
+      enabled: 0
       maxPercentage: 100
       minPercentage: 50
       dynResType: 0
@@ -90,8 +90,8 @@ MonoBehaviour:
       forceResolution: 0
       forcedPercentage: 100
   allowShaderVariantStripping: 1
-  enableSRPBatcher: 0
-  shaderVariantLogLevel: 1
+  enableSRPBatcher: 1
+  shaderVariantLogLevel: 2
   diffusionProfileSettings: {fileID: 0}
   diffusionProfileSettingsList:
   - {fileID: 11400000, guid: 34f5d0d8ebe5dfa41a899ca985b974bb, type: 2}

@@ -27,7 +27,7 @@ namespace General
 
         private Texture2D _blackTexture;
         private Texture2D _packedNormal;
-        
+
         #region Map Variables
 
         public RenderTexture HdHeightMap;
@@ -266,12 +266,15 @@ namespace General
             return texture;
         }
 
-        public RenderTexture GetTempRenderTexture(int width, int height, bool forceGama = false)
+        public RenderTexture GetTempRenderTexture(int width, int height, bool forceGama = false, bool mono = false)
         {
-            var rt = forceGama
-                ? RenderTexture.GetTemporary(width, height, 24, RenderTextureFormat, RenderTextureReadWrite.sRGB)
-                : RenderTexture.GetTemporary(width, height, 24, RenderTextureFormat, RenderTextureReadWrite.Linear);
+            var format = mono ? RenderTextureFormat.RFloat : RenderTextureFormat;
 
+            var rt = forceGama
+                ? RenderTexture.GetTemporary(width, height, 24, format, RenderTextureReadWrite.sRGB)
+                : RenderTexture.GetTemporary(width, height, 24, format, RenderTextureReadWrite.Linear);
+
+            rt.enableRandomWrite = true;
 
             rt.Create();
 

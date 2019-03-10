@@ -5,7 +5,6 @@ using System.Collections;
 using General;
 using Settings;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 #endregion
 
@@ -88,9 +87,7 @@ namespace Gui
         private RenderTexture _avgMap;
 
         private RenderTexture _avgTempMap;
-        private Material _blitMaterial;
         private Material _blitMaterialNormal;
-        private Material _blitMaterialSample;
         private RenderTexture _blurMap0;
         private RenderTexture _blurMap1;
         private RenderTexture _blurMap2;
@@ -132,9 +129,10 @@ namespace Gui
         public GameObject TestObject;
 
         public Material ThisMaterial;
-
-        public ComputeShader NormalToHeightComputeShader;
+        public ComputeShader HeightCompute;
+        public ComputeShader SampleCompute;
         private int _windowId;
+        private int _kernelBlur;
 
         private void Awake()
         {
@@ -194,18 +192,10 @@ namespace Gui
             _settingsInitialized = true;
         }
 
-        // Use this for initialization
         private void Start()
         {
             _camera = Camera.main;
-            Resources.UnloadUnusedAssets();
-
-            //TextureManager.Instance = MainGui.instance;
-
             TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
-            _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
-            _blitMaterialSample = new Material(Shader.Find("Hidden/Blit_Sample"));
-            _blitMaterialNormal = new Material(Shader.Find("Hidden/Blit_Height_From_Normal"));
 
             InitializeSettings();
 
@@ -224,6 +214,7 @@ namespace Gui
 
             SetMaterialValues();
 
+            _kernelBlur = HeightCompute.FindKernel("CSBlur");
             _windowId = ProgramManager.Instance.GetWindowId;
         }
 
@@ -266,6 +257,7 @@ namespace Gui
 
             if (TextureManager.Instance.DiffuseMap != null ||
                 TextureManager.Instance.DiffuseMapOriginal != null) return;
+
             _heightFromDiffuseSettings.UseAdjustedDiffuse = false;
             _heightFromDiffuseSettings.UseOriginalDiffuse = false;
             _heightFromDiffuseSettings.UseNormal = true;
@@ -413,6 +405,7 @@ namespace Gui
         // Update is called once per frame
         private void Update()
         {
+            if (Busy) return;
             if (_selectingColor) SelectColor();
 
             if (_heightFromDiffuseSettings.UseAdjustedDiffuse != _lastUseDiffuse)
@@ -777,7 +770,6 @@ namespace Gui
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _heightFromDiffuseSettings.FinalBias,
                 out _heightFromDiffuseSettings.FinalBias, -1.0f, 1.0f);
-            offsetY += 50;
             GUI.enabled = true;
 
             GUI.DragWindow();
@@ -826,28 +818,16 @@ namespace Gui
 
 //        General.Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
-            _tempBlurMap = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.RFloat,
-                RenderTextureReadWrite.Linear);
-            _blurMap0 = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.RFloat,
-                RenderTextureReadWrite.Linear);
-            _blurMap1 = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.RFloat,
-                RenderTextureReadWrite.Linear);
-            _blurMap2 = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.RFloat,
-                RenderTextureReadWrite.Linear);
-            _blurMap3 = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.RFloat,
-                RenderTextureReadWrite.Linear);
-            _blurMap4 = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.RFloat,
-                RenderTextureReadWrite.Linear);
-            _blurMap5 = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.RFloat,
-                RenderTextureReadWrite.Linear);
-            _blurMap6 = RenderTexture.GetTemporary(_imageSizeX, _imageSizeY, 0, RenderTextureFormat.RFloat,
-                RenderTextureReadWrite.Linear);
-
-            _avgMap = RenderTexture.GetTemporary(256, 256, 0, RenderTextureFormat.RFloat,
-                RenderTextureReadWrite.Linear);
-            _avgTempMap =
-                RenderTexture.GetTemporary(256, 256, 0, RenderTextureFormat.RFloat, RenderTextureReadWrite.Linear);
-
+            _tempBlurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
+            _blurMap0 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
+            _blurMap1 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
+            _blurMap2 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
+            _blurMap3 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
+            _blurMap4 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
+            _blurMap5 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
+            _blurMap6 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
+            _avgMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
+            _avgTempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
             SetMaterialValues();
         }
 
@@ -874,61 +854,59 @@ namespace Gui
 
         public IEnumerator Process()
         {
+            Busy = true;
+
+            var kernelCombine = HeightCompute.FindKernel("CSCombineHeight");
             General.Logger.Log("Processing HeightMap");
             Busy = true;
-            _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
+            HeightCompute.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
 
             RenderTexture.ReleaseTemporary(_tempHeightMap);
             _tempHeightMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
-            _blitMaterial.SetFloat(FinalContrast, _heightFromDiffuseSettings.FinalContrast);
-            _blitMaterial.SetFloat(FinalBias, _heightFromDiffuseSettings.FinalBias);
+            HeightCompute.SetFloat(FinalContrast, _heightFromDiffuseSettings.FinalContrast);
+            HeightCompute.SetFloat(FinalBias, _heightFromDiffuseSettings.FinalBias);
 
             var realGain = _heightFromDiffuseSettings.FinalGain;
             if (realGain < 0.0f)
                 realGain = Mathf.Abs(1.0f / (realGain - 1.0f));
             else
                 realGain = realGain + 1.0f;
-            _blitMaterial.SetFloat(FinalGain, realGain);
 
-            _blitMaterial.SetFloat(Blur0Weight, _heightFromDiffuseSettings.Blur0Weight);
-            _blitMaterial.SetFloat(Blur1Weight, _heightFromDiffuseSettings.Blur1Weight);
-            _blitMaterial.SetFloat(Blur2Weight, _heightFromDiffuseSettings.Blur2Weight);
-            _blitMaterial.SetFloat(Blur3Weight, _heightFromDiffuseSettings.Blur3Weight);
-            _blitMaterial.SetFloat(Blur4Weight, _heightFromDiffuseSettings.Blur4Weight);
-            _blitMaterial.SetFloat(Blur5Weight, _heightFromDiffuseSettings.Blur5Weight);
-            _blitMaterial.SetFloat(Blur6Weight, _heightFromDiffuseSettings.Blur6Weight);
+            HeightCompute.SetFloat(FinalGain, realGain);
 
-            _blitMaterial.SetFloat(Blur0Contrast, _heightFromDiffuseSettings.Blur0Contrast);
-            _blitMaterial.SetFloat(Blur1Contrast, _heightFromDiffuseSettings.Blur1Contrast);
-            _blitMaterial.SetFloat(Blur2Contrast, _heightFromDiffuseSettings.Blur2Contrast);
-            _blitMaterial.SetFloat(Blur3Contrast, _heightFromDiffuseSettings.Blur3Contrast);
-            _blitMaterial.SetFloat(Blur4Contrast, _heightFromDiffuseSettings.Blur4Contrast);
-            _blitMaterial.SetFloat(Blur5Contrast, _heightFromDiffuseSettings.Blur5Contrast);
-            _blitMaterial.SetFloat(Blur6Contrast, _heightFromDiffuseSettings.Blur6Contrast);
+            HeightCompute.SetFloat(Blur0Weight, _heightFromDiffuseSettings.Blur0Weight);
+            HeightCompute.SetFloat(Blur1Weight, _heightFromDiffuseSettings.Blur1Weight);
+            HeightCompute.SetFloat(Blur2Weight, _heightFromDiffuseSettings.Blur2Weight);
+            HeightCompute.SetFloat(Blur3Weight, _heightFromDiffuseSettings.Blur3Weight);
+            HeightCompute.SetFloat(Blur4Weight, _heightFromDiffuseSettings.Blur4Weight);
+            HeightCompute.SetFloat(Blur5Weight, _heightFromDiffuseSettings.Blur5Weight);
+            HeightCompute.SetFloat(Blur6Weight, _heightFromDiffuseSettings.Blur6Weight);
 
-            _blitMaterial.SetTexture(BlurTex0, _blurMap0);
-            _blitMaterial.SetTexture(BlurTex1, _blurMap1);
-            _blitMaterial.SetTexture(BlurTex2, _blurMap2);
-            _blitMaterial.SetTexture(BlurTex3, _blurMap3);
-            _blitMaterial.SetTexture(BlurTex4, _blurMap4);
-            _blitMaterial.SetTexture(BlurTex5, _blurMap5);
-            _blitMaterial.SetTexture(BlurTex6, _blurMap6);
+            HeightCompute.SetFloat(Blur0Contrast, _heightFromDiffuseSettings.Blur0Contrast);
+            HeightCompute.SetFloat(Blur1Contrast, _heightFromDiffuseSettings.Blur1Contrast);
+            HeightCompute.SetFloat(Blur2Contrast, _heightFromDiffuseSettings.Blur2Contrast);
+            HeightCompute.SetFloat(Blur3Contrast, _heightFromDiffuseSettings.Blur3Contrast);
+            HeightCompute.SetFloat(Blur4Contrast, _heightFromDiffuseSettings.Blur4Contrast);
+            HeightCompute.SetFloat(Blur5Contrast, _heightFromDiffuseSettings.Blur5Contrast);
+            HeightCompute.SetFloat(Blur6Contrast, _heightFromDiffuseSettings.Blur6Contrast);
 
-            _blitMaterial.SetTexture(AvgTex, _avgMap);
+            HeightCompute.SetTexture(kernelCombine, BlurTex0, _blurMap0);
+            HeightCompute.SetTexture(kernelCombine, BlurTex1, _blurMap1);
+            HeightCompute.SetTexture(kernelCombine, BlurTex2, _blurMap2);
+            HeightCompute.SetTexture(kernelCombine, BlurTex3, _blurMap3);
+            HeightCompute.SetTexture(kernelCombine, BlurTex4, _blurMap4);
+            HeightCompute.SetTexture(kernelCombine, BlurTex5, _blurMap5);
+            HeightCompute.SetTexture(kernelCombine, BlurTex6, _blurMap6);
 
-            if (_heightFromDiffuseSettings.UseNormal)
-            {
-                _blitMaterial.SetFloat(HeightFromNormal, 1.0f);
-            }
-            else
-            {
-                _blitMaterial.SetFloat(HeightFromNormal, 0.0f);
-            }
+            HeightCompute.SetTexture(kernelCombine, AvgTex, _avgMap);
+
+            HeightCompute.SetBool(HeightFromNormal, _heightFromDiffuseSettings.UseNormal);
 
             // Save low fidelity for texture 2d
-            Graphics.Blit(_blurMap0, _tempHeightMap, _blitMaterial, 2);
-
+            HeightCompute.SetTexture(kernelCombine, "ImageInput", _blurMap0);
+            HeightCompute.SetTexture(kernelCombine, "Result", _tempHeightMap);
+            HeightCompute.Dispatch(kernelCombine, _imageSizeX / 8, _imageSizeY / 8, 1);
 
             if (TextureManager.Instance.HeightMap) Destroy(TextureManager.Instance.HeightMap);
 
@@ -943,7 +921,9 @@ namespace Gui
 
             TextureManager.Instance.HdHeightMap =
                 TextureManager.Instance.GetTempRenderTexture(_tempHeightMap.width, _tempHeightMap.width);
-            Graphics.Blit(_blurMap0, TextureManager.Instance.HdHeightMap, _blitMaterial, 2);
+            HeightCompute.SetTexture(kernelCombine, "ImageInput", _blurMap0);
+            HeightCompute.SetTexture(kernelCombine, "Result", TextureManager.Instance.HdHeightMap);
+            HeightCompute.Dispatch(kernelCombine, _imageSizeX / 8, _imageSizeY / 8, 1);
 
             RenderTexture.ReleaseTemporary(_tempHeightMap);
 
@@ -955,141 +935,135 @@ namespace Gui
         private IEnumerator ProcessNormal()
         {
             Busy = true;
+            var kernelNormal = HeightCompute.FindKernel("CSHeightFromNormal");
 
             General.Logger.Log("Processing Normal");
 
-            _blitMaterialNormal.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
-            _blitMaterialNormal.SetFloat(Spread, _heightFromDiffuseSettings.Spread);
-            _blitMaterialNormal.SetFloat(SpreadBoost, _heightFromDiffuseSettings.SpreadBoost);
-            _blitMaterialNormal.SetFloat(Samples, (int) _heightFromDiffuseSettings.Spread);
-            _blitMaterialNormal.SetTexture(BlendTex, _blurMap1);
+            HeightCompute.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
+            HeightCompute.SetFloat(Spread, _heightFromDiffuseSettings.Spread);
+            HeightCompute.SetFloat(SpreadBoost, _heightFromDiffuseSettings.SpreadBoost);
+            HeightCompute.SetInt(Samples, (int) _heightFromDiffuseSettings.Spread);
+            HeightCompute.SetTexture(kernelNormal, BlendTex, _blurMap1);
+            HeightCompute.SetTexture(kernelNormal, "ImageInput", TextureManager.Instance.NormalMap);
+            HeightCompute.SetTexture(kernelNormal, "Result", _blurMap0);
+
+            ThisMaterial.SetFloat(IsNormal, 1.0f);
+            ThisMaterial.SetTexture(BlurTex0, _blurMap0);
+            ThisMaterial.SetTexture(BlurTex1, _blurMap1);
+            ThisMaterial.SetTexture(MainTex, TextureManager.Instance.NormalMap);
 
             for (var i = 1; i < 100; i++)
             {
-                _blitMaterialNormal.SetFloat(BlendAmount, 1.0f / i);
-                _blitMaterialNormal.SetFloat(Progress, i / 100.0f);
-
-                Graphics.Blit(TextureManager.Instance.NormalMap, _blurMap0, _blitMaterialNormal, 0);
+                HeightCompute.SetFloat(BlendAmount, 1.0f / i);
+                HeightCompute.SetFloat(Progress, i / 100.0f);
+                HeightCompute.Dispatch(kernelNormal, _imageSizeX / 8, _imageSizeY / 8, 1);
 
                 Graphics.Blit(_blurMap0, _blurMap1);
-                if (i % 10 == 0) yield return null;
+
+                if (i % 10 == 0) yield return new WaitForSeconds(0.05f);
             }
+
+            yield return new WaitForSeconds(0.1f);
 
             Busy = false;
         }
 
         public IEnumerator ProcessDiffuse()
         {
+            var kernelSample = SampleCompute.FindKernel("CSSample");
+
             Busy = true;
 
             ThisMaterial.SetFloat(IsNormal, 0.0f);
 
-            _blitMaterialSample.SetInt(IsolateSample1, _heightFromDiffuseSettings.IsolateSample1 ? 1 : 0);
-            _blitMaterialSample.SetInt(UseSample1, _heightFromDiffuseSettings.UseSample1 ? 1 : 0);
-            _blitMaterialSample.SetColor(SampleColor1, _heightFromDiffuseSettings.SampleColor1);
-            _blitMaterialSample.SetVector(SampleUv1,
+            SampleCompute.SetInt(IsolateSample1, _heightFromDiffuseSettings.IsolateSample1 ? 1 : 0);
+            SampleCompute.SetInt(UseSample1, _heightFromDiffuseSettings.UseSample1 ? 1 : 0);
+            SampleCompute.SetVector(SampleColor1, _heightFromDiffuseSettings.SampleColor1);
+            SampleCompute.SetVector(SampleUv1,
                 new Vector4(_heightFromDiffuseSettings.SampleUv1.x, _heightFromDiffuseSettings.SampleUv1.y, 0, 0));
-            _blitMaterialSample.SetFloat(HueWeight1, _heightFromDiffuseSettings.HueWeight1);
-            _blitMaterialSample.SetFloat(SatWeight1, _heightFromDiffuseSettings.SatWeight1);
-            _blitMaterialSample.SetFloat(LumWeight1, _heightFromDiffuseSettings.LumWeight1);
-            _blitMaterialSample.SetFloat(MaskLow1, _heightFromDiffuseSettings.MaskLow1);
-            _blitMaterialSample.SetFloat(MaskHigh1, _heightFromDiffuseSettings.MaskHigh1);
-            _blitMaterialSample.SetFloat(Sample1Height, _heightFromDiffuseSettings.Sample1Height);
+            SampleCompute.SetFloat(HueWeight1, _heightFromDiffuseSettings.HueWeight1);
+            SampleCompute.SetFloat(SatWeight1, _heightFromDiffuseSettings.SatWeight1);
+            SampleCompute.SetFloat(LumWeight1, _heightFromDiffuseSettings.LumWeight1);
+            SampleCompute.SetFloat(MaskLow1, _heightFromDiffuseSettings.MaskLow1);
+            SampleCompute.SetFloat(MaskHigh1, _heightFromDiffuseSettings.MaskHigh1);
+            SampleCompute.SetFloat(Sample1Height, _heightFromDiffuseSettings.Sample1Height);
 
-            _blitMaterialSample.SetInt(IsolateSample2, _heightFromDiffuseSettings.IsolateSample2 ? 1 : 0);
-            _blitMaterialSample.SetInt(UseSample2, _heightFromDiffuseSettings.UseSample2 ? 1 : 0);
-            _blitMaterialSample.SetColor(SampleColor2, _heightFromDiffuseSettings.SampleColor2);
-            _blitMaterialSample.SetVector(SampleUv2,
+            SampleCompute.SetInt(IsolateSample2, _heightFromDiffuseSettings.IsolateSample2 ? 1 : 0);
+            SampleCompute.SetInt(UseSample2, _heightFromDiffuseSettings.UseSample2 ? 1 : 0);
+            SampleCompute.SetVector(SampleColor2, _heightFromDiffuseSettings.SampleColor2);
+            SampleCompute.SetVector(SampleUv2,
                 new Vector4(_heightFromDiffuseSettings.SampleUv2.x, _heightFromDiffuseSettings.SampleUv2.y, 0, 0));
-            _blitMaterialSample.SetFloat(HueWeight2, _heightFromDiffuseSettings.HueWeight2);
-            _blitMaterialSample.SetFloat(SatWeight2, _heightFromDiffuseSettings.SatWeight2);
-            _blitMaterialSample.SetFloat(LumWeight2, _heightFromDiffuseSettings.LumWeight2);
-            _blitMaterialSample.SetFloat(MaskLow2, _heightFromDiffuseSettings.MaskLow2);
-            _blitMaterialSample.SetFloat(MaskHigh2, _heightFromDiffuseSettings.MaskHigh2);
-            _blitMaterialSample.SetFloat(Sample2Height, _heightFromDiffuseSettings.Sample2Height);
+            SampleCompute.SetFloat(HueWeight2, _heightFromDiffuseSettings.HueWeight2);
+            SampleCompute.SetFloat(SatWeight2, _heightFromDiffuseSettings.SatWeight2);
+            SampleCompute.SetFloat(LumWeight2, _heightFromDiffuseSettings.LumWeight2);
+            SampleCompute.SetFloat(MaskLow2, _heightFromDiffuseSettings.MaskLow2);
+            SampleCompute.SetFloat(MaskHigh2, _heightFromDiffuseSettings.MaskHigh2);
+            SampleCompute.SetFloat(Sample2Height, _heightFromDiffuseSettings.Sample2Height);
 
             if (_heightFromDiffuseSettings.UseSample1 == false && _heightFromDiffuseSettings.UseSample2 == false)
-                _blitMaterialSample.SetFloat(SampleBlend, 0.0f);
+                SampleCompute.SetFloat(SampleBlend, 0.0f);
             else
-                _blitMaterialSample.SetFloat(SampleBlend, _heightFromDiffuseSettings.SampleBlend);
+                SampleCompute.SetFloat(SampleBlend, _heightFromDiffuseSettings.SampleBlend);
 
-            _blitMaterialSample.SetFloat(FinalContrast, _heightFromDiffuseSettings.FinalContrast);
-            _blitMaterialSample.SetFloat(FinalBias, _heightFromDiffuseSettings.FinalBias);
+            SampleCompute.SetFloat(FinalContrast, _heightFromDiffuseSettings.FinalContrast);
+            SampleCompute.SetFloat(FinalBias, _heightFromDiffuseSettings.FinalBias);
 
-            Graphics.Blit(
-                _heightFromDiffuseSettings.UseOriginalDiffuse
-                    ? TextureManager.Instance.DiffuseMapOriginal
-                    : TextureManager.Instance.DiffuseMap,
-                _blurMap0, _blitMaterialSample, 0);
+            var source = _heightFromDiffuseSettings.UseOriginalDiffuse
+                ? TextureManager.Instance.DiffuseMapOriginal
+                : TextureManager.Instance.DiffuseMap;
 
-            _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
-            _blitMaterial.SetFloat(BlurContrast, 1.0f);
+            SampleCompute.SetTexture(kernelSample, "ImageInput", source);
+            SampleCompute.SetTexture(kernelSample, "Result", _blurMap0);
+            SampleCompute.Dispatch(kernelSample, _imageSizeX / 8, _imageSizeY / 8, 1);
 
-            var extraSpread = (_blurMap0.width + _blurMap0.height) * 0.5f / 1024.0f;
+            HeightCompute.SetVector(ImageSize, new Vector2(_imageSizeX, _imageSizeY));
+//            HeightCompute.SetInt("_Desaturate", 1);
+            HeightCompute.SetFloat(BlurContrast, 1.0f);
+
+            var extraSpread = (_blurMap0.width + _blurMap0.height) * (0.5f / 1024.0f);
             var spread = 1.0f;
 
+            HeightCompute.SetInt(BlurSamples, 4);
+
             // Blur the image 1
-            _blitMaterial.SetInt(BlurSamples, 4);
-            _blitMaterial.SetFloat(BlurSpread, spread);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            Graphics.Blit(_blurMap0, _tempBlurMap, _blitMaterial, 1);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            Graphics.Blit(_tempBlurMap, _blurMap1, _blitMaterial, 1);
+            BlurImage(spread, _blurMap0, _blurMap1);
 
             spread += extraSpread;
 
             // Blur the image 2
-            _blitMaterial.SetFloat(BlurSpread, spread);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            Graphics.Blit(_blurMap1, _tempBlurMap, _blitMaterial, 1);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            Graphics.Blit(_tempBlurMap, _blurMap2, _blitMaterial, 1);
+            BlurImage(spread, _blurMap1, _blurMap2);
 
             spread += 2 * extraSpread;
 
             // Blur the image 3
-            _blitMaterial.SetFloat(BlurSpread, spread);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            Graphics.Blit(_blurMap2, _tempBlurMap, _blitMaterial, 1);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            Graphics.Blit(_tempBlurMap, _blurMap3, _blitMaterial, 1);
+            BlurImage(spread, _blurMap2, _blurMap3);
 
             spread += 4 * extraSpread;
 
             // Blur the image 4
-            _blitMaterial.SetFloat(BlurSpread, spread);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            Graphics.Blit(_blurMap3, _tempBlurMap, _blitMaterial, 1);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            Graphics.Blit(_tempBlurMap, _blurMap4, _blitMaterial, 1);
+            BlurImage(spread, _blurMap3, _blurMap4);
 
             spread += 8 * extraSpread;
 
             // Blur the image 5
-            _blitMaterial.SetFloat(BlurSpread, spread);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            Graphics.Blit(_blurMap4, _tempBlurMap, _blitMaterial, 1);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            Graphics.Blit(_tempBlurMap, _blurMap5, _blitMaterial, 1);
+            BlurImage(spread, _blurMap4, _blurMap5);
 
             spread += 16 * extraSpread;
 
             // Blur the image 6
-            _blitMaterial.SetFloat(BlurSpread, spread);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            Graphics.Blit(_blurMap5, _tempBlurMap, _blitMaterial, 1);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            Graphics.Blit(_tempBlurMap, _blurMap6, _blitMaterial, 1);
-
+            BlurImage(spread, _blurMap5, _blurMap6);
 
             // Average Color
-            _blitMaterial.SetInt(BlurSamples, 32);
-            _blitMaterial.SetFloat(BlurSpread, 64.0f * extraSpread);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            Graphics.Blit(_blurMap6, _avgTempMap, _blitMaterial, 1);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            Graphics.Blit(_avgTempMap, _avgMap, _blitMaterial, 1);
-
+            HeightCompute.SetInt(BlurSamples, 32);
+            HeightCompute.SetFloat(BlurSpread, 64.0f * extraSpread);
+            HeightCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
+            HeightCompute.SetTexture(_kernelBlur, "ImageInput", _blurMap6);
+            HeightCompute.SetTexture(_kernelBlur, "Result", _avgTempMap);
+            HeightCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
+            HeightCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
+            HeightCompute.SetTexture(_kernelBlur, "ImageInput", _avgTempMap);
+            HeightCompute.SetTexture(_kernelBlur, "Result", _avgMap);
+            HeightCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
 
             ThisMaterial.SetTexture(MainTex,
                 _heightFromDiffuseSettings.UseOriginalDiffuse
@@ -1105,9 +1079,22 @@ namespace Gui
             ThisMaterial.SetTexture(BlurTex6, _blurMap6);
             ThisMaterial.SetTexture(AvgTex, _avgMap);
 
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.1f);
 
             Busy = false;
+        }
+
+        private void BlurImage(float spread, Texture source, Texture dest)
+        {
+            HeightCompute.SetFloat(BlurSpread, spread);
+            HeightCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
+            HeightCompute.SetTexture(_kernelBlur, "ImageInput", source);
+            HeightCompute.SetTexture(_kernelBlur, "Result", _tempBlurMap);
+            HeightCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
+            HeightCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
+            HeightCompute.SetTexture(_kernelBlur, "ImageInput", _tempBlurMap);
+            HeightCompute.SetTexture(_kernelBlur, "Result", dest);
+            HeightCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
         }
 
         public bool Hide { get; set; }
