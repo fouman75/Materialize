@@ -131,6 +131,7 @@ namespace Gui
         public Material ThisMaterial;
         public ComputeShader HeightCompute;
         public ComputeShader SampleCompute;
+        public ComputeShader BlurCompute;
         private int _windowId;
         private int _kernelBlur;
 
@@ -214,7 +215,7 @@ namespace Gui
 
             SetMaterialValues();
 
-            _kernelBlur = HeightCompute.FindKernel("CSBlur");
+            _kernelBlur = BlurCompute.FindKernel("CSBlur");
             _windowId = ProgramManager.Instance.GetWindowId;
         }
 
@@ -1016,14 +1017,14 @@ namespace Gui
             SampleCompute.SetTexture(kernelSample, "Result", _blurMap0);
             SampleCompute.Dispatch(kernelSample, _imageSizeX / 8, _imageSizeY / 8, 1);
 
-            HeightCompute.SetVector(ImageSize, new Vector2(_imageSizeX, _imageSizeY));
-//            HeightCompute.SetInt("_Desaturate", 1);
-            HeightCompute.SetFloat(BlurContrast, 1.0f);
+            BlurCompute.SetVector(ImageSize, new Vector2(_imageSizeX, _imageSizeY));
+//            BlurCompute.SetInt("_Desaturate", 1);
+            BlurCompute.SetFloat(BlurContrast, 1.0f);
 
             var extraSpread = (_blurMap0.width + _blurMap0.height) * (0.5f / 1024.0f);
             var spread = 1.0f;
 
-            HeightCompute.SetInt(BlurSamples, 4);
+            BlurCompute.SetInt(BlurSamples, 4);
 
             // Blur the image 1
             BlurImage(spread, _blurMap0, _blurMap1);
@@ -1054,16 +1055,16 @@ namespace Gui
             BlurImage(spread, _blurMap5, _blurMap6);
 
             // Average Color
-            HeightCompute.SetInt(BlurSamples, 32);
-            HeightCompute.SetFloat(BlurSpread, 64.0f * extraSpread);
-            HeightCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            HeightCompute.SetTexture(_kernelBlur, "ImageInput", _blurMap6);
-            HeightCompute.SetTexture(_kernelBlur, "Result", _avgTempMap);
-            HeightCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
-            HeightCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            HeightCompute.SetTexture(_kernelBlur, "ImageInput", _avgTempMap);
-            HeightCompute.SetTexture(_kernelBlur, "Result", _avgMap);
-            HeightCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
+            BlurCompute.SetInt(BlurSamples, 32);
+            BlurCompute.SetFloat(BlurSpread, 64.0f * extraSpread);
+            BlurCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
+            BlurCompute.SetTexture(_kernelBlur, "ImageInput", _blurMap6);
+            BlurCompute.SetTexture(_kernelBlur, "Result", _avgTempMap);
+            BlurCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
+            BlurCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
+            BlurCompute.SetTexture(_kernelBlur, "ImageInput", _avgTempMap);
+            BlurCompute.SetTexture(_kernelBlur, "Result", _avgMap);
+            BlurCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
 
             ThisMaterial.SetTexture(MainTex,
                 _heightFromDiffuseSettings.UseOriginalDiffuse
@@ -1086,15 +1087,15 @@ namespace Gui
 
         private void BlurImage(float spread, Texture source, Texture dest)
         {
-            HeightCompute.SetFloat(BlurSpread, spread);
-            HeightCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            HeightCompute.SetTexture(_kernelBlur, "ImageInput", source);
-            HeightCompute.SetTexture(_kernelBlur, "Result", _tempBlurMap);
-            HeightCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
-            HeightCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            HeightCompute.SetTexture(_kernelBlur, "ImageInput", _tempBlurMap);
-            HeightCompute.SetTexture(_kernelBlur, "Result", dest);
-            HeightCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
+            BlurCompute.SetFloat(BlurSpread, spread);
+            BlurCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
+            BlurCompute.SetTexture(_kernelBlur, "ImageInput", source);
+            BlurCompute.SetTexture(_kernelBlur, "Result", _tempBlurMap);
+            BlurCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
+            BlurCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
+            BlurCompute.SetTexture(_kernelBlur, "ImageInput", _tempBlurMap);
+            BlurCompute.SetTexture(_kernelBlur, "Result", dest);
+            BlurCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
         }
 
         public bool Hide { get; set; }

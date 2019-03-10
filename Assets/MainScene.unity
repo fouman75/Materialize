@@ -5605,6 +5605,7 @@ MonoBehaviour:
   ThisMaterial: {fileID: 2100000, guid: b737aed4cdca0074482a1475d22763a2, type: 2}
   HeightCompute: {fileID: 7200000, guid: 17f086950c0da403f87512844428f028, type: 3}
   SampleCompute: {fileID: 7200000, guid: d8911c43e0f28fafda7ec493e8d14825, type: 3}
+  BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
 --- !u!4 &1922002223
 Transform:
   m_ObjectHideFlags: 0
@@ -5653,6 +5654,8 @@ MonoBehaviour:
   MainLight: {fileID: 1585571158}
   TestObject: {fileID: 1463534583}
   ThisMaterial: {fileID: 2100000, guid: 4678d9f7beec7d04e824e08435395770, type: 2}
+  NormalCompute: {fileID: 7200000, guid: 054c3774b078c2fad8f520cb6674d9d0, type: 3}
+  BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
 --- !u!4 &1970709860
 Transform:
   m_ObjectHideFlags: 0
@@ -6551,6 +6554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hdr: 1
+  FlipNormalY: 0
   RenderTextureFormat: 0
   TextureInClipboard: 0
   FullMaterial: {fileID: 2100000, guid: 85f53cbecf1be3b439a8c31604ce77af, type: 2}

@@ -223,7 +223,7 @@ public class CommandListExecutor : MonoBehaviour
                         break;
                     }
                     case CommandType.FlipNormalMapY:
-                        TextureManager.Instance.FlipNormalY();
+                        TextureManager.Instance.FlipNormalYCallback();
                         break;
                     case CommandType.FileFormat:
                         MainGui.Instance.SetFormat(thisCommand.Extension);

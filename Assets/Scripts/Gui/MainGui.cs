@@ -217,7 +217,7 @@ namespace Gui
 
             if (GUI.Button(new Rect(offsetXm + 10, offsetY + 145, 100, 25), "Flip Normal Y"))
             {
-                TextureManager.Instance.FlipNormalY();
+                TextureManager.Instance.FlipNormalYCallback();
             }
 
             GUI.enabled = true;

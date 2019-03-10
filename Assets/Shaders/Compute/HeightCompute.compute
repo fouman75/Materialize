@@ -1,7 +1,6 @@
 ﻿#include "Assets/Shaders/Include/Color.hlsl"
 #include "Assets/Shaders/Include/Random.hlsl"
 
-#pragma kernel CSBlur
 #pragma kernel CSCombineHeight
 #pragma kernel CSHeightFromNormal
 
@@ -21,7 +20,6 @@ Texture2D<float4> _BlurTex6;
 SamplerState LinearRepeatSample;
 
 float _Contrast;
-float _BlurContrast;
 
 float _Blur0Weight;
 float _Blur0Contrast;
@@ -44,9 +42,6 @@ float _Blur5Contrast;
 float _Blur6Weight;
 float _Blur6Contrast;
 
-float4 _BlurDirection;
-int _BlurSamples;
-float _BlurSpread;
 float _Spread;
 float _SpreadBoost;
 float _BlendAmount;
@@ -59,37 +54,9 @@ float _FinalContrast;
 float _FinalBias;
 float _FinalGain;
 
-int _Desaturate;
 float2 _ImageSize;
 
 bool _HeightFromNormal;
-
-[numthreads(8,8,1)]
-void CSBlur (uint3 id : SV_DispatchThreadID)
-{
-    float2 pixelSize = ( 1.0 / _ImageSize.xy );
-
-    int totalSamples = _BlurSamples * 2;
-    int i;
-    half4 mainTex = float4(0,0,0,0);
-    for( i = -_BlurSamples; i <= _BlurSamples; i++ ){
-
-        float weight = cos( ( float( i ) / float( totalSamples ) ) * 6.28318530718 ) * 0.5 + 0.5;
-        float2 uv = id.xy / _ImageSize;
-        half4 sampleTex = ImageInput.SampleLevel(LinearRepeatSample, uv + pixelSize.xy * _BlurDirection.xy * i * _BlurSpread, 0);
-        if( _Desaturate > 0 ){
-            sampleTex.xyz = sampleTex.x * 0.3 + sampleTex.y * 0.5 + sampleTex.z * 0.2;
-        }
-        sampleTex = half4( sampleTex.xyz * weight, weight );
-        mainTex += sampleTex;
-    }
-    
-    mainTex.xyz *= 1.0 / mainTex.w;
-    //mainTex.xyz = FastSRGBToLinear(mainTex.xyz);
-    mainTex.xyz = saturate( ( ( mainTex.xyz - 0.5 ) * _BlurContrast ) + 0.5 );
-
-    Result[id.xy] = float4(mainTex.xyz, 1.0);
-}
 
 [numthreads(8,8,1)]
 void CSCombineHeight (uint3 id : SV_DispatchThreadID)

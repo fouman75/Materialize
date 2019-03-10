@@ -10,6 +10,7 @@ namespace General
     {
         public static TextureManager Instance;
         public bool Hdr;
+        public bool FlipNormalY;
         public const TextureFormat DefaultHdrTextureFormat = TextureFormat.RGBAHalf;
         public const TextureFormat DefaultLdrTextureFormat = TextureFormat.RGBA32;
         public RenderTextureFormat RenderTextureFormat;
@@ -466,9 +467,10 @@ namespace General
             SetFullMaterial();
         }
 
-        public void FlipNormalY()
+        public void FlipNormalYCallback()
         {
             NormalMap = TextureProcessing.FlipNormalMapY(NormalMap);
+            FlipNormalY = !FlipNormalY;
         }
 
         public void SaveMap(ProgramEnums.MapType mapType)
