@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.049081787, g: 0.04534054, b: 0.03825843, a: 1}
+  m_IndirectSpecularColor: {r: 0.03963014, g: 0.037270494, b: 0.032906674, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -2503,6 +2503,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1132468366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1132468368}
+  - component: {fileID: 1132468367}
+  m_Layer: 0
+  m_Name: GuiMaker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1132468367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132468366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de68157bb35b874ca9b7e620a01ab8a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanvasPrefab: {fileID: 2135110651006445557, guid: 61312bcb7ab62fa0786a99bdd9c60c18,
+    type: 3}
+  GuiPrefabs:
+    SliderPrefab: {fileID: 2163184492170941334, guid: 5b696b6c374e99937a6dc9b1ccd1fdef,
+      type: 3}
+    PanelPrefab: {fileID: 3144218374860707021, guid: 4bdbaf7b41d86564194af8872215a437,
+      type: 3}
+    TitlePrefab: {fileID: 8919625483269269812, guid: 1a763e576236e46049f48a46962b976c,
+      type: 3}
+--- !u!4 &1132468368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132468366}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1136538184
 GameObject:
@@ -5551,7 +5603,8 @@ MonoBehaviour:
   Busy: 0
   TestObject: {fileID: 1463534583}
   ThisMaterial: {fileID: 2100000, guid: b737aed4cdca0074482a1475d22763a2, type: 2}
-  NormalToHeightComputeShader: {fileID: 0}
+  HeightCompute: {fileID: 7200000, guid: 17f086950c0da403f87512844428f028, type: 3}
+  SampleCompute: {fileID: 7200000, guid: d8911c43e0f28fafda7ec493e8d14825, type: 3}
 --- !u!4 &1922002223
 Transform:
   m_ObjectHideFlags: 0

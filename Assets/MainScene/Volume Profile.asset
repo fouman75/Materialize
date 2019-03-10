@@ -418,10 +418,10 @@ MonoBehaviour:
   m_Name: Bloom
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 0
+  m_AdvancedMode: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.01
+    m_Value: 0.1
     min: 0
     max: 1
   scatter:
@@ -430,7 +430,7 @@ MonoBehaviour:
     min: 0
     max: 1
   tint:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     hdr: 0
     showAlpha: 0
@@ -443,14 +443,14 @@ MonoBehaviour:
     m_Value: 1
     min: 0
   highQualityFiltering:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   resolution:
     m_OverrideState: 0
     m_Value: 2
   prefilter:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 1
   anamorphic:
     m_OverrideState: 0
     m_Value: 1
@@ -607,7 +607,7 @@ MonoBehaviour:
     min: 0
     max: 1
   reflectSky:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   rayMaxIterations:
     m_OverrideState: 0
@@ -720,7 +720,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: {x: 0.5, y: 0.5}
   scale:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
     min: 0.01
     max: 5

@@ -118,8 +118,8 @@ namespace General
 
         private void SlowUpdate()
         {
-            Logger.Log("Target : " + Application.targetFrameRate);
-            Logger.Log("Desired FrameRate : " + DesiredFrameRate);
+//            Logger.Log("Target : " + Application.targetFrameRate);
+//            Logger.Log("Desired FrameRate : " + DesiredFrameRate);
             if (Application.targetFrameRate != DesiredFrameRate && DesiredFrameRate != 0)
             {
                 Logger.Log("Setting FrameRate to " + DesiredFrameRate);
