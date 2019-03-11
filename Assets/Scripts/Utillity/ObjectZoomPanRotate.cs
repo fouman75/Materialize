@@ -43,6 +43,7 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
     private bool _hovering;
     private Vector3 _startPosition;
     private Quaternion _startRotation;
+    private Vector3 _offset;
 
     private void Start()
     {
@@ -102,6 +103,7 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
     public void OnBeginDrag(PointerEventData eventData)
     {
         _lastMousePos = eventData.position;
+        _offset = transform.position - eventData.pointerCurrentRaycast.worldPosition;
         if (AllowHide) MainGui.Instance.SaveHideStateAndHideAndLock(this);
     }
 
@@ -132,6 +134,7 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
 
         if (pos.magnitude < 0.001f) return;
 
+        pos = pos + _offset;
         pos.z = position.z;
         _targetPosition = pos;
     }

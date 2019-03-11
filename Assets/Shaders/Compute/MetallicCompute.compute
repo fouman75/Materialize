@@ -1,0 +1,61 @@
+﻿#include "Assets/Shaders/Include/Color.hlsl"
+
+#pragma kernel CSMetallic
+
+RWTexture2D<float4> Result;
+Texture2D<float4> ImageInput;
+Texture2D<float4> _BlurTex;
+Texture2D<float4> _OverlayBlurTex;
+
+SamplerState LinearRepeatSample;
+
+float4 _MetalColor;
+float2 _ImageSize;
+	
+float2 _SampleUV;
+
+float _HueWeight;
+float _SatWeight;
+float _LumWeight;
+
+float _MaskLow;
+float _MaskHigh;
+
+float _BlurOverlay;
+
+float _FinalContrast;
+float _FinalBias;
+
+[numthreads(8,8,1)]
+void CSMetallic (uint3 id : SV_DispatchThreadID)
+{
+    float2 uv = id.xy / _ImageSize;
+
+    half3 mainTex = ImageInput.SampleLevel(LinearRepeatSample, uv, 0).xyz;
+    half3 blurTex = _BlurTex.SampleLevel(LinearRepeatSample, uv, 0).xyz;
+    half3 overlayBlurTex = _OverlayBlurTex.SampleLevel(LinearRepeatSample, uv, 0).xyz;
+    
+    half3 overlay = ( mainTex - overlayBlurTex );
+    half overlayGrey = overlay.x * 0.3 + overlay.y * 0.5 + overlay.z * 0.2;
+    
+    half3 metalSample = _BlurTex.SampleLevel(LinearRepeatSample, _SampleUV, 0).xyz;
+    
+    half3 mainTexHSL = RgbToHsl( mainTex.xyz );
+    half3 blurTexHSL = RgbToHsl( blurTex.xyz );
+    half3 metalHSL = RgbToHsl( _MetalColor.xyz );
+    half3 metalSampleHSL = metalHSL;
+    
+    float hueDif = 1.0 - min( min( abs( blurTexHSL.x - metalSampleHSL.x ), abs( ( blurTexHSL.x + 1.0 ) - metalSampleHSL.x ) ), abs( ( blurTexHSL.x - 1.0 ) - metalSampleHSL.x ) ) * 2.0;
+    float satDif = 1.0 - abs( blurTexHSL.y - metalSampleHSL.y );
+    float lumDif = 1.0 - abs( blurTexHSL.z - metalSampleHSL.z );
+    
+    float finalDiff = ( hueDif * _HueWeight ) + ( satDif * _SatWeight ) + ( lumDif * _LumWeight );
+    finalDiff *= 1.0 / ( _HueWeight + _SatWeight + _LumWeight );
+    finalDiff = smoothstep( _MaskLow, _MaskHigh, finalDiff );
+    
+    finalDiff = saturate( ( finalDiff - 0.5 ) * _FinalContrast + 0.5 + _FinalBias );
+    finalDiff *= clamp( ( overlayGrey * _BlurOverlay ) + 1.0, 0.0, 10.0 );
+    finalDiff = saturate( finalDiff );
+    
+    Result[id.xy] = float4( saturate( finalDiff.xxx ), 1.0 );
+}

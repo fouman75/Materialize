@@ -976,6 +976,7 @@ namespace Gui
             Busy = true;
 
             ThisMaterial.SetFloat(IsNormal, 0.0f);
+            SampleCompute.SetVector(ImageSize, new Vector2(_imageSizeX, _imageSizeY));
 
             SampleCompute.SetInt(IsolateSample1, _heightFromDiffuseSettings.IsolateSample1 ? 1 : 0);
             SampleCompute.SetInt(UseSample1, _heightFromDiffuseSettings.UseSample1 ? 1 : 0);

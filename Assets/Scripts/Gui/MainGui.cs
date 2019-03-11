@@ -168,8 +168,6 @@ namespace Gui
             ProgramManager.RenderProbe();
         }
 
-
-
         #endregion
 
         #region Gui
@@ -389,7 +387,6 @@ namespace Gui
 
         public void Fullscreen()
         {
-
             //Problema com a versao
 //            string text;
 //            if (Screen.fullScreenMode == FullScreenMode.Windowed)
@@ -934,7 +931,7 @@ namespace Gui
         {
             CloseWindows();
             TextureManager.Instance.FixSize();
-            TextureManager.Instance.MakeMaskMap();
+            StartCoroutine(TextureManager.Instance.MakeMaskMap());
         }
 
         public static void MakeScaledWindow(Rect windowRect, int id, GUI.WindowFunction callback, string title)

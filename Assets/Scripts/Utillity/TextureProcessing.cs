@@ -8,9 +8,9 @@ using Object = UnityEngine.Object;
 
 public static class TextureProcessing
 {
-    private static readonly int MetallicTex = Shader.PropertyToID("_MetallicTex");
-    private static readonly int SmoothnessTex = Shader.PropertyToID("_SmoothnessTex");
-    private static readonly int AoTex = Shader.PropertyToID("_AoTex");
+    private static readonly int MetallicTex = Shader.PropertyToID("MetallicInput");
+    private static readonly int SmoothnessTex = Shader.PropertyToID("SmoothnessInput");
+    private static readonly int AoTex = Shader.PropertyToID("AoInput");
 
     public static Texture2D BlitMaskMap(Texture2D metallicMap, Texture2D smoothnessMap, Texture2D aoMap)
     {
@@ -26,18 +26,24 @@ public static class TextureProcessing
         var textureBlack = new Texture2D(1, 1);
         textureBlack.SetPixel(0, 0, Color.black);
         textureBlack.Resize(size.x, size.y, TextureFormat.ARGB32, true);
+        textureBlack.Apply(true);
 
-        var mat = new Material(Shader.Find("Blit/Blit_MaskMap"));
-        mat.SetTexture(MetallicTex, metallicMap ? metallicMap : textureBlack);
-        mat.SetTexture(SmoothnessTex, smoothnessMap ? smoothnessMap : textureBlack);
-        mat.SetTexture(AoTex, aoMap ? aoMap : textureBlack);
-        var emptyTex = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+        var maskMapCompute = TextureManager.Instance.MaskMapCompute;
+        var kernel = maskMapCompute.FindKernel("CSMaskMap");
+
+        maskMapCompute.SetTexture(kernel, MetallicTex, metallicMap ? metallicMap : textureBlack);
+        maskMapCompute.SetTexture(kernel, SmoothnessTex, smoothnessMap ? smoothnessMap : textureBlack);
+        maskMapCompute.SetTexture(kernel, AoTex, aoMap ? aoMap : textureBlack);
+
         var map = TextureManager.Instance.GetTempRenderTexture(size.x, size.y);
-        Graphics.Blit(emptyTex, map, mat);
+        maskMapCompute.SetVector("_ImageSize", (Vector2) size);
+        maskMapCompute.SetTexture(kernel, "Result", map);
+        maskMapCompute.Dispatch(kernel, size.x / 8, size.y / 8, 1);
+
         RenderTexture.active = map;
         var maskMap = TextureManager.Instance.GetStandardTexture(map.width, map.height);
         maskMap.ReadPixels(new Rect(0, 0, map.width, map.height), 0, 0);
-        maskMap.Apply(false);
+        maskMap.Apply(true);
         RenderTexture.ReleaseTemporary(map);
 
         return maskMap;

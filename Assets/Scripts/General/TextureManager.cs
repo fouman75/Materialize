@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Gui;
 using JetBrains.Annotations;
 using Plugins.Extension;
@@ -20,6 +21,8 @@ namespace General
         // ReSharper disable once RedundantDefaultMemberInitializer
         [UsedImplicitly] [SerializeField] private Material FullMaterial = null;
         public Material FullMaterialInstance { get; private set; }
+        public ComputeShader MaskMapCompute;
+        public ComputeShader PackNormalCompute;
 
         private static readonly int DiffuseMapId = Shader.PropertyToID("_BaseColorMap");
         private static readonly int NormalMapId = Shader.PropertyToID("_NormalMap");
@@ -176,6 +179,8 @@ namespace General
 
         public void SetFullMaterial()
         {
+            GL.Flush();
+            
             if (HeightMap)
             {
                 FullMaterialInstance.EnableKeyword("_TESSELLATION_DISPLACEMENT");
@@ -228,9 +233,13 @@ namespace General
 
         private void PackNormal()
         {
-            var packMaterial = new Material(Shader.Find("Blit/Blit_PackNormal"));
             var tempRenderTexture = GetTempRenderTexture(NormalMap.width, NormalMap.height);
-            Graphics.Blit(NormalMap, tempRenderTexture, packMaterial);
+            var kernel = PackNormalCompute.FindKernel("CSPackNormal");
+            var size = new Vector2Int(NormalMap.width, NormalMap.height);
+            PackNormalCompute.SetVector("_ImageSize", (Vector2) size);
+            PackNormalCompute.SetTexture(kernel, "NormalInput", NormalMap);
+            PackNormalCompute.SetTexture(kernel, "Result", tempRenderTexture);
+            PackNormalCompute.Dispatch(kernel, size.x / 8, size.y / 8, 1);
             GetTextureFromRender(tempRenderTexture, out _packedNormal);
         }
 
@@ -461,9 +470,11 @@ namespace General
             FixSizeSize(1024.0f, 1024.0f);
         }
 
-        public void MakeMaskMap()
+        public IEnumerator MakeMaskMap()
         {
+            GL.Flush();
             MaskMap = TextureProcessing.BlitMaskMap(MetallicMap, SmoothnessMap, AoMap);
+            yield return null;
             SetFullMaterial();
         }
 

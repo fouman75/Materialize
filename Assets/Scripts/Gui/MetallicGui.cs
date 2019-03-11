@@ -7,8 +7,6 @@ using UnityEngine;
 
 #endregion
 
-// ReSharper disable Unity.PreferAddressByIdToGraphicsParams
-
 namespace Gui
 {
     public class MetallicGui : MonoBehaviour, IProcessor, IHideable
@@ -18,7 +16,7 @@ namespace Gui
             get => gameObject.activeSelf;
             set => gameObject.SetActive(value);
         }
-        
+
         private static readonly int MetalColor = Shader.PropertyToID("_MetalColor");
         private static readonly int SampleUv = Shader.PropertyToID("_SampleUV");
         private static readonly int HueWeight = Shader.PropertyToID("_HueWeight");
@@ -31,7 +29,6 @@ namespace Gui
         private static readonly int FinalContrast = Shader.PropertyToID("_FinalContrast");
         private static readonly int FinalBias = Shader.PropertyToID("_FinalBias");
         private static readonly int MainTex = Shader.PropertyToID("_MainTex");
-        private Material _blitMaterial;
         private RenderTexture _blurMap;
         private Camera _camera;
 
@@ -44,8 +41,6 @@ namespace Gui
 
         private bool _lastUseAdjustedDiffuse;
         private Texture2D _metalColorMap;
-        private Material _metallicBlitMaterial;
-
         private Texture2D _metallicMap;
 
         private MetallicSettings _metallicSettings;
@@ -63,18 +58,23 @@ namespace Gui
         private Rect _windowRect;
         private int _windowId;
 
-        [HideInInspector] public bool Busy = true;
+        public ComputeShader MetallicCompute;
+        public ComputeShader BlurCompute;
+
+        [HideInInspector] public bool Busy;
 
         public GameObject TestObject;
 
         public Material ThisMaterial;
+        private static readonly int BlurTex = Shader.PropertyToID("_BlurTex");
+        private static readonly int OverlayBlurTex = Shader.PropertyToID("_OverlayBlurTex");
 
         private void Awake()
         {
             _windowRect = new Rect(10.0f, 265.0f, 300f, 460f);
         }
-        
-        
+
+
         private void OnDisable()
         {
             CleanupTextures();
@@ -123,10 +123,6 @@ namespace Gui
         {
             _camera = Camera.main;
             TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
-
-            _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
-
-            _metallicBlitMaterial = new Material(Shader.Find("Hidden/Blit_Metallic"));
 
             InitializeSettings();
             _windowId = ProgramManager.Instance.GetWindowId;
@@ -290,7 +286,6 @@ namespace Gui
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _metallicSettings.FinalBias,
                 out _metallicSettings.FinalBias, -0.5f, 0.5f);
-            offsetY += 50;
 
             GUI.DragWindow();
         }
@@ -350,38 +345,37 @@ namespace Gui
         {
             Busy = true;
 
-            General.Logger.Log("Processing Height");
+            General.Logger.Log("Processing Metallic");
+            var metallicKernel = MetallicCompute.FindKernel("CSMetallic");
 
-            _metallicBlitMaterial.SetVector("_ImageSize", new Vector4(_imageSizeX, _imageSizeY, 0, 0));
+            MetallicCompute.SetVector("_ImageSize", new Vector2(_imageSizeX, _imageSizeY));
 
-            _metallicBlitMaterial.SetVector("_MetalColor", _metallicSettings.MetalColor);
-            _metallicBlitMaterial.SetVector("_SampleUV",
-                new Vector4(_metallicSettings.SampleUv.x, _metallicSettings.SampleUv.y, 0, 0));
+            MetallicCompute.SetVector("_MetalColor", _metallicSettings.MetalColor);
+            MetallicCompute.SetVector("_SampleUV", _metallicSettings.SampleUv);
+            MetallicCompute.SetFloat("_HueWeight", _metallicSettings.HueWeight);
+            MetallicCompute.SetFloat("_SatWeight", _metallicSettings.SatWeight);
+            MetallicCompute.SetFloat("_LumWeight", _metallicSettings.LumWeight);
 
-            _metallicBlitMaterial.SetFloat("_HueWeight", _metallicSettings.HueWeight);
-            _metallicBlitMaterial.SetFloat("_SatWeight", _metallicSettings.SatWeight);
-            _metallicBlitMaterial.SetFloat("_LumWeight", _metallicSettings.LumWeight);
+            MetallicCompute.SetFloat("_MaskLow", _metallicSettings.MaskLow);
+            MetallicCompute.SetFloat("_MaskHigh", _metallicSettings.MaskHigh);
 
-            _metallicBlitMaterial.SetFloat("_MaskLow", _metallicSettings.MaskLow);
-            _metallicBlitMaterial.SetFloat("_MaskHigh", _metallicSettings.MaskHigh);
+            MetallicCompute.SetFloat("_BlurOverlay", _metallicSettings.BlurOverlay);
 
-            _metallicBlitMaterial.SetFloat("_Slider", _slider);
+            MetallicCompute.SetFloat("_FinalContrast", _metallicSettings.FinalContrast);
 
-            _metallicBlitMaterial.SetFloat("_BlurOverlay", _metallicSettings.BlurOverlay);
+            MetallicCompute.SetFloat("_FinalBias", _metallicSettings.FinalBias);
 
-            _metallicBlitMaterial.SetFloat("_FinalContrast", _metallicSettings.FinalContrast);
+            MetallicCompute.SetTexture(metallicKernel, "_BlurTex", _blurMap);
 
-            _metallicBlitMaterial.SetFloat("_FinalBias", _metallicSettings.FinalBias);
-
-            _metallicBlitMaterial.SetTexture("_BlurTex", _blurMap);
-
-            _metallicBlitMaterial.SetTexture("_OverlayBlurTex", _overlayBlurMap);
+            MetallicCompute.SetTexture(metallicKernel, "_OverlayBlurTex", _overlayBlurMap);
 
             RenderTexture.ReleaseTemporary(_tempMap);
             _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            var source = _metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
 
-            Graphics.Blit(_metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal, _tempMap,
-                _metallicBlitMaterial, 0);
+            MetallicCompute.SetTexture(metallicKernel, "ImageInput", source);
+            MetallicCompute.SetTexture(metallicKernel, "Result", _tempMap);
+            MetallicCompute.Dispatch(metallicKernel, _imageSizeX / 8, _imageSizeY / 8, 1);
 
             TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Metallic);
 
@@ -398,44 +392,51 @@ namespace Gui
 
             General.Logger.Log("Processing Blur");
 
-            _blitMaterial.SetVector("_ImageSize", new Vector4(_imageSizeX, _imageSizeY, 0, 0));
-            _blitMaterial.SetFloat("_BlurContrast", 1.0f);
-            _blitMaterial.SetFloat("_BlurSpread", 1.0f);
+            var blurKernel = BlurCompute.FindKernel("CSBlur");
+
+            BlurCompute.SetVector("_ImageSize", new Vector2(_imageSizeX, _imageSizeY));
+            BlurCompute.SetFloat("_BlurContrast", 1.0f);
+            BlurCompute.SetFloat("_BlurSpread", 1.0f);
 
             // Blur the image 1
-            _blitMaterial.SetInt("_BlurSamples", _metallicSettings.BlurSize);
-            _blitMaterial.SetVector("_BlurDirection", new Vector4(1, 0, 0, 0));
-            if (_metallicSettings.UseAdjustedDiffuse)
-            {
-                if (_metallicSettings.BlurSize == 0)
-                    Graphics.Blit(_diffuseMap, _tempMap);
-                else
-                    Graphics.Blit(_diffuseMap, _tempMap, _blitMaterial, 1);
-            }
+            BlurCompute.SetInt("_BlurSamples", _metallicSettings.BlurSize);
+            BlurCompute.SetVector("_BlurDirection", new Vector4(1, 0, 0, 0));
+            var diffuse = _metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
+
+            if (_metallicSettings.BlurSize == 0)
+                Graphics.Blit(diffuse, _tempMap);
             else
             {
-                if (_metallicSettings.BlurSize == 0)
-                    Graphics.Blit(_diffuseMapOriginal, _tempMap);
-                else
-                    Graphics.Blit(_diffuseMapOriginal, _tempMap, _blitMaterial, 1);
+                BlurCompute.SetTexture(blurKernel, "ImageInput", diffuse);
+                BlurCompute.SetTexture(blurKernel, "Result", _tempMap);
+                BlurCompute.Dispatch(blurKernel, _imageSizeX / 8, _imageSizeY / 8, 1);
             }
 
-            _blitMaterial.SetVector("_BlurDirection", new Vector4(0, 1, 0, 0));
+            BlurCompute.SetVector("_BlurDirection", new Vector4(0, 1, 0, 0));
             if (_metallicSettings.BlurSize == 0)
                 Graphics.Blit(_tempMap, _blurMap);
             else
-                Graphics.Blit(_tempMap, _blurMap, _blitMaterial, 1);
-            ThisMaterial.SetTexture("_BlurTex", _blurMap);
+            {
+                BlurCompute.SetTexture(blurKernel, "ImageInput", _tempMap);
+                BlurCompute.SetTexture(blurKernel, "Result", _blurMap);
+                BlurCompute.Dispatch(blurKernel, _imageSizeX / 8, _imageSizeY / 8, 1);
+            }
+
+            ThisMaterial.SetTexture(BlurTex, _blurMap);
 
             // Blur the image for overlay
-            _blitMaterial.SetInt("_BlurSamples", _metallicSettings.OverlayBlurSize);
-            _blitMaterial.SetVector("_BlurDirection", new Vector4(1, 0, 0, 0));
-            Graphics.Blit(_metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal, _tempMap,
-                _blitMaterial,
-                1);
-            _blitMaterial.SetVector("_BlurDirection", new Vector4(0, 1, 0, 0));
-            Graphics.Blit(_tempMap, _overlayBlurMap, _blitMaterial, 1);
-            ThisMaterial.SetTexture("_OverlayBlurTex", _overlayBlurMap);
+            BlurCompute.SetInt("_BlurSamples", _metallicSettings.OverlayBlurSize);
+            BlurCompute.SetVector("_BlurDirection", new Vector4(1, 0, 0, 0));
+            var source = _metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
+            BlurCompute.SetTexture(blurKernel, "ImageInput", source);
+            BlurCompute.SetTexture(blurKernel, "Result", _tempMap);
+            BlurCompute.Dispatch(blurKernel, _imageSizeX / 8, _imageSizeY / 8, 1);
+
+            BlurCompute.SetVector("_BlurDirection", new Vector4(0, 1, 0, 0));
+            BlurCompute.SetTexture(blurKernel, "ImageInput", _tempMap);
+            BlurCompute.SetTexture(blurKernel, "Result", _overlayBlurMap);
+            BlurCompute.Dispatch(blurKernel, _imageSizeX / 8, _imageSizeY / 8, 1);
+            ThisMaterial.SetTexture(OverlayBlurTex, _overlayBlurMap);
 
             yield return new WaitForSeconds(0.01f);
 

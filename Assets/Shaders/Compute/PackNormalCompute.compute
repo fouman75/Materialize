@@ -1,0 +1,17 @@
+﻿#pragma kernel CSPackNormal
+
+RWTexture2D<float4> Result;
+Texture2D<float4> NormalInput;
+
+SamplerState LinearRepeatSample;
+
+float2 _ImageSize;
+
+[numthreads(8,8,1)]
+void CSPackNormal (uint3 id : SV_DispatchThreadID)
+{
+    float2 uv = id.xy / _ImageSize;
+    float3 normal = NormalInput.SampleLevel(LinearRepeatSample, uv, 0).x;
+
+    Result[id.xy] = float4(1.0, normal.g, normal.g, normal.r);
+}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f086a068d4c5889438831b3ae9afc11c, type: 3}
   m_Name: Tonemapping
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
@@ -45,6 +45,69 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
     min: 0.001
+--- !u!114 &-8599435661181402426
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa3b8214f75b354e9ba2caadd022259, type: 3}
+  m_Name: DepthOfField
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 1
+  focusMode:
+    m_OverrideState: 1
+    m_Value: 2
+  focusDistance:
+    m_OverrideState: 0
+    m_Value: 10
+    min: 0.1
+  nearFocusStart:
+    m_OverrideState: 0
+    m_Value: 0
+    min: 0
+  nearFocusEnd:
+    m_OverrideState: 0
+    m_Value: 4
+    min: 0
+  farFocusStart:
+    m_OverrideState: 1
+    m_Value: 15
+    min: 0
+  farFocusEnd:
+    m_OverrideState: 0
+    m_Value: 20
+    min: 0
+  nearSampleCount:
+    m_OverrideState: 0
+    m_Value: 5
+    min: 3
+    max: 8
+  nearMaxBlur:
+    m_OverrideState: 0
+    m_Value: 4
+    min: 0
+    max: 8
+  farSampleCount:
+    m_OverrideState: 0
+    m_Value: 7
+    min: 3
+    max: 16
+  farMaxBlur:
+    m_OverrideState: 0
+    m_Value: 8
+    min: 0
+    max: 16
+  highQualityFiltering:
+    m_OverrideState: 0
+    m_Value: 1
+  resolution:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &-6213100005148243067
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -57,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d08ce26990eb1a4a9177b860541e702, type: 3}
   m_Name: Exposure
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
@@ -72,14 +135,14 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   compensation:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: -1
   limitMin:
     m_OverrideState: 1
-    m_Value: -20
+    m_Value: -5
   limitMax:
     m_OverrideState: 1
-    m_Value: 20
+    m_Value: 5
   curveMap:
     m_OverrideState: 0
     m_Value:
@@ -107,15 +170,15 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   adaptationMode:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   adaptationSpeedDarkToLight:
-    m_OverrideState: 0
-    m_Value: 3
+    m_OverrideState: 1
+    m_Value: 0.5
     min: 0.001
   adaptationSpeedLightToDark:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 0.5
     min: 0.001
 --- !u!114 &-5897152060983739252
 MonoBehaviour:
@@ -148,7 +211,7 @@ MonoBehaviour:
     min: 0
   upperHemisphereLuxValue:
     m_OverrideState: 0
-    m_Value: 6.46
+    m_Value: 2.4410193
     min: 0
   desiredLuxValue:
     m_OverrideState: 0
@@ -233,7 +296,7 @@ MonoBehaviour:
     m_Value: 0
   fogType:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 0
 --- !u!114 &-3819876013009440890
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -298,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29b00527f85bb3346a4d2cb710971587, type: 3}
   m_Name: VolumetricFog
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   colorMode:
     m_OverrideState: 0
@@ -342,8 +405,8 @@ MonoBehaviour:
     m_Value: 1000000
     min: 1
   baseHeight:
-    m_OverrideState: 1
-    m_Value: 0
+    m_OverrideState: 0
+    m_Value: 12.92
   meanHeight:
     m_OverrideState: 0
     m_Value: 19.43
@@ -421,7 +484,7 @@ MonoBehaviour:
   m_AdvancedMode: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.01
+    m_Value: 0.1
     min: 0
     max: 1
   scatter:
@@ -440,7 +503,7 @@ MonoBehaviour:
     m_Value: {fileID: 2800000, guid: 45e021da13b7f8155809643ef9e58a23, type: 3}
   dirtIntensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
     min: 0
   highQualityFiltering:
     m_OverrideState: 1
@@ -452,7 +515,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1
   anamorphic:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -482,6 +545,7 @@ MonoBehaviour:
   - {fileID: -5821385101070672208}
   - {fileID: -2438411679903717450}
   - {fileID: 8358278686522180101}
+  - {fileID: -8599435661181402426}
 --- !u!114 &191499441628046417
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -501,7 +565,7 @@ MonoBehaviour:
     m_Value: 40
     min: 0
   cascadeShadowSplitCount:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 4
     min: 1
     max: 4
@@ -584,7 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 384c4d03a551c44448145f4093304119, type: 3}
   m_Name: ScreenSpaceReflection
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   depthBufferThickness:
     m_OverrideState: 0

@@ -34,7 +34,7 @@ void CSAo (uint3 id : SV_DispatchThreadID)
         flipTex = float3(1,-1,1);
     }
     
-    half3 mainTex = ImageInput[id.xy].xyz;
+    half3 mainTex = ImageInput.SampleLevel(LinearRepeatSample, uv, 0).xyz;
     mainTex = normalize( mainTex * 2.0 - 1.0 );
     mainTex *= flipTex;
     
@@ -70,7 +70,7 @@ void CSAo (uint3 id : SV_DispatchThreadID)
 
         // Normal Only, same as depth from normal
         float sampleImportance = sqrt( 1.0 - progress );
-        AO.x += dot( sampleTex.xyz, trueDir ) * sampleImportance;
+        AO.x += dot( sampleTex.xy, trueDir ) * sampleImportance;
         AOAccum += sampleImportance;
 
         // Depth Only, pure geometric occlusion
@@ -89,7 +89,7 @@ void CSAo (uint3 id : SV_DispatchThreadID)
 
     AO.y = 1.0 - AO.y;
     
-    half2 blendTex = _BlendTex[id.xy].xy;
+    half2 blendTex = _BlendTex.SampleLevel(LinearRepeatSample, uv, 0).xy;
     
     AO = lerp( blendTex.xy, AO, _BlendAmount );
     
@@ -99,12 +99,13 @@ void CSAo (uint3 id : SV_DispatchThreadID)
 [numthreads(8,8,1)]
 void CSCombineAo (uint3 id : SV_DispatchThreadID)
 {
-    half2 mainTex = ImageInput[id.xy].xy;
+    float2 uv = id.xy / _ImageSize;
+    half2 mainTex = ImageInput.SampleLevel(LinearRepeatSample, uv, 0).xy;
 
     half AO = lerp( mainTex.x, mainTex.y, _AOBlend);
     
     AO += _FinalBias;
-    AO = pow( AO, _FinalContrast );
+    AO = pow(abs(AO), _FinalContrast );
     AO = saturate( AO );
     
     Result[id.xy] = float4( AO.xxx, 1.0 );
