@@ -215,7 +215,11 @@ namespace Gui
         private void OnGUI()
         {
             if (Hide) return;
-            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Post Process", 0.9f);
+            Rect rect = new Rect(_windowRect);
+            if (!_bloom.active) rect.height -= 135;
+            if (!_vignette.active) rect.height -= 90;
+            if (!_depthOfField.active) rect.height -= 170;
+            MainGui.MakeScaledWindow(rect, _windowId, DoMyWindow, "Post Process", 0.9f);
         }
 
         public bool Hide { get; set; }
