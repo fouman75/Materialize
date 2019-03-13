@@ -934,13 +934,16 @@ namespace Gui
             StartCoroutine(TextureManager.Instance.MakeMaskMap());
         }
 
-        public static void MakeScaledWindow(Rect windowRect, int id, GUI.WindowFunction callback, string title)
+        public static void MakeScaledWindow(Rect windowRect, int id, GUI.WindowFunction callback, string title,
+            float scale = 1.0f)
         {
+            var aspect = ProgramManager.Instance.GuiScale.x / ProgramManager.Instance.GuiScale.y;
             var posX = windowRect.x * ProgramManager.Instance.GuiScale.x;
             var posY = windowRect.y * ProgramManager.Instance.GuiScale.y;
+            posY += (aspect - 1.0f) * 90f;
             var pivotPoint = new Vector2(posX, posY);
 
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale * scale, pivotPoint);
 
             var newWindowRect = new Rect(posX, posY, windowRect.width, windowRect.height);
             newWindowRect = GUI.Window(id, newWindowRect, callback, title);
@@ -950,13 +953,15 @@ namespace Gui
             windowRect.y = posY;
         }
 
-        public static Rect MakeScaledBox(Rect windowRect, string title)
+        private static Rect MakeScaledBox(Rect windowRect, string title, float scale = 1.0f)
         {
+            var aspect = ProgramManager.Instance.GuiScale.x / ProgramManager.Instance.GuiScale.y;
             var posX = windowRect.x * ProgramManager.Instance.GuiScale.x;
             var posY = windowRect.y * ProgramManager.Instance.GuiScale.y;
+            posY += (aspect - 1.0f) * 90f;
             var pivotPoint = new Vector2(posX, posY);
 
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale * scale, pivotPoint);
 
             var newWindowRect = new Rect(posX, posY, windowRect.width, windowRect.height);
             GUI.Box(newWindowRect, title);

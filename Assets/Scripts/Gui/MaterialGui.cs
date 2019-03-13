@@ -72,7 +72,7 @@ namespace Gui
         {
             _light = LightObject.GetComponent<Light>();
             ProgramManager.Instance.SceneObjects.Add(gameObject);
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+            _windowRect = new Rect(10.0f, 265.0f, 300f, 575f);
         }
 
         private void Start()
@@ -215,16 +215,16 @@ namespace Gui
             var temp = _materialSettings.Metallic.Value;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Metallic Multiplier", temp,
                 out temp, 0.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 40;
             _materialSettings.Metallic.Value = temp;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Normal Scale", _materialSettings.NormalStrength,
                 out temp, 0.0f, 8.0f);
-            offsetY += 35;
+            offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Ambient Occlusion Remap Min Max",
                 _materialSettings.AoRemapMin, out _materialSettings.AoRemapMin, 0.0f, 1.0f);
-            offsetY += 20;
+            offsetY += 25;
 
             if (_materialSettings.AoRemapMin > _materialSettings.AoRemapMax)
             {
@@ -234,7 +234,7 @@ namespace Gui
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _materialSettings.AoRemapMax,
                 out _materialSettings.AoRemapMax, 0.0f, 1.0f);
 
-            offsetY += 35;
+            offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Smoothness Remap Min Max",
                 _materialSettings.SmoothnessRemapMin, out _materialSettings.SmoothnessRemapMin, 0.0f, 1.0f);
@@ -243,16 +243,16 @@ namespace Gui
                 _materialSettings.SmoothnessRemapMin = _materialSettings.SmoothnessRemapMax;
             }
 
-            offsetY += 20;
+            offsetY += 25;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _materialSettings.SmoothnessRemapMax,
                 out _materialSettings.SmoothnessRemapMax, 0.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 40;
 
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Tessellation Amplitude",
                 _materialSettings.DisplacementAmplitude, out _materialSettings.DisplacementAmplitude, 0.0f, 3.0f);
-            offsetY += 35;
+            offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Tiling (X,Y)", _materialSettings.TexTilingX,
                 out _materialSettings.TexTilingX, 0.1f, 5.0f);
@@ -260,7 +260,7 @@ namespace Gui
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _materialSettings.TexTilingY,
                 out _materialSettings.TexTilingY, 0.1f, 5.0f);
-            offsetY += 35;
+            offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Offset (X,Y)", _materialSettings.TexOffsetX,
                 out _materialSettings.TexOffsetX, -1.0f, 1.0f);
@@ -268,7 +268,7 @@ namespace Gui
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _materialSettings.TexOffsetY,
                 out _materialSettings.TexOffsetY, -1.0f, 1.0f);
-            offsetY += 35;
+            offsetY += 40;
 
             GUI.Label(new Rect(offsetX, offsetY, 250, 30), "Light Color");
             ChooseLightColor(offsetX, offsetY + 20);
@@ -316,7 +316,7 @@ namespace Gui
         private void OnGUI()
         {
             if (Hide) return;
-            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Full Material");
+            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Full Material", 0.9f);
         }
 
         public void Initialize()
