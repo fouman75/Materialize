@@ -189,7 +189,7 @@ namespace General
             }
             else
             {
-                FullMaterialInstance.SetTexture(HeightMapId, Texture2D.blackTexture);
+                FullMaterialInstance.SetTexture(HeightMapId, null);
             }
 
             if (DiffuseMap != null)
@@ -207,12 +207,10 @@ namespace General
                 // ReSharper disable once StringLiteralTypo
                 FullMaterialInstance.EnableKeyword("_NORMALMAP");
                 StartCoroutine(PackNormalAndSet());
-
-
             }
             else
             {
-                FullMaterialInstance.SetTexture(NormalMapId, Texture2D.normalTexture);
+                FullMaterialInstance.SetTexture(NormalMapId, null);
             }
 
             if (MaskMap)
@@ -223,7 +221,7 @@ namespace General
             }
             else
             {
-                FullMaterialInstance.SetTexture(MaskMapId, _blackTexture);
+                FullMaterialInstance.SetTexture(MaskMapId, null);
             }
 
             ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = FullMaterialInstance;
@@ -239,7 +237,7 @@ namespace General
             PackNormalCompute.SetTexture(kernel, "NormalInput", NormalMap);
             PackNormalCompute.SetTexture(kernel, "Result", tempRenderTexture);
             PackNormalCompute.Dispatch(kernel, size.x / 8, size.y / 8, 1);
-            
+
             yield return null;
             GetTextureFromRender(tempRenderTexture, out _packedNormal);
             FullMaterialInstance.SetTexture(NormalMapId, _packedNormal);
@@ -247,17 +245,10 @@ namespace General
 
         public Texture2D GetStandardTexture(int width, int height, bool linear = true)
         {
-            if (Hdr)
-            {
-                return GetStandardHdrTexture(width, height, linear);
-            }
-            else
-            {
-                return GetStandardLdrTexture(width, height, linear);
-            }
+            return Hdr ? GetStandardHdrTexture(width, height, linear) : GetStandardLdrTexture(width, height, linear);
         }
 
-        public static Texture2D GetStandardHdrTexture(int width, int height, bool linear = true)
+        private static Texture2D GetStandardHdrTexture(int width, int height, bool linear = true)
         {
             var texture = new Texture2D(width, height, DefaultHdrTextureFormat, true, linear)
             {
@@ -268,7 +259,7 @@ namespace General
         }
 
 
-        public static Texture2D GetStandardLdrTexture(int width, int height, bool linear = true)
+        private static Texture2D GetStandardLdrTexture(int width, int height, bool linear = true)
         {
             var texture = new Texture2D(width, height, DefaultLdrTextureFormat, true, linear)
             {
@@ -298,12 +289,12 @@ namespace General
             GetTextureFromRender(input, mapType, out _);
         }
 
-        public void GetTextureFromRender(RenderTexture input, out Texture2D outTexture)
+        private void GetTextureFromRender(RenderTexture input, out Texture2D outTexture)
         {
             GetTextureFromRender(input, ProgramEnums.MapType.None, out outTexture);
         }
 
-        public void GetTextureFromRender(RenderTexture input, ProgramEnums.MapType mapType, out Texture2D outTexture)
+        private void GetTextureFromRender(RenderTexture input, ProgramEnums.MapType mapType, out Texture2D outTexture)
         {
             RenderTexture.active = input;
             var texture = GetStandardTexture(input.width, input.height);
@@ -465,6 +456,7 @@ namespace General
             }
         }
 
+        [UsedImplicitly]
         public void ClearAllButtonCallback()
         {
             ClearAllTextures();
@@ -542,17 +534,19 @@ namespace General
             FixSizeSize(size.x, size.y);
         }
 
+        [UsedImplicitly]
         public static void FixSizeMap(Texture mapToUse)
         {
             FixSizeSize(mapToUse.width, mapToUse.height);
         }
 
+        [UsedImplicitly]
         public static void FixSizeMap(RenderTexture mapToUse)
         {
             FixSizeSize(mapToUse.width, mapToUse.height);
         }
 
-        public static void FixSizeSize(float width, float height)
+        private static void FixSizeSize(float width, float height)
         {
             var testObjectScale = new Vector3(1, 1, 1);
             const float area = 1.0f;
