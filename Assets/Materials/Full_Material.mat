@@ -473,8 +473,8 @@ Material:
     - _SmoothnessRemapMin1: 0
     - _SmoothnessRemapMin2: 0
     - _SmoothnessRemapMin3: 0
-    - _SpecularAAScreenSpaceVariance: 0.1
-    - _SpecularAAThreshold: 0.2
+    - _SpecularAAScreenSpaceVariance: 0.2
+    - _SpecularAAThreshold: 0.3
     - _SrcBlend: 1
     - _StencilRef: 2
     - _StencilRefDepth: 0
@@ -493,10 +493,10 @@ Material:
     - _SupportDecals: 0
     - _SurfaceType: 0
     - _TessellationBackFaceCullEpsilon: -0.5
-    - _TessellationFactor: 10
+    - _TessellationFactor: 2
     - _TessellationFactorMaxDistance: 50
     - _TessellationFactorMinDistance: 25
-    - _TessellationFactorTriangleSize: 5
+    - _TessellationFactorTriangleSize: 3
     - _TessellationMode: 1
     - _TessellationShapeFactor: 0.75
     - _TexWorldScale: 1

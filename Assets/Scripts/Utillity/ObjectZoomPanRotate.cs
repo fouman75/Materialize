@@ -92,12 +92,15 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     private void Zoom()
     {
+        const float minDistanceFromCamera = 5.0f;
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(ray, out var hit);
         var direction = (hit.point - _camera.transform.position).normalized;
         var scrollWheel = -Input.GetAxis("Mouse ScrollWheel");
         if (InvertZoom) scrollWheel = -scrollWheel;
-        _targetPosition = transform.position + (direction * scrollWheel * ZoomSpeed);
+        var target = transform.position + (direction * scrollWheel * ZoomSpeed);
+        if (target.z < _camera.transform.position.z + minDistanceFromCamera) return;
+        _targetPosition = target;
     }
 
     public void OnBeginDrag(PointerEventData eventData)

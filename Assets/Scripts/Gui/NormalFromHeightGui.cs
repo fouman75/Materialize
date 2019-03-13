@@ -139,7 +139,7 @@ namespace Gui
 
 
             InitializeSettings();
-            InitializeTextures();
+//            InitializeTextures();
 
             _windowId = ProgramManager.Instance.GetWindowId;
             _kernelBlur = BlurCompute.FindKernel("CSBlur");
@@ -205,7 +205,7 @@ namespace Gui
             _doStuff = true;
         }
 
-        private void Update()
+        private void Update()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
         {
             InitializeTextures();
 

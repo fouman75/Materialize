@@ -28,7 +28,7 @@ MonoBehaviour:
       data2: 4539628424389459968
   m_RenderPipelineSettings:
     supportShadowMask: 1
-    supportSSR: 0
+    supportSSR: 1
     supportSSAO: 1
     supportSubsurfaceScattering: 0
     increaseSssSampleCount: 1

@@ -180,7 +180,7 @@ namespace General
         public void SetFullMaterial()
         {
             GL.Flush();
-            
+
             if (HeightMap)
             {
                 FullMaterialInstance.EnableKeyword("_TESSELLATION_DISPLACEMENT");
@@ -206,9 +206,9 @@ namespace General
             {
                 // ReSharper disable once StringLiteralTypo
                 FullMaterialInstance.EnableKeyword("_NORMALMAP");
-                PackNormal();
+                StartCoroutine(PackNormalAndSet());
 
-                FullMaterialInstance.SetTexture(NormalMapId, _packedNormal);
+
             }
             else
             {
@@ -228,10 +228,9 @@ namespace General
 
             ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = FullMaterialInstance;
             ProgramManager.Instance.MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
-            ProgramManager.RenderProbe();
         }
 
-        private void PackNormal()
+        private IEnumerator PackNormalAndSet()
         {
             var tempRenderTexture = GetTempRenderTexture(NormalMap.width, NormalMap.height);
             var kernel = PackNormalCompute.FindKernel("CSPackNormal");
@@ -240,7 +239,10 @@ namespace General
             PackNormalCompute.SetTexture(kernel, "NormalInput", NormalMap);
             PackNormalCompute.SetTexture(kernel, "Result", tempRenderTexture);
             PackNormalCompute.Dispatch(kernel, size.x / 8, size.y / 8, 1);
+            
+            yield return null;
             GetTextureFromRender(tempRenderTexture, out _packedNormal);
+            FullMaterialInstance.SetTexture(NormalMapId, _packedNormal);
         }
 
         public Texture2D GetStandardTexture(int width, int height, bool linear = true)

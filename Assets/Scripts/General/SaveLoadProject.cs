@@ -212,9 +212,13 @@ namespace General
 
         private IEnumerator SaveTexture(Texture2D textureToSave, string pathToFile)
         {
-            if (!textureToSave || StringExt.IsNullOrEmpty(pathToFile)) yield break;
+            if (!textureToSave || string.IsNullOrEmpty(pathToFile)) yield break;
             Logger.Log($"Salvando {textureToSave} como {pathToFile}");
-            if (!textureToSave.isReadable) Logger.LogError($"Texture {pathToFile} somente leitura");
+            if (!textureToSave.isReadable)
+            {
+                Logger.LogError($"Texture {pathToFile} somente leitura");
+                yield break;
+            }
 
             if (!pathToFile.Contains(".")) pathToFile = $"{pathToFile}.{MainGui.Instance.SelectedFormat}";
 
@@ -230,6 +234,7 @@ namespace General
 
             Graphics.Blit(textureToSave, renderTexture);
             RenderTexture.active = renderTexture;
+            textureToSave = TextureManager.Instance.GetStandardTexture(renderTexture.width, renderTexture.height);
             textureToSave.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0, false);
             textureToSave.Apply(false);
 
