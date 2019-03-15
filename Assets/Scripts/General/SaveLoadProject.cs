@@ -157,19 +157,28 @@ namespace General
                 BashRunner.Run($"xclip -selection clipboard -o > {pathToTextFile}");
                 bashOut = File.ReadAllText(pathToTextFile);
 
-                if (!bashOut.Contains(filePrefix)) return;
                 var supported = ProgramManager.LoadFormats.Any(format => bashOut.Contains(format));
                 if (!supported) return;
 
-                var firstIndex = bashOut.IndexOf("file:///", StringComparison.Ordinal);
-                var lastIndex = bashOut.IndexOf("\n", firstIndex, StringComparison.Ordinal);
-                var length = lastIndex - firstIndex;
-                pathToFile = bashOut.Substring(firstIndex, length);
-                pathToFile = pathToFile.Replace("file:///", "/");
+                if (bashOut.Contains("file:///"))
+                {
+                    bashOut = bashOut.Replace("file:///", "/");
+                }
+
+                var firstIndex = bashOut.IndexOf('/');
+                if (bashOut.Length > firstIndex)
+                {
+                    var extension = Path.GetExtension(bashOut);
+                    var lastIndex = bashOut.IndexOf(extension, firstIndex, StringComparison.Ordinal) + extension.Length;
+                    var length = lastIndex - firstIndex;
+                    pathToFile = bashOut.Substring(firstIndex, length);
+                }
+                else return;
             }
 
             File.Delete(pathToTextFile);
 
+            if (!File.Exists(pathToFile)) return;
 
             StartCoroutine(LoadTexture(mapTypeToLoad, pathToFile));
         }
