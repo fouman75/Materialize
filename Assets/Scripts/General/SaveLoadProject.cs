@@ -352,11 +352,12 @@ namespace General
             var newTexture = TextureProcessing.GetTextureFromFile(pathToFile);
             if (!newTexture) yield break;
 
-            if (!Mathf.IsPowerOfTwo(newTexture.width))
-            {
-                var size = Mathf.NextPowerOfTwo(newTexture.width);
-                newTexture.Resize(size, size);
-            }
+//            if (!Mathf.IsPowerOfTwo(newTexture.width))
+//            {
+//                var size = Mathf.NextPowerOfTwo(newTexture.width);
+//                newTexture.Resize(size, size, newTexture.format, true);
+//                newTexture.Apply(true);
+//            }
 
             if (newTexture && newTexture.format != TextureManager.DefaultHdrTextureFormat)
             {

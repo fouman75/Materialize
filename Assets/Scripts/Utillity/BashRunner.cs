@@ -32,7 +32,7 @@ internal static class BashRunner
             process.BeginOutputReadLine();
             process.ErrorDataReceived += (sender, args) => { errorBuilder.AppendLine(args.Data); };
             process.BeginErrorReadLine();
-            if (!process.WaitForExit(500))
+            if (!process.WaitForExit(2000))
             {
                 var timeoutError = $@"Process timed out. Command line: bash {arguments}.
 Output: {outputBuilder}
