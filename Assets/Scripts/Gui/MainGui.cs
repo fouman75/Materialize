@@ -263,6 +263,7 @@ namespace Gui
         private Texture2D _textureToLoad;
         private Texture2D _textureToSave;
         private bool _tgaSelected;
+        private Texture2D _greyTexture;
 
         private Material _thisMaterial;
 
@@ -292,11 +293,13 @@ namespace Gui
         public GameObject SaveLoadProjectObject;
         public ProgramEnums.FileFormat SelectedFormat;
 
-        public Texture2D TextureBlack;
-        public Texture2D TextureGrey;
         public GameObject TilingTextureMakerGuiObject;
         public VolumeProfile VolumeProfile;
         [HideInInspector] public HDRISky HdriSky;
+
+        // ReSharper disable once RedundantDefaultMemberInitializer
+        [SerializeField] private TextMeshProUGUI FullScreenTextObject = null;
+        [SerializeField] private Camera MainCamera = null;
 
         #endregion
 
@@ -310,6 +313,15 @@ namespace Gui
 
         private IEnumerator Start()
         {
+            //Inclua uma textura cinza
+            _greyTexture = TextureManager.Instance.GetStandardTexture(64, 64);
+            for (var i = 0; i < _greyTexture.width; i++)
+            for (var j = 0; j < _greyTexture.height; j++)
+            {
+                _greyTexture.SetPixel(i, j, Color.grey);
+            }
+
+
             _propertyCompShader = Shader.Find("Hidden/Blit_Property_Comp");
             _propertyCompMaterial = new Material(_propertyCompShader);
 
@@ -568,38 +580,49 @@ namespace Gui
         public void Fullscreen()
         {
             //Problema com a versao
-//            string text;
-//            if (Screen.fullScreenMode == FullScreenMode.Windowed)
-//            {
-//                text = "Windowed";
-//                SetScreen(ProgramEnums.ScreenMode.FullScreen);
-//            }
-//            else
-//            {
-//                text = "FullScreen";
-//                SetScreen(ProgramEnums.ScreenMode.Windowed);
-//            }
-//
-//            EventSystem.current.currentSelectedGameObject.GetComponentInChildren<TextMeshProUGUI>().text = text;
+            string text;
+            if (Screen.fullScreenMode == FullScreenMode.Windowed)
+            {
+                text = "Windowed";
+                StartCoroutine(SetScreen(ProgramEnums.ScreenMode.FullScreen));
+            }
+            else
+            {
+                text = "FullScreen";
+                StartCoroutine(SetScreen(ProgramEnums.ScreenMode.Windowed));
+            }
+
+            FullScreenTextObject.text = text;
         }
 
-        public void SetScreen(ProgramEnums.ScreenMode screenMode)
+        private IEnumerator SetScreen(ProgramEnums.ScreenMode screenMode)
         {
+            MainCamera.gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.1f);
+            var refreshRate = ProgramManager.Instance.DesiredFrameRate;
             switch (screenMode)
             {
                 case ProgramEnums.ScreenMode.FullScreen:
                     var fsRes = Screen.resolutions;
                     var highRes = fsRes[fsRes.Length - 1];
-                    Screen.SetResolution(highRes.width, highRes.height, FullScreenMode.ExclusiveFullScreen);
+                    Screen.SetResolution(highRes.width, highRes.height, FullScreenMode.FullScreenWindow, refreshRate);
+//                    QualitySettings.vSyncCount = 0;
+                    Screen.fullScreen = true;
                     break;
                 case ProgramEnums.ScreenMode.Windowed:
                     var winRes = Screen.resolutions;
-                    var midRes = winRes[winRes.Length - 3];
-                    Screen.SetResolution(midRes.width, midRes.height, FullScreenMode.Windowed);
+                    var midRes = winRes[winRes.Length / 2];
+                    Screen.SetResolution(midRes.width, midRes.height, FullScreenMode.Windowed, refreshRate);
+//                    QualitySettings.vSyncCount = 0;
+                    Screen.fullScreen = false;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(screenMode), screenMode, null);
             }
+
+            yield return new WaitForSeconds(0.1f);
+
+            MainCamera.gameObject.SetActive(true);
         }
 
         public void HideGuiButtonClickEvent()
@@ -825,7 +848,7 @@ namespace Gui
 
         private void SetPropertyTexture(string texPrefix, Texture2D texture, Texture overlayTexture)
         {
-            _propertyCompMaterial.SetTexture(texPrefix + "Tex", texture != null ? texture : TextureBlack);
+            _propertyCompMaterial.SetTexture(texPrefix + "Tex", texture != null ? texture : Texture2D.blackTexture);
 
             _propertyCompMaterial.SetTexture(texPrefix + "OverlayTex", overlayTexture);
         }
@@ -835,22 +858,22 @@ namespace Gui
             switch (pcm)
             {
                 case PropChannelMap.Height:
-                    SetPropertyTexture(texPrefix, TextureManager.Instance.HeightMap, TextureGrey);
+                    SetPropertyTexture(texPrefix, TextureManager.Instance.HeightMap, _greyTexture);
                     break;
                 case PropChannelMap.Metallic:
-                    SetPropertyTexture(texPrefix, TextureManager.Instance.MetallicMap, TextureGrey);
+                    SetPropertyTexture(texPrefix, TextureManager.Instance.MetallicMap, _greyTexture);
                     break;
                 case PropChannelMap.Smoothness:
-                    SetPropertyTexture(texPrefix, TextureManager.Instance.SmoothnessMap, TextureGrey);
+                    SetPropertyTexture(texPrefix, TextureManager.Instance.SmoothnessMap, _greyTexture);
                     break;
                 case PropChannelMap.Ao:
-                    SetPropertyTexture(texPrefix, TextureManager.Instance.AoMap, TextureGrey);
+                    SetPropertyTexture(texPrefix, TextureManager.Instance.AoMap, _greyTexture);
                     break;
                 case PropChannelMap.MaskMap:
-                    SetPropertyTexture(texPrefix, TextureManager.Instance.MaskMap, TextureGrey);
+                    SetPropertyTexture(texPrefix, TextureManager.Instance.MaskMap, _greyTexture);
                     break;
                 case PropChannelMap.None:
-                    SetPropertyTexture(texPrefix, TextureBlack, TextureGrey);
+                    SetPropertyTexture(texPrefix, Texture2D.blackTexture, _greyTexture);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(pcm), pcm, null);

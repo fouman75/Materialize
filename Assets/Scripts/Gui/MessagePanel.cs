@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 
@@ -22,11 +23,13 @@ namespace Gui
         {
             Instance.Message.text = message;
             Instance.gameObject.SetActive(true);
+            MainGui.Instance.SaveHideStateAndHideAndLock(Instance);
         }
 
         public static void HideMessage()
         {
             Instance.gameObject.SetActive(false);
+            MainGui.Instance.HideGuiLocker.Unlock(Instance);
         }
     }
 }

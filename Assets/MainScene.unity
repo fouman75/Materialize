@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.5010711, g: 0.47107214, b: 0.41595566, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -359,6 +359,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55262777}
   m_CullTransparentMesh: 0
+--- !u!114 &340463084 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 428877481005275534, guid: 731175185b2388b04b28f78dc12f657e,
+    type: 3}
+  m_PrefabInstance: {fileID: 7629444614668512165}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &461938097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -647,8 +659,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79b6b4b30e58933469d807ecc340a2d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MetallicCompute: {fileID: 7200000, guid: 9ce34682c1d7648d899be3d879dd5943, type: 3}
   BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
+  MetallicCompute: {fileID: 7200000, guid: 9ce34682c1d7648d899be3d879dd5943, type: 3}
   TestObject: {fileID: 1463534583}
   ThisMaterial: {fileID: 2100000, guid: 737272c68658cdf41aeb0a785065b699, type: 2}
 --- !u!1 &534880369
@@ -1398,8 +1410,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 160ce17b3a5127e48a2b65fa77a7876a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneVolume: {fileID: 2072837669}
   Profile: {fileID: 0}
+  SceneVolume: {fileID: 2072837669}
 --- !u!4 &1107095848
 Transform:
   m_ObjectHideFlags: 0
@@ -1557,9 +1569,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e58b2a5f02556c4897347a45818c57a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_mergeDistance: 0.5
-  m_usePointLights: 1
-  m_pointLightRange: 2
+  MergeDistance: 0.5
+  PointLightRange: 1
+  UsePointLights: 0
 --- !u!114 &1136538188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1575,9 +1587,9 @@ MonoBehaviour:
   m_volume:
     m_origin: {x: 0, y: 0, z: 0}
     m_size: {x: 60, y: 50, z: 30}
-  m_type: 0
   m_densityFixed: {x: 3, y: 2, z: 2}
   m_densityFloat: {x: 1, y: 1, z: 1}
+  m_type: 0
 --- !u!1 &1249791421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1607,9 +1619,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc3347dd3f3aca5499cce6256be89541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SkipWelcomeScreen: 1
   Background: {fileID: 2800000, guid: dce0d2e052fe4dc4eadd0d754612efa8, type: 3}
   Logo: {fileID: 2800000, guid: 014af7e22aa509343ab21147b0ca84d5, type: 3}
+  SkipWelcomeScreen: 1
 --- !u!4 &1249791423
 Transform:
   m_ObjectHideFlags: 0
@@ -1898,9 +1910,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524b2e2efd4dd464aacafed015a5d6f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AoCompute: {fileID: 7200000, guid: ba69990ce89f5252fa92a9c1df13104b, type: 3}
   TestObject: {fileID: 1463534583}
   ThisMaterial: {fileID: 2100000, guid: bdada9e324602714d9fb2b5ad75f45a3, type: 2}
-  AoCompute: {fileID: 7200000, guid: ba69990ce89f5252fa92a9c1df13104b, type: 3}
 --- !u!4 &1318754590
 Transform:
   m_ObjectHideFlags: 0
@@ -2269,8 +2281,8 @@ MonoBehaviour:
   volumeAnchorOverride: {fileID: 0}
   antialiasing: 3
   SMAAQuality: 2
-  dithering: 1
-  stopNaNs: 0
+  dithering: 0
+  stopNaNs: 1
   physicalParameters:
     m_Iso: 200
     m_ShutterSpeed: 0.005
@@ -3268,11 +3280,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c311a2b5638944983c713e2d8d6669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
   DefaultMetallicMap: {fileID: 2800000, guid: d06194f3a7ca3b64082ef8ff725091b7, type: 3}
+  SmoothnessCompute: {fileID: 7200000, guid: 0d98f1530b8834f0bbe7a6d49a9cf440, type: 3}
   TestObject: {fileID: 1463534583}
   ThisMaterial: {fileID: 2100000, guid: 48a5da314272a9d4da4cfa82a779455f, type: 2}
-  BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
-  SmoothnessCompute: {fileID: 7200000, guid: 0d98f1530b8834f0bbe7a6d49a9cf440, type: 3}
 --- !u!4 &1612067965
 Transform:
   m_ObjectHideFlags: 0
@@ -3644,11 +3656,11 @@ MonoBehaviour:
   SampleMaterialRef: {fileID: 2100000, guid: f25e3e31a2e27add0b90f2617b9cd94f, type: 2}
   SaveLoadProjectObject: {fileID: 1390751209}
   SelectedFormat: 0
-  TextureBlack: {fileID: 2800000, guid: 46acab317f59cb047be5c189df89266c, type: 3}
-  TextureGrey: {fileID: 2800000, guid: d06194f3a7ca3b64082ef8ff725091b7, type: 3}
   TilingTextureMakerGuiObject: {fileID: 892130044}
   VolumeProfile: {fileID: 11400000, guid: ad3ebe04a20f6e1508eed926324ab0e6, type: 2}
   HdriSky: {fileID: 0}
+  FullScreenTextObject: {fileID: 340463084}
+  MainCamera: {fileID: 1433099825}
 --- !u!4 &1866024255
 Transform:
   m_ObjectHideFlags: 0
@@ -3937,11 +3949,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42bfcfcf9f072604a93d2b19d0d9fb46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestObject: {fileID: 1463534583}
-  ThisMaterial: {fileID: 2100000, guid: b737aed4cdca0074482a1475d22763a2, type: 2}
+  BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
   HeightCompute: {fileID: 7200000, guid: 17f086950c0da403f87512844428f028, type: 3}
   SampleCompute: {fileID: 7200000, guid: d8911c43e0f28fafda7ec493e8d14825, type: 3}
-  BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
+  TestObject: {fileID: 1463534583}
+  ThisMaterial: {fileID: 2100000, guid: b737aed4cdca0074482a1475d22763a2, type: 2}
 --- !u!4 &1922002223
 Transform:
   m_ObjectHideFlags: 0
@@ -3985,12 +3997,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2779cf5cd160cd14d91000f76919d956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
   HeightBlurMap: {fileID: 0}
   MainLight: {fileID: 1585571158}
+  NormalCompute: {fileID: 7200000, guid: 054c3774b078c2fad8f520cb6674d9d0, type: 3}
   TestObject: {fileID: 1463534583}
   ThisMaterial: {fileID: 2100000, guid: 4678d9f7beec7d04e824e08435395770, type: 2}
-  NormalCompute: {fileID: 7200000, guid: 054c3774b078c2fad8f520cb6674d9d0, type: 3}
-  BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
 --- !u!4 &1970709860
 Transform:
   m_ObjectHideFlags: 0
@@ -4339,8 +4351,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242fd42f7d37fb4489a7316fecbee106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PostProcessGui: {fileID: 1107095847}
   ObjectHandler: {fileID: 2015501343}
+  PostProcessGui: {fileID: 1107095847}
 --- !u!1 &2015501342
 GameObject:
   m_ObjectHideFlags: 0
@@ -4370,18 +4382,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b396c0335c0814d9dc7809cb1287e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Filter: 5
-  ZoomSpeed: 10
+  AllowHide: 1
   AllowX: 1
   AllowY: 1
+  Filter: 5
   InvertX: 0
   InvertY: 0
   InvertZoom: 0
-  KeyToHoldToRotate: 0
   KeyToHoldToPan: 0
-  RotateButton: 1
+  KeyToHoldToRotate: 0
   PanButton: 2
-  AllowHide: 1
+  RotateButton: 1
+  ZoomSpeed: 10
 --- !u!4 &2015501344
 Transform:
   m_ObjectHideFlags: 0
@@ -4429,10 +4441,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66d9b4f2eca473e8c490f0e9af16e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainLight: {fileID: 1585571158}
+  ApplicationIsQuitting: 0
+  DesiredFrameRate: 0
   GuiScale: {x: 1, y: 1}
   LastPath: 
-  DesiredFrameRate: 0
+  MainLight: {fileID: 1585571158}
   MessagePanelObject: {fileID: 1674964765}
   StartCubeMap: {fileID: 8900000, guid: d179a5cf97a39ec5c91cb199d742898a, type: 3}
   SceneObjects: []
@@ -4485,13 +4498,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8833a3d08edf409eb51c87af95cd640a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hdr: 1
   FlipNormalY: 0
-  RenderTextureFormat: 0
-  TextureInClipboard: 0
   FullMaterial: {fileID: 2100000, guid: 85f53cbecf1be3b439a8c31604ce77af, type: 2}
+  Hdr: 1
   MaskMapCompute: {fileID: 7200000, guid: 28a9b64b8836c39ada04b2b11ba2bfb8, type: 3}
   PackNormalCompute: {fileID: 7200000, guid: 495f736537d69cda089838ba084e7e7e, type: 3}
+  RenderTextureFormat: 0
+  TextureInClipboard: 0
   HdHeightMap: {fileID: 0}
   HeightMap: {fileID: 0}
   DiffuseMap: {fileID: 0}
@@ -5462,12 +5475,12 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 1433099825}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: -1
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
