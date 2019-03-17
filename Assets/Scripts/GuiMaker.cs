@@ -1,15 +1,19 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Logger = General.Logger;
 
+#endregion
+
 public class GuiMaker : Singleton<GuiMaker>
 {
-    public GameObject CanvasPrefab;
-    public GuiPrefabPack GuiPrefabs;
     private static readonly List<GuiPanel> PanelsList = new List<GuiPanel>();
     private Canvas _canvas;
+    public GameObject CanvasPrefab;
+    public GuiPrefabPack GuiPrefabs;
 
 
     private void Awake()
@@ -109,7 +113,7 @@ public class GuiMaker : Singleton<GuiMaker>
             var position = Vector2.zero;
 
             var height = (int) prefab.GetComponent<RectTransform>().rect.height;
-            position.y = -(rect.height);
+            position.y = -rect.height;
             component.GetComponent<RectTransform>().anchoredPosition = position;
 
             //Then add it back

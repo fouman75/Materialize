@@ -1,29 +1,33 @@
+#region
+
 using General;
 using Plugins.Extension;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+#endregion
+
 namespace Gui
 {
     public class TexturePanel : MonoBehaviour
     {
-        public ProgramEnums.MapType MapType;
-
-        [Header("Gui Elements")] public RawImage TextureFrame;
-        public Button SaveButton;
-        public Button LoadButton;
-        public Button PasteButton;
+        public Button ClearButton;
         public Button CopyButton;
         public Button CreateButton;
-        public Button ClearButton;
-        public TextMeshProUGUI Title;
+        public int Height = 215;
         public int LeftBorder = 5;
+        public Button LoadButton;
+        public ProgramEnums.MapType MapType;
+        public int NumberOfPanels = 7;
+        public int PanelSlot;
+        public Button PasteButton;
+        public Button SaveButton;
+
+        [Header("Gui Elements")] public RawImage TextureFrame;
+        public TextMeshProUGUI Title;
         public int TopBorder = -5;
         public int Width = 125;
-        public int Height = 215;
-        public int NumberOfPanels = 7;
-        public int PanelSlot = 0;
 
         private void Awake()
         {

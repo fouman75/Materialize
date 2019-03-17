@@ -4,6 +4,7 @@ using System.Collections;
 using General;
 using JetBrains.Annotations;
 using UnityEngine;
+using Logger = General.Logger;
 
 #endregion
 
@@ -61,6 +62,8 @@ namespace Gui
 
         public Material ThisMaterial;
 
+        public bool Hide { get; set; }
+
         private void Awake()
         {
             _camera = Camera.main;
@@ -92,9 +95,7 @@ namespace Gui
                 _textureToAlign = TextureManager.Instance.MaskMap;
             else if (TextureManager.Instance.AoMap != null) _textureToAlign = TextureManager.Instance.AoMap;
             else
-            {
                 gameObject.SetActive(false);
-            }
 
 
             _doStuff = true;
@@ -249,10 +250,7 @@ namespace Gui
             _blitMaterial.SetFloat(PerspectiveX, _perspectiveX);
             _blitMaterial.SetFloat(PerspectiveY, _perspectiveY);
 
-            if (_doStuff)
-            {
-                _doStuff = false;
-            }
+            if (_doStuff) _doStuff = false;
 
             ThisMaterial.SetFloat(Slider, _slider);
         }
@@ -463,13 +461,13 @@ namespace Gui
         {
             if (TextureManager.Instance.HeightMap != null)
             {
-                General.Logger.Log("Setting Height");
+                Logger.Log("Setting Height");
                 TextureManager.Instance.HeightMap = SetMap(TextureManager.Instance.HeightMap);
             }
 
             if (TextureManager.Instance.HdHeightMap != null)
             {
-                General.Logger.Log("Setting HD Height");
+                Logger.Log("Setting HD Height");
                 TextureManager.Instance.HdHeightMap = SetMap(TextureManager.Instance.HdHeightMap);
             }
 
@@ -477,7 +475,7 @@ namespace Gui
 
             if (TextureManager.Instance.DiffuseMap != null)
             {
-                General.Logger.Log("Setting Diffuse");
+                Logger.Log("Setting Diffuse");
                 TextureManager.Instance.DiffuseMap = SetMap(TextureManager.Instance.DiffuseMap);
             }
 
@@ -485,7 +483,7 @@ namespace Gui
 
             if (TextureManager.Instance.DiffuseMapOriginal != null)
             {
-                General.Logger.Log("Setting Diffuse Original");
+                Logger.Log("Setting Diffuse Original");
                 TextureManager.Instance.DiffuseMapOriginal = SetMap(TextureManager.Instance.DiffuseMapOriginal);
             }
 
@@ -493,7 +491,7 @@ namespace Gui
 
             if (TextureManager.Instance.NormalMap != null)
             {
-                General.Logger.Log("Setting Normal");
+                Logger.Log("Setting Normal");
                 TextureManager.Instance.NormalMap = SetMap(TextureManager.Instance.NormalMap);
             }
 
@@ -501,7 +499,7 @@ namespace Gui
 
             if (TextureManager.Instance.MetallicMap != null)
             {
-                General.Logger.Log("Setting Metallic");
+                Logger.Log("Setting Metallic");
                 TextureManager.Instance.MetallicMap = SetMap(TextureManager.Instance.MetallicMap);
             }
 
@@ -509,7 +507,7 @@ namespace Gui
 
             if (TextureManager.Instance.SmoothnessMap != null)
             {
-                General.Logger.Log("Setting Smoothness");
+                Logger.Log("Setting Smoothness");
                 TextureManager.Instance.SmoothnessMap = SetMap(TextureManager.Instance.SmoothnessMap);
             }
 
@@ -517,7 +515,7 @@ namespace Gui
 
             if (TextureManager.Instance.MaskMap != null)
             {
-                General.Logger.Log("Setting MaskMap");
+                Logger.Log("Setting MaskMap");
                 TextureManager.Instance.MaskMap = SetMap(TextureManager.Instance.MaskMap);
             }
 
@@ -525,13 +523,11 @@ namespace Gui
 
             if (TextureManager.Instance.AoMap != null)
             {
-                General.Logger.Log("Setting AO");
+                Logger.Log("Setting AO");
                 TextureManager.Instance.AoMap = SetMap(TextureManager.Instance.AoMap);
             }
 
             yield return new WaitForSeconds(0.1f);
         }
-
-        public bool Hide { get; set; }
     }
 }

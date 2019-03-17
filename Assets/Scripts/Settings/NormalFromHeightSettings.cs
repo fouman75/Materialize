@@ -52,7 +52,7 @@ namespace Settings
 
             Blur0Contrast = 20.0f;
             FinalContrast = 5.0f;
-        
+
             Angularity = 0.1f;
             AngularIntensity = 0.5f;
             UseDiffuse = true;

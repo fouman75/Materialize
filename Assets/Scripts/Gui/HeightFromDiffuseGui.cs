@@ -5,6 +5,7 @@ using System.Collections;
 using General;
 using Settings;
 using UnityEngine;
+using Logger = General.Logger;
 
 #endregion
 
@@ -14,12 +15,6 @@ namespace Gui
 {
     public class HeightFromDiffuseGui : MonoBehaviour, IProcessor, IHideable
     {
-        public bool Active
-        {
-            get => gameObject.activeSelf;
-            set => gameObject.SetActive(value);
-        }
-
         private const float BlurScale = 1.0f;
         private static readonly int BlurScaleId = Shader.PropertyToID("_BlurScale");
         private static readonly int ImageSize = Shader.PropertyToID("_ImageSize");
@@ -103,6 +98,7 @@ namespace Gui
         private HeightFromDiffuseSettings _heightFromDiffuseSettings;
         private int _imageSizeX = 1024;
         private int _imageSizeY = 1024;
+        private int _kernelBlur;
 
         private float _lastBlur0Contrast = 1.0f;
 
@@ -111,6 +107,7 @@ namespace Gui
         private bool _lastUseOriginalDiffuse;
         private bool _mouseButtonDown;
         private bool _newTexture;
+        private bool _readyToProcess;
 
         private Texture2D _sampleColorMap1;
         private Texture2D _sampleColorMap2;
@@ -121,18 +118,124 @@ namespace Gui
 
         private RenderTexture _tempBlurMap;
         private RenderTexture _tempHeightMap;
+        private int _windowId;
 
         private Rect _windowRect;
+        public ComputeShader BlurCompute;
+        public ComputeShader HeightCompute;
+        public ComputeShader SampleCompute;
 
         public GameObject TestObject;
 
         public Material ThisMaterial;
-        public ComputeShader HeightCompute;
-        public ComputeShader SampleCompute;
-        public ComputeShader BlurCompute;
-        private int _windowId;
-        private int _kernelBlur;
-        private bool _readyToProcess;
+
+        public bool Hide { get; set; }
+
+        public bool Active
+        {
+            get => gameObject.activeSelf;
+            set => gameObject.SetActive(value);
+        }
+
+        public void DoStuff()
+        {
+            _doStuff = true;
+        }
+
+        public void NewTexture()
+        {
+            _newTexture = true;
+        }
+
+        public void Close()
+        {
+            CleanupTextures();
+            gameObject.SetActive(false);
+        }
+
+        public IEnumerator Process()
+        {
+            while (!ProgramManager.Lock()) yield return null;
+
+            while (!_readyToProcess) yield return null;
+
+            MessagePanel.ShowMessage("Processing Height Map");
+
+            var kernelCombine = HeightCompute.FindKernel("CSCombineHeight");
+            HeightCompute.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
+
+            RenderTexture.ReleaseTemporary(_tempHeightMap);
+            _tempHeightMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+
+            HeightCompute.SetFloat(FinalContrast, _heightFromDiffuseSettings.FinalContrast);
+            HeightCompute.SetFloat(FinalBias, _heightFromDiffuseSettings.FinalBias);
+
+            var realGain = _heightFromDiffuseSettings.FinalGain;
+            if (realGain < 0.0f)
+                realGain = Mathf.Abs(1.0f / (realGain - 1.0f));
+            else
+                realGain = realGain + 1.0f;
+
+            HeightCompute.SetFloat(FinalGain, realGain);
+
+            HeightCompute.SetFloat(Blur0Weight, _heightFromDiffuseSettings.Blur0Weight);
+            HeightCompute.SetFloat(Blur1Weight, _heightFromDiffuseSettings.Blur1Weight);
+            HeightCompute.SetFloat(Blur2Weight, _heightFromDiffuseSettings.Blur2Weight);
+            HeightCompute.SetFloat(Blur3Weight, _heightFromDiffuseSettings.Blur3Weight);
+            HeightCompute.SetFloat(Blur4Weight, _heightFromDiffuseSettings.Blur4Weight);
+            HeightCompute.SetFloat(Blur5Weight, _heightFromDiffuseSettings.Blur5Weight);
+            HeightCompute.SetFloat(Blur6Weight, _heightFromDiffuseSettings.Blur6Weight);
+
+            HeightCompute.SetFloat(Blur0Contrast, _heightFromDiffuseSettings.Blur0Contrast);
+            HeightCompute.SetFloat(Blur1Contrast, _heightFromDiffuseSettings.Blur1Contrast);
+            HeightCompute.SetFloat(Blur2Contrast, _heightFromDiffuseSettings.Blur2Contrast);
+            HeightCompute.SetFloat(Blur3Contrast, _heightFromDiffuseSettings.Blur3Contrast);
+            HeightCompute.SetFloat(Blur4Contrast, _heightFromDiffuseSettings.Blur4Contrast);
+            HeightCompute.SetFloat(Blur5Contrast, _heightFromDiffuseSettings.Blur5Contrast);
+            HeightCompute.SetFloat(Blur6Contrast, _heightFromDiffuseSettings.Blur6Contrast);
+
+            HeightCompute.SetTexture(kernelCombine, BlurTex0, _blurMap0);
+            HeightCompute.SetTexture(kernelCombine, BlurTex1, _blurMap1);
+            HeightCompute.SetTexture(kernelCombine, BlurTex2, _blurMap2);
+            HeightCompute.SetTexture(kernelCombine, BlurTex3, _blurMap3);
+            HeightCompute.SetTexture(kernelCombine, BlurTex4, _blurMap4);
+            HeightCompute.SetTexture(kernelCombine, BlurTex5, _blurMap5);
+            HeightCompute.SetTexture(kernelCombine, BlurTex6, _blurMap6);
+
+            HeightCompute.SetTexture(kernelCombine, AvgTex, _avgMap);
+
+            HeightCompute.SetBool(HeightFromNormal, _heightFromDiffuseSettings.UseNormal);
+
+            // Save low fidelity for texture 2d
+            HeightCompute.SetTexture(kernelCombine, "ImageInput", _blurMap0);
+            HeightCompute.SetTexture(kernelCombine, "Result", _tempHeightMap);
+            HeightCompute.Dispatch(kernelCombine, _imageSizeX / 8, _imageSizeY / 8, 1);
+
+            if (TextureManager.Instance.HeightMap) Destroy(TextureManager.Instance.HeightMap);
+
+            TextureManager.Instance.GetTextureFromRender(_tempHeightMap, ProgramEnums.MapType.Height);
+
+            // Save high fidelity for normal making
+            if (TextureManager.Instance.HdHeightMap)
+            {
+                TextureManager.Instance.HdHeightMap.Release();
+                TextureManager.Instance.HdHeightMap = null;
+            }
+
+            TextureManager.Instance.HdHeightMap =
+                TextureManager.Instance.GetTempRenderTexture(_tempHeightMap.width, _tempHeightMap.width);
+            HeightCompute.SetTexture(kernelCombine, "ImageInput", _blurMap0);
+            HeightCompute.SetTexture(kernelCombine, "Result", TextureManager.Instance.HdHeightMap);
+            HeightCompute.Dispatch(kernelCombine, _imageSizeX / 8, _imageSizeY / 8, 1);
+
+            RenderTexture.ReleaseTemporary(_tempHeightMap);
+
+            yield return new WaitForSeconds(0.1f);
+
+            MessagePanel.HideMessage();
+
+            ProgramManager.Unlock();
+        }
 
         private void Awake()
         {
@@ -176,7 +279,7 @@ namespace Gui
         private void InitializeSettings()
         {
             if (_settingsInitialized) return;
-            General.Logger.Log("Initializing Height From Diffuse Settings");
+            Logger.Log("Initializing Height From Diffuse Settings");
 
             _heightFromDiffuseSettings = new HeightFromDiffuseSettings();
 
@@ -195,6 +298,7 @@ namespace Gui
 
         private void Start()
         {
+            MessagePanel.ShowMessage("Initializing Height GUI");
             _camera = Camera.main;
             TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
 
@@ -262,16 +366,6 @@ namespace Gui
             _heightFromDiffuseSettings.UseAdjustedDiffuse = false;
             _heightFromDiffuseSettings.UseOriginalDiffuse = false;
             _heightFromDiffuseSettings.UseNormal = true;
-        }
-
-        public void DoStuff()
-        {
-            _doStuff = true;
-        }
-
-        public void NewTexture()
-        {
-            _newTexture = true;
         }
 
         private void SetMaterialValues()
@@ -834,12 +928,6 @@ namespace Gui
             SetMaterialValues();
         }
 
-        public void Close()
-        {
-            CleanupTextures();
-            gameObject.SetActive(false);
-        }
-
         private void CleanupTextures()
         {
             RenderTexture.ReleaseTemporary(_tempBlurMap);
@@ -855,103 +943,13 @@ namespace Gui
             RenderTexture.ReleaseTemporary(_avgTempMap);
         }
 
-        public IEnumerator Process()
-        {
-            while (!ProgramManager.Lock())
-            {
-                yield return null;
-            }
-
-            while (!_readyToProcess)
-            {
-                yield return null;
-            }
-
-            var kernelCombine = HeightCompute.FindKernel("CSCombineHeight");
-            General.Logger.Log("Processing HeightMap");
-            HeightCompute.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
-
-            RenderTexture.ReleaseTemporary(_tempHeightMap);
-            _tempHeightMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
-
-            HeightCompute.SetFloat(FinalContrast, _heightFromDiffuseSettings.FinalContrast);
-            HeightCompute.SetFloat(FinalBias, _heightFromDiffuseSettings.FinalBias);
-
-            var realGain = _heightFromDiffuseSettings.FinalGain;
-            if (realGain < 0.0f)
-                realGain = Mathf.Abs(1.0f / (realGain - 1.0f));
-            else
-                realGain = realGain + 1.0f;
-
-            HeightCompute.SetFloat(FinalGain, realGain);
-
-            HeightCompute.SetFloat(Blur0Weight, _heightFromDiffuseSettings.Blur0Weight);
-            HeightCompute.SetFloat(Blur1Weight, _heightFromDiffuseSettings.Blur1Weight);
-            HeightCompute.SetFloat(Blur2Weight, _heightFromDiffuseSettings.Blur2Weight);
-            HeightCompute.SetFloat(Blur3Weight, _heightFromDiffuseSettings.Blur3Weight);
-            HeightCompute.SetFloat(Blur4Weight, _heightFromDiffuseSettings.Blur4Weight);
-            HeightCompute.SetFloat(Blur5Weight, _heightFromDiffuseSettings.Blur5Weight);
-            HeightCompute.SetFloat(Blur6Weight, _heightFromDiffuseSettings.Blur6Weight);
-
-            HeightCompute.SetFloat(Blur0Contrast, _heightFromDiffuseSettings.Blur0Contrast);
-            HeightCompute.SetFloat(Blur1Contrast, _heightFromDiffuseSettings.Blur1Contrast);
-            HeightCompute.SetFloat(Blur2Contrast, _heightFromDiffuseSettings.Blur2Contrast);
-            HeightCompute.SetFloat(Blur3Contrast, _heightFromDiffuseSettings.Blur3Contrast);
-            HeightCompute.SetFloat(Blur4Contrast, _heightFromDiffuseSettings.Blur4Contrast);
-            HeightCompute.SetFloat(Blur5Contrast, _heightFromDiffuseSettings.Blur5Contrast);
-            HeightCompute.SetFloat(Blur6Contrast, _heightFromDiffuseSettings.Blur6Contrast);
-
-            HeightCompute.SetTexture(kernelCombine, BlurTex0, _blurMap0);
-            HeightCompute.SetTexture(kernelCombine, BlurTex1, _blurMap1);
-            HeightCompute.SetTexture(kernelCombine, BlurTex2, _blurMap2);
-            HeightCompute.SetTexture(kernelCombine, BlurTex3, _blurMap3);
-            HeightCompute.SetTexture(kernelCombine, BlurTex4, _blurMap4);
-            HeightCompute.SetTexture(kernelCombine, BlurTex5, _blurMap5);
-            HeightCompute.SetTexture(kernelCombine, BlurTex6, _blurMap6);
-
-            HeightCompute.SetTexture(kernelCombine, AvgTex, _avgMap);
-
-            HeightCompute.SetBool(HeightFromNormal, _heightFromDiffuseSettings.UseNormal);
-
-            // Save low fidelity for texture 2d
-            HeightCompute.SetTexture(kernelCombine, "ImageInput", _blurMap0);
-            HeightCompute.SetTexture(kernelCombine, "Result", _tempHeightMap);
-            HeightCompute.Dispatch(kernelCombine, _imageSizeX / 8, _imageSizeY / 8, 1);
-
-            if (TextureManager.Instance.HeightMap) Destroy(TextureManager.Instance.HeightMap);
-
-            TextureManager.Instance.GetTextureFromRender(_tempHeightMap, ProgramEnums.MapType.Height);
-
-            // Save high fidelity for normal making
-            if (TextureManager.Instance.HdHeightMap)
-            {
-                TextureManager.Instance.HdHeightMap.Release();
-                TextureManager.Instance.HdHeightMap = null;
-            }
-
-            TextureManager.Instance.HdHeightMap =
-                TextureManager.Instance.GetTempRenderTexture(_tempHeightMap.width, _tempHeightMap.width);
-            HeightCompute.SetTexture(kernelCombine, "ImageInput", _blurMap0);
-            HeightCompute.SetTexture(kernelCombine, "Result", TextureManager.Instance.HdHeightMap);
-            HeightCompute.Dispatch(kernelCombine, _imageSizeX / 8, _imageSizeY / 8, 1);
-
-            RenderTexture.ReleaseTemporary(_tempHeightMap);
-
-            yield return new WaitForSeconds(0.1f);
-
-            ProgramManager.Unlock();
-        }
-
         private IEnumerator ProcessNormal()
         {
-            while (!ProgramManager.Lock())
-            {
-                yield return null;
-            }
+            while (!ProgramManager.Lock()) yield return null;
 
             var kernelNormal = HeightCompute.FindKernel("CSHeightFromNormal");
 
-            General.Logger.Log("Processing Normal");
+            MessagePanel.ShowMessage("Processing Normal for Height Map");
 
             HeightCompute.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
             HeightCompute.SetFloat(Spread, _heightFromDiffuseSettings.Spread);
@@ -980,16 +978,16 @@ namespace Gui
             yield return null;
 
             _readyToProcess = true;
+            MessagePanel.HideMessage();
 
             ProgramManager.Unlock();
         }
 
         public IEnumerator ProcessDiffuse()
         {
-            while (!ProgramManager.Lock())
-            {
-                yield return null;
-            }
+            while (!ProgramManager.Lock()) yield return null;
+
+            MessagePanel.ShowMessage("Processing Diffuse for Height Map");
 
             var kernelSample = SampleCompute.FindKernel("CSSample");
 
@@ -1107,6 +1105,8 @@ namespace Gui
 
             _readyToProcess = true;
 
+            MessagePanel.HideMessage();
+
             ProgramManager.Unlock();
         }
 
@@ -1124,7 +1124,5 @@ namespace Gui
             BlurCompute.SetTexture(_kernelBlur, "Result", dest);
             BlurCompute.Dispatch(_kernelBlur, groupsX, groupsY, 1);
         }
-
-        public bool Hide { get; set; }
     }
 }

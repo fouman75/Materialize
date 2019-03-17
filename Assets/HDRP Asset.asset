@@ -16,15 +16,15 @@ MonoBehaviour:
     type: 2}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 68178309937951
+      data1: 68186899872543
       data2: 4539628424389459968
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
-      data1: 69277821697823
+      data1: 69286411632415
       data2: 4539628424389459968
   m_RenderingPathDefaultRealtimeReflectionFrameSettings:
     bitDatas:
-      data1: 69277620371231
+      data1: 69286210305823
       data2: 4539628424389459968
   m_RenderPipelineSettings:
     supportShadowMask: 1
@@ -39,6 +39,7 @@ MonoBehaviour:
     supportTransparentBackface: 1
     supportTransparentDepthPrepass: 1
     supportTransparentDepthPostpass: 1
+    colorBufferFormat: 74
     supportedLitShaderMode: 2
     supportDecals: 0
     msaaSampleCount: 2
@@ -55,7 +56,7 @@ MonoBehaviour:
       planarReflectionTextureSize: 1024
       reflectionProbeCacheSize: 1
       reflectionCubemapSize: 1024
-      reflectionCacheCompressed: 0
+      reflectionCacheCompressed: 1
       planarReflectionCacheCompressed: 0
       skyReflectionSize: 512
       skyLightingOverrideLayerMask:
@@ -68,11 +69,17 @@ MonoBehaviour:
       maxEnvLightsOnScreen: 4
       maxDecalsOnScreen: 512
     hdShadowInitParams:
-      shadowAtlasResolution: 4096
       maxShadowRequests: 16
-      shadowMapsDepthBits: 32
-      useDynamicViewportRescale: 1
+      directionalShadowsDepthBits: 32
       shadowQuality: 1
+      punctualLightShadowAtlas:
+        shadowAtlasResolution: 4096
+        shadowAtlasDepthBits: 32
+        useDynamicViewportRescale: 1
+      areaLightShadowAtlas:
+        shadowAtlasResolution: 4096
+        shadowAtlasDepthBits: 32
+        useDynamicViewportRescale: 1
     decalSettings:
       drawDistance: 1000
       atlasWidth: 4096
@@ -95,7 +102,7 @@ MonoBehaviour:
   diffusionProfileSettings: {fileID: 0}
   diffusionProfileSettingsList:
   - {fileID: 11400000, guid: 34f5d0d8ebe5dfa41a899ca985b974bb, type: 2}
-  m_Version: 3
+  m_Version: 5
   m_ObsoleteFrameSettings:
     overrides: 0
     enableShadow: 0

@@ -1,3 +1,5 @@
+#region
+
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -7,67 +9,28 @@ using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
 
+#endregion
+
 namespace General
 {
     public class ProgramManager : MonoBehaviour
     {
-        public static ProgramManager Instance;
-        public char PathChar { get; private set; }
-        public Light MainLight;
-        public Vector2 GuiScale = new Vector2(1, 1);
         private const string LastPathKey = nameof(LastPathKey);
-        private const string TargetFrameRateKey = nameof(TargetFrameRateKey);
         public const int DefaultFrameRate = 30;
-        [HideInInspector] public string LastPath;
-        public HDRenderPipeline RenderPipeline;
+        public static ProgramManager Instance;
         public static Vector2 GuiReferenceSize = new Vector2(1440, 810);
         private int _windowId;
-
-        public int GetWindowId => _windowId++;
+        public bool ApplicationIsQuitting;
         public int DesiredFrameRate;
+        public Vector2 GuiScale = new Vector2(1, 1);
+        [HideInInspector] public string LastPath;
+        public Light MainLight;
+        public MessagePanel MessagePanelObject;
+        public HDRenderPipeline RenderPipeline;
 
         #region Settings
 
         public Cubemap StartCubeMap;
-
-        #endregion
-
-        #region Gui Objects
-
-        public List<GameObject> SceneObjects = new List<GameObject>();
-
-        [HideInInspector] [Header("Gui Objects")]
-        public GameObject CommandListExecutorObject;
-
-        [HideInInspector] public GameObject ControlsGuiObject;
-        [HideInInspector] public GameObject MainGuiObject;
-        [HideInInspector] public GameObject SettingsGuiObject;
-        [HideInInspector] public GameObject MaterialGuiObject;
-        public GameObject TestObject;
-
-        #endregion
-
-        #region Suported Formats
-
-        public static readonly string[] LoadFormats =
-        {
-            "png", "jpg", "jpeg", "tga", "bmp", "exr"
-        };
-
-        public static readonly ExtensionFilter[] ImageLoadFilter =
-        {
-            new ExtensionFilter("Image Files", LoadFormats)
-        };
-
-        public static readonly string[] SaveFormats =
-        {
-            "png", "jpg", "jpeg", "tga", "exr"
-        };
-
-        public static readonly ExtensionFilter[] ImageSaveFilter =
-        {
-            new ExtensionFilter("Image Files", SaveFormats)
-        };
 
         #endregion
 
@@ -76,9 +39,15 @@ namespace General
         {
         }
 
+        public char PathChar { get; private set; }
+
+        public int GetWindowId => _windowId++;
+
+        public static bool IsLocked { get; private set; }
+
         public static bool Lock()
         {
-            if (IsLocked != false) return false;
+            if (IsLocked) return false;
 
             IsLocked = true;
             return true;
@@ -89,8 +58,6 @@ namespace General
             IsLocked = false;
         }
 
-        public static bool IsLocked { get; private set; }
-
         private void Awake()
         {
             Instance = this;
@@ -99,6 +66,7 @@ namespace General
             PathChar = Path.DirectorySeparatorChar;
 
             GuiScale = new Vector2(Screen.width / GuiReferenceSize.x, Screen.height / GuiReferenceSize.y);
+            MessagePanelObject.gameObject.SetActive(true);
         }
 
         private IEnumerator Start()
@@ -185,5 +153,49 @@ namespace General
                 probe.RequestRenderNextUpdate();
             }
         }
+
+        private void OnApplicationQuit()
+        {
+            ApplicationIsQuitting = true;
+        }
+
+        #region Gui Objects
+
+        public List<GameObject> SceneObjects = new List<GameObject>();
+
+        [HideInInspector] [Header("Gui Objects")]
+        public GameObject CommandListExecutorObject;
+
+        [HideInInspector] public GameObject ControlsGuiObject;
+        [HideInInspector] public GameObject MainGuiObject;
+        [HideInInspector] public GameObject SettingsGuiObject;
+        [HideInInspector] public GameObject MaterialGuiObject;
+        public GameObject TestObject;
+
+        #endregion
+
+        #region Suported Formats
+
+        public static readonly string[] LoadFormats =
+        {
+            "png", "jpg", "jpeg", "tga", "bmp", "exr"
+        };
+
+        public static readonly ExtensionFilter[] ImageLoadFilter =
+        {
+            new ExtensionFilter("Image Files", LoadFormats)
+        };
+
+        public static readonly string[] SaveFormats =
+        {
+            "png", "jpg", "jpeg", "tga", "exr"
+        };
+
+        public static readonly ExtensionFilter[] ImageSaveFilter =
+        {
+            new ExtensionFilter("Image Files", SaveFormats)
+        };
+
+        #endregion
     }
 }

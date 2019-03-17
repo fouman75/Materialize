@@ -4,6 +4,7 @@ using System.Collections;
 using General;
 using Settings;
 using UnityEngine;
+using Logger = General.Logger;
 
 #endregion
 
@@ -11,12 +12,6 @@ namespace Gui
 {
     public class MetallicGui : MonoBehaviour, IProcessor, IHideable
     {
-        public bool Active
-        {
-            get => gameObject.activeSelf;
-            set => gameObject.SetActive(value);
-        }
-
         private static readonly int MetalColor = Shader.PropertyToID("_MetalColor");
         private static readonly int SampleUv = Shader.PropertyToID("_SampleUV");
         private static readonly int HueWeight = Shader.PropertyToID("_HueWeight");
@@ -29,6 +24,8 @@ namespace Gui
         private static readonly int FinalContrast = Shader.PropertyToID("_FinalContrast");
         private static readonly int FinalBias = Shader.PropertyToID("_FinalBias");
         private static readonly int MainTex = Shader.PropertyToID("_MainTex");
+        private static readonly int BlurTex = Shader.PropertyToID("_BlurTex");
+        private static readonly int OverlayBlurTex = Shader.PropertyToID("_OverlayBlurTex");
         private RenderTexture _blurMap;
         private Camera _camera;
 
@@ -47,6 +44,7 @@ namespace Gui
         private bool _mouseButtonDown;
         private bool _newTexture;
         private RenderTexture _overlayBlurMap;
+        private bool _readyToProcess;
         private bool _selectingColor;
 
         private bool _settingsInitialized;
@@ -54,19 +52,91 @@ namespace Gui
         private float _slider = 0.5f;
 
         private RenderTexture _tempMap;
-
-        private Rect _windowRect;
         private int _windowId;
 
-        public ComputeShader MetallicCompute;
+        private Rect _windowRect;
         public ComputeShader BlurCompute;
+
+        public ComputeShader MetallicCompute;
 
         public GameObject TestObject;
 
         public Material ThisMaterial;
-        private static readonly int BlurTex = Shader.PropertyToID("_BlurTex");
-        private static readonly int OverlayBlurTex = Shader.PropertyToID("_OverlayBlurTex");
-        private bool _readyToProcess;
+
+        public bool Hide { get; set; }
+
+        public bool Active
+        {
+            get => gameObject.activeSelf;
+            set => gameObject.SetActive(value);
+        }
+
+        public void DoStuff()
+        {
+            _doStuff = true;
+        }
+
+        public void NewTexture()
+        {
+            _newTexture = true;
+        }
+
+        public void Close()
+        {
+            CleanupTextures();
+            gameObject.SetActive(false);
+        }
+
+        public IEnumerator Process()
+        {
+            while (!ProgramManager.Lock()) yield return null;
+
+            while (!_readyToProcess) yield return null;
+
+            MessagePanel.ShowMessage("Processing Metallic Map");
+            var metallicKernel = MetallicCompute.FindKernel("CSMetallic");
+
+            MetallicCompute.SetVector("_ImageSize", new Vector2(_imageSizeX, _imageSizeY));
+
+            MetallicCompute.SetVector("_MetalColor", _metallicSettings.MetalColor);
+            MetallicCompute.SetVector("_SampleUV", _metallicSettings.SampleUv);
+            MetallicCompute.SetFloat("_HueWeight", _metallicSettings.HueWeight);
+            MetallicCompute.SetFloat("_SatWeight", _metallicSettings.SatWeight);
+            MetallicCompute.SetFloat("_LumWeight", _metallicSettings.LumWeight);
+
+            MetallicCompute.SetFloat("_MaskLow", _metallicSettings.MaskLow);
+            MetallicCompute.SetFloat("_MaskHigh", _metallicSettings.MaskHigh);
+
+            MetallicCompute.SetFloat("_BlurOverlay", _metallicSettings.BlurOverlay);
+
+            MetallicCompute.SetFloat("_FinalContrast", _metallicSettings.FinalContrast);
+
+            MetallicCompute.SetFloat("_FinalBias", _metallicSettings.FinalBias);
+
+            MetallicCompute.SetTexture(metallicKernel, "_BlurTex", _blurMap);
+
+            MetallicCompute.SetTexture(metallicKernel, "_OverlayBlurTex", _overlayBlurMap);
+
+            RenderTexture.ReleaseTemporary(_tempMap);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            var source = _metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
+
+            MetallicCompute.SetTexture(metallicKernel, "ImageInput", source);
+            MetallicCompute.SetTexture(metallicKernel, "Result", _tempMap);
+            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
+            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+            MetallicCompute.Dispatch(metallicKernel, groupsX, groupsY, 1);
+
+            TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Metallic);
+
+            yield return null;
+
+            RenderTexture.ReleaseTemporary(_tempMap);
+
+            MessagePanel.HideMessage();
+
+            ProgramManager.Unlock();
+        }
 
         private void Awake()
         {
@@ -108,7 +178,7 @@ namespace Gui
         private void InitializeSettings()
         {
             if (_settingsInitialized) return;
-            General.Logger.Log("Initializing Metallic Settings");
+            Logger.Log("Initializing Metallic Settings");
             _metallicSettings = new MetallicSettings();
 
             _metalColorMap = TextureManager.Instance.GetStandardTexture(1, 1);
@@ -121,21 +191,12 @@ namespace Gui
         // Use this for initialization
         private void Start()
         {
+            MessagePanel.ShowMessage("Initializing Metallic GUI");
             _camera = Camera.main;
             TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
 
             InitializeSettings();
             _windowId = ProgramManager.Instance.GetWindowId;
-        }
-
-        public void DoStuff()
-        {
-            _doStuff = true;
-        }
-
-        public void NewTexture()
-        {
-            _newTexture = true;
         }
 
         private void SelectColor()
@@ -298,12 +359,6 @@ namespace Gui
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Metallic From Diffuse");
         }
 
-        public void Close()
-        {
-            CleanupTextures();
-            gameObject.SetActive(false);
-        }
-
         private void CleanupTextures()
         {
             RenderTexture.ReleaseTemporary(_blurMap);
@@ -336,77 +391,19 @@ namespace Gui
                 _metallicSettings.UseOriginalDiffuse = true;
             }
 
-            General.Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
+            Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
             _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
             _blurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
             _overlayBlurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
         }
 
-        public IEnumerator Process()
-        {
-            while (!ProgramManager.Lock())
-            {
-                yield return null;
-            }
-
-            while (!_readyToProcess)
-            {
-                yield return null;
-            }
-
-            General.Logger.Log("Processing Metallic");
-            var metallicKernel = MetallicCompute.FindKernel("CSMetallic");
-
-            MetallicCompute.SetVector("_ImageSize", new Vector2(_imageSizeX, _imageSizeY));
-
-            MetallicCompute.SetVector("_MetalColor", _metallicSettings.MetalColor);
-            MetallicCompute.SetVector("_SampleUV", _metallicSettings.SampleUv);
-            MetallicCompute.SetFloat("_HueWeight", _metallicSettings.HueWeight);
-            MetallicCompute.SetFloat("_SatWeight", _metallicSettings.SatWeight);
-            MetallicCompute.SetFloat("_LumWeight", _metallicSettings.LumWeight);
-
-            MetallicCompute.SetFloat("_MaskLow", _metallicSettings.MaskLow);
-            MetallicCompute.SetFloat("_MaskHigh", _metallicSettings.MaskHigh);
-
-            MetallicCompute.SetFloat("_BlurOverlay", _metallicSettings.BlurOverlay);
-
-            MetallicCompute.SetFloat("_FinalContrast", _metallicSettings.FinalContrast);
-
-            MetallicCompute.SetFloat("_FinalBias", _metallicSettings.FinalBias);
-
-            MetallicCompute.SetTexture(metallicKernel, "_BlurTex", _blurMap);
-
-            MetallicCompute.SetTexture(metallicKernel, "_OverlayBlurTex", _overlayBlurMap);
-
-            RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
-            var source = _metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
-
-            MetallicCompute.SetTexture(metallicKernel, "ImageInput", source);
-            MetallicCompute.SetTexture(metallicKernel, "Result", _tempMap);
-            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
-            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
-            MetallicCompute.Dispatch(metallicKernel, groupsX, groupsY, 1);
-
-            TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Metallic);
-
-            yield return null;
-
-            RenderTexture.ReleaseTemporary(_tempMap);
-
-            ProgramManager.Unlock();
-        }
-
         public IEnumerator ProcessBlur()
         {
-            while (!ProgramManager.Lock())
-            {
-                yield return null;
-            }
+            while (!ProgramManager.Lock()) yield return null;
 
 
-            General.Logger.Log("Processing Blur");
+            MessagePanel.ShowMessage("Processing Blur for Metallic Map");
 
             var blurKernel = BlurCompute.FindKernel("CSBlur");
 
@@ -423,7 +420,9 @@ namespace Gui
             var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
 
             if (_metallicSettings.BlurSize == 0)
+            {
                 Graphics.Blit(diffuse, _tempMap);
+            }
             else
             {
                 BlurCompute.SetTexture(blurKernel, "ImageInput", diffuse);
@@ -433,7 +432,9 @@ namespace Gui
 
             BlurCompute.SetVector("_BlurDirection", new Vector4(0, 1, 0, 0));
             if (_metallicSettings.BlurSize == 0)
+            {
                 Graphics.Blit(_tempMap, _blurMap);
+            }
             else
             {
                 BlurCompute.SetTexture(blurKernel, "ImageInput", _tempMap);
@@ -462,9 +463,9 @@ namespace Gui
 
             _readyToProcess = true;
 
+            MessagePanel.HideMessage();
+
             ProgramManager.Unlock();
         }
-
-        public bool Hide { get; set; }
     }
 }

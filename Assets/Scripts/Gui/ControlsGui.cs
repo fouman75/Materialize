@@ -9,10 +9,12 @@ namespace Gui
 {
     public class ControlsGui : MonoBehaviour, IHideable
     {
+        private int _windowId;
         private bool _windowOpen;
 
         private Rect _windowRect = new Rect(Screen.width - 520, Screen.height - 320, 300, 600);
-        private int _windowId;
+
+        public bool Hide { get; set; }
 
         private void Awake()
         {
@@ -68,7 +70,5 @@ namespace Gui
         {
             _windowOpen = !_windowOpen;
         }
-
-        public bool Hide { get; set; }
     }
 }

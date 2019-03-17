@@ -13,29 +13,31 @@ namespace Gui
 {
     public class PostProcessGui : MonoBehaviour, IHideable
     {
+        private AmbientOcclusion _ambientOcclusion;
+        private float _ambientOcclusionIntensity;
+        private Bloom _bloom;
         private float _bloomIntensity;
         private float _bloomScatter;
-        private float _dofFocusNearFocusStart;
-        private float _dofFocusNearFocusEnd;
-        private float _dofFocusFarFocusStart;
+        private DepthOfField _depthOfField;
         private float _dofFocusFarFocusEnd;
+        private float _dofFocusFarFocusStart;
+        private float _dofFocusNearFocusEnd;
+        private float _dofFocusNearFocusStart;
+        private bool _enableBloom;
+        private bool _enablePostProcess = true;
+        private bool _enableVignette;
         private float _lensDirtIntensity;
+        private Vignette _vignette;
         private float _vignetteIntensity;
         private float _vignetteSmoothness;
-        private float _ambientOcclusionIntensity;
-
-        private Rect _windowRect;
         private int _windowId;
 
-        public Volume SceneVolume;
+        private Rect _windowRect;
         [HideInInspector] public VolumeProfile Profile;
-        private Bloom _bloom;
-        private DepthOfField _depthOfField;
-        private Vignette _vignette;
-        private bool _enablePostProcess = true;
-        private AmbientOcclusion _ambientOcclusion;
-        private bool _enableBloom;
-        private bool _enableVignette;
+
+        public Volume SceneVolume;
+
+        public bool Hide { get; set; }
 
         private void Awake()
         {
@@ -184,10 +186,7 @@ namespace Gui
 
                 offsetY += 45;
 
-                if (_dofFocusNearFocusStart > _dofFocusNearFocusEnd)
-                {
-                    _dofFocusNearFocusStart = _dofFocusNearFocusEnd;
-                }
+                if (_dofFocusNearFocusStart > _dofFocusNearFocusEnd) _dofFocusNearFocusStart = _dofFocusNearFocusEnd;
 
                 GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "DOF Near Focus End", _dofFocusNearFocusEnd,
                     out _dofFocusNearFocusEnd, 0.0f, 50.0f);
@@ -199,10 +198,7 @@ namespace Gui
 
                 offsetY += 45;
 
-                if (_dofFocusFarFocusStart > _dofFocusFarFocusEnd)
-                {
-                    _dofFocusFarFocusStart = _dofFocusFarFocusEnd;
-                }
+                if (_dofFocusFarFocusStart > _dofFocusFarFocusEnd) _dofFocusFarFocusStart = _dofFocusFarFocusEnd;
 
                 GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "DOF Far Focus End", _dofFocusFarFocusEnd,
                     out _dofFocusFarFocusEnd, 0.0f, 50.0f);
@@ -215,13 +211,11 @@ namespace Gui
         private void OnGUI()
         {
             if (Hide) return;
-            Rect rect = new Rect(_windowRect);
+            var rect = new Rect(_windowRect);
             if (!_bloom.active) rect.height -= 135;
             if (!_vignette.active) rect.height -= 90;
             if (!_depthOfField.active) rect.height -= 170;
             MainGui.MakeScaledWindow(rect, _windowId, DoMyWindow, "Post Process", 0.9f);
         }
-
-        public bool Hide { get; set; }
     }
 }

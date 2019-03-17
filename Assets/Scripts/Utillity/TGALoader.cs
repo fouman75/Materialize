@@ -1,11 +1,10 @@
-// This was made by aaro4130 on the Unity forums.  Thanks boss!
-// It's been optimized and slimmed down for the purpose of loading Quake 3 TGA textures from memory streams.
+#region
 
 using System;
 using System.IO;
-using General;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
+
+#endregion
 
 // ReSharper disable InconsistentNaming
 

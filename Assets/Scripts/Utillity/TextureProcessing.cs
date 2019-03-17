@@ -1,10 +1,13 @@
+#region
+
 using System;
 using System.IO;
 using General;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
 using Logger = General.Logger;
 using Object = UnityEngine.Object;
+
+#endregion
 
 public static class TextureProcessing
 {
@@ -89,7 +92,7 @@ public static class TextureProcessing
         newTexture.LoadImage(fileData);
 //        newTexture = ConvertToLinear(newTexture);
 
-        return TextureProcessing.ConvertToStandard(newTexture);
+        return ConvertToStandard(newTexture);
     }
 
 
@@ -109,7 +112,7 @@ public static class TextureProcessing
     {
         pathToFile = Uri.UnescapeDataString(pathToFile);
 
-        var fileFormat = TextureProcessing.GetFormat(pathToFile);
+        var fileFormat = GetFormat(pathToFile);
 
         Texture2D newTexture = null;
         switch (fileFormat)
@@ -117,7 +120,7 @@ public static class TextureProcessing
             case ProgramEnums.FileFormat.Png:
             case ProgramEnums.FileFormat.Jpg:
             case ProgramEnums.FileFormat.Bmp:
-                newTexture = TextureProcessing.LoadPngBmpJpg(pathToFile);
+                newTexture = LoadPngBmpJpg(pathToFile);
                 break;
             case ProgramEnums.FileFormat.Tga:
                 newTexture = TGALoader.LoadTGA(pathToFile);

@@ -71,6 +71,7 @@
             <e p="IProcessor.cs" t="Include" />
             <e p="MainGui.cs" t="Include" />
             <e p="MaterialGui.cs" t="Include" />
+            <e p="MessagePanel.cs" t="Include" />
             <e p="MetallicGui.cs" t="Include" />
             <e p="NormalFromHeightGui.cs" t="Include" />
             <e p="PostProcessGui.cs" t="Include" />

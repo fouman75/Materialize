@@ -2,6 +2,16 @@ namespace General
 {
     public static class ProgramEnums
     {
+        public enum FileFormat
+        {
+            Png,
+            Jpg,
+            Tga,
+            Exr,
+            Bmp,
+            Invalid
+        }
+
         public enum MapType
         {
             None,
@@ -16,16 +26,6 @@ namespace General
             Ao,
             Property,
             MaskMap
-        }
-
-        public enum FileFormat
-        {
-            Png,
-            Jpg,
-            Tga,
-            Exr,
-            Bmp,
-            Invalid
         }
 
         public enum ScreenMode

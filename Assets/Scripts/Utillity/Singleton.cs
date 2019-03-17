@@ -1,6 +1,10 @@
 ﻿#region
 
+#region
+
 using UnityEngine;
+
+#endregion
 
 // ReSharper disable StaticMemberInGenericType
 
@@ -15,7 +19,7 @@ using UnityEngine;
 /// </typeparam>
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    private static T _instance;
+    protected static T _instance;
 
     private static readonly object Lock = new object();
 

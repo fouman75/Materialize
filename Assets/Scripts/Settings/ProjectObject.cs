@@ -1,4 +1,8 @@
+#region
+
 using Gui;
+
+#endregion
 
 namespace Settings
 {
@@ -9,11 +13,11 @@ namespace Settings
         public AoSettings AoSettings;
         public string DiffuseMapOriginalPath;
         public string DiffuseMapPath;
-        public string MaskMapPath;
 
         public EditDiffuseSettings EditDiffuseSettings;
         public HeightFromDiffuseSettings HeightFromDiffuseSettings;
         public string HeightMapPath;
+        public string MaskMapPath;
 
         public MaterialSettings MaterialSettings;
         public string MetallicMapPath;

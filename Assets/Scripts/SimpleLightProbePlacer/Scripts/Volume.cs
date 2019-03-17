@@ -1,16 +1,21 @@
-﻿using UnityEngine;
+﻿#region
+
+using System;
+using UnityEngine;
+
+#endregion
 
 namespace SimpleLightProbePlacer
 {
-    [System.Serializable]
+    [Serializable]
     public struct Volume
     {
         [SerializeField] private Vector3 m_origin;
         [SerializeField] private Vector3 m_size;
 
-        public Vector3 Origin { get { return m_origin; } }
-        public Vector3 Size { get { return m_size; } }
-        
+        public Vector3 Origin => m_origin;
+        public Vector3 Size => m_size;
+
         public Volume(Vector3 origin, Vector3 size)
         {
             m_origin = origin;

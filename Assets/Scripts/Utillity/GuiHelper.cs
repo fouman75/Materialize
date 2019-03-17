@@ -37,10 +37,7 @@ public static class GuiHelper
         var offsetY = (int) rect.y;
         var startValue = value;
 
-        if (!title.IsNullOrEmpty())
-        {
-            GUI.Label(new Rect(rect.x, rect.y, 250, 30), title);
-        }
+        if (!title.IsNullOrEmpty()) GUI.Label(new Rect(rect.x, rect.y, 250, 30), title);
 
         offsetY += 25;
 
@@ -55,10 +52,7 @@ public static class GuiHelper
         if (Event.current.type == EventType.KeyDown && Event.current.character == '\n' &&
             GUI.GetNameOfFocusedControl() == handler)
         {
-            if (textValue.Contains("."))
-            {
-                textValue = textValue.Replace(".", ",");
-            }
+            if (textValue.Contains(".")) textValue = textValue.Replace(".", ",");
 
             float.TryParse(textValue, out value);
             value = Mathf.Clamp(value, minValue, maxValue);

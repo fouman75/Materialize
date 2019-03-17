@@ -1,8 +1,13 @@
 ﻿#region
 
+#region
+
 using General;
 using Settings;
 using UnityEngine;
+using Logger = General.Logger;
+
+#endregion
 
 namespace Gui
 {
@@ -12,7 +17,6 @@ namespace Gui
     public class MaterialGui : MonoBehaviour, IHideable
     {
         private const int UpdateDivisor = 4;
-        private int _divisorCount = UpdateDivisor;
         private static readonly int MetallicId = Shader.PropertyToID("_Metallic");
         private static readonly int NormalStrengthId = Shader.PropertyToID("_NormalScale");
         private static readonly int AoRemapMinId = Shader.PropertyToID("_AORemapMin");
@@ -27,9 +31,11 @@ namespace Gui
         private bool _cubeShown;
         private bool _cylinderShown;
         private Texture2D _diffuseMap;
+        private int _divisorCount = UpdateDivisor;
 
         private Texture2D _heightMap;
         private Light _light;
+        private Texture2D _maskMap;
 
         private MaterialSettings _materialSettings;
 
@@ -42,6 +48,7 @@ namespace Gui
         private bool _sphereShown;
 
         private Material _thisMaterial;
+        private int _windowId;
 
         private Rect _windowRect;
 
@@ -53,8 +60,8 @@ namespace Gui
         public GameObject TestObjectParent;
         public GameObject TestObjectSphere;
         public ObjectZoomPanRotate TestRotator;
-        private Texture2D _maskMap;
-        private int _windowId;
+
+        public bool Hide { get; set; }
 
 
         private void OnDisable()
@@ -121,7 +128,7 @@ namespace Gui
         {
             _thisMaterial = TextureManager.Instance.FullMaterialInstance;
             if (_settingsInitialized) return;
-            General.Logger.Log("Initializing MaterialSettings");
+            Logger.Log("Initializing MaterialSettings");
             _materialSettings = new MaterialSettings();
             _myColorTexture = TextureManager.Instance.GetStandardTexture(1, 1);
             _materialSettings.DisplacementAmplitude = _thisMaterial.GetFloat(HeightAmplitudeId);
@@ -139,6 +146,7 @@ namespace Gui
 
         private void Update()
         {
+            if (ProgramManager.Instance.ApplicationIsQuitting) return;
             if (_divisorCount > 0)
             {
                 _divisorCount--;
@@ -227,9 +235,7 @@ namespace Gui
             offsetY += 25;
 
             if (_materialSettings.AoRemapMin > _materialSettings.AoRemapMax)
-            {
                 _materialSettings.AoRemapMin = _materialSettings.AoRemapMax;
-            }
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _materialSettings.AoRemapMax,
                 out _materialSettings.AoRemapMax, 0.0f, 1.0f);
@@ -239,9 +245,7 @@ namespace Gui
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Smoothness Remap Min Max",
                 _materialSettings.SmoothnessRemapMin, out _materialSettings.SmoothnessRemapMin, 0.0f, 1.0f);
             if (_materialSettings.SmoothnessRemapMin > _materialSettings.SmoothnessRemapMax)
-            {
                 _materialSettings.SmoothnessRemapMin = _materialSettings.SmoothnessRemapMax;
-            }
 
             offsetY += 25;
 
@@ -327,7 +331,5 @@ namespace Gui
             TestObjectCylinder.GetComponent<Renderer>().sharedMaterial = _thisMaterial;
             TestObjectSphere.GetComponent<Renderer>().sharedMaterial = _thisMaterial;
         }
-
-        public bool Hide { get; set; }
     }
 }

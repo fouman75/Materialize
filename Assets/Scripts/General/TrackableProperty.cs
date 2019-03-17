@@ -1,4 +1,8 @@
+#region
+
 using System.Xml.Serialization;
+
+#endregion
 
 namespace General
 {

@@ -10,40 +10,76 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
     IPointerEnterHandler,
     IPointerExitHandler
 {
+    private Camera _camera;
+    private bool _hovering;
     private Vector2 _lastMousePos;
+
+    private Vector3 _lastRaycast;
     private Vector3 _lerpRotation;
 
     private int _mouseDownCount;
 
     private Vector2 _mousePos;
+    private Vector3 _offset;
     private Vector3 _rotation;
+    private Vector3 _startPosition;
+    private Quaternion _startRotation;
+    private Vector3 _targetPosition;
+    private Quaternion _targetRotation;
 
-    public float Filter = 2f;
-    public float ZoomSpeed = 10f;
+    public bool AllowHide = true;
 
     public bool AllowX = true;
     public bool AllowY = true;
 
+    public float Filter = 2f;
+
     public bool InvertX;
     public bool InvertY;
     public bool InvertZoom;
-
-    public KeyCode KeyToHoldToRotate = KeyCode.None;
     public KeyCode KeyToHoldToPan = KeyCode.None;
 
-    public PointerEventData.InputButton RotateButton;
+    public KeyCode KeyToHoldToRotate = KeyCode.None;
     public PointerEventData.InputButton PanButton;
 
-    public bool AllowHide = true;
+    public PointerEventData.InputButton RotateButton;
+    public float ZoomSpeed = 10f;
 
-    private Vector3 _lastRaycast;
-    private Vector3 _targetPosition;
-    private Quaternion _targetRotation;
-    private Camera _camera;
-    private bool _hovering;
-    private Vector3 _startPosition;
-    private Quaternion _startRotation;
-    private Vector3 _offset;
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        _lastMousePos = eventData.position;
+        _offset = transform.position - eventData.pointerCurrentRaycast.worldPosition;
+        if (AllowHide) MainGui.Instance.SaveHideStateAndHideAndLock(this);
+    }
+
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        var canRotate = KeyToHoldToRotate == KeyCode.None || Input.GetKey(KeyToHoldToRotate);
+        canRotate = canRotate && eventData.button == RotateButton;
+
+        if (canRotate) Rotate(eventData);
+
+        var canPan = KeyToHoldToPan == KeyCode.None || Input.GetKey(KeyToHoldToPan);
+        canPan = canPan && eventData.button == PanButton;
+
+        if (canPan) Pan(eventData);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        MainGui.Instance.HideGuiLocker.Unlock(this);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _hovering = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _hovering = false;
+    }
 
     private void Start()
     {
@@ -98,36 +134,9 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
         var direction = (hit.point - _camera.transform.position).normalized;
         var scrollWheel = -Input.GetAxis("Mouse ScrollWheel");
         if (InvertZoom) scrollWheel = -scrollWheel;
-        var target = transform.position + (direction * scrollWheel * ZoomSpeed);
+        var target = transform.position + direction * scrollWheel * ZoomSpeed;
         if (target.z < _camera.transform.position.z + minDistanceFromCamera) return;
         _targetPosition = target;
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        _lastMousePos = eventData.position;
-        _offset = transform.position - eventData.pointerCurrentRaycast.worldPosition;
-        if (AllowHide) MainGui.Instance.SaveHideStateAndHideAndLock(this);
-    }
-
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        var canRotate = (KeyToHoldToRotate == KeyCode.None) || (Input.GetKey(KeyToHoldToRotate));
-        canRotate = canRotate && eventData.button == RotateButton;
-
-        if (canRotate)
-        {
-            Rotate(eventData);
-        }
-
-        var canPan = (KeyToHoldToPan == KeyCode.None) || (Input.GetKey(KeyToHoldToPan));
-        canPan = canPan && eventData.button == PanButton;
-
-        if (canPan)
-        {
-            Pan(eventData);
-        }
     }
 
     private void Pan(PointerEventData eventData)
@@ -154,22 +163,12 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
 //        General.Logger.Log("delta Pass");
 
         if (!AllowX)
-        {
             delta.x = 0;
-        }
-        else if (InvertX)
-        {
-            delta.x = -delta.x;
-        }
+        else if (InvertX) delta.x = -delta.x;
 
         if (!AllowY)
-        {
             delta.y = 0;
-        }
-        else if (InvertY)
-        {
-            delta.y = -delta.y;
-        }
+        else if (InvertY) delta.y = -delta.y;
 
         var axis = Vector3.Cross(delta, Vector3.forward).normalized;
 
@@ -181,20 +180,5 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
         _targetRotation.z = 0;
         transform.rotation = originalRotation;
         _lastMousePos = mousePos;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        MainGui.Instance.HideGuiLocker.Unlock(this);
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        _hovering = true;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        _hovering = false;
     }
 }

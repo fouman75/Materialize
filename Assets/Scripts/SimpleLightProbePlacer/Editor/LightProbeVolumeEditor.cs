@@ -1,14 +1,19 @@
-﻿using UnityEditor;
+﻿#region
+
+using UnityEditor;
 using UnityEngine;
+
+#endregion
 
 namespace SimpleLightProbePlacer.Editor
 {
-    [CanEditMultipleObjects, CustomEditor(typeof(LightProbeVolume))]
+    [CanEditMultipleObjects]
+    [CustomEditor(typeof(LightProbeVolume))]
     public class LightProbeVolumeEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
-            var volume = (LightProbeVolume)target;
+            var volume = (LightProbeVolume) target;
 
             EditorGUI.BeginChangeCheck();
 
@@ -19,11 +24,11 @@ namespace SimpleLightProbePlacer.Editor
 
             GUILayout.Space(10);
             EditorGUILayout.LabelField("Density", EditorStyles.boldLabel);
-            var type = (LightProbeVolumeType)EditorGUILayout.EnumPopup("Density Type", volume.Type);
-            
-            float densityMin = volume.Type == LightProbeVolumeType.Fixed ? 1 : 0.1f;
+            var type = (LightProbeVolumeType) EditorGUILayout.EnumPopup("Density Type", volume.Type);
+
+            var densityMin = volume.Type == LightProbeVolumeType.Fixed ? 1 : 0.1f;
             float densityMax = volume.Type == LightProbeVolumeType.Fixed ? 100 : 50;
-        
+
             var density = volume.Density;
             density.x = EditorGUILayout.Slider("DensityX", volume.Density.x, densityMin, densityMax);
             density.y = EditorGUILayout.Slider("DensityY", volume.Density.y, densityMin, densityMax);
@@ -40,10 +45,10 @@ namespace SimpleLightProbePlacer.Editor
                 EditorUtility.SetDirty(target);
             }
         }
-    
+
         private void OnSceneGUI()
         {
-            var lightProbeVolume = (LightProbeVolume)target;
+            var lightProbeVolume = (LightProbeVolume) target;
 
             var volume = TransformVolume.EditorVolumeControl(lightProbeVolume, 0.1f, LightProbeVolume.EditorColor);
 
@@ -62,19 +67,16 @@ namespace SimpleLightProbePlacer.Editor
             Gizmos.color = color;
             Gizmos.matrix = Matrix4x4.TRS(volume.transform.position, volume.transform.rotation, Vector3.one);
             Gizmos.DrawWireCube(volume.Origin, volume.Size);
-            
+
             if (gizmoType != (GizmoType.Selected | GizmoType.InSelectionHierarchy | GizmoType.Active)) return;
-            
+
             color.a = 0.25f;
             Gizmos.color = color;
             Gizmos.DrawCube(volume.Origin, volume.Size);
 
             var probes = volume.CreatePositions();
 
-            for (int i = 0; i < probes.Count; i++)
-            {
-                Gizmos.DrawIcon(probes[i], "NONE", false);
-            }
+            for (var i = 0; i < probes.Count; i++) Gizmos.DrawIcon(probes[i], "NONE", false);
         }
 
         [MenuItem("GameObject/Light/Light Probe Volume")]

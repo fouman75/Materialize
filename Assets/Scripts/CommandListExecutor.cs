@@ -10,6 +10,7 @@ using General;
 using Gui;
 using Settings;
 using UnityEngine;
+using Logger = General.Logger;
 
 #endregion
 
@@ -125,7 +126,7 @@ public class CommandListExecutor : MonoBehaviour
         serializer.Serialize(stream, commandList);
         ClipboardHelper.ClipBoard = stream.ToString();
 
-        General.Logger.Log(stream.ToString());
+        Logger.Log(stream.ToString());
     }
 
     private void OnApplicationFocus(bool focusStatus)

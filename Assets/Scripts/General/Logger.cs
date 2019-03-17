@@ -1,7 +1,10 @@
 #define ENABLE_LOGGER
 
+#region
+
 using UnityEngine;
 
+#endregion
 
 namespace General
 {

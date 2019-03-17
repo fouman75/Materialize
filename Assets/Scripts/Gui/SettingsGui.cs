@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using General;
 using Settings;
 using UnityEngine;
+using Logger = General.Logger;
 
 #endregion
 
@@ -17,17 +18,19 @@ namespace Gui
         private static readonly int FlipNormalY = Shader.PropertyToID("_FlipNormalY");
 
         public static SettingsGui Instance;
-        public PostProcessGui PostProcessGui;
-        public ObjectZoomPanRotate ObjectHandler;
-        [HideInInspector] public ProgramSettings ProgramSettings = new ProgramSettings();
-
-        private bool _windowOpen;
 
         private readonly Rect _windowRect = new Rect(ProgramManager.GuiReferenceSize.x - 300,
             ProgramManager.GuiReferenceSize.y - 400, 280, 300);
 
         private bool _invalidSettings;
         private int _windowId;
+
+        private bool _windowOpen;
+        public ObjectZoomPanRotate ObjectHandler;
+        public PostProcessGui PostProcessGui;
+        [HideInInspector] public ProgramSettings ProgramSettings = new ProgramSettings();
+
+        public bool Hide { get; set; }
 
         private void Awake()
         {
@@ -63,7 +66,10 @@ namespace Gui
                     ProgramSettings = serializer.Deserialize(sr) as ProgramSettings;
                 }
             }
-            else _invalidSettings = true;
+            else
+            {
+                _invalidSettings = true;
+            }
 
             if (_invalidSettings) InitializeSettings();
 
@@ -72,7 +78,7 @@ namespace Gui
 
         private void InitializeSettings()
         {
-            General.Logger.Log("Initializing Program Settings");
+            Logger.Log("Initializing Program Settings");
             ProgramSettings.HideUiOnRotate = ObjectHandler.AllowHide;
             ProgramSettings.FrameRate = ProgramManager.DefaultFrameRate;
             ProgramSettings.HDR = TextureManager.Instance.Hdr;
@@ -90,7 +96,7 @@ namespace Gui
         private void Serializer_UnknownNode
             (object sender, XmlNodeEventArgs e)
         {
-            General.Logger.LogError($"Unknown Node: {e.Name}\te.Text ");
+            Logger.LogError($"Unknown Node: {e.Name}\te.Text ");
             _invalidSettings = true;
         }
 
@@ -98,7 +104,7 @@ namespace Gui
             (object sender, XmlAttributeEventArgs e)
         {
             var attr = e.Attr;
-            General.Logger.LogError($"Unknown attribute {attr.Name} + ='{attr.Value}'");
+            Logger.LogError($"Unknown attribute {attr.Name} + ='{attr.Value}'");
             _invalidSettings = true;
         }
 
@@ -106,7 +112,7 @@ namespace Gui
             (object sender, XmlElementEventArgs xmlElementEventArgs)
         {
             var element = xmlElementEventArgs.Element;
-            General.Logger.LogError($"Unknown element {element.Name} + ='{element.Value}'");
+            Logger.LogError($"Unknown element {element.Name} + ='{element.Value}'");
             _invalidSettings = true;
         }
 
@@ -182,25 +188,13 @@ namespace Gui
 
             offsetY += 30;
 
-            if (GUI.Button(new Rect(offsetX + 40, offsetY, 30, 30), "30"))
-            {
-                ProgramSettings.FrameRate = 30;
-            }
+            if (GUI.Button(new Rect(offsetX + 40, offsetY, 30, 30), "30")) ProgramSettings.FrameRate = 30;
 
-            if (GUI.Button(new Rect(offsetX + 80, offsetY, 30, 30), "60"))
-            {
-                ProgramSettings.FrameRate = 60;
-            }
+            if (GUI.Button(new Rect(offsetX + 80, offsetY, 30, 30), "60")) ProgramSettings.FrameRate = 60;
 
-            if (GUI.Button(new Rect(offsetX + 120, offsetY, 30, 30), "120"))
-            {
-                ProgramSettings.FrameRate = 120;
-            }
+            if (GUI.Button(new Rect(offsetX + 120, offsetY, 30, 30), "120")) ProgramSettings.FrameRate = 120;
 
-            if (GUI.Button(new Rect(offsetX + 160, offsetY, 40, 30), "None"))
-            {
-                ProgramSettings.FrameRate = -1;
-            }
+            if (GUI.Button(new Rect(offsetX + 160, offsetY, 40, 30), "None")) ProgramSettings.FrameRate = -1;
 
             offsetY += 40;
 
@@ -244,7 +238,5 @@ namespace Gui
                 _windowOpen = true;
             }
         }
-
-        public bool Hide { get; set; }
     }
 }

@@ -40,10 +40,7 @@ Error: {errorBuilder}";
                 throw new Exception(timeoutError);
             }
 
-            if (process.ExitCode == 0)
-            {
-                return outputBuilder.ToString();
-            }
+            if (process.ExitCode == 0) return outputBuilder.ToString();
 
             var error = $@"Could not execute process. Command line: bash {arguments}.
 Output: {outputBuilder}

@@ -10,12 +10,12 @@ namespace Gui
     public class WelcomeScreen : MonoBehaviour
     {
         private static readonly int GlobalCubemap = Shader.PropertyToID("_GlobalCubemap");
-
-        public bool SkipWelcomeScreen;
-        public Texture2D Background;
-        public Texture2D Logo;
         private float _backgroundFade = 1.0f;
         private float _logoFade = 1.0f;
+        public Texture2D Background;
+        public Texture2D Logo;
+
+        public bool SkipWelcomeScreen;
 
         private void Start()
         {

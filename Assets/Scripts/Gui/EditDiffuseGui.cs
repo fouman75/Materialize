@@ -4,6 +4,7 @@ using System.Collections;
 using General;
 using Settings;
 using UnityEngine;
+using Logger = General.Logger;
 
 #endregion
 
@@ -11,12 +12,6 @@ namespace Gui
 {
     public class EditDiffuseGui : MonoBehaviour, IProcessor, IHideable
     {
-        public bool Active
-        {
-            get => gameObject.activeSelf;
-            set => gameObject.SetActive(value);
-        }
-
         private static readonly int Slider = Shader.PropertyToID("_Slider");
         private static readonly int BlurContrast = Shader.PropertyToID("_BlurContrast");
         private static readonly int LightMaskPow = Shader.PropertyToID("_LightMaskPow");
@@ -48,20 +43,91 @@ namespace Gui
 
         private int _imageSizeX;
         private int _imageSizeY;
+        private Material _material;
         private bool _newTexture;
         private bool _settingsInitialized;
 
         private float _slider = 0.5f;
 
         private RenderTexture _tempMap;
+        private int _windowId;
 
         private Rect _windowRect;
 
         public GameObject TestObject;
 
         public Material ThisMaterial;
-        private Material _material;
-        private int _windowId;
+
+        public bool Hide { get; set; }
+
+        public bool Active
+        {
+            get => gameObject.activeSelf;
+            set => gameObject.SetActive(value);
+        }
+
+        public void DoStuff()
+        {
+            _doStuff = true;
+        }
+
+        public void NewTexture()
+        {
+            _newTexture = true;
+        }
+
+
+        public void Close()
+        {
+            CleanupTextures();
+            gameObject.SetActive(false);
+        }
+
+        public IEnumerator Process()
+        {
+            while (!ProgramManager.Lock()) yield return null;
+
+            Logger.Log("Processing Diffuse");
+
+            _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
+
+            _blitMaterial.SetTexture(MainTex, _diffuseMapOriginal);
+
+            _blitMaterial.SetTexture(BlurTex, _blurMap);
+            _blitMaterial.SetFloat(BlurContrast, _eds.BlurContrast);
+
+            _blitMaterial.SetTexture(AvgTex, _avgMap);
+
+            _blitMaterial.SetFloat(LightMaskPow, _eds.LightMaskPow);
+            _blitMaterial.SetFloat(LightPow, _eds.LightPow);
+
+            _blitMaterial.SetFloat(DarkMaskPow, _eds.DarkMaskPow);
+            _blitMaterial.SetFloat(DarkPow, _eds.DarkPow);
+
+            _blitMaterial.SetFloat(HotSpot, _eds.HotSpot);
+            _blitMaterial.SetFloat(DarkSpot, _eds.DarkSpot);
+
+            _blitMaterial.SetFloat(FinalContrast, _eds.FinalContrast);
+
+            _blitMaterial.SetFloat(FinalBias, _eds.FinalBias);
+
+            _blitMaterial.SetFloat(ColorLerp, _eds.ColorLerp);
+
+            _blitMaterial.SetFloat(Saturation, _eds.Saturation);
+
+            RenderTexture.ReleaseTemporary(_tempMap);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+
+            Graphics.Blit(_diffuseMapOriginal, _tempMap, _blitMaterial, 11);
+
+            TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Diffuse);
+
+            RenderTexture.ReleaseTemporary(_tempMap);
+
+            yield return new WaitForSeconds(0.5f);
+
+            ProgramManager.Unlock();
+        }
 
         public void GetValues(ProjectObject projectObject)
         {
@@ -93,7 +159,7 @@ namespace Gui
         private void InitializeSettings()
         {
             if (_settingsInitialized) return;
-            General.Logger.Log("Initializing Edit Diffuse Settings");
+            Logger.Log("Initializing Edit Diffuse Settings");
             _eds = new EditDiffuseSettings();
             _settingsInitialized = true;
         }
@@ -115,17 +181,7 @@ namespace Gui
             InitializeSettings();
 
             _windowId = ProgramManager.Instance.GetWindowId;
-            General.Logger.Log($"Window ID de {name} : {_windowId}");
-        }
-
-        public void DoStuff()
-        {
-            _doStuff = true;
-        }
-
-        public void NewTexture()
-        {
-            _newTexture = true;
+            Logger.Log($"Window ID de {name} : {_windowId}");
         }
 
         // Update is called once per frame
@@ -232,13 +288,6 @@ namespace Gui
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Edit Diffuse");
         }
 
-
-        public void Close()
-        {
-            CleanupTextures();
-            gameObject.SetActive(false);
-        }
-
         private void CleanupTextures()
         {
             RenderTexture.ReleaseTemporary(_blurMap);
@@ -259,69 +308,17 @@ namespace Gui
             _imageSizeX = _diffuseMapOriginal.width;
             _imageSizeY = _diffuseMapOriginal.height;
 
-            General.Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
+            Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
             _blurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
             _avgMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
         }
 
-        public IEnumerator Process()
-        {
-            while (!ProgramManager.Lock())
-            {
-                yield return null;
-            }
-
-            General.Logger.Log("Processing Diffuse");
-
-            _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
-
-            _blitMaterial.SetTexture(MainTex, _diffuseMapOriginal);
-
-            _blitMaterial.SetTexture(BlurTex, _blurMap);
-            _blitMaterial.SetFloat(BlurContrast, _eds.BlurContrast);
-
-            _blitMaterial.SetTexture(AvgTex, _avgMap);
-
-            _blitMaterial.SetFloat(LightMaskPow, _eds.LightMaskPow);
-            _blitMaterial.SetFloat(LightPow, _eds.LightPow);
-
-            _blitMaterial.SetFloat(DarkMaskPow, _eds.DarkMaskPow);
-            _blitMaterial.SetFloat(DarkPow, _eds.DarkPow);
-
-            _blitMaterial.SetFloat(HotSpot, _eds.HotSpot);
-            _blitMaterial.SetFloat(DarkSpot, _eds.DarkSpot);
-
-            _blitMaterial.SetFloat(FinalContrast, _eds.FinalContrast);
-
-            _blitMaterial.SetFloat(FinalBias, _eds.FinalBias);
-
-            _blitMaterial.SetFloat(ColorLerp, _eds.ColorLerp);
-
-            _blitMaterial.SetFloat(Saturation, _eds.Saturation);
-
-            RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
-
-            Graphics.Blit(_diffuseMapOriginal, _tempMap, _blitMaterial, 11);
-
-            TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Diffuse);
-
-            RenderTexture.ReleaseTemporary(_tempMap);
-
-            yield return new WaitForSeconds(0.5f);
-
-            ProgramManager.Unlock();
-        }
-
         private IEnumerator ProcessBlur()
         {
-            while (!ProgramManager.Lock())
-            {
-                yield return null;
-            }
+            while (!ProgramManager.Lock()) yield return null;
 
-            General.Logger.Log("Processing Blur");
+            Logger.Log("Processing Blur");
 
             RenderTexture.ReleaseTemporary(_tempMap);
             _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
@@ -360,7 +357,5 @@ namespace Gui
 
             ProgramManager.Unlock();
         }
-
-        public bool Hide { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections;
 using General;
 using Settings;
 using UnityEngine;
+using Logger = General.Logger;
 
 #endregion
 
@@ -14,12 +15,6 @@ namespace Gui
 {
     public class SmoothnessGui : MonoBehaviour, IProcessor, IHideable
     {
-        public bool Active
-        {
-            get => gameObject.activeSelf;
-            set => gameObject.SetActive(value);
-        }
-
         private static readonly int MetalSmoothness = Shader.PropertyToID("_MetalSmoothness");
         private static readonly int IsolateSample1 = Shader.PropertyToID("_IsolateSample1");
         private static readonly int UseSample1 = Shader.PropertyToID("_UseSample1");
@@ -76,6 +71,7 @@ namespace Gui
         private bool _mouseButtonDown;
         private bool _newTexture;
         private RenderTexture _overlayBlurMap;
+        private bool _readyToProcess;
 
         private Texture2D _sampleColorMap1;
         private Texture2D _sampleColorMap2;
@@ -91,17 +87,123 @@ namespace Gui
         private Texture2D _smoothnessMap;
 
         private RenderTexture _tempMap;
-
-        private Rect _windowRect;
         private int _windowId;
 
+        private Rect _windowRect;
+        public ComputeShader BlurCompute;
+
         public Texture2D DefaultMetallicMap;
+        public ComputeShader SmoothnessCompute;
         public GameObject TestObject;
 
         public Material ThisMaterial;
-        public ComputeShader BlurCompute;
-        public ComputeShader SmoothnessCompute;
-        private bool _readyToProcess;
+
+        public bool Hide { get; set; }
+
+        public bool Active
+        {
+            get => gameObject.activeSelf;
+            set => gameObject.SetActive(value);
+        }
+
+        public void DoStuff()
+        {
+            _doStuff = true;
+        }
+
+        public void NewTexture()
+        {
+            _newTexture = true;
+        }
+
+        public void Close()
+        {
+            CleanUpTextures();
+            gameObject.SetActive(false);
+        }
+
+        public IEnumerator Process()
+        {
+            while (!ProgramManager.Lock()) yield return null;
+
+            while (!_readyToProcess) yield return null;
+
+            MessagePanel.ShowMessage("Processing Smoothness Map");
+
+            var smoothnessKernel = SmoothnessCompute.FindKernel("CSSmoothness");
+
+            SmoothnessCompute.SetVector("_ImageSize", new Vector2(_imageSizeX, _imageSizeY));
+
+            SmoothnessCompute.SetTexture(smoothnessKernel, "_MetallicTex",
+                _metallicMap != null ? _metallicMap : DefaultMetallicMap);
+
+
+            SmoothnessCompute.SetTexture(smoothnessKernel, "_BlurTex", _blurMap);
+
+            SmoothnessCompute.SetTexture(smoothnessKernel, "_OverlayBlurTex", _overlayBlurMap);
+
+            SmoothnessCompute.SetFloat("_MetalSmoothness", _settings.MetalSmoothness);
+
+            SmoothnessCompute.SetInt("_UseSample1", _settings.UseSample1 ? 1 : 0);
+            SmoothnessCompute.SetVector("_SampleColor1", _settings.SampleColor1);
+            SmoothnessCompute.SetVector("_SampleUV1",
+                new Vector4(_settings.SampleUv1.x, _settings.SampleUv1.y, 0, 0));
+            SmoothnessCompute.SetFloat("_HueWeight1", _settings.HueWeight1);
+            SmoothnessCompute.SetFloat("_SatWeight1", _settings.SatWeight1);
+            SmoothnessCompute.SetFloat("_LumWeight1", _settings.LumWeight1);
+            SmoothnessCompute.SetFloat("_MaskLow1", _settings.MaskLow1);
+            SmoothnessCompute.SetFloat("_MaskHigh1", _settings.MaskHigh1);
+            SmoothnessCompute.SetFloat("_Sample1Smoothness", _settings.Sample1Smoothness);
+
+            SmoothnessCompute.SetInt("_UseSample2", _settings.UseSample2 ? 1 : 0);
+            SmoothnessCompute.SetVector("_SampleColor2", _settings.SampleColor2);
+            SmoothnessCompute.SetVector("_SampleUV2",
+                new Vector4(_settings.SampleUv2.x, _settings.SampleUv2.y, 0, 0));
+            SmoothnessCompute.SetFloat("_HueWeight2", _settings.HueWeight2);
+            SmoothnessCompute.SetFloat("_SatWeight2", _settings.SatWeight2);
+            SmoothnessCompute.SetFloat("_LumWeight2", _settings.LumWeight2);
+            SmoothnessCompute.SetFloat("_MaskLow2", _settings.MaskLow2);
+            SmoothnessCompute.SetFloat("_MaskHigh2", _settings.MaskHigh2);
+            SmoothnessCompute.SetFloat("_Sample2Smoothness", _settings.Sample2Smoothness);
+
+            SmoothnessCompute.SetInt("_UseSample3", _settings.UseSample3 ? 1 : 0);
+            SmoothnessCompute.SetVector("_SampleColor3", _settings.SampleColor3);
+            SmoothnessCompute.SetVector("_SampleUV3",
+                new Vector4(_settings.SampleUv3.x, _settings.SampleUv3.y, 0, 0));
+            SmoothnessCompute.SetFloat("_HueWeight3", _settings.HueWeight3);
+            SmoothnessCompute.SetFloat("_SatWeight3", _settings.SatWeight3);
+            SmoothnessCompute.SetFloat("_LumWeight3", _settings.LumWeight3);
+            SmoothnessCompute.SetFloat("_MaskLow3", _settings.MaskLow3);
+            SmoothnessCompute.SetFloat("_MaskHigh3", _settings.MaskHigh3);
+            SmoothnessCompute.SetFloat("_Sample3Smoothness", _settings.Sample3Smoothness);
+
+            SmoothnessCompute.SetFloat("_BaseSmoothness", _settings.BaseSmoothness);
+
+            SmoothnessCompute.SetFloat("_BlurOverlay", _settings.BlurOverlay);
+            SmoothnessCompute.SetFloat("_FinalContrast", _settings.FinalContrast);
+            SmoothnessCompute.SetFloat("_FinalBias", _settings.FinalBias);
+
+            RenderTexture.ReleaseTemporary(_tempMap);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+
+            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
+            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+
+            var source = _settings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
+            SmoothnessCompute.SetTexture(smoothnessKernel, "ImageInput", source);
+            SmoothnessCompute.SetTexture(smoothnessKernel, "Result", _tempMap);
+            SmoothnessCompute.Dispatch(smoothnessKernel, groupsX, groupsY, 1);
+
+            TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Smoothness);
+
+            RenderTexture.ReleaseTemporary(_tempMap);
+
+            yield return null;
+
+            MessagePanel.HideMessage();
+
+            ProgramManager.Unlock();
+        }
 
         private void Awake()
         {
@@ -169,20 +271,11 @@ namespace Gui
         // Use this for initialization
         private void Start()
         {
+            MessagePanel.ShowMessage("Initializing Smoothness GUI");
             TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
 
             InitializeSettings();
             _windowId = ProgramManager.Instance.GetWindowId;
-        }
-
-        public void DoStuff()
-        {
-            _doStuff = true;
-        }
-
-        public void NewTexture()
-        {
-            _newTexture = true;
         }
 
         // Update is called once per frame
@@ -487,12 +580,6 @@ namespace Gui
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Smoothness From Diffuse");
         }
 
-        public void Close()
-        {
-            CleanUpTextures();
-            gameObject.SetActive(false);
-        }
-
         private void CleanUpTextures()
         {
             RenderTexture.ReleaseTemporary(_blurMap);
@@ -528,110 +615,22 @@ namespace Gui
                 _settings.UseOriginalDiffuse = true;
             }
 
-            General.Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
+            Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
             _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
             _blurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
             _overlayBlurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
         }
 
-        public IEnumerator Process()
-        {
-            while (!ProgramManager.Lock())
-            {
-                yield return null;
-            }
-
-            while (!_readyToProcess)
-            {
-                yield return null;
-            }
-
-            General.Logger.Log("Processing Height");
-            var smoothnessKernel = SmoothnessCompute.FindKernel("CSSmoothness");
-
-            SmoothnessCompute.SetVector("_ImageSize", new Vector2(_imageSizeX, _imageSizeY));
-
-            SmoothnessCompute.SetTexture(smoothnessKernel, "_MetallicTex",
-                _metallicMap != null ? _metallicMap : DefaultMetallicMap);
-
-
-            SmoothnessCompute.SetTexture(smoothnessKernel, "_BlurTex", _blurMap);
-
-            SmoothnessCompute.SetTexture(smoothnessKernel, "_OverlayBlurTex", _overlayBlurMap);
-
-            SmoothnessCompute.SetFloat("_MetalSmoothness", _settings.MetalSmoothness);
-
-            SmoothnessCompute.SetInt("_UseSample1", _settings.UseSample1 ? 1 : 0);
-            SmoothnessCompute.SetVector("_SampleColor1", _settings.SampleColor1);
-            SmoothnessCompute.SetVector("_SampleUV1",
-                new Vector4(_settings.SampleUv1.x, _settings.SampleUv1.y, 0, 0));
-            SmoothnessCompute.SetFloat("_HueWeight1", _settings.HueWeight1);
-            SmoothnessCompute.SetFloat("_SatWeight1", _settings.SatWeight1);
-            SmoothnessCompute.SetFloat("_LumWeight1", _settings.LumWeight1);
-            SmoothnessCompute.SetFloat("_MaskLow1", _settings.MaskLow1);
-            SmoothnessCompute.SetFloat("_MaskHigh1", _settings.MaskHigh1);
-            SmoothnessCompute.SetFloat("_Sample1Smoothness", _settings.Sample1Smoothness);
-
-            SmoothnessCompute.SetInt("_UseSample2", _settings.UseSample2 ? 1 : 0);
-            SmoothnessCompute.SetVector("_SampleColor2", _settings.SampleColor2);
-            SmoothnessCompute.SetVector("_SampleUV2",
-                new Vector4(_settings.SampleUv2.x, _settings.SampleUv2.y, 0, 0));
-            SmoothnessCompute.SetFloat("_HueWeight2", _settings.HueWeight2);
-            SmoothnessCompute.SetFloat("_SatWeight2", _settings.SatWeight2);
-            SmoothnessCompute.SetFloat("_LumWeight2", _settings.LumWeight2);
-            SmoothnessCompute.SetFloat("_MaskLow2", _settings.MaskLow2);
-            SmoothnessCompute.SetFloat("_MaskHigh2", _settings.MaskHigh2);
-            SmoothnessCompute.SetFloat("_Sample2Smoothness", _settings.Sample2Smoothness);
-
-            SmoothnessCompute.SetInt("_UseSample3", _settings.UseSample3 ? 1 : 0);
-            SmoothnessCompute.SetVector("_SampleColor3", _settings.SampleColor3);
-            SmoothnessCompute.SetVector("_SampleUV3",
-                new Vector4(_settings.SampleUv3.x, _settings.SampleUv3.y, 0, 0));
-            SmoothnessCompute.SetFloat("_HueWeight3", _settings.HueWeight3);
-            SmoothnessCompute.SetFloat("_SatWeight3", _settings.SatWeight3);
-            SmoothnessCompute.SetFloat("_LumWeight3", _settings.LumWeight3);
-            SmoothnessCompute.SetFloat("_MaskLow3", _settings.MaskLow3);
-            SmoothnessCompute.SetFloat("_MaskHigh3", _settings.MaskHigh3);
-            SmoothnessCompute.SetFloat("_Sample3Smoothness", _settings.Sample3Smoothness);
-
-            SmoothnessCompute.SetFloat("_BaseSmoothness", _settings.BaseSmoothness);
-
-            SmoothnessCompute.SetFloat("_BlurOverlay", _settings.BlurOverlay);
-            SmoothnessCompute.SetFloat("_FinalContrast", _settings.FinalContrast);
-            SmoothnessCompute.SetFloat("_FinalBias", _settings.FinalBias);
-
-            RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
-
-            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
-            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
-
-            var source = _settings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
-            SmoothnessCompute.SetTexture(smoothnessKernel, "ImageInput", source);
-            SmoothnessCompute.SetTexture(smoothnessKernel, "Result", _tempMap);
-            SmoothnessCompute.Dispatch(smoothnessKernel, groupsX, groupsY, 1);
-
-            TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Smoothness);
-
-            RenderTexture.ReleaseTemporary(_tempMap);
-
-            yield return null;
-
-            ProgramManager.Unlock();
-        }
-
         public IEnumerator ProcessBlur()
         {
-            while (!ProgramManager.Lock())
-            {
-                yield return null;
-            }
+            while (!ProgramManager.Lock()) yield return null;
+
+            MessagePanel.ShowMessage("Processing Blur for Smoothness Map");
 
             var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
             var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
 
-            General.Logger.Log("Processing Blur");
             var blurKernel = BlurCompute.FindKernel("CSBlur");
 
             BlurCompute.SetVector("_ImageSize", new Vector4(_imageSizeX, _imageSizeY, 0, 0));
@@ -644,7 +643,9 @@ namespace Gui
             var diffuse = _settings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
 
             if (_settings.BlurSize == 0)
+            {
                 Graphics.Blit(diffuse, _tempMap);
+            }
             else
             {
                 BlurCompute.SetTexture(blurKernel, "ImageInput", diffuse);
@@ -654,7 +655,9 @@ namespace Gui
 
             BlurCompute.SetVector("_BlurDirection", new Vector4(0, 1, 0, 0));
             if (_settings.BlurSize == 0)
+            {
                 Graphics.Blit(_tempMap, _blurMap);
+            }
             else
             {
                 BlurCompute.SetTexture(blurKernel, "ImageInput", _tempMap);
@@ -683,9 +686,9 @@ namespace Gui
 
             _readyToProcess = true;
 
+            MessagePanel.HideMessage();
+
             ProgramManager.Unlock();
         }
-
-        public bool Hide { get; set; }
     }
 }

@@ -22,6 +22,194 @@ namespace Gui
 {
     public class MainGui : MonoBehaviour
     {
+        public void SaveImage(ProgramEnums.MapType mapType)
+        {
+            switch (mapType)
+            {
+                case ProgramEnums.MapType.Height:
+                    break;
+                case ProgramEnums.MapType.Diffuse:
+                    break;
+                case ProgramEnums.MapType.DiffuseOriginal:
+                    break;
+                case ProgramEnums.MapType.Metallic:
+                    break;
+                case ProgramEnums.MapType.Smoothness:
+                    break;
+                case ProgramEnums.MapType.Normal:
+                    break;
+                case ProgramEnums.MapType.Ao:
+                    break;
+                case ProgramEnums.MapType.Property:
+                    break;
+                case ProgramEnums.MapType.MaskMap:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
+            }
+        }
+
+        public void LoadImage(ProgramEnums.MapType mapType)
+        {
+            switch (mapType)
+            {
+                case ProgramEnums.MapType.Height:
+                    break;
+                case ProgramEnums.MapType.Diffuse:
+                    break;
+                case ProgramEnums.MapType.DiffuseOriginal:
+                    break;
+                case ProgramEnums.MapType.Metallic:
+                    break;
+                case ProgramEnums.MapType.Smoothness:
+                    break;
+                case ProgramEnums.MapType.Normal:
+                    break;
+                case ProgramEnums.MapType.Ao:
+                    break;
+                case ProgramEnums.MapType.Property:
+                    break;
+                case ProgramEnums.MapType.MaskMap:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
+            }
+        }
+
+        public void CreateImage(ProgramEnums.MapType mapType, Button button)
+        {
+            switch (mapType)
+            {
+                case ProgramEnums.MapType.Height:
+                    StartCoroutine(CreateHeight(button));
+                    break;
+                case ProgramEnums.MapType.Diffuse:
+                    break;
+                case ProgramEnums.MapType.DiffuseOriginal:
+                    break;
+                case ProgramEnums.MapType.Metallic:
+                    StartCoroutine(CreateMetallic(button));
+                    break;
+                case ProgramEnums.MapType.Smoothness:
+                    StartCoroutine(CreateSmoothness(button));
+                    break;
+                case ProgramEnums.MapType.Normal:
+                    StartCoroutine(CreateNormal(button));
+                    break;
+                case ProgramEnums.MapType.Ao:
+                    StartCoroutine(CreateAo(button));
+                    break;
+                case ProgramEnums.MapType.Property:
+                    break;
+                case ProgramEnums.MapType.MaskMap:
+                    CreateMaskMap();
+                    break;
+                case ProgramEnums.MapType.None:
+                    break;
+                case ProgramEnums.MapType.Any:
+                    break;
+                case ProgramEnums.MapType.AnyDiffuse:
+                    StartCoroutine(EditDiffuse(button));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
+            }
+        }
+
+        private IEnumerator CreateHeight(Button button)
+        {
+            yield return StartCoroutine(Create(HeightFromDiffuseGuiScript, button));
+        }
+
+        private IEnumerator EditDiffuse(Button button)
+        {
+            yield return StartCoroutine(Create(EditDiffuseGuiScript, button));
+        }
+
+        private IEnumerator CreateNormal(Button button)
+        {
+            yield return StartCoroutine(Create(NormalFromHeightGuiScript, button));
+        }
+
+        private IEnumerator CreateMetallic(Button button)
+        {
+            yield return StartCoroutine(Create(MetallicGuiScript, button));
+        }
+
+        private IEnumerator CreateSmoothness(Button button)
+        {
+            yield return StartCoroutine(Create(SmoothnessGuiScript, button));
+        }
+
+        private IEnumerator CreateAo(Button button)
+        {
+            yield return StartCoroutine(Create(AoFromNormalGuiScript, button));
+        }
+
+        private IEnumerator Create(IProcessor processor, Button button)
+        {
+            CloseWindows();
+            TextureManager.Instance.FixSize();
+            processor.Active = true;
+            processor.NewTexture();
+            processor.DoStuff();
+
+            var textComp = button.GetComponentInChildren<TextMeshProUGUI>();
+            var oldText = textComp.text;
+            textComp.text = "Apply";
+
+            var action = new UnityAction(() => StartCoroutine(processor.Process()));
+            var oldDelegate = button.onClick;
+            button.onClick = new Button.ButtonClickedEvent();
+            button.onClick.AddListener(action);
+            while (processor.Active) yield return null;
+
+            button.onClick = oldDelegate;
+            textComp.text = oldText;
+        }
+
+        private void CreateMaskMap()
+        {
+            CloseWindows();
+            TextureManager.Instance.FixSize();
+            StartCoroutine(TextureManager.Instance.MakeMaskMap());
+        }
+
+        public static void MakeScaledWindow(Rect windowRect, int id, GUI.WindowFunction callback, string title,
+            float scale = 1.0f)
+        {
+            var aspect = ProgramManager.Instance.GuiScale.x / ProgramManager.Instance.GuiScale.y;
+            var posX = windowRect.x * ProgramManager.Instance.GuiScale.x;
+            var posY = windowRect.y * ProgramManager.Instance.GuiScale.y;
+            posY += (aspect - 1.0f) * 90f;
+            var pivotPoint = new Vector2(posX, posY);
+
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale * scale, pivotPoint);
+
+            var newWindowRect = new Rect(posX, posY, windowRect.width, windowRect.height);
+            newWindowRect = GUI.Window(id, newWindowRect, callback, title);
+            posX = newWindowRect.x / ProgramManager.Instance.GuiScale.x;
+            posY = newWindowRect.y / ProgramManager.Instance.GuiScale.y;
+            windowRect.x = posX;
+            windowRect.y = posY;
+        }
+
+        private static Rect MakeScaledBox(Rect windowRect, string title, float scale = 1.0f)
+        {
+            var aspect = ProgramManager.Instance.GuiScale.x / ProgramManager.Instance.GuiScale.y;
+            var posX = windowRect.x * ProgramManager.Instance.GuiScale.x;
+            var posY = windowRect.y * ProgramManager.Instance.GuiScale.y;
+            posY += (aspect - 1.0f) * 90f;
+            var pivotPoint = new Vector2(posX, posY);
+
+            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale * scale, pivotPoint);
+
+            var newWindowRect = new Rect(posX, posY, windowRect.width, windowRect.height);
+            GUI.Box(newWindowRect, title);
+
+            return newWindowRect;
+        }
+
         #region Variables
 
         public static MainGui Instance;
@@ -148,22 +336,18 @@ namespace Gui
 
             HDRenderPipeline hdrp = null;
             if (RenderPipelineManager.currentPipeline != null)
-            {
                 hdrp = RenderPipelineManager.currentPipeline as HDRenderPipeline;
-            }
 
             while (hdrp == null)
             {
                 if (RenderPipelineManager.currentPipeline != null)
-                {
                     hdrp = RenderPipelineManager.currentPipeline as HDRenderPipeline;
-                }
 
                 yield return new WaitForSeconds(0.1f);
             }
 
             hdrp.RequestSkyEnvironmentUpdate();
-            General.Logger.Log("HDRI Sky Atualizado");
+            Logger.Log("HDRI Sky Atualizado");
 
             ProgramManager.RenderProbe();
         }
@@ -214,9 +398,7 @@ namespace Gui
             GUI.enabled = TextureManager.Instance.NotNull(ProgramEnums.MapType.Normal);
 
             if (GUI.Button(new Rect(offsetXm + 10, offsetY + 145, 100, 25), "Flip Normal Y"))
-            {
                 TextureManager.Instance.FlipNormalYCallback();
-            }
 
             GUI.enabled = true;
 
@@ -230,10 +412,8 @@ namespace Gui
 
             //Load Project
             if (GUI.Button(new Rect(offsetXm + 10, offsetY + 215, 100, 25), "Load Project"))
-            {
                 StandaloneFileBrowser.StandaloneFileBrowser.OpenFilePanelAsync("Load Project",
                     ProgramManager.Instance.LastPath, "mtz", false, LoadProjectCallback);
-            }
 
             #endregion
 
@@ -520,55 +700,25 @@ namespace Gui
         {
             _objectsToUnhide = new List<IHideable>();
 
-            if (HeightFromDiffuseGuiObject.activeSelf)
-            {
-                _objectsToUnhide.Add(HeightFromDiffuseGuiScript);
-            }
+            if (HeightFromDiffuseGuiObject.activeSelf) _objectsToUnhide.Add(HeightFromDiffuseGuiScript);
 
-            if (NormalFromHeightGuiObject.activeSelf)
-            {
-                _objectsToUnhide.Add(NormalFromHeightGuiScript);
-            }
+            if (NormalFromHeightGuiObject.activeSelf) _objectsToUnhide.Add(NormalFromHeightGuiScript);
 
-            if (AoFromNormalGuiObject.activeSelf)
-            {
-                _objectsToUnhide.Add(AoFromNormalGuiScript);
-            }
+            if (AoFromNormalGuiObject.activeSelf) _objectsToUnhide.Add(AoFromNormalGuiScript);
 
-            if (EditDiffuseGuiObject.activeSelf)
-            {
-                _objectsToUnhide.Add(EditDiffuseGuiScript);
-            }
+            if (EditDiffuseGuiObject.activeSelf) _objectsToUnhide.Add(EditDiffuseGuiScript);
 
-            if (MetallicGuiObject.activeSelf)
-            {
-                _objectsToUnhide.Add(MetallicGuiScript);
-            }
+            if (MetallicGuiObject.activeSelf) _objectsToUnhide.Add(MetallicGuiScript);
 
-            if (SmoothnessGuiObject.activeSelf)
-            {
-                _objectsToUnhide.Add(SmoothnessGuiScript);
-            }
+            if (SmoothnessGuiObject.activeSelf) _objectsToUnhide.Add(SmoothnessGuiScript);
 
-            if (MaterialGuiObject.activeSelf)
-            {
-                _objectsToUnhide.Add(MaterialGuiScript);
-            }
+            if (MaterialGuiObject.activeSelf) _objectsToUnhide.Add(MaterialGuiScript);
 
-            if (PostProcessGuiObject.activeSelf)
-            {
-                _objectsToUnhide.Add(PostProcessGuiScript);
-            }
+            if (PostProcessGuiObject.activeSelf) _objectsToUnhide.Add(PostProcessGuiScript);
 
-            if (TilingTextureMakerGuiObject.activeSelf)
-            {
-                _objectsToUnhide.Add(_tilingTextureMakerGuiScript);
-            }
+            if (TilingTextureMakerGuiObject.activeSelf) _objectsToUnhide.Add(_tilingTextureMakerGuiScript);
 
-            foreach (var hideable in _objectsToUnhide)
-            {
-                hideable.Hide = true;
-            }
+            foreach (var hideable in _objectsToUnhide) hideable.Hide = true;
         }
 
         #endregion
@@ -759,7 +909,7 @@ namespace Gui
             {
                 if (HideGuiLocker.IsLocked)
                 {
-                    General.Logger.Log("Tentando modificar IsGuiHidden quando travado");
+                    Logger.Log("Tentando modificar IsGuiHidden quando travado");
                     return;
                 }
 
@@ -777,196 +927,5 @@ namespace Gui
         }
 
         #endregion
-
-        public void SaveImage(ProgramEnums.MapType mapType)
-        {
-            switch (mapType)
-            {
-                case ProgramEnums.MapType.Height:
-                    break;
-                case ProgramEnums.MapType.Diffuse:
-                    break;
-                case ProgramEnums.MapType.DiffuseOriginal:
-                    break;
-                case ProgramEnums.MapType.Metallic:
-                    break;
-                case ProgramEnums.MapType.Smoothness:
-                    break;
-                case ProgramEnums.MapType.Normal:
-                    break;
-                case ProgramEnums.MapType.Ao:
-                    break;
-                case ProgramEnums.MapType.Property:
-                    break;
-                case ProgramEnums.MapType.MaskMap:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
-            }
-        }
-
-        public void LoadImage(ProgramEnums.MapType mapType)
-        {
-            switch (mapType)
-            {
-                case ProgramEnums.MapType.Height:
-                    break;
-                case ProgramEnums.MapType.Diffuse:
-                    break;
-                case ProgramEnums.MapType.DiffuseOriginal:
-                    break;
-                case ProgramEnums.MapType.Metallic:
-                    break;
-                case ProgramEnums.MapType.Smoothness:
-                    break;
-                case ProgramEnums.MapType.Normal:
-                    break;
-                case ProgramEnums.MapType.Ao:
-                    break;
-                case ProgramEnums.MapType.Property:
-                    break;
-                case ProgramEnums.MapType.MaskMap:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
-            }
-        }
-
-        public void CreateImage(ProgramEnums.MapType mapType, Button button)
-        {
-            switch (mapType)
-            {
-                case ProgramEnums.MapType.Height:
-                    StartCoroutine(CreateHeight(button));
-                    break;
-                case ProgramEnums.MapType.Diffuse:
-                    break;
-                case ProgramEnums.MapType.DiffuseOriginal:
-                    break;
-                case ProgramEnums.MapType.Metallic:
-                    StartCoroutine(CreateMetallic(button));
-                    break;
-                case ProgramEnums.MapType.Smoothness:
-                    StartCoroutine(CreateSmoothness(button));
-                    break;
-                case ProgramEnums.MapType.Normal:
-                    StartCoroutine(CreateNormal(button));
-                    break;
-                case ProgramEnums.MapType.Ao:
-                    StartCoroutine(CreateAo(button));
-                    break;
-                case ProgramEnums.MapType.Property:
-                    break;
-                case ProgramEnums.MapType.MaskMap:
-                    CreateMaskMap();
-                    break;
-                case ProgramEnums.MapType.None:
-                    break;
-                case ProgramEnums.MapType.Any:
-                    break;
-                case ProgramEnums.MapType.AnyDiffuse:
-                    StartCoroutine(EditDiffuse(button));
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
-            }
-        }
-
-        private IEnumerator CreateHeight(Button button)
-        {
-            yield return StartCoroutine(Create(HeightFromDiffuseGuiScript, button));
-        }
-
-        private IEnumerator EditDiffuse(Button button)
-        {
-            yield return StartCoroutine(Create(EditDiffuseGuiScript, button));
-        }
-
-        private IEnumerator CreateNormal(Button button)
-        {
-            yield return StartCoroutine(Create(NormalFromHeightGuiScript, button));
-        }
-
-        private IEnumerator CreateMetallic(Button button)
-        {
-            yield return StartCoroutine(Create(MetallicGuiScript, button));
-        }
-
-        private IEnumerator CreateSmoothness(Button button)
-        {
-            yield return StartCoroutine(Create(SmoothnessGuiScript, button));
-        }
-
-        private IEnumerator CreateAo(Button button)
-        {
-            yield return StartCoroutine(Create(AoFromNormalGuiScript, button));
-        }
-
-        private IEnumerator Create(IProcessor processor, Button button)
-        {
-            CloseWindows();
-            TextureManager.Instance.FixSize();
-            processor.Active = true;
-            processor.NewTexture();
-            processor.DoStuff();
-
-            var textComp = button.GetComponentInChildren<TextMeshProUGUI>();
-            var oldText = textComp.text;
-            textComp.text = "Apply";
-
-            var action = new UnityAction(() => StartCoroutine(processor.Process()));
-            var oldDelegate = button.onClick;
-            button.onClick = new Button.ButtonClickedEvent();
-            button.onClick.AddListener(action);
-            while (processor.Active)
-            {
-                yield return null;
-            }
-
-            button.onClick = oldDelegate;
-            textComp.text = oldText;
-        }
-
-        private void CreateMaskMap()
-        {
-            CloseWindows();
-            TextureManager.Instance.FixSize();
-            StartCoroutine(TextureManager.Instance.MakeMaskMap());
-        }
-
-        public static void MakeScaledWindow(Rect windowRect, int id, GUI.WindowFunction callback, string title,
-            float scale = 1.0f)
-        {
-            var aspect = ProgramManager.Instance.GuiScale.x / ProgramManager.Instance.GuiScale.y;
-            var posX = windowRect.x * ProgramManager.Instance.GuiScale.x;
-            var posY = windowRect.y * ProgramManager.Instance.GuiScale.y;
-            posY += (aspect - 1.0f) * 90f;
-            var pivotPoint = new Vector2(posX, posY);
-
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale * scale, pivotPoint);
-
-            var newWindowRect = new Rect(posX, posY, windowRect.width, windowRect.height);
-            newWindowRect = GUI.Window(id, newWindowRect, callback, title);
-            posX = newWindowRect.x / ProgramManager.Instance.GuiScale.x;
-            posY = newWindowRect.y / ProgramManager.Instance.GuiScale.y;
-            windowRect.x = posX;
-            windowRect.y = posY;
-        }
-
-        private static Rect MakeScaledBox(Rect windowRect, string title, float scale = 1.0f)
-        {
-            var aspect = ProgramManager.Instance.GuiScale.x / ProgramManager.Instance.GuiScale.y;
-            var posX = windowRect.x * ProgramManager.Instance.GuiScale.x;
-            var posY = windowRect.y * ProgramManager.Instance.GuiScale.y;
-            posY += (aspect - 1.0f) * 90f;
-            var pivotPoint = new Vector2(posX, posY);
-
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale * scale, pivotPoint);
-
-            var newWindowRect = new Rect(posX, posY, windowRect.width, windowRect.height);
-            GUI.Box(newWindowRect, title);
-
-            return newWindowRect;
-        }
     }
 }

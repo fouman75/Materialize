@@ -1,12 +1,18 @@
+#region
+
 using System.ComponentModel;
 using General;
 using UnityEngine;
+
+#endregion
 
 namespace Gui
 {
     public class MaterialSettings
     {
         private const float LightIntensityDefault = 10f;
+        [DefaultValue(1)] public float AoRemapMax;
+        [DefaultValue(0)] public float AoRemapMin;
         public float DisplacementAmplitude;
         public float DisplacementCenter;
 
@@ -20,14 +26,12 @@ namespace Gui
 
         public TrackableProperty Metallic;
         public float NormalStrength;
-        [DefaultValue(0)] public float AoRemapMin;
-        [DefaultValue(1)] public float AoRemapMax;
-        [DefaultValue(0)] public float SmoothnessRemapMin;
         [DefaultValue(1)] public float SmoothnessRemapMax;
-        [DefaultValue(1)] public float TexTilingX;
-        [DefaultValue(1)] public float TexTilingY;
+        [DefaultValue(0)] public float SmoothnessRemapMin;
         [DefaultValue(0)] public float TexOffsetX;
         [DefaultValue(0)] public float TexOffsetY;
+        [DefaultValue(1)] public float TexTilingX;
+        [DefaultValue(1)] public float TexTilingY;
 
         public MaterialSettings()
         {

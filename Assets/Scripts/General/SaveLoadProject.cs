@@ -7,9 +7,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using Gui;
+using Plugins.Extension;
 using Settings;
 using UnityEngine;
-using StringExt = Plugins.Extension.StringExt;
 
 #endregion
 
@@ -160,10 +160,7 @@ namespace General
                 var supported = ProgramManager.LoadFormats.Any(format => bashOut.Contains(format));
                 if (!supported) return;
 
-                if (bashOut.Contains(filePrefix))
-                {
-                    bashOut = bashOut.Replace(filePrefix, "/");
-                }
+                if (bashOut.Contains(filePrefix)) bashOut = bashOut.Replace(filePrefix, "/");
 
                 var firstIndex = bashOut.IndexOf('/');
                 if (bashOut.Length > firstIndex)
@@ -173,7 +170,10 @@ namespace General
                     var length = lastIndex - firstIndex;
                     pathToFile = bashOut.Substring(firstIndex, length);
                 }
-                else return;
+                else
+                {
+                    return;
+                }
             }
 
             File.Delete(pathToTextFile);
@@ -247,10 +247,7 @@ namespace General
             textureToSave.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0, false);
             textureToSave.Apply(false);
 
-            if (extension != "exr" || !isHdr)
-            {
-                textureToSave = TextureProcessing.ConvertToGama(textureToSave);
-            }
+            if (extension != "exr" || !isHdr) textureToSave = TextureProcessing.ConvertToGama(textureToSave);
 
             byte[] bytes;
             switch (extension)
@@ -267,7 +264,7 @@ namespace General
                 }
                 case "tga":
                 {
-                    bytes = textureToSave.EncodeToTGA();
+                    bytes = ImageConversion.EncodeToTGA(textureToSave);
                     break;
                 }
                 case "exr":
@@ -357,9 +354,7 @@ namespace General
 //            }
 
             if (newTexture && newTexture.format != TextureManager.DefaultHdrTextureFormat)
-            {
                 newTexture = TextureProcessing.ConvertToStandard(newTexture);
-            }
 
             if (!newTexture) yield break;
             newTexture.anisoLevel = 9;

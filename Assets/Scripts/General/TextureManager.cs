@@ -1,3 +1,5 @@
+#region
+
 using System;
 using System.Collections;
 using Gui;
@@ -5,24 +7,15 @@ using JetBrains.Annotations;
 using Plugins.Extension;
 using UnityEngine;
 
+#endregion
+
 namespace General
 {
     public class TextureManager : MonoBehaviour
     {
-        public static TextureManager Instance;
-        public bool Hdr;
-        public bool FlipNormalY;
         public const TextureFormat DefaultHdrTextureFormat = TextureFormat.RGBAHalf;
         public const TextureFormat DefaultLdrTextureFormat = TextureFormat.RGBA32;
-        public RenderTextureFormat RenderTextureFormat;
-
-        [HideInInspector] public ProgramEnums.MapType TextureInClipboard;
-
-        // ReSharper disable once RedundantDefaultMemberInitializer
-        [UsedImplicitly] [SerializeField] private Material FullMaterial = null;
-        public Material FullMaterialInstance { get; private set; }
-        public ComputeShader MaskMapCompute;
-        public ComputeShader PackNormalCompute;
+        public static TextureManager Instance;
 
         private static readonly int DiffuseMapId = Shader.PropertyToID("_BaseColorMap");
         private static readonly int NormalMapId = Shader.PropertyToID("_NormalMap");
@@ -31,22 +24,17 @@ namespace General
 
         private Texture2D _blackTexture;
         private Texture2D _packedNormal;
+        public bool FlipNormalY;
 
-        #region Map Variables
+        // ReSharper disable once RedundantDefaultMemberInitializer
+        [UsedImplicitly] [SerializeField] private Material FullMaterial = null;
+        public bool Hdr;
+        public ComputeShader MaskMapCompute;
+        public ComputeShader PackNormalCompute;
+        public RenderTextureFormat RenderTextureFormat;
 
-        public RenderTexture HdHeightMap;
-        public Texture2D HeightMap;
-        public Texture2D DiffuseMap;
-        public Texture2D DiffuseMapOriginal;
-        public Texture2D NormalMap;
-        public Texture2D MetallicMap;
-        public Texture2D SmoothnessMap;
-        public Texture2D AoMap;
-        public Texture2D MaskMap;
-        public Texture2D PropertyMap;
-        private ProgramEnums.MapType _textureToSave;
-
-        #endregion
+        [HideInInspector] public ProgramEnums.MapType TextureInClipboard;
+        public Material FullMaterialInstance { get; private set; }
 
         private void Awake()
         {
@@ -98,11 +86,11 @@ namespace General
                 case ProgramEnums.MapType.MaskMap:
                     return MaskMap;
                 case ProgramEnums.MapType.AnyDiffuse:
-                    return (DiffuseMap || DiffuseMapOriginal);
+                    return DiffuseMap || DiffuseMapOriginal;
                 case ProgramEnums.MapType.None:
                     break;
                 case ProgramEnums.MapType.Any:
-                    return (HeightMap || DiffuseMapOriginal || MetallicMap || SmoothnessMap || MaskMap || AoMap);
+                    return HeightMap || DiffuseMapOriginal || MetallicMap || SmoothnessMap || MaskMap || AoMap;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
             }
@@ -181,6 +169,8 @@ namespace General
         {
             GL.Flush();
 
+            MessagePanel.ShowMessage("Setting Material");
+
             if (HeightMap)
             {
                 FullMaterialInstance.EnableKeyword("_TESSELLATION_DISPLACEMENT");
@@ -197,9 +187,7 @@ namespace General
             else if (DiffuseMapOriginal != null)
                 FullMaterialInstance.SetTexture(DiffuseMapId, DiffuseMapOriginal);
             else
-            {
                 FullMaterialInstance.SetTexture(DiffuseMapId, Texture2D.whiteTexture);
-            }
 
 
             if (NormalMap)
@@ -226,14 +214,13 @@ namespace General
 
             ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = FullMaterialInstance;
             ProgramManager.Instance.MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
+
+            MessagePanel.HideMessage();
         }
 
         private IEnumerator PackNormalAndSet()
         {
-            while (!ProgramManager.Lock())
-            {
-                yield return null;
-            }
+            while (!ProgramManager.Lock()) yield return null;
 
             var tempRenderTexture = GetTempRenderTexture(NormalMap.width, NormalMap.height);
             var kernel = PackNormalCompute.FindKernel("CSPackNormal");
@@ -375,10 +362,7 @@ namespace General
                         HeightMap = null;
                     }
 
-                    if (HdHeightMap)
-                    {
-                        RenderTexture.ReleaseTemporary(HdHeightMap);
-                    }
+                    if (HdHeightMap) RenderTexture.ReleaseTemporary(HdHeightMap);
 
                     break;
                 case ProgramEnums.MapType.Diffuse:
@@ -458,9 +442,8 @@ namespace General
 
             var panels = FindObjectsOfType<TexturePanel>();
             foreach (var panel in panels)
-            {
-                if (panel.MapType == mapType) panel.TextureFrame.texture = null;
-            }
+                if (panel.MapType == mapType)
+                    panel.TextureFrame.texture = null;
         }
 
         [UsedImplicitly]
@@ -473,14 +456,15 @@ namespace General
 
         public IEnumerator MakeMaskMap()
         {
-            while (!ProgramManager.Lock())
-            {
-                yield return null;
-            }
+            while (!ProgramManager.Lock()) yield return null;
+
+            MessagePanel.ShowMessage("Processing Mask Map");
 
             MaskMap = TextureProcessing.BlitMaskMap(MetallicMap, SmoothnessMap, AoMap);
 
             yield return new WaitForSeconds(0.5f);
+
+            MessagePanel.HideMessage();
 
             ProgramManager.Unlock();
 
@@ -511,6 +495,22 @@ namespace General
             var textureToSave = GetTexture(_textureToSave);
             SaveLoadProject.Instance.SaveFile(path, textureToSave);
         }
+
+        #region Map Variables
+
+        public RenderTexture HdHeightMap;
+        public Texture2D HeightMap;
+        public Texture2D DiffuseMap;
+        public Texture2D DiffuseMapOriginal;
+        public Texture2D NormalMap;
+        public Texture2D MetallicMap;
+        public Texture2D SmoothnessMap;
+        public Texture2D AoMap;
+        public Texture2D MaskMap;
+        public Texture2D PropertyMap;
+        private ProgramEnums.MapType _textureToSave;
+
+        #endregion
 
         #region Fix Size
 
@@ -576,13 +576,9 @@ namespace General
 
             if (ProgramManager.Instance.TestObject.transform.parent &&
                 ProgramManager.Instance.TestObject.GetComponentInParent<MeshFilter>() != null)
-            {
                 ProgramManager.Instance.TestObject.transform.parent.localScale.Scale(testObjectScale);
-            }
             else
-            {
                 ProgramManager.Instance.TestObject.transform.localScale.Scale(testObjectScale);
-            }
         }
 
         #endregion

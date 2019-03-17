@@ -4,6 +4,7 @@ using System.Collections;
 using General;
 using Settings;
 using UnityEngine;
+using Logger = General.Logger;
 
 #endregion
 
@@ -12,12 +13,6 @@ namespace Gui
 {
     public class NormalFromHeightGui : MonoBehaviour, IProcessor, IHideable
     {
-        public bool Active
-        {
-            get => gameObject.activeSelf;
-            set => gameObject.SetActive(value);
-        }
-
         private static readonly int Blur0Weight = Shader.PropertyToID("_Blur0Weight");
         private static readonly int Blur1Weight = Shader.PropertyToID("_Blur1Weight");
         private static readonly int Blur2Weight = Shader.PropertyToID("_Blur2Weight");
@@ -31,40 +26,6 @@ namespace Gui
         private static readonly int FinalContrast = Shader.PropertyToID("_FinalContrast");
         private static readonly int LightDir = Shader.PropertyToID("_LightDir");
         private static readonly int HeightTex = Shader.PropertyToID("_HeightTex");
-        private RenderTexture _blurMap0;
-        private RenderTexture _blurMap1;
-        private RenderTexture _blurMap2;
-        private RenderTexture _blurMap3;
-        private RenderTexture _blurMap4;
-        private RenderTexture _blurMap5;
-        private RenderTexture _blurMap6;
-        private bool _doStuff;
-        private int _imageSizeX = 1024;
-        private int _imageSizeY = 1024;
-        private bool _newTexture;
-
-        private NormalFromHeightSettings _settings;
-        private bool _settingsInitialized;
-
-        private float _slider = 0.5f;
-
-        private RenderTexture _tempBlurMap;
-
-        private Rect _windowRect;
-        private int _windowId;
-
-        [HideInInspector] public RenderTexture HeightBlurMap;
-
-        public Light MainLight;
-
-        public GameObject TestObject;
-
-        public Material ThisMaterial;
-        public ComputeShader NormalCompute;
-        public ComputeShader BlurCompute;
-
-        private Coroutine _processingCoroutine;
-        private Renderer _testMaterialRenderer;
         private static readonly int ImageSize = Shader.PropertyToID("_ImageSize");
         private static readonly int HeightBlurTex = Shader.PropertyToID("_HeightBlurTex");
         private static readonly int ImageInput = Shader.PropertyToID("ImageInput");
@@ -86,10 +47,124 @@ namespace Gui
         private static readonly int ShapeRecognition = Shader.PropertyToID("_ShapeRecognition");
         private static readonly int ShapeBias = Shader.PropertyToID("_ShapeBias");
         private static readonly int DiffuseTex = Shader.PropertyToID("_DiffuseTex");
-        private Material _previewMaterial;
+        private RenderTexture _blurMap0;
+        private RenderTexture _blurMap1;
+        private RenderTexture _blurMap2;
+        private RenderTexture _blurMap3;
+        private RenderTexture _blurMap4;
+        private RenderTexture _blurMap5;
+        private RenderTexture _blurMap6;
+        private bool _doStuff;
+        private int _imageSizeX = 1024;
+        private int _imageSizeY = 1024;
         private int _kernelBlur;
         private int _kernelNormal;
+        private bool _newTexture;
+        private Material _previewMaterial;
+
+        private Coroutine _processingCoroutine;
         private bool _readyToProcess;
+
+        private NormalFromHeightSettings _settings;
+        private bool _settingsInitialized;
+
+        private float _slider = 0.5f;
+
+        private RenderTexture _tempBlurMap;
+        private Renderer _testMaterialRenderer;
+        private int _windowId;
+
+        private Rect _windowRect;
+        public ComputeShader BlurCompute;
+
+        [HideInInspector] public RenderTexture HeightBlurMap;
+
+        public Light MainLight;
+        public ComputeShader NormalCompute;
+
+        public GameObject TestObject;
+
+        public Material ThisMaterial;
+
+        public bool Hide { get; set; }
+
+        public bool Active
+        {
+            get => gameObject.activeSelf;
+            set => gameObject.SetActive(value);
+        }
+
+        public void DoStuff()
+        {
+            _doStuff = true;
+        }
+
+        public void NewTexture()
+        {
+            _newTexture = true;
+        }
+
+        public void Close()
+        {
+            CleanupTextures();
+            gameObject.SetActive(false);
+        }
+
+        public IEnumerator Process()
+        {
+            while (!ProgramManager.Lock()) yield return null;
+
+            while (!_readyToProcess) yield return null;
+
+            MessagePanel.ShowMessage("Processing Normal Map");
+
+            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
+            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+
+            var kernelCombine = NormalCompute.FindKernel("CSCombineNormal");
+
+
+            NormalCompute.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
+
+            NormalCompute.SetFloat(Blur0Weight, _settings.Blur0Weight);
+            NormalCompute.SetFloat(Blur1Weight, _settings.Blur1Weight);
+            NormalCompute.SetFloat(Blur2Weight, _settings.Blur2Weight);
+            NormalCompute.SetFloat(Blur3Weight, _settings.Blur3Weight);
+            NormalCompute.SetFloat(Blur4Weight, _settings.Blur4Weight);
+            NormalCompute.SetFloat(Blur5Weight, _settings.Blur5Weight);
+            NormalCompute.SetFloat(Blur6Weight, _settings.Blur6Weight);
+            NormalCompute.SetFloat(FinalContrast, _settings.FinalContrast);
+
+            NormalCompute.SetTexture(kernelCombine, HeightBlurTex, HeightBlurMap);
+
+            NormalCompute.SetTexture(kernelCombine, ImageInput, _blurMap0);
+            NormalCompute.SetTexture(kernelCombine, BlurTex0, _blurMap0);
+            NormalCompute.SetTexture(kernelCombine, BlurTex1, _blurMap1);
+            NormalCompute.SetTexture(kernelCombine, BlurTex2, _blurMap2);
+            NormalCompute.SetTexture(kernelCombine, BlurTex3, _blurMap3);
+            NormalCompute.SetTexture(kernelCombine, BlurTex4, _blurMap4);
+            NormalCompute.SetTexture(kernelCombine, BlurTex5, _blurMap5);
+            NormalCompute.SetTexture(kernelCombine, BlurTex6, _blurMap6);
+
+            NormalCompute.SetFloat(Angularity, _settings.Angularity);
+            NormalCompute.SetFloat(AngularIntensity, _settings.AngularIntensity);
+
+
+            var tempNormalMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            NormalCompute.SetTexture(kernelCombine, "ImageInput", _blurMap0);
+            NormalCompute.SetTexture(kernelCombine, "Result", tempNormalMap);
+            NormalCompute.Dispatch(kernelCombine, groupsX, groupsY, 1);
+
+            TextureManager.Instance.GetTextureFromRender(tempNormalMap, ProgramEnums.MapType.Normal);
+
+            RenderTexture.ReleaseTemporary(tempNormalMap);
+
+            yield return null;
+
+            MessagePanel.HideMessage();
+
+            ProgramManager.Unlock();
+        }
 
         private void Awake()
         {
@@ -128,31 +203,23 @@ namespace Gui
         private void InitializeSettings()
         {
             if (_settingsInitialized) return;
-            General.Logger.Log("Initializing Normal From Height Settings");
+            Logger.Log("Initializing Normal From Height Settings");
             _settings = new NormalFromHeightSettings();
             _settingsInitialized = true;
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
+            MessagePanel.ShowMessage("Initializing Normal GUI");
             _previewMaterial = new Material(ThisMaterial.shader);
 
             InitializeSettings();
-//            InitializeTextures();
+            yield return null;
+            InitializeTextures();
 
             _windowId = ProgramManager.Instance.GetWindowId;
             _kernelBlur = BlurCompute.FindKernel("CSBlur");
             _kernelNormal = NormalCompute.FindKernel("CSNormal");
-        }
-
-        public void DoStuff()
-        {
-            _doStuff = true;
-        }
-
-        public void NewTexture()
-        {
-            _newTexture = true;
         }
 
         private void SetWeightEqDefault()
@@ -342,7 +409,7 @@ namespace Gui
             _imageSizeX = TextureManager.Instance.HeightMap.width;
             _imageSizeY = TextureManager.Instance.HeightMap.height;
 
-            General.Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
+            Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
 
             _tempBlurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
             HeightBlurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
@@ -355,12 +422,6 @@ namespace Gui
             _blurMap6 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
             _newTexture = false;
-        }
-
-        public void Close()
-        {
-            CleanupTextures();
-            gameObject.SetActive(false);
         }
 
         private void CleanupTextures()
@@ -376,78 +437,18 @@ namespace Gui
             RenderTexture.ReleaseTemporary(_blurMap6);
         }
 
-        public IEnumerator Process()
-        {
-            while (!ProgramManager.Lock())
-            {
-                yield return null;
-            }
-
-            while (!_readyToProcess)
-            {
-                yield return null;
-            }
-
-            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
-            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
-
-            var kernelCombine = NormalCompute.FindKernel("CSCombineNormal");
-
-            General.Logger.Log("Processing Normal");
-
-            NormalCompute.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
-
-            NormalCompute.SetFloat(Blur0Weight, _settings.Blur0Weight);
-            NormalCompute.SetFloat(Blur1Weight, _settings.Blur1Weight);
-            NormalCompute.SetFloat(Blur2Weight, _settings.Blur2Weight);
-            NormalCompute.SetFloat(Blur3Weight, _settings.Blur3Weight);
-            NormalCompute.SetFloat(Blur4Weight, _settings.Blur4Weight);
-            NormalCompute.SetFloat(Blur5Weight, _settings.Blur5Weight);
-            NormalCompute.SetFloat(Blur6Weight, _settings.Blur6Weight);
-            NormalCompute.SetFloat(FinalContrast, _settings.FinalContrast);
-
-            NormalCompute.SetTexture(kernelCombine, HeightBlurTex, HeightBlurMap);
-
-            NormalCompute.SetTexture(kernelCombine, ImageInput, _blurMap0);
-            NormalCompute.SetTexture(kernelCombine, BlurTex0, _blurMap0);
-            NormalCompute.SetTexture(kernelCombine, BlurTex1, _blurMap1);
-            NormalCompute.SetTexture(kernelCombine, BlurTex2, _blurMap2);
-            NormalCompute.SetTexture(kernelCombine, BlurTex3, _blurMap3);
-            NormalCompute.SetTexture(kernelCombine, BlurTex4, _blurMap4);
-            NormalCompute.SetTexture(kernelCombine, BlurTex5, _blurMap5);
-            NormalCompute.SetTexture(kernelCombine, BlurTex6, _blurMap6);
-
-            NormalCompute.SetFloat(Angularity, _settings.Angularity);
-            NormalCompute.SetFloat(AngularIntensity, _settings.AngularIntensity);
-
-
-            var tempNormalMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
-            NormalCompute.SetTexture(kernelCombine, "ImageInput", _blurMap0);
-            NormalCompute.SetTexture(kernelCombine, "Result", tempNormalMap);
-            NormalCompute.Dispatch(kernelCombine, groupsX, groupsY, 1);
-
-            TextureManager.Instance.GetTextureFromRender(tempNormalMap, ProgramEnums.MapType.Normal);
-
-            RenderTexture.ReleaseTemporary(tempNormalMap);
-
-            yield return null;
-
-            ProgramManager.Unlock();
-        }
-
         public IEnumerator ProcessHeight()
         {
-            while (!ProgramManager.Lock())
-            {
-                yield return null;
-            }
+            while (!ProgramManager.Lock()) yield return null;
+
+            MessagePanel.ShowMessage("Processing Height for Normal Map");
 
             var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
             var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
 
             NormalCompute.SetBool("FlipNormalY", TextureManager.Instance.FlipNormalY);
 
-            General.Logger.Log("Processing Height");
+            Logger.Log("Processing Height");
 
             BlurCompute.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
             NormalCompute.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
@@ -548,13 +549,9 @@ namespace Gui
             BlurImage(spread, _blurMap5, _blurMap6);
 
             if (TextureManager.Instance.HdHeightMap)
-            {
                 _previewMaterial.SetTexture(ImageInput, TextureManager.Instance.HdHeightMap);
-            }
             else
-            {
                 _previewMaterial.SetTexture(ImageInput, TextureManager.Instance.HeightMap);
-            }
 
 
             _previewMaterial.SetTexture(BlurTex0, _blurMap0);
@@ -569,6 +566,8 @@ namespace Gui
             yield return null;
 
             _readyToProcess = true;
+
+            MessagePanel.HideMessage();
 
             ProgramManager.Unlock();
         }
@@ -588,7 +587,5 @@ namespace Gui
             BlurCompute.SetTexture(_kernelBlur, "Result", dest);
             BlurCompute.Dispatch(_kernelBlur, groupsX, groupsY, 1);
         }
-
-        public bool Hide { get; set; }
     }
 }
