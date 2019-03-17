@@ -76,6 +76,21 @@ namespace General
         {
         }
 
+        public static bool Lock()
+        {
+            if (IsLocked != false) return false;
+
+            IsLocked = true;
+            return true;
+        }
+
+        public static void Unlock()
+        {
+            IsLocked = false;
+        }
+
+        public static bool IsLocked { get; private set; }
+
         private void Awake()
         {
             Instance = this;
@@ -153,7 +168,7 @@ namespace General
                 yield break;
             }
         }
-        
+
         public static void RenderProbe()
         {
             var probes = FindObjectsOfType<ReflectionProbe>();

@@ -61,13 +61,12 @@ namespace Gui
         public ComputeShader MetallicCompute;
         public ComputeShader BlurCompute;
 
-        [HideInInspector] public bool Busy;
-
         public GameObject TestObject;
 
         public Material ThisMaterial;
         private static readonly int BlurTex = Shader.PropertyToID("_BlurTex");
         private static readonly int OverlayBlurTex = Shader.PropertyToID("_OverlayBlurTex");
+        private bool _readyToProcess;
 
         private void Awake()
         {
@@ -78,6 +77,7 @@ namespace Gui
         private void OnDisable()
         {
             CleanupTextures();
+            _readyToProcess = false;
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -173,6 +173,8 @@ namespace Gui
         // Update is called once per frame
         private void Update()
         {
+            if (ProgramManager.IsLocked) return;
+
             if (_selectingColor) SelectColor();
 
             if (_newTexture)
@@ -343,7 +345,15 @@ namespace Gui
 
         public IEnumerator Process()
         {
-            Busy = true;
+            while (!ProgramManager.Lock())
+            {
+                yield return null;
+            }
+
+            while (!_readyToProcess)
+            {
+                yield return null;
+            }
 
             General.Logger.Log("Processing Metallic");
             var metallicKernel = MetallicCompute.FindKernel("CSMetallic");
@@ -375,20 +385,26 @@ namespace Gui
 
             MetallicCompute.SetTexture(metallicKernel, "ImageInput", source);
             MetallicCompute.SetTexture(metallicKernel, "Result", _tempMap);
-            MetallicCompute.Dispatch(metallicKernel, _imageSizeX / 8, _imageSizeY / 8, 1);
+            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
+            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+            MetallicCompute.Dispatch(metallicKernel, groupsX, groupsY, 1);
 
             TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Metallic);
 
-            yield return new WaitForSeconds(0.01f);
+            yield return null;
 
             RenderTexture.ReleaseTemporary(_tempMap);
 
-            Busy = false;
+            ProgramManager.Unlock();
         }
 
         public IEnumerator ProcessBlur()
         {
-            Busy = true;
+            while (!ProgramManager.Lock())
+            {
+                yield return null;
+            }
+
 
             General.Logger.Log("Processing Blur");
 
@@ -403,13 +419,16 @@ namespace Gui
             BlurCompute.SetVector("_BlurDirection", new Vector4(1, 0, 0, 0));
             var diffuse = _metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
 
+            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
+            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+
             if (_metallicSettings.BlurSize == 0)
                 Graphics.Blit(diffuse, _tempMap);
             else
             {
                 BlurCompute.SetTexture(blurKernel, "ImageInput", diffuse);
                 BlurCompute.SetTexture(blurKernel, "Result", _tempMap);
-                BlurCompute.Dispatch(blurKernel, _imageSizeX / 8, _imageSizeY / 8, 1);
+                BlurCompute.Dispatch(blurKernel, groupsX, groupsY, 1);
             }
 
             BlurCompute.SetVector("_BlurDirection", new Vector4(0, 1, 0, 0));
@@ -419,7 +438,7 @@ namespace Gui
             {
                 BlurCompute.SetTexture(blurKernel, "ImageInput", _tempMap);
                 BlurCompute.SetTexture(blurKernel, "Result", _blurMap);
-                BlurCompute.Dispatch(blurKernel, _imageSizeX / 8, _imageSizeY / 8, 1);
+                BlurCompute.Dispatch(blurKernel, groupsX, groupsY, 1);
             }
 
             ThisMaterial.SetTexture(BlurTex, _blurMap);
@@ -430,17 +449,20 @@ namespace Gui
             var source = _metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
             BlurCompute.SetTexture(blurKernel, "ImageInput", source);
             BlurCompute.SetTexture(blurKernel, "Result", _tempMap);
-            BlurCompute.Dispatch(blurKernel, _imageSizeX / 8, _imageSizeY / 8, 1);
+            BlurCompute.Dispatch(blurKernel, groupsX, groupsY, 1);
 
             BlurCompute.SetVector("_BlurDirection", new Vector4(0, 1, 0, 0));
             BlurCompute.SetTexture(blurKernel, "ImageInput", _tempMap);
             BlurCompute.SetTexture(blurKernel, "Result", _overlayBlurMap);
-            BlurCompute.Dispatch(blurKernel, _imageSizeX / 8, _imageSizeY / 8, 1);
+            BlurCompute.Dispatch(blurKernel, groupsX, groupsY, 1);
             ThisMaterial.SetTexture(OverlayBlurTex, _overlayBlurMap);
 
-            yield return new WaitForSeconds(0.01f);
+            yield return null;
+            yield return null;
 
-            Busy = false;
+            _readyToProcess = true;
+
+            ProgramManager.Unlock();
         }
 
         public bool Hide { get; set; }

@@ -61,6 +61,9 @@ bool _HeightFromNormal;
 [numthreads(8,8,1)]
 void CSCombineHeight (uint3 id : SV_DispatchThreadID)
 {
+    if (id.x >= uint(_ImageSize.x) || id.y >= uint(_ImageSize.y))
+        return;
+        
     half4 heightTex = half4(0, 0, 0, 0);
     float2 uv = id.xy / _ImageSize;
     
@@ -98,6 +101,9 @@ void CSCombineHeight (uint3 id : SV_DispatchThreadID)
 [numthreads(8,8,1)]
 void CSHeightFromNormal (uint3 id : SV_DispatchThreadID)
 {
+    if (id.x >= uint(_ImageSize.x) || id.y >= uint(_ImageSize.y))
+        return;
+        
     float2 pixelSize = ( 1.0 / _ImageSize.xy );
 
     float3 flipTex = float3(1,1,1);

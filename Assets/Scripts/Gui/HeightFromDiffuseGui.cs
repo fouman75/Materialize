@@ -124,8 +124,6 @@ namespace Gui
 
         private Rect _windowRect;
 
-        [HideInInspector] public bool Busy;
-
         public GameObject TestObject;
 
         public Material ThisMaterial;
@@ -134,6 +132,7 @@ namespace Gui
         public ComputeShader BlurCompute;
         private int _windowId;
         private int _kernelBlur;
+        private bool _readyToProcess;
 
         private void Awake()
         {
@@ -143,6 +142,7 @@ namespace Gui
         private void OnDisable()
         {
             CleanupTextures();
+            _readyToProcess = false;
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -406,7 +406,7 @@ namespace Gui
         // Update is called once per frame
         private void Update()
         {
-            if (Busy) return;
+            if (ProgramManager.IsLocked) return;
             if (_selectingColor) SelectColor();
 
             if (_heightFromDiffuseSettings.UseAdjustedDiffuse != _lastUseDiffuse)
@@ -779,17 +779,19 @@ namespace Gui
         private void OnGUI()
         {
             if (Hide) return;
+
+            var rect = _windowRect;
             if (_heightFromDiffuseSettings.UseSample1 && !_heightFromDiffuseSettings.UseNormal)
-                _windowRect.height += 110;
+                rect.height += 110;
 
             if (_heightFromDiffuseSettings.UseSample2 && !_heightFromDiffuseSettings.UseNormal)
-                _windowRect.height += 110;
+                rect.height += 110;
 
             if ((_heightFromDiffuseSettings.UseSample1 || _heightFromDiffuseSettings.UseSample2) &&
-                !_heightFromDiffuseSettings.UseNormal) _windowRect.height += 40;
+                !_heightFromDiffuseSettings.UseNormal) rect.height += 40;
 
 
-            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Height From Diffuse");
+            MainGui.MakeScaledWindow(rect, _windowId, DoMyWindow, "Height From Diffuse");
         }
 
         public void InitializeTextures()
@@ -855,11 +857,18 @@ namespace Gui
 
         public IEnumerator Process()
         {
-            Busy = true;
+            while (!ProgramManager.Lock())
+            {
+                yield return null;
+            }
+
+            while (!_readyToProcess)
+            {
+                yield return null;
+            }
 
             var kernelCombine = HeightCompute.FindKernel("CSCombineHeight");
             General.Logger.Log("Processing HeightMap");
-            Busy = true;
             HeightCompute.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
 
             RenderTexture.ReleaseTemporary(_tempHeightMap);
@@ -930,12 +939,16 @@ namespace Gui
 
             yield return new WaitForSeconds(0.1f);
 
-            Busy = false;
+            ProgramManager.Unlock();
         }
 
         private IEnumerator ProcessNormal()
         {
-            Busy = true;
+            while (!ProgramManager.Lock())
+            {
+                yield return null;
+            }
+
             var kernelNormal = HeightCompute.FindKernel("CSHeightFromNormal");
 
             General.Logger.Log("Processing Normal");
@@ -963,17 +976,22 @@ namespace Gui
 
                 if (i % 10 == 0) yield return new WaitForSeconds(0.01f);
             }
-            
-            yield return new WaitForSeconds(0.1f);
 
-            Busy = false;
+            yield return null;
+
+            _readyToProcess = true;
+
+            ProgramManager.Unlock();
         }
 
         public IEnumerator ProcessDiffuse()
         {
-            var kernelSample = SampleCompute.FindKernel("CSSample");
+            while (!ProgramManager.Lock())
+            {
+                yield return null;
+            }
 
-            Busy = true;
+            var kernelSample = SampleCompute.FindKernel("CSSample");
 
             ThisMaterial.SetFloat(IsNormal, 0.0f);
             SampleCompute.SetVector(ImageSize, new Vector2(_imageSizeX, _imageSizeY));
@@ -1016,7 +1034,9 @@ namespace Gui
 
             SampleCompute.SetTexture(kernelSample, "ImageInput", source);
             SampleCompute.SetTexture(kernelSample, "Result", _blurMap0);
-            SampleCompute.Dispatch(kernelSample, _imageSizeX / 8, _imageSizeY / 8, 1);
+            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
+            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+            SampleCompute.Dispatch(kernelSample, groupsX, groupsY, 1);
 
             BlurCompute.SetVector(ImageSize, new Vector2(_imageSizeX, _imageSizeY));
 //            BlurCompute.SetInt("_Desaturate", 1);
@@ -1061,11 +1081,12 @@ namespace Gui
             BlurCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
             BlurCompute.SetTexture(_kernelBlur, "ImageInput", _blurMap6);
             BlurCompute.SetTexture(_kernelBlur, "Result", _avgTempMap);
-            BlurCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
+
+            BlurCompute.Dispatch(_kernelBlur, groupsX, groupsY, 1);
             BlurCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
             BlurCompute.SetTexture(_kernelBlur, "ImageInput", _avgTempMap);
             BlurCompute.SetTexture(_kernelBlur, "Result", _avgMap);
-            BlurCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
+            BlurCompute.Dispatch(_kernelBlur, groupsX, groupsY, 1);
 
             ThisMaterial.SetTexture(MainTex,
                 _heightFromDiffuseSettings.UseOriginalDiffuse
@@ -1081,9 +1102,12 @@ namespace Gui
             ThisMaterial.SetTexture(BlurTex6, _blurMap6);
             ThisMaterial.SetTexture(AvgTex, _avgMap);
 
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
+            yield return null;
 
-            Busy = false;
+            _readyToProcess = true;
+
+            ProgramManager.Unlock();
         }
 
         private void BlurImage(float spread, Texture source, Texture dest)
@@ -1092,11 +1116,13 @@ namespace Gui
             BlurCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
             BlurCompute.SetTexture(_kernelBlur, "ImageInput", source);
             BlurCompute.SetTexture(_kernelBlur, "Result", _tempBlurMap);
-            BlurCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
+            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
+            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+            BlurCompute.Dispatch(_kernelBlur, groupsX, groupsY, 1);
             BlurCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
             BlurCompute.SetTexture(_kernelBlur, "ImageInput", _tempBlurMap);
             BlurCompute.SetTexture(_kernelBlur, "Result", dest);
-            BlurCompute.Dispatch(_kernelBlur, _imageSizeX / 8, _imageSizeY / 8, 1);
+            BlurCompute.Dispatch(_kernelBlur, groupsX, groupsY, 1);
         }
 
         public bool Hide { get; set; }

@@ -230,6 +230,11 @@ namespace General
 
         private IEnumerator PackNormalAndSet()
         {
+            while (!ProgramManager.Lock())
+            {
+                yield return null;
+            }
+
             var tempRenderTexture = GetTempRenderTexture(NormalMap.width, NormalMap.height);
             var kernel = PackNormalCompute.FindKernel("CSPackNormal");
             var size = new Vector2Int(NormalMap.width, NormalMap.height);
@@ -238,9 +243,12 @@ namespace General
             PackNormalCompute.SetTexture(kernel, "Result", tempRenderTexture);
             PackNormalCompute.Dispatch(kernel, size.x / 8, size.y / 8, 1);
 
-            yield return null;
+            yield return new WaitForSeconds(0.5f);
+
             GetTextureFromRender(tempRenderTexture, out _packedNormal);
             FullMaterialInstance.SetTexture(NormalMapId, _packedNormal);
+
+            ProgramManager.Unlock();
         }
 
         public Texture2D GetStandardTexture(int width, int height, bool linear = true)
@@ -448,7 +456,6 @@ namespace General
                     throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
             }
 
-            Resources.UnloadUnusedAssets();
             var panels = FindObjectsOfType<TexturePanel>();
             foreach (var panel in panels)
             {
@@ -466,9 +473,17 @@ namespace General
 
         public IEnumerator MakeMaskMap()
         {
-            GL.Flush();
+            while (!ProgramManager.Lock())
+            {
+                yield return null;
+            }
+
             MaskMap = TextureProcessing.BlitMaskMap(MetallicMap, SmoothnessMap, AoMap);
-            yield return null;
+
+            yield return new WaitForSeconds(0.5f);
+
+            ProgramManager.Unlock();
+
             SetFullMaterial();
         }
 

@@ -160,9 +160,9 @@ namespace General
                 var supported = ProgramManager.LoadFormats.Any(format => bashOut.Contains(format));
                 if (!supported) return;
 
-                if (bashOut.Contains("file:///"))
+                if (bashOut.Contains(filePrefix))
                 {
-                    bashOut = bashOut.Replace("file:///", "/");
+                    bashOut = bashOut.Replace(filePrefix, "/");
                 }
 
                 var firstIndex = bashOut.IndexOf('/');
@@ -283,9 +283,6 @@ namespace General
             if (bytes == null) yield break;
             File.WriteAllBytes(pathToFile, bytes);
 
-            Resources.UnloadUnusedAssets();
-
-
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -403,8 +400,6 @@ namespace General
                 default:
                     throw new ArgumentOutOfRangeException(nameof(textureToLoad), textureToLoad, null);
             }
-
-            Resources.UnloadUnusedAssets();
 
             yield return new WaitForSeconds(0.01f);
 

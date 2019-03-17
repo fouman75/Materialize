@@ -533,9 +533,6 @@ namespace Gui
             }
 
             yield return new WaitForSeconds(0.1f);
-
-
-            Resources.UnloadUnusedAssets();
         }
 
         public void Close()
@@ -792,8 +789,6 @@ namespace Gui
                 _aoMapTemp = TileTexture(TextureManager.Instance.AoMap, _aoMapTemp, "_AOMap");
                 _thisMaterial.SetTexture("_AOMap", _aoMapTemp);
             }
-
-            Resources.UnloadUnusedAssets();
 
             yield return new WaitForSeconds(0.1f);
         }

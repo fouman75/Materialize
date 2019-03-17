@@ -149,9 +149,9 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
         var delta = mousePos - _lastMousePos;
         if (Mathf.Abs(delta.x) < Filter) delta.x = 0;
         if (Mathf.Abs(delta.y) < Filter) delta.y = 0;
-        General.Logger.Log("delta : " + delta);
+//        General.Logger.Log("delta : " + delta);
         if (delta.magnitude < 0.01f) return;
-        General.Logger.Log("delta Pass");
+//        General.Logger.Log("delta Pass");
 
         if (!AllowX)
         {

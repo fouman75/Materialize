@@ -131,6 +131,8 @@ namespace Gui
         // Update is called once per frame
         private void Update()
         {
+            if (ProgramManager.IsLocked) return;
+
             if (_newTexture)
             {
                 InitializeTextures();
@@ -226,7 +228,7 @@ namespace Gui
 
         private void OnGUI()
         {
-            if(Hide) return;
+            if (Hide) return;
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Edit Diffuse");
         }
 
@@ -265,6 +267,11 @@ namespace Gui
 
         public IEnumerator Process()
         {
+            while (!ProgramManager.Lock())
+            {
+                yield return null;
+            }
+
             General.Logger.Log("Processing Diffuse");
 
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
@@ -301,11 +308,19 @@ namespace Gui
             TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Diffuse);
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            yield break;
+
+            yield return new WaitForSeconds(0.5f);
+
+            ProgramManager.Unlock();
         }
 
         private IEnumerator ProcessBlur()
         {
+            while (!ProgramManager.Lock())
+            {
+                yield return null;
+            }
+
             General.Logger.Log("Processing Blur");
 
             RenderTexture.ReleaseTemporary(_tempMap);
@@ -341,7 +356,9 @@ namespace Gui
 
             RenderTexture.ReleaseTemporary(_tempMap);
 
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.5f);
+
+            ProgramManager.Unlock();
         }
 
         public bool Hide { get; set; }

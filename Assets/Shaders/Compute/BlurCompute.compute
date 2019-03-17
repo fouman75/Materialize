@@ -15,6 +15,9 @@ float _BlurContrast;
 [numthreads(8,8,1)]
 void CSBlur (uint3 id : SV_DispatchThreadID)
 {
+    if (id.x >= uint(_ImageSize.x) || id.y >= uint(_ImageSize.y))
+        return;
+        
     float2 pixelSize = ( 1.0 / _ImageSize.xy );
 
     int totalSamples = _BlurSamples * 2;

@@ -1,4 +1,4 @@
-﻿#region
+﻿﻿#region
 
 using System.Collections;
 using General;
@@ -45,7 +45,6 @@ namespace Gui
         private Rect _windowRect;
         private float _slider = 0.5f;
 
-        [HideInInspector] public bool Busy;
         public GameObject TestObject;
 
         public Material ThisMaterial;
@@ -57,6 +56,7 @@ namespace Gui
         private int _kernelAo;
         private int _kernelCombine;
         private static readonly int NormalTex = Shader.PropertyToID("_NormalTex");
+        private bool _readyToProcess;
 
         private void Awake()
         {
@@ -68,6 +68,7 @@ namespace Gui
         private void OnDisable()
         {
             CleanupTextures();
+            _readyToProcess = false;
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -120,6 +121,8 @@ namespace Gui
 
         private void Update()
         {
+            if (ProgramManager.IsLocked) return;
+
             if (_newTexture)
             {
                 InitializeTextures();
@@ -147,7 +150,7 @@ namespace Gui
             GUI.Label(new Rect(offsetX, offsetY, 250, 30), "AO Reveal Slider");
             _slider = GUI.HorizontalSlider(new Rect(offsetX, offsetY + 20, 280, 10), _slider, 0.0f, 1.0f);
             offsetY += 35;
-            
+
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "AO pixel Spread", _aos.Spread,
                 out _aos.Spread, 10.0f, 100.0f)) _doStuff = true;
             offsetY += 40;
@@ -205,8 +208,15 @@ namespace Gui
 
         public IEnumerator Process()
         {
-            yield return _processingNormalCoroutine;
-            Busy = true;
+            while (!ProgramManager.Lock())
+            {
+                yield return null;
+            }
+
+            while (!_readyToProcess)
+            {
+                yield return null;
+            }
 
             General.Logger.Log("Processing AO Map");
 
@@ -216,23 +226,29 @@ namespace Gui
             AoCompute.SetFloat(FinalContrast, _aos.FinalContrast);
             AoCompute.SetTexture(_kernelCombine, ImageInput, _blendedAoMap);
             AoCompute.SetFloat(AoBlend, _aos.Blend);
+            AoCompute.SetVector(ImageSize, new Vector2(_imageSizeX, _imageSizeY));
 
             AoCompute.SetTexture(_kernelCombine, "ImageInput", _blendedAoMap);
             AoCompute.SetTexture(_kernelCombine, "Result", tempAoMap);
-            AoCompute.Dispatch(_kernelCombine, _imageSizeX / 8, _imageSizeY / 8, 1);
+            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
+            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+            AoCompute.Dispatch(_kernelCombine, groupsX, groupsY, 1);
 
             TextureManager.Instance.GetTextureFromRender(tempAoMap, ProgramEnums.MapType.Ao);
             RenderTexture.ReleaseTemporary(tempAoMap);
 
-            yield return new WaitForSeconds(0.2f);
+            yield return null;
 
-            Busy = false;
+            ProgramManager.Unlock();
         }
 
 
         public IEnumerator ProcessNormalDepth()
         {
-            Busy = true;
+            while (!ProgramManager.Lock())
+            {
+                yield return null;
+            }
 
             General.Logger.Log("Processing Normal Depth to AO");
 
@@ -268,14 +284,20 @@ namespace Gui
             {
                 AoCompute.SetFloat(BlendAmount, 1.0f / i);
                 AoCompute.SetFloat(Progress, i / 100.0f);
-                AoCompute.Dispatch(_kernelAo, _imageSizeX / 8, _imageSizeY / 8, 1);
+                var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
+                var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+                AoCompute.Dispatch(_kernelAo, groupsX, groupsY, 1);
 
-                if (i % 10 == 0) yield return new WaitForSeconds(0.01f);
+
+                if (i % 25 == 0) yield return null;
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
+            yield return null;
 
-            Busy = false;
+            _readyToProcess = true;
+
+            ProgramManager.Unlock();
         }
 
         public bool Hide { get; set; }

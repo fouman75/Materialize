@@ -12,6 +12,9 @@ float2 _ImageSize;
 [numthreads(8,8,1)]
 void CSMaskMap (uint3 id : SV_DispatchThreadID)
 {
+    if (id.x >= uint(_ImageSize.x) || id.y >= uint(_ImageSize.y))
+        return;
+        
     float2 uv = id.xy / _ImageSize;
     float metallic = MetallicInput.SampleLevel(LinearRepeatSample, uv, 0).x;
     float smoothness = 1.0 - SmoothnessInput.SampleLevel(LinearRepeatSample, uv, 0).x;

@@ -66,7 +66,7 @@ namespace Gui
             _camera = Camera.main;
             _windowRect = new Rect(10.0f, 265.0f, 300f, 430f);
         }
-        
+
         private void OnDisable()
         {
             RenderTexture.ReleaseTemporary(_alignMap);
@@ -359,7 +359,7 @@ namespace Gui
 
         private void OnGUI()
         {
-            if(Hide) return;
+            if (Hide) return;
             var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
             GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
@@ -530,8 +530,6 @@ namespace Gui
             }
 
             yield return new WaitForSeconds(0.1f);
-
-            Resources.UnloadUnusedAssets();
         }
 
         public bool Hide { get; set; }
