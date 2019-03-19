@@ -583,58 +583,17 @@ namespace Gui
             if (Screen.fullScreenMode == FullScreenMode.Windowed)
             {
                 text = "Windowed";
-                StartCoroutine(SetScreen(ProgramEnums.ScreenMode.FullScreen));
+                StartCoroutine(ProgramManager.SetScreen(ProgramEnums.ScreenMode.FullScreen));
             }
             else
             {
                 text = "FullScreen";
-                StartCoroutine(SetScreen(ProgramEnums.ScreenMode.Windowed));
+                StartCoroutine(ProgramManager.SetScreen(ProgramEnums.ScreenMode.Windowed));
             }
 
             FullScreenTextObject.text = text;
         }
 
-        private IEnumerator SetScreen(ProgramEnums.ScreenMode screenMode)
-        {
-            switch (screenMode)
-            {
-                case ProgramEnums.ScreenMode.FullScreen:
-                    var fsRes = Screen.resolutions;
-                    var highRes = fsRes[fsRes.Length - 1];
-                    Screen.SetResolution(highRes.width, highRes.height, FullScreenMode.ExclusiveFullScreen);
-                    break;
-                case ProgramEnums.ScreenMode.Windowed:
-                    var res = GetSecondHighestResolution();
-
-                    Screen.SetResolution(res.width, res.height, FullScreenMode.Windowed);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(screenMode), screenMode, null);
-            }
-
-            yield return new WaitForSeconds(0.2f);
-
-            GraphicsSettings.renderPipelineAsset = GraphicsSettings.renderPipelineAsset;
-        }
-
-        private static Resolution GetSecondHighestResolution()
-        {
-            var winRes = Screen.resolutions;
-            var nativeRes = winRes[winRes.Length - 1];
-            var res = nativeRes;
-            var nativeAspect = 1.0f * nativeRes.width / nativeRes.height;
-            for (var i = winRes.Length - 1; i >= 0; i--)
-            {
-                var aspectRatio = 1.0f * winRes[i].width / winRes[i].height;
-
-                if (!(Mathf.Abs(aspectRatio - nativeAspect) < 0.001f)) continue;
-
-                res = winRes[i];
-                break;
-            }
-
-            return res;
-        }
 
         public void HideGuiButtonClickEvent()
         {

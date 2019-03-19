@@ -72,6 +72,8 @@ namespace General
 
             GuiScale = new Vector2(Screen.width / GuiReferenceSize.x, Screen.height / GuiReferenceSize.y);
             MessagePanelObject.gameObject.SetActive(true);
+
+            StartCoroutine(SetScreen(ProgramEnums.ScreenMode.Windowed));
         }
 
         private IEnumerator Start()
@@ -106,7 +108,7 @@ namespace General
 
         private IEnumerator SlowUpdate()
         {
-            while (true)
+            while (!ApplicationIsQuitting)
             {
                 if (Application.targetFrameRate != DesiredFrameRate && DesiredFrameRate != 0)
                 {
@@ -124,7 +126,6 @@ namespace General
 
         private IEnumerator UpdateQuality()
         {
-            Debug.Log("Quality " + QualitySettings.GetQualityLevel());
             HDRenderPipelineAsset hdRenderPipelineAsset;
             switch (GraphicsQuality)
             {
@@ -161,7 +162,7 @@ namespace General
                     throw new ArgumentOutOfRangeException();
             }
 
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.3f);
 
             GraphicsSettings.renderPipelineAsset = hdRenderPipelineAsset;
 
@@ -213,6 +214,50 @@ namespace General
         private void OnApplicationQuit()
         {
             ApplicationIsQuitting = true;
+        }
+
+        public static IEnumerator SetScreen(ProgramEnums.ScreenMode screenMode)
+        {
+            if (Application.isEditor) yield break;
+
+            switch (screenMode)
+            {
+                case ProgramEnums.ScreenMode.FullScreen:
+                    var fsRes = Screen.resolutions;
+                    var highRes = fsRes[fsRes.Length - 1];
+                    Screen.SetResolution(highRes.width, highRes.height, FullScreenMode.ExclusiveFullScreen);
+                    break;
+                case ProgramEnums.ScreenMode.Windowed:
+                    var res = GetSecondHighestResolution();
+
+                    Screen.SetResolution(res.width, res.height, FullScreenMode.Windowed);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(screenMode), screenMode, null);
+            }
+
+            yield return new WaitForSeconds(0.3f);
+
+            GraphicsSettings.renderPipelineAsset = GraphicsSettings.renderPipelineAsset;
+        }
+
+        private static Resolution GetSecondHighestResolution()
+        {
+            var winRes = Screen.resolutions;
+            var nativeRes = winRes[winRes.Length - 1];
+            var res = nativeRes;
+            var nativeAspect = 1.0f * nativeRes.width / nativeRes.height;
+            for (var i = winRes.Length - 1; i >= 0; i--)
+            {
+                var aspectRatio = 1.0f * winRes[i].width / winRes[i].height;
+
+                if (!(Mathf.Abs(aspectRatio - nativeAspect) < 0.001f)) continue;
+
+                res = winRes[i];
+                break;
+            }
+
+            return res;
         }
 
         #region Gui Objects

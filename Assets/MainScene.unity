@@ -3660,7 +3660,6 @@ MonoBehaviour:
   VolumeProfile: {fileID: 11400000, guid: ad3ebe04a20f6e1508eed926324ab0e6, type: 2}
   HdriSky: {fileID: 0}
   FullScreenTextObject: {fileID: 340463084}
-  MainCamera: {fileID: 1433099825}
 --- !u!4 &1866024255
 Transform:
   m_ObjectHideFlags: 0
@@ -4402,7 +4401,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015501342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8, y: -1.5, z: 2.5}
+  m_LocalPosition: {x: 5, y: -2, z: 2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1463534582}
