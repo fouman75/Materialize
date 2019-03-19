@@ -1,0 +1,839 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HDRenderPipelineAsset
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 0cf1dab834d4ec34195b920ea7bbf9ec,
+      type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineResources
+    value: 
+    objectReference: {fileID: 11400000, guid: 3ce144cff5783da45aa5d4fdc2da14b7, type: 2}
+  - target: {fileID: 0}
+    propertyPath: m_RenderingPathDefaultCameraFrameSettings.bitDatas.data1
+    value: 68186899872543
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderingPathDefaultCameraFrameSettings.bitDatas.data2
+    value: 4539628424389459968
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings.bitDatas.data1
+    value: 69286411632415
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings.bitDatas.data2
+    value: 4539628424389459968
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderingPathDefaultRealtimeReflectionFrameSettings.bitDatas.data1
+    value: 69286210305823
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderingPathDefaultRealtimeReflectionFrameSettings.bitDatas.data2
+    value: 4539628424389459968
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportShadowMask
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportSSR
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportSSAO
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportSubsurfaceScattering
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.increaseSssSampleCount
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportVolumetrics
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.increaseResolutionOfVolumetrics
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportLightLayers
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportDistortion
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportTransparentBackface
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportTransparentDepthPrepass
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportTransparentDepthPostpass
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.colorBufferFormat
+    value: 74
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportedLitShaderMode
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportDecals
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.msaaSampleCount
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportMotionVectors
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportRuntimeDebugDisplay
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportDitheringCrossFade
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.supportRayTracing
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.cookieSize
+    value: 128
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.cookieTexArraySize
+    value: 16
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.pointCookieSize
+    value: 128
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.cubeCookieTexArraySize
+    value: 16
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.planarReflectionProbeCacheSize
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.planarReflectionTextureSize
+    value: 1024
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.reflectionProbeCacheSize
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.reflectionCubemapSize
+    value: 1024
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.reflectionCacheCompressed
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.planarReflectionCacheCompressed
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.skyReflectionSize
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.skyLightingOverrideLayerMask.m_Bits
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.supportFabricConvolution
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.maxDirectionalLightsOnScreen
+    value: 16
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.maxPunctualLightsOnScreen
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.maxAreaLightsOnScreen
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.maxEnvLightsOnScreen
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.lightLoopSettings.maxDecalsOnScreen
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.hdShadowInitParams.maxShadowRequests
+    value: 16
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.hdShadowInitParams.directionalShadowsDepthBits
+    value: 32
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.hdShadowInitParams.shadowQuality
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.hdShadowInitParams.punctualLightShadowAtlas.shadowAtlasResolution
+    value: 4096
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.hdShadowInitParams.punctualLightShadowAtlas.shadowAtlasDepthBits
+    value: 32
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.hdShadowInitParams.punctualLightShadowAtlas.useDynamicViewportRescale
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.hdShadowInitParams.areaLightShadowAtlas.shadowAtlasResolution
+    value: 4096
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.hdShadowInitParams.areaLightShadowAtlas.shadowAtlasDepthBits
+    value: 32
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.hdShadowInitParams.areaLightShadowAtlas.useDynamicViewportRescale
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.decalSettings.drawDistance
+    value: 1000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.decalSettings.atlasWidth
+    value: 4096
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.decalSettings.atlasHeight
+    value: 4096
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.decalSettings.perChannelMask
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.postProcessSettings.m_LutSize
+    value: 32
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.postProcessSettings.lutFormat
+    value: 52
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.dynamicResolutionSettings.enabled
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.dynamicResolutionSettings.maxPercentage
+    value: 100
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.dynamicResolutionSettings.minPercentage
+    value: 50
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.dynamicResolutionSettings.dynResType
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.dynamicResolutionSettings.upsampleFilter
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.dynamicResolutionSettings.forceResolution
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RenderPipelineSettings.dynamicResolutionSettings.forcedPercentage
+    value: 100
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: allowShaderVariantStripping
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: enableSRPBatcher
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: shaderVariantLogLevel
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: diffusionProfileSettings
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: diffusionProfileSettingsList.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: diffusionProfileSettingsList.Array.data[0]
+    value: 
+    objectReference: {fileID: 11400000, guid: 34f5d0d8ebe5dfa41a899ca985b974bb, type: 2}
+  - target: {fileID: 0}
+    propertyPath: m_Version
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.overrides
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableShadow
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableContactShadows
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableShadowMask
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableSSR
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableSSAO
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableSubsurfaceScattering
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableTransmission
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableAtmosphericScattering
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableVolumetrics
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableReprojectionForVolumetrics
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableLightLayers
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableExposureControl
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.diffuseGlobalDimmer
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.specularGlobalDimmer
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.shaderLitMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableDepthPrepassWithDeferredRendering
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableTransparentPrepass
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableMotionVectors
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableObjectMotionVectors
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableDecals
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableRoughRefraction
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableTransparentPostpass
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableDistortion
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enablePostprocess
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableOpaqueObjects
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableTransparentObjects
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableRealtimePlanarReflection
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableMSAA
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.enableAsyncCompute
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.runLightListAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.runSSRAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.runSSAOAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.runContactShadowsAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.runVolumeVoxelizationAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.lightLoopSettings.overrides
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.lightLoopSettings.enableDeferredTileAndCluster
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.lightLoopSettings.enableComputeLightEvaluation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.lightLoopSettings.enableComputeLightVariants
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.lightLoopSettings.enableComputeMaterialVariants
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.lightLoopSettings.enableFptlForForwardOpaque
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.lightLoopSettings.enableBigTilePrepass
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteFrameSettings.lightLoopSettings.isFptlEnabled
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.overrides
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableShadow
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableContactShadows
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableShadowMask
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableSSR
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableSSAO
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableSubsurfaceScattering
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableTransmission
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableAtmosphericScattering
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableVolumetrics
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableReprojectionForVolumetrics
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableLightLayers
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableExposureControl
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.diffuseGlobalDimmer
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.specularGlobalDimmer
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.shaderLitMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableDepthPrepassWithDeferredRendering
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableTransparentPrepass
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableMotionVectors
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableObjectMotionVectors
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableDecals
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableRoughRefraction
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableTransparentPostpass
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableDistortion
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enablePostprocess
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableOpaqueObjects
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableTransparentObjects
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableRealtimePlanarReflection
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableMSAA
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.enableAsyncCompute
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.runLightListAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.runSSRAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.runSSAOAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.runContactShadowsAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.runVolumeVoxelizationAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.lightLoopSettings.overrides
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.lightLoopSettings.enableDeferredTileAndCluster
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.lightLoopSettings.enableComputeLightEvaluation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.lightLoopSettings.enableComputeLightVariants
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.lightLoopSettings.enableComputeMaterialVariants
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.lightLoopSettings.enableFptlForForwardOpaque
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.lightLoopSettings.enableBigTilePrepass
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteBakedOrCustomReflectionFrameSettings.lightLoopSettings.isFptlEnabled
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.overrides
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableShadow
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableContactShadows
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableShadowMask
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableSSR
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableSSAO
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableSubsurfaceScattering
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableTransmission
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableAtmosphericScattering
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableVolumetrics
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableReprojectionForVolumetrics
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableLightLayers
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableExposureControl
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.diffuseGlobalDimmer
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.specularGlobalDimmer
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.shaderLitMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableDepthPrepassWithDeferredRendering
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableTransparentPrepass
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableMotionVectors
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableObjectMotionVectors
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableDecals
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableRoughRefraction
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableTransparentPostpass
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableDistortion
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enablePostprocess
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableOpaqueObjects
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableTransparentObjects
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableRealtimePlanarReflection
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableMSAA
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.enableAsyncCompute
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.runLightListAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.runSSRAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.runSSAOAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.runContactShadowsAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.runVolumeVoxelizationAsync
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.lightLoopSettings.overrides
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.lightLoopSettings.enableDeferredTileAndCluster
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.lightLoopSettings.enableComputeLightEvaluation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.lightLoopSettings.enableComputeLightVariants
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.lightLoopSettings.enableComputeMaterialVariants
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.lightLoopSettings.enableFptlForForwardOpaque
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.lightLoopSettings.enableBigTilePrepass
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ObsoleteRealtimeReflectionFrameSettings.lightLoopSettings.isFptlEnabled
+    value: 0
+    objectReference: {fileID: 0}

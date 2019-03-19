@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -27,6 +28,10 @@ namespace General
         public Light MainLight;
         public MessagePanel MessagePanelObject;
         public HDRenderPipeline RenderPipeline;
+        public HDRenderPipelineAsset HighQualityAsset;
+        public HDRenderPipelineAsset MediumQualityAsset;
+        public HDRenderPipelineAsset LowQualityAsset;
+        public ProgramEnums.GraphicsQuality GraphicsQuality;
 
         #region Settings
 
@@ -79,7 +84,7 @@ namespace General
             MaterialGuiObject = FindMonoBehaviour<MaterialGui>().gameObject;
 
             ActivateObjects();
-            InvokeRepeating(nameof(SlowUpdate), 0.1f, 0.2f);
+            StartCoroutine(SlowUpdate());
             yield return StartCoroutine(GetHdrpCoroutine());
         }
 
@@ -99,17 +104,68 @@ namespace General
             GuiScale = new Vector2(Screen.width / GuiReferenceSize.x, Screen.height / GuiReferenceSize.y);
         }
 
-        private void SlowUpdate()
+        private IEnumerator SlowUpdate()
         {
-//            Logger.Log("Target : " + Application.targetFrameRate);
-//            Logger.Log("Desired FrameRate : " + DesiredFrameRate);
-            if (Application.targetFrameRate != DesiredFrameRate && DesiredFrameRate != 0)
+            while (true)
             {
-                Logger.Log("Setting FrameRate to " + DesiredFrameRate);
-                Application.targetFrameRate = DesiredFrameRate;
+                if (Application.targetFrameRate != DesiredFrameRate && DesiredFrameRate != 0)
+                {
+                    Logger.Log("Setting FrameRate to " + DesiredFrameRate);
+                    Application.targetFrameRate = DesiredFrameRate;
+                }
+
+                if (LastPath != null) PlayerPrefs.SetString(LastPathKey, LastPath);
+
+                yield return StartCoroutine(UpdateQuality());
+
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
+
+        private IEnumerator UpdateQuality()
+        {
+            Debug.Log("Quality " + QualitySettings.GetQualityLevel());
+            HDRenderPipelineAsset hdRenderPipelineAsset;
+            switch (GraphicsQuality)
+            {
+                case ProgramEnums.GraphicsQuality.High:
+                    QualitySettings.SetQualityLevel(2);
+                    hdRenderPipelineAsset = HighQualityAsset;
+                    break;
+                case ProgramEnums.GraphicsQuality.Medium:
+                    QualitySettings.SetQualityLevel(1);
+                    hdRenderPipelineAsset = MediumQualityAsset;
+                    break;
+                case ProgramEnums.GraphicsQuality.Low:
+                    QualitySettings.SetQualityLevel(0);
+                    hdRenderPipelineAsset = LowQualityAsset;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
-            if (LastPath != null) PlayerPrefs.SetString(LastPathKey, LastPath);
+            if (GraphicsSettings.renderPipelineAsset == hdRenderPipelineAsset) yield break;
+
+            switch (GraphicsQuality)
+            {
+                case ProgramEnums.GraphicsQuality.High:
+                    QualitySettings.SetQualityLevel(2);
+                    break;
+                case ProgramEnums.GraphicsQuality.Medium:
+                    QualitySettings.SetQualityLevel(1);
+                    break;
+                case ProgramEnums.GraphicsQuality.Low:
+                    QualitySettings.SetQualityLevel(0);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            yield return new WaitForSeconds(0.2f);
+
+            GraphicsSettings.renderPipelineAsset = hdRenderPipelineAsset;
+
+            yield return new WaitForSeconds(0.8f);
         }
 
         private void ActivateObjects()

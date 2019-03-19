@@ -3,6 +3,7 @@
 using System.IO;
 using System.Xml.Serialization;
 using General;
+using JetBrains.Annotations;
 using Settings;
 using UnityEngine;
 using Logger = General.Logger;
@@ -20,7 +21,7 @@ namespace Gui
         public static SettingsGui Instance;
 
         private readonly Rect _windowRect = new Rect(ProgramManager.GuiReferenceSize.x - 300,
-            ProgramManager.GuiReferenceSize.y - 400, 280, 300);
+            ProgramManager.GuiReferenceSize.y - 420, 280, 370);
 
         private bool _invalidSettings;
         private int _windowId;
@@ -49,10 +50,11 @@ namespace Gui
         {
             ObjectHandler.AllowHide = ProgramSettings.HideUiOnRotate;
             ProgramManager.Instance.DesiredFrameRate = ProgramSettings.FrameRate;
+            ProgramManager.Instance.GraphicsQuality = ProgramSettings.GraphicsQuality;
             TextureManager.Instance.Hdr = ProgramSettings.HDR;
         }
 
-        public void LoadSettings()
+        private void LoadSettings()
         {
             if (PlayerPrefs.HasKey(SettingsKey))
             {
@@ -81,6 +83,7 @@ namespace Gui
             Logger.Log("Initializing Program Settings");
             ProgramSettings.HideUiOnRotate = ObjectHandler.AllowHide;
             ProgramSettings.FrameRate = ProgramManager.DefaultFrameRate;
+            ProgramSettings.GraphicsQuality = ProgramEnums.GraphicsQuality.Medium;
             ProgramSettings.HDR = TextureManager.Instance.Hdr;
             ProgramSettings.NormalMapMaxStyle = true;
             ProgramSettings.NormalMapMayaStyle = false;
@@ -198,6 +201,31 @@ namespace Gui
 
             offsetY += 40;
 
+            GUI.Label(new Rect(offsetX + 70, offsetY, 250, 30), "Graphics Quality");
+
+            offsetY += 30;
+
+            var isLow = ProgramSettings.GraphicsQuality == ProgramEnums.GraphicsQuality.Low;
+            if (GUI.Toggle(new Rect(offsetX + 20, offsetY, 50, 30), isLow, "Low"))
+            {
+                ProgramSettings.GraphicsQuality = ProgramEnums.GraphicsQuality.Low;
+            }
+
+            var isMedium = ProgramSettings.GraphicsQuality == ProgramEnums.GraphicsQuality.Medium;
+            if (GUI.Toggle(new Rect(offsetX + 100, offsetY, 50, 30), isMedium, "Medium"))
+            {
+                ProgramSettings.GraphicsQuality = ProgramEnums.GraphicsQuality.Medium;
+            }
+
+            var isHigh = ProgramSettings.GraphicsQuality == ProgramEnums.GraphicsQuality.High;
+            if (GUI.Toggle(new Rect(offsetX + 180, offsetY, 50, 30), isHigh, "High"))
+            {
+                ProgramSettings.GraphicsQuality = ProgramEnums.GraphicsQuality.High;
+            }
+
+            offsetY += 40;
+
+
             if (GUI.Button(new Rect(offsetX, offsetY, 260, 25), "Set Default Property Map Channels"))
             {
                 ProgramSettings.PropRed = MainGui.Instance.PropRed;
@@ -226,6 +254,7 @@ namespace Gui
             if (_windowOpen) MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Setting and Preferences");
         }
 
+        [UsedImplicitly]
         public void SettingsButtonCallBack()
         {
             if (_windowOpen)

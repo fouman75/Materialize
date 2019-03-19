@@ -1,0 +1,240 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf1dab834d4ec34195b920ea7bbf9ec, type: 3}
+  m_Name: HDRP Asset High
+  m_EditorClassIdentifier: 
+  m_RenderPipelineResources: {fileID: 11400000, guid: 3ce144cff5783da45aa5d4fdc2da14b7,
+    type: 2}
+  m_RenderingPathDefaultCameraFrameSettings:
+    bitDatas:
+      data1: 68186899872543
+      data2: 4539628424389459968
+  m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
+    bitDatas:
+      data1: 69286411632415
+      data2: 4539628424389459968
+  m_RenderingPathDefaultRealtimeReflectionFrameSettings:
+    bitDatas:
+      data1: 69286210305823
+      data2: 4539628424389459968
+  m_RenderPipelineSettings:
+    supportShadowMask: 1
+    supportSSR: 1
+    supportSSAO: 1
+    supportSubsurfaceScattering: 0
+    increaseSssSampleCount: 1
+    supportVolumetrics: 0
+    increaseResolutionOfVolumetrics: 1
+    supportLightLayers: 0
+    supportDistortion: 0
+    supportTransparentBackface: 0
+    supportTransparentDepthPrepass: 0
+    supportTransparentDepthPostpass: 0
+    colorBufferFormat: 74
+    supportedLitShaderMode: 2
+    supportDecals: 0
+    msaaSampleCount: 2
+    supportMotionVectors: 0
+    supportRuntimeDebugDisplay: 1
+    supportDitheringCrossFade: 0
+    supportRayTracing: 0
+    lightLoopSettings:
+      cookieSize: 128
+      cookieTexArraySize: 16
+      pointCookieSize: 128
+      cubeCookieTexArraySize: 16
+      planarReflectionProbeCacheSize: 1
+      planarReflectionTextureSize: 1024
+      reflectionProbeCacheSize: 1
+      reflectionCubemapSize: 1024
+      reflectionCacheCompressed: 1
+      planarReflectionCacheCompressed: 0
+      skyReflectionSize: 1024
+      skyLightingOverrideLayerMask:
+        serializedVersion: 2
+        m_Bits: 0
+      supportFabricConvolution: 0
+      maxDirectionalLightsOnScreen: 16
+      maxPunctualLightsOnScreen: 4
+      maxAreaLightsOnScreen: 4
+      maxEnvLightsOnScreen: 4
+      maxDecalsOnScreen: 512
+    hdShadowInitParams:
+      maxShadowRequests: 16
+      directionalShadowsDepthBits: 32
+      shadowQuality: 0
+      punctualLightShadowAtlas:
+        shadowAtlasResolution: 4096
+        shadowAtlasDepthBits: 32
+        useDynamicViewportRescale: 1
+      areaLightShadowAtlas:
+        shadowAtlasResolution: 4096
+        shadowAtlasDepthBits: 32
+        useDynamicViewportRescale: 1
+    decalSettings:
+      drawDistance: 1000
+      atlasWidth: 4096
+      atlasHeight: 4096
+      perChannelMask: 0
+    postProcessSettings:
+      m_LutSize: 32
+      lutFormat: 52
+    dynamicResolutionSettings:
+      enabled: 0
+      maxPercentage: 100
+      minPercentage: 50
+      dynResType: 0
+      upsampleFilter: 1
+      forceResolution: 0
+      forcedPercentage: 100
+  allowShaderVariantStripping: 1
+  enableSRPBatcher: 1
+  shaderVariantLogLevel: 2
+  diffusionProfileSettings: {fileID: 0}
+  diffusionProfileSettingsList:
+  - {fileID: 11400000, guid: 34f5d0d8ebe5dfa41a899ca985b974bb, type: 2}
+  m_Version: 5
+  m_ObsoleteFrameSettings:
+    overrides: 0
+    enableShadow: 0
+    enableContactShadows: 0
+    enableShadowMask: 0
+    enableSSR: 0
+    enableSSAO: 0
+    enableSubsurfaceScattering: 0
+    enableTransmission: 0
+    enableAtmosphericScattering: 0
+    enableVolumetrics: 0
+    enableReprojectionForVolumetrics: 0
+    enableLightLayers: 0
+    enableExposureControl: 1
+    diffuseGlobalDimmer: 0
+    specularGlobalDimmer: 0
+    shaderLitMode: 0
+    enableDepthPrepassWithDeferredRendering: 0
+    enableTransparentPrepass: 0
+    enableMotionVectors: 0
+    enableObjectMotionVectors: 0
+    enableDecals: 0
+    enableRoughRefraction: 0
+    enableTransparentPostpass: 0
+    enableDistortion: 0
+    enablePostprocess: 0
+    enableOpaqueObjects: 0
+    enableTransparentObjects: 0
+    enableRealtimePlanarReflection: 0
+    enableMSAA: 0
+    enableAsyncCompute: 0
+    runLightListAsync: 0
+    runSSRAsync: 0
+    runSSAOAsync: 0
+    runContactShadowsAsync: 0
+    runVolumeVoxelizationAsync: 0
+    lightLoopSettings:
+      overrides: 0
+      enableDeferredTileAndCluster: 0
+      enableComputeLightEvaluation: 0
+      enableComputeLightVariants: 0
+      enableComputeMaterialVariants: 0
+      enableFptlForForwardOpaque: 0
+      enableBigTilePrepass: 0
+      isFptlEnabled: 0
+  m_ObsoleteBakedOrCustomReflectionFrameSettings:
+    overrides: 0
+    enableShadow: 0
+    enableContactShadows: 0
+    enableShadowMask: 0
+    enableSSR: 0
+    enableSSAO: 0
+    enableSubsurfaceScattering: 0
+    enableTransmission: 0
+    enableAtmosphericScattering: 0
+    enableVolumetrics: 0
+    enableReprojectionForVolumetrics: 0
+    enableLightLayers: 0
+    enableExposureControl: 1
+    diffuseGlobalDimmer: 0
+    specularGlobalDimmer: 0
+    shaderLitMode: 0
+    enableDepthPrepassWithDeferredRendering: 0
+    enableTransparentPrepass: 0
+    enableMotionVectors: 0
+    enableObjectMotionVectors: 0
+    enableDecals: 0
+    enableRoughRefraction: 0
+    enableTransparentPostpass: 0
+    enableDistortion: 0
+    enablePostprocess: 0
+    enableOpaqueObjects: 0
+    enableTransparentObjects: 0
+    enableRealtimePlanarReflection: 0
+    enableMSAA: 0
+    enableAsyncCompute: 0
+    runLightListAsync: 0
+    runSSRAsync: 0
+    runSSAOAsync: 0
+    runContactShadowsAsync: 0
+    runVolumeVoxelizationAsync: 0
+    lightLoopSettings:
+      overrides: 0
+      enableDeferredTileAndCluster: 0
+      enableComputeLightEvaluation: 0
+      enableComputeLightVariants: 0
+      enableComputeMaterialVariants: 0
+      enableFptlForForwardOpaque: 0
+      enableBigTilePrepass: 0
+      isFptlEnabled: 0
+  m_ObsoleteRealtimeReflectionFrameSettings:
+    overrides: 0
+    enableShadow: 0
+    enableContactShadows: 0
+    enableShadowMask: 0
+    enableSSR: 0
+    enableSSAO: 0
+    enableSubsurfaceScattering: 0
+    enableTransmission: 0
+    enableAtmosphericScattering: 0
+    enableVolumetrics: 0
+    enableReprojectionForVolumetrics: 0
+    enableLightLayers: 0
+    enableExposureControl: 1
+    diffuseGlobalDimmer: 0
+    specularGlobalDimmer: 0
+    shaderLitMode: 0
+    enableDepthPrepassWithDeferredRendering: 0
+    enableTransparentPrepass: 0
+    enableMotionVectors: 0
+    enableObjectMotionVectors: 0
+    enableDecals: 0
+    enableRoughRefraction: 0
+    enableTransparentPostpass: 0
+    enableDistortion: 0
+    enablePostprocess: 0
+    enableOpaqueObjects: 0
+    enableTransparentObjects: 0
+    enableRealtimePlanarReflection: 0
+    enableMSAA: 0
+    enableAsyncCompute: 0
+    runLightListAsync: 0
+    runSSRAsync: 0
+    runSSAOAsync: 0
+    runContactShadowsAsync: 0
+    runVolumeVoxelizationAsync: 0
+    lightLoopSettings:
+      overrides: 0
+      enableDeferredTileAndCluster: 0
+      enableComputeLightEvaluation: 0
+      enableComputeLightVariants: 0
+      enableComputeMaterialVariants: 0
+      enableFptlForForwardOpaque: 0
+      enableBigTilePrepass: 0
+      isFptlEnabled: 0

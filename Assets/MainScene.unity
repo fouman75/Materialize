@@ -39,20 +39,20 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.50718814, g: 0.4817171, b: 0.4364872, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 0
+    m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
     serializedVersion: 12
@@ -73,7 +73,7 @@ LightmapSettings:
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
-    m_MixedBakeMode: 0
+    m_MixedBakeMode: 2
     m_BakeBackend: 2
     m_PVRSampling: 1
     m_PVRDirectSampleCount: 32
@@ -100,7 +100,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 112000000, guid: 9a16c689f04cae6a28ae3c271dbac256,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &5
 NavMeshSettings:
   serializedVersion: 2
@@ -4423,7 +4423,7 @@ GameObject:
   - component: {fileID: 2017529247}
   - component: {fileID: 2017529246}
   m_Layer: 0
-  m_Name: Program Manager
+  m_Name: ProgramManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4447,6 +4447,10 @@ MonoBehaviour:
   LastPath: 
   MainLight: {fileID: 1585571158}
   MessagePanelObject: {fileID: 1674964765}
+  HighQualityAsset: {fileID: 11400000, guid: 204ea025a14fc8290b039026772df368, type: 2}
+  MediumQualityAsset: {fileID: 11400000, guid: c70b1ea4295ec1e26a01d8a6c9086304, type: 2}
+  LowQualityAsset: {fileID: 11400000, guid: 179adb809604d5a67a969e8c3850c7be, type: 2}
+  GraphicsQuality: 0
   StartCubeMap: {fileID: 8900000, guid: d179a5cf97a39ec5c91cb199d742898a, type: 3}
   SceneObjects: []
   CommandListExecutorObject: {fileID: 1637277520}

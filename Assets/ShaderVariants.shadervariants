@@ -154,6 +154,11 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
+  - first: {fileID: 4800000, guid: d850d0a2481878d4bbf17e5126b04163, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
   - first: {fileID: 4800000, guid: e3cab24f27741f44d8af1e94d006267c, type: 3}
     second:
       variants:
@@ -177,9 +182,15 @@ ShaderVariantCollection:
         passType: 8
       - keywords: INSTANCING_ON _TERRAIN_INSTANCED_PERPIXEL_NORMAL
         passType: 8
+      - keywords: 
+        passType: 13
       - keywords: _TERRAIN_INSTANCED_PERPIXEL_NORMAL
         passType: 13
+      - keywords: INSTANCING_ON _TERRAIN_INSTANCED_PERPIXEL_NORMAL
+        passType: 13
       - keywords: DECALS_OFF _TERRAIN_INSTANCED_PERPIXEL_NORMAL
+        passType: 13
+      - keywords: DECALS_OFF INSTANCING_ON _TERRAIN_INSTANCED_PERPIXEL_NORMAL
         passType: 13
   - first: {fileID: 4800000, guid: 19fa402a9db6edf4dbd182194973fa8c, type: 3}
     second:

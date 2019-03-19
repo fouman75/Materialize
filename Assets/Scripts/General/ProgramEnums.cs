@@ -33,5 +33,12 @@ namespace General
             FullScreen,
             Windowed
         }
+
+        public enum GraphicsQuality
+        {
+            High,
+            Medium,
+            Low
+        }
     }
 }

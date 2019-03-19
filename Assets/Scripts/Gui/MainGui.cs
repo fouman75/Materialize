@@ -299,7 +299,6 @@ namespace Gui
 
         // ReSharper disable once RedundantDefaultMemberInitializer
         [SerializeField] private TextMeshProUGUI FullScreenTextObject = null;
-        [SerializeField] private Camera MainCamera = null;
 
         #endregion
 
@@ -597,32 +596,44 @@ namespace Gui
 
         private IEnumerator SetScreen(ProgramEnums.ScreenMode screenMode)
         {
-            MainCamera.gameObject.SetActive(false);
-            yield return new WaitForSeconds(0.1f);
-            var refreshRate = ProgramManager.Instance.DesiredFrameRate;
             switch (screenMode)
             {
                 case ProgramEnums.ScreenMode.FullScreen:
                     var fsRes = Screen.resolutions;
                     var highRes = fsRes[fsRes.Length - 1];
-                    Screen.SetResolution(highRes.width, highRes.height, FullScreenMode.FullScreenWindow, refreshRate);
-//                    QualitySettings.vSyncCount = 0;
-                    Screen.fullScreen = true;
+                    Screen.SetResolution(highRes.width, highRes.height, FullScreenMode.ExclusiveFullScreen);
                     break;
                 case ProgramEnums.ScreenMode.Windowed:
-                    var winRes = Screen.resolutions;
-                    var midRes = winRes[winRes.Length / 2];
-                    Screen.SetResolution(midRes.width, midRes.height, FullScreenMode.Windowed, refreshRate);
-//                    QualitySettings.vSyncCount = 0;
-                    Screen.fullScreen = false;
+                    var res = GetSecondHighestResolution();
+
+                    Screen.SetResolution(res.width, res.height, FullScreenMode.Windowed);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(screenMode), screenMode, null);
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
 
-            MainCamera.gameObject.SetActive(true);
+            GraphicsSettings.renderPipelineAsset = GraphicsSettings.renderPipelineAsset;
+        }
+
+        private static Resolution GetSecondHighestResolution()
+        {
+            var winRes = Screen.resolutions;
+            var nativeRes = winRes[winRes.Length - 1];
+            var res = nativeRes;
+            var nativeAspect = 1.0f * nativeRes.width / nativeRes.height;
+            for (var i = winRes.Length - 1; i >= 0; i--)
+            {
+                var aspectRatio = 1.0f * winRes[i].width / winRes[i].height;
+
+                if (!(Mathf.Abs(aspectRatio - nativeAspect) < 0.001f)) continue;
+
+                res = winRes[i];
+                break;
+            }
+
+            return res;
         }
 
         public void HideGuiButtonClickEvent()
