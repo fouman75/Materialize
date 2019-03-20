@@ -21,8 +21,6 @@ namespace General
         private char _pathChar;
         public ProjectObject ThisProject;
 
-        [HideInInspector] public bool Busy;
-
         // Use this for initialization
         private void Awake()
         {
@@ -225,10 +223,17 @@ namespace General
         private IEnumerator SaveTexture(Texture2D textureToSave, string pathToFile)
         {
             if (!textureToSave || string.IsNullOrEmpty(pathToFile)) yield break;
+
+            while (!ProgramManager.Lock()) yield return null;
+
+            MessagePanel.ShowMessage($"Saving to {pathToFile}");
+
             Logger.Log($"Salvando {textureToSave} como {pathToFile}");
             if (!textureToSave.isReadable)
             {
                 Logger.LogError($"Texture {pathToFile} somente leitura");
+                MessagePanel.HideMessage();
+                ProgramManager.Unlock();
                 yield break;
             }
 
@@ -280,10 +285,19 @@ namespace General
                     throw new ArgumentOutOfRangeException(nameof(extension), extension, null);
             }
 
-            if (bytes == null) yield break;
+            if (bytes == null)
+            {
+                MessagePanel.HideMessage();
+                ProgramManager.Unlock();
+                yield break;
+            }
+
             File.WriteAllBytes(pathToFile, bytes);
 
             yield return new WaitForSeconds(0.1f);
+
+            MessagePanel.HideMessage();
+            ProgramManager.Unlock();
         }
 
         //==============================================//
@@ -298,44 +312,44 @@ namespace General
             if (ThisProject.HeightMapPath != "null")
                 StartCoroutine(LoadTexture(ProgramEnums.MapType.Height, pathToFile + ThisProject.HeightMapPath));
 
-            while (Busy) yield return new WaitForSeconds(0.01f);
+            while (ProgramManager.IsLocked) yield return new WaitForSeconds(0.01f);
 
             if (ThisProject.DiffuseMapOriginalPath != "null")
                 StartCoroutine(LoadTexture(ProgramEnums.MapType.DiffuseOriginal,
                     pathToFile + ThisProject.DiffuseMapOriginalPath));
 
-            while (Busy) yield return new WaitForSeconds(0.01f);
+            while (ProgramManager.IsLocked) yield return new WaitForSeconds(0.01f);
 
             if (ThisProject.DiffuseMapPath != "null")
                 StartCoroutine(LoadTexture(ProgramEnums.MapType.Diffuse, pathToFile + ThisProject.DiffuseMapPath));
 
-            while (Busy) yield return new WaitForSeconds(0.01f);
+            while (ProgramManager.IsLocked) yield return new WaitForSeconds(0.01f);
 
             if (ThisProject.NormalMapPath != "null")
                 StartCoroutine(LoadTexture(ProgramEnums.MapType.Normal, pathToFile + ThisProject.NormalMapPath));
 
-            while (Busy) yield return new WaitForSeconds(0.01f);
+            while (ProgramManager.IsLocked) yield return new WaitForSeconds(0.01f);
 
             if (ThisProject.MetallicMapPath != "null")
                 StartCoroutine(LoadTexture(ProgramEnums.MapType.Metallic, pathToFile + ThisProject.MetallicMapPath));
 
-            while (Busy) yield return new WaitForSeconds(0.01f);
+            while (ProgramManager.IsLocked) yield return new WaitForSeconds(0.01f);
 
             if (ThisProject.SmoothnessMapPath != "null")
                 StartCoroutine(
                     LoadTexture(ProgramEnums.MapType.Smoothness, pathToFile + ThisProject.SmoothnessMapPath));
 
-            while (Busy) yield return new WaitForSeconds(0.01f);
+            while (ProgramManager.IsLocked) yield return new WaitForSeconds(0.01f);
 
             if (ThisProject.MaskMapPath != "null")
                 StartCoroutine(LoadTexture(ProgramEnums.MapType.MaskMap, pathToFile + ThisProject.MaskMapPath));
 
-            while (Busy) yield return new WaitForSeconds(0.01f);
+            while (ProgramManager.IsLocked) yield return new WaitForSeconds(0.01f);
 
             if (ThisProject.AoMapPath != "null")
                 StartCoroutine(LoadTexture(ProgramEnums.MapType.Ao, pathToFile + ThisProject.AoMapPath));
 
-            while (Busy) yield return new WaitForSeconds(0.01f);
+            while (ProgramManager.IsLocked) yield return new WaitForSeconds(0.01f);
 
             yield return new WaitForSeconds(0.01f);
             TextureManager.Instance.SetFullMaterial();
@@ -345,24 +359,23 @@ namespace General
 
         public IEnumerator LoadTexture(ProgramEnums.MapType textureToLoad, string pathToFile)
         {
-            Busy = true;
+            if (pathToFile.IsNullOrEmpty()) yield break;
 
-            if (StringExt.IsNullOrEmpty(pathToFile)) yield break;
+            while (!ProgramManager.Lock()) yield return null;
+            MessagePanel.ShowMessage($"Loading {pathToFile}");
 
             var newTexture = TextureProcessing.GetTextureFromFile(pathToFile);
-            if (!newTexture) yield break;
-
-//            if (!Mathf.IsPowerOfTwo(newTexture.width))
-//            {
-//                var size = Mathf.NextPowerOfTwo(newTexture.width);
-//                newTexture.Resize(size, size, newTexture.format, true);
-//                newTexture.Apply(true);
-//            }
 
             if (newTexture && newTexture.format != TextureManager.DefaultHdrTextureFormat)
                 newTexture = TextureProcessing.ConvertToStandard(newTexture);
 
-            if (!newTexture) yield break;
+            if (!newTexture)
+            {
+                MessagePanel.HideMessage();
+                ProgramManager.Unlock();
+                yield break;
+            }
+
             newTexture.anisoLevel = 9;
 
             switch (textureToLoad)
@@ -402,12 +415,11 @@ namespace General
                     throw new ArgumentOutOfRangeException(nameof(textureToLoad), textureToLoad, null);
             }
 
-            yield return new WaitForSeconds(0.01f);
-
-            Busy = false;
+            MessagePanel.HideMessage();
+            ProgramManager.Unlock();
         }
 
-        private void ClearPanelQuickSave()
+        private static void ClearPanelQuickSave()
         {
             var panels = FindObjectsOfType<TexturePanel>();
             foreach (var panel in panels)

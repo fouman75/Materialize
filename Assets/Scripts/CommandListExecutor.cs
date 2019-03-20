@@ -220,7 +220,7 @@ public class CommandListExecutor : MonoBehaviour
                                 throw new ArgumentOutOfRangeException();
                         }
 
-                        while (_saveLoad.Busy) yield return new WaitForSeconds(0.1f);
+                        while (ProgramManager.IsLocked) yield return new WaitForSeconds(0.1f);
                         break;
                     }
                     case CommandType.FlipNormalMapY:
