@@ -29,6 +29,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Other stability changes to Compute Shaders.
 - Minor fixes and improve stability.
 
+### To Implement
+- Windows Copy / Paste
+- Linux Copy to clipboard
+
+
 ## [v0.4HDRP-beta.5a] - 2019-13-03
 ### Changed since beta 5
 - New Options to Post Processing.
