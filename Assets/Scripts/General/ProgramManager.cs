@@ -79,6 +79,7 @@ namespace General
 
         private IEnumerator Start()
         {
+            _probes = FindObjectsOfType<ReflectionProbe>();
             Logger.Log("Starting " + name);
             ControlsGuiObject = FindMonoBehaviour<ControlsGui>().gameObject;
             MainGuiObject = FindMonoBehaviour<MainGui>().gameObject;
@@ -197,9 +198,7 @@ namespace General
 
         public static void RenderProbe()
         {
-            var probes = FindObjectsOfType<ReflectionProbe>();
-
-            foreach (var probe in probes)
+            foreach (var probe in Instance._probes)
             {
                 var isRealTime = probe.mode == ReflectionProbeMode.Realtime;
                 var hdProbe = probe.GetComponent<HDAdditionalReflectionData>();
@@ -220,9 +219,18 @@ namespace General
         public static IEnumerator SetScreen(ProgramEnums.ScreenMode screenMode)
         {
             if (Application.isEditor) yield break;
+            yield return null;
 
-            TextureManager.Instance.CleanMaterial();
+            if (MainGui.Instance)
+            {
+                MainGui.Instance.CloseWindows();
+            }
+
+//            if (TextureManager.Instance) TextureManager.Instance.CleanMaterial();
+
             Instance.SceneVolume.enabled = false;
+            GraphicsSettings.renderPipelineAsset = null;
+            yield return null;
 
             switch (screenMode)
             {
@@ -233,16 +241,15 @@ namespace General
                     break;
                 case ProgramEnums.ScreenMode.Windowed:
                     var res = GetSecondHighestResolution();
-
                     Screen.SetResolution(res.width, res.height, FullScreenMode.Windowed);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(screenMode), screenMode, null);
             }
 
-            Instance.SceneVolume.enabled = true;
-
             GraphicsSettings.renderPipelineAsset = GraphicsSettings.renderPipelineAsset;
+            Instance.SceneVolume.enabled = true;
+            RenderProbe();
         }
 
         private static Resolution GetSecondHighestResolution()
@@ -300,6 +307,8 @@ namespace General
         {
             new ExtensionFilter("Image Files", SaveFormats)
         };
+
+        private ReflectionProbe[] _probes;
 
         #endregion
     }
