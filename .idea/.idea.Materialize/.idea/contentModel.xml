@@ -127,11 +127,10 @@
             <e p="MaskMapCompute.compute" t="Include" />
             <e p="MetallicCompute.compute" t="Include" />
             <e p="NormalCompute.compute" t="Include" />
-            <e p="PackNormalCompute.compute" t="Include" />
             <e p="SampleCompute.compute" t="Include" />
             <e p="SmoothnessCompute.compute" t="Include" />
+            <e p="TextureProcessingCompute.compute" t="Include" />
           </e>
-          <e p="ConvertToGama.shader" t="Include" />
           <e p="Edge_From_Normal_Preview.shader" t="Include" />
           <e p="Edit_Diffuse_Preview.shader" t="Include" />
           <e p="Height_From_Diffuse_Preview.shader" t="Include" />
@@ -151,7 +150,6 @@
             <e p="Blit_MaskMap.shader" t="Include" />
             <e p="Blit_Metallic.shader" t="Include" />
             <e p="Blit_Normal_From_Height.shader" t="Include" />
-            <e p="Blit_PackNormal.shader" t="Include" />
             <e p="Blit_Property_Comp.shader" t="Include" />
             <e p="Blit_Sample.shader" t="Include" />
             <e p="Blit_Seamless_Texture_Maker.shader" t="Include" />

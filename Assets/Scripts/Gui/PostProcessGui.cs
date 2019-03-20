@@ -40,7 +40,7 @@ namespace Gui
 
         private void Awake()
         {
-            Profile = ProgramManager.Instance.SceneVolume.profile;
+            Profile = ProgramManager.Instance.PostProcessingVolume.profile;
 
             Profile.TryGet(out _bloom);
             _bloomIntensity = _bloom.intensity.value;
@@ -97,12 +97,12 @@ namespace Gui
 
         public void PostProcessOn()
         {
-            ProgramManager.Instance.SceneVolume.enabled = true;
+            ProgramManager.Instance.PostProcessingVolume.enabled = true;
         }
 
         public void PostProcessOff()
         {
-            ProgramManager.Instance.SceneVolume.enabled = false;
+            ProgramManager.Instance.PostProcessingVolume.enabled = false;
         }
 
         public void TogglePostProcessGui()

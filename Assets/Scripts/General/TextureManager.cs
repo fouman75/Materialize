@@ -30,7 +30,7 @@ namespace General
         [UsedImplicitly] [SerializeField] private Material FullMaterial = null;
         public bool Hdr;
         public ComputeShader MaskMapCompute;
-        public ComputeShader PackNormalCompute;
+        public ComputeShader TextureProcessingCompute;
         public RenderTextureFormat RenderTextureFormat;
 
         [HideInInspector] public ProgramEnums.MapType TextureInClipboard;
@@ -228,12 +228,12 @@ namespace General
             while (!ProgramManager.Lock()) yield return null;
 
             var tempRenderTexture = GetTempRenderTexture(NormalMap.width, NormalMap.height);
-            var kernel = PackNormalCompute.FindKernel("CSPackNormal");
+            var kernel = TextureProcessingCompute.FindKernel("CSPackNormal");
             var size = new Vector2Int(NormalMap.width, NormalMap.height);
-            PackNormalCompute.SetVector("_ImageSize", (Vector2) size);
-            PackNormalCompute.SetTexture(kernel, "NormalInput", NormalMap);
-            PackNormalCompute.SetTexture(kernel, "Result", tempRenderTexture);
-            PackNormalCompute.Dispatch(kernel, size.x / 8, size.y / 8, 1);
+            TextureProcessingCompute.SetVector("_ImageSize", (Vector2) size);
+            TextureProcessingCompute.SetTexture(kernel, "Input", NormalMap);
+            TextureProcessingCompute.SetTexture(kernel, "Result", tempRenderTexture);
+            TextureProcessingCompute.Dispatch(kernel, size.x / 8, size.y / 8, 1);
 
             yield return new WaitForSeconds(0.5f);
 

@@ -32,6 +32,7 @@ namespace General
         public HDRenderPipelineAsset MediumQualityAsset;
         public HDRenderPipelineAsset LowQualityAsset;
         public ProgramEnums.GraphicsQuality GraphicsQuality;
+        public Volume PostProcessingVolume;
         public Volume SceneVolume;
 
         #region Settings
@@ -228,6 +229,7 @@ namespace General
 
 //            if (TextureManager.Instance) TextureManager.Instance.CleanMaterial();
 
+            Instance.PostProcessingVolume.enabled = false;
             Instance.SceneVolume.enabled = false;
             GraphicsSettings.renderPipelineAsset = null;
             yield return null;
@@ -248,6 +250,7 @@ namespace General
             }
 
             GraphicsSettings.renderPipelineAsset = GraphicsSettings.renderPipelineAsset;
+            Instance.PostProcessingVolume.enabled = true;
             Instance.SceneVolume.enabled = true;
             RenderProbe();
         }

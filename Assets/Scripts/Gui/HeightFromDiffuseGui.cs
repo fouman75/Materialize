@@ -963,12 +963,14 @@ namespace Gui
             ThisMaterial.SetTexture(BlurTex0, _blurMap0);
             ThisMaterial.SetTexture(BlurTex1, _blurMap1);
             ThisMaterial.SetTexture(MainTex, TextureManager.Instance.NormalMap);
+            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
+            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
 
             for (var i = 1; i < 100; i++)
             {
                 HeightCompute.SetFloat(BlendAmount, 1.0f / i);
                 HeightCompute.SetFloat(Progress, i / 100.0f);
-                HeightCompute.Dispatch(kernelNormal, _imageSizeX / 8, _imageSizeY / 8, 1);
+                HeightCompute.Dispatch(kernelNormal, groupsX, groupsY, 1);
 
                 Graphics.Blit(_blurMap0, _blurMap1);
 

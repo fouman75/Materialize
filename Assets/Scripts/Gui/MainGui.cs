@@ -294,7 +294,7 @@ namespace Gui
         public ProgramEnums.FileFormat SelectedFormat;
 
         public GameObject TilingTextureMakerGuiObject;
-        public VolumeProfile VolumeProfile;
+        private VolumeProfile _volumeProfile;
         [HideInInspector] public HDRISky HdriSky;
 
         // ReSharper disable once RedundantDefaultMemberInitializer
@@ -341,8 +341,9 @@ namespace Gui
             _saveLoadProjectScript = SaveLoadProjectObject.GetComponent<SaveLoadProject>();
             PostProcessGuiScript = PostProcessGuiObject.GetComponent<PostProcessGui>();
 
+            _volumeProfile = ProgramManager.Instance.SceneVolume.profile;
             HideGuiLocker.LockEmpty += LoadHideState;
-            VolumeProfile.TryGet(out HdriSky);
+            _volumeProfile.TryGet(out HdriSky);
             HdriSky.hdriSky.value = CubeMaps[0];
 
             HDRenderPipeline hdrp = null;

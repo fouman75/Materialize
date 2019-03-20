@@ -663,6 +663,69 @@ MonoBehaviour:
   MetallicCompute: {fileID: 7200000, guid: 9ce34682c1d7648d899be3d879dd5943, type: 3}
   TestObject: {fileID: 1463534583}
   ThisMaterial: {fileID: 2100000, guid: 737272c68658cdf41aeb0a785065b699, type: 2}
+--- !u!1 &513423964
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 513423967}
+  - component: {fileID: 513423966}
+  - component: {fileID: 513423965}
+  m_Layer: 9
+  m_Name: Scene Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!114 &513423965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513423964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441482e8936e35048a1dffac814e3ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Profile: {fileID: 11400000, guid: ad3ebe04a20f6e1508eed926324ab0e6, type: 2}
+  m_StaticLightingSkyUniqueID: 0
+--- !u!114 &513423966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513423964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: c81df4dba188de7b38203f9535bb1bbe, type: 2}
+--- !u!4 &513423967
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513423964}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &534880369
 GameObject:
   m_ObjectHideFlags: 0
@@ -4448,7 +4511,8 @@ MonoBehaviour:
   MediumQualityAsset: {fileID: 11400000, guid: c70b1ea4295ec1e26a01d8a6c9086304, type: 2}
   LowQualityAsset: {fileID: 11400000, guid: 179adb809604d5a67a969e8c3850c7be, type: 2}
   GraphicsQuality: 0
-  SceneVolume: {fileID: 2072837669}
+  PostProcessingVolume: {fileID: 2072837669}
+  SceneVolume: {fileID: 513423966}
   StartCubeMap: {fileID: 8900000, guid: d179a5cf97a39ec5c91cb199d742898a, type: 3}
   SceneObjects: []
   CommandListExecutorObject: {fileID: 1637277520}
@@ -4504,7 +4568,8 @@ MonoBehaviour:
   FullMaterial: {fileID: 2100000, guid: 85f53cbecf1be3b439a8c31604ce77af, type: 2}
   Hdr: 1
   MaskMapCompute: {fileID: 7200000, guid: 28a9b64b8836c39ada04b2b11ba2bfb8, type: 3}
-  PackNormalCompute: {fileID: 7200000, guid: 495f736537d69cda089838ba084e7e7e, type: 3}
+  TextureProcessingCompute: {fileID: 7200000, guid: 19932851aa20fcfccbba2150b4bc878d,
+    type: 3}
   RenderTextureFormat: 0
   TextureInClipboard: 0
   HdHeightMap: {fileID: 0}
@@ -4549,7 +4614,7 @@ GameObject:
   - component: {fileID: 2072837669}
   - component: {fileID: 2072837668}
   m_Layer: 9
-  m_Name: Scene Volume
+  m_Name: PostProcessing Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

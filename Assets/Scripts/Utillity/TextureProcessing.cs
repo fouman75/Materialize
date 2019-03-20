@@ -41,7 +41,9 @@ public static class TextureProcessing
         var map = TextureManager.Instance.GetTempRenderTexture(size.x, size.y);
         maskMapCompute.SetVector("_ImageSize", (Vector2) size);
         maskMapCompute.SetTexture(kernel, "Result", map);
-        maskMapCompute.Dispatch(kernel, size.x / 8, size.y / 8, 1);
+        var groupsX = (int) Mathf.Ceil(size.x / 8f);
+        var groupsY = (int) Mathf.Ceil(size.y / 8f);
+        maskMapCompute.Dispatch(kernel, groupsX, groupsY, 1);
 
         RenderTexture.active = map;
         var maskMap = TextureManager.Instance.GetStandardTexture(map.width, map.height);
@@ -70,9 +72,18 @@ public static class TextureProcessing
 
     public static Texture2D ConvertToGama(Texture2D texture)
     {
-        var mat = new Material(Shader.Find("Hidden/ConvertToGama"));
+        var compute = TextureManager.Instance.TextureProcessingCompute;
+        var kernel = compute.FindKernel("ConvertToGama");
         var renderTexture = TextureManager.Instance.GetTempRenderTexture(texture.width, texture.height);
-        Graphics.Blit(texture, renderTexture, mat);
+        var imageSizeX = texture.width;
+        var imageSizeY = texture.height;
+        compute.SetVector("_ImageSize", new Vector2(imageSizeX, imageSizeY));
+        compute.SetTexture(kernel, "Input", texture);
+        compute.SetTexture(kernel, "Result", renderTexture);
+        var groupsX = (int) Mathf.Ceil(imageSizeX / 8f);
+        var groupsY = (int) Mathf.Ceil(imageSizeY / 8f);
+        compute.Dispatch(kernel, groupsX, groupsY, 1);
+        
         RenderTexture.active = renderTexture;
         var tex = TextureManager.Instance.GetStandardTexture(texture.width, texture.height);
         tex.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
