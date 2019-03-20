@@ -687,6 +687,7 @@ namespace Gui
             AlignmentGuiScript.Close();
             MaterialGuiObject.SetActive(false);
             PostProcessGuiObject.SetActive(false);
+            TextureManager.Instance.SetFullMaterial();
         }
 
         private void HideWindows()
