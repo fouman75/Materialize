@@ -28,6 +28,7 @@ namespace Gui
         public TextMeshProUGUI Title;
         public int TopBorder = -5;
         public int Width = 125;
+        [HideInInspector] public string QuickSavePath;
 
         private void Awake()
         {
@@ -76,6 +77,7 @@ namespace Gui
             ProgramManager.Instance.LastPath = path.Substring(0, lastBar + 1);
             var textureToSave = TextureManager.Instance.GetTexture(MapType);
             SaveLoadProject.Instance.SaveFile(path, textureToSave);
+            QuickSavePath = path;
         }
 
         public void LoadImage()
@@ -120,6 +122,18 @@ namespace Gui
             MainGui.Instance.CloseWindows();
             TextureManager.Instance.SetFullMaterial();
             TextureManager.Instance.FixSize();
+        }
+
+        public void QuickSave()
+        {
+            var path = QuickSavePath.IsNullOrEmpty()
+                ? SaveLoadProject.Instance.ThisProject?.GetSavePath(MapType)
+                : QuickSavePath;
+
+            if (path.IsNullOrEmpty()) return;
+
+            var textureToSave = TextureManager.Instance.GetTexture(MapType);
+            SaveLoadProject.Instance.SaveFile(path, textureToSave);
         }
 
         private void OnValidate()

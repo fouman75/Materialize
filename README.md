@@ -39,6 +39,10 @@ To use, Unity is not necessary, you can use like a normal linux application.
 - Textures must be in the same folder for them to load.
 - Don't rename the textures.
 
+#### Quick Saving
+- After you save using the save button in the panel, quick save will save and overwrite to that location.
+- If you or load the project, quick save will overwrite the project's texture file.
+ 
 #### Saving Extension
 - You can choose one of the supported extensions by simple naming the file. (Ex.: myTexture.jpg).
 - When saving the project, the extension used will be the one selected in the save panel on the right.
@@ -86,6 +90,10 @@ You can try to downgrade or upgrade the package, but mainly downgrading, somethi
 - tga
 - bmp
 
+### Supported Screen Aspect Ratios
+- 4:3
+- 16:9
+- 16:10
+
 ## Not implemented
-- QuickSave - Will implement in settings, then you can set the folder to save the texture. This will be a persistent setting, that means you can close and open the program without lose the Quick Save path. *Planed for v0.4*.
 - Copy to clipboard. *Planed for v0.4*.

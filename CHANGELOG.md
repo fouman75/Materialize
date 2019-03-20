@@ -4,6 +4,31 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v0.4HDRP-beta.6] - 2019-20-03
+### Added
+- Added Support for Copy/Paste in nautilus 3.26.
+- Added Info Messages on screen.
+- Added Graphics Quality Selection.
+- Added support for 4:3 screens.
+
+### Changed
+- Start in rhe second highest resolution available.
+- Change to full material view when the windows are closed.
+
+#### Minor changes
+- Update to Unity 2019.1.0b8
+- Update to SRP 5.9.0
+
+### Fixes
+- Fix Full Screen.
+- Adjust Post Processing box size when disabling itens.
+- Fix paste of non power of two textures.
+- Better thread groups handling in cases where the texture resolution is odd.
+- Speed improve in processing.
+- Don't let user be too fast pressing buttons and breaking things.
+- Other stability changes to Compute Shaders.
+- Minor fixes and improve stability.
+
 ## [v0.4HDRP-beta.5a] - 2019-13-03
 ### Changed since beta 5
 - New Options to Post Processing.
@@ -29,7 +54,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fix Panning when panning not from centre.
 - Fix a problem with object getting stuck when zooming too much.
 - Fix Save Texture modifying original texture.
-- Minor fixes and improve instability.
+- Minor fixes and improve stability.
 
 ### Known Issues
 - Full Screen is not working, Unity Bug

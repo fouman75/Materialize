@@ -567,7 +567,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8831128299634766101}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3086599526389945307}
+        m_MethodName: QuickSave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &2495070464422320993
@@ -1826,6 +1837,7 @@ MonoBehaviour:
   Title: {fileID: 8488669187998808996}
   TopBorder: -5
   Width: 125
+  QuickSavePath: 
 --- !u!1 &8759541849923599324
 GameObject:
   m_ObjectHideFlags: 0

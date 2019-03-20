@@ -19,7 +19,7 @@ namespace General
     {
         public static SaveLoadProject Instance;
         private char _pathChar;
-        private ProjectObject _thisProject;
+        public ProjectObject ThisProject;
 
         [HideInInspector] public bool Busy;
 
@@ -32,7 +32,7 @@ namespace General
         private void Start()
         {
             _pathChar = ProgramManager.Instance.PathChar;
-            _thisProject = new ProjectObject();
+            ThisProject = new ProjectObject();
         }
 
         public void LoadProject(string pathToFile)
@@ -41,15 +41,15 @@ namespace General
 
             var serializer = new XmlSerializer(typeof(ProjectObject));
             var stream = new FileStream(pathToFile, FileMode.Open);
-            _thisProject = serializer.Deserialize(stream) as ProjectObject;
+            ThisProject = serializer.Deserialize(stream) as ProjectObject;
             stream.Close();
-            MainGui.Instance.HeightFromDiffuseGuiScript.SetValues(_thisProject);
-            MainGui.Instance.EditDiffuseGuiScript.SetValues(_thisProject);
-            MainGui.Instance.NormalFromHeightGuiScript.SetValues(_thisProject);
-            MainGui.Instance.MetallicGuiScript.SetValues(_thisProject);
-            MainGui.Instance.SmoothnessGuiScript.SetValues(_thisProject);
-            MainGui.Instance.AoFromNormalGuiScript.SetValues(_thisProject);
-            MainGui.Instance.MaterialGuiScript.SetValues(_thisProject);
+            MainGui.Instance.HeightFromDiffuseGuiScript.SetValues(ThisProject);
+            MainGui.Instance.EditDiffuseGuiScript.SetValues(ThisProject);
+            MainGui.Instance.NormalFromHeightGuiScript.SetValues(ThisProject);
+            MainGui.Instance.MetallicGuiScript.SetValues(ThisProject);
+            MainGui.Instance.SmoothnessGuiScript.SetValues(ThisProject);
+            MainGui.Instance.AoFromNormalGuiScript.SetValues(ThisProject);
+            MainGui.Instance.MaterialGuiScript.SetValues(ThisProject);
 
             TextureManager.Instance.ClearAllTextures();
 
@@ -68,57 +68,57 @@ namespace General
 
             Logger.Log("Project Name " + projectName);
 
-            MainGui.Instance.HeightFromDiffuseGuiScript.GetValues(_thisProject);
+            MainGui.Instance.HeightFromDiffuseGuiScript.GetValues(ThisProject);
             if (TextureManager.Instance.HeightMap != null)
-                _thisProject.HeightMapPath = projectName + "_height." + extension;
+                ThisProject.HeightMapPath = projectName + "_height." + extension;
             else
-                _thisProject.HeightMapPath = "null";
+                ThisProject.HeightMapPath = "null";
 
-            MainGui.Instance.EditDiffuseGuiScript.GetValues(_thisProject);
+            MainGui.Instance.EditDiffuseGuiScript.GetValues(ThisProject);
             if (TextureManager.Instance.DiffuseMap != null)
-                _thisProject.DiffuseMapPath = projectName + "_diffuse." + extension;
+                ThisProject.DiffuseMapPath = projectName + "_diffuse." + extension;
             else
-                _thisProject.DiffuseMapPath = "null";
+                ThisProject.DiffuseMapPath = "null";
 
             if (TextureManager.Instance.DiffuseMapOriginal != null)
-                _thisProject.DiffuseMapOriginalPath = projectName + "_diffuseOriginal." + extension;
+                ThisProject.DiffuseMapOriginalPath = projectName + "_diffuseOriginal." + extension;
             else
-                _thisProject.DiffuseMapOriginalPath = "null";
+                ThisProject.DiffuseMapOriginalPath = "null";
 
-            MainGui.Instance.NormalFromHeightGuiScript.GetValues(_thisProject);
+            MainGui.Instance.NormalFromHeightGuiScript.GetValues(ThisProject);
             if (TextureManager.Instance.NormalMap != null)
-                _thisProject.NormalMapPath = projectName + "_normal." + extension;
+                ThisProject.NormalMapPath = projectName + "_normal." + extension;
             else
-                _thisProject.NormalMapPath = "null";
+                ThisProject.NormalMapPath = "null";
 
-            MainGui.Instance.MetallicGuiScript.GetValues(_thisProject);
+            MainGui.Instance.MetallicGuiScript.GetValues(ThisProject);
             if (TextureManager.Instance.MetallicMap != null)
-                _thisProject.MetallicMapPath = projectName + "_metallic." + extension;
+                ThisProject.MetallicMapPath = projectName + "_metallic." + extension;
             else
-                _thisProject.MetallicMapPath = "null";
+                ThisProject.MetallicMapPath = "null";
 
-            MainGui.Instance.SmoothnessGuiScript.GetValues(_thisProject);
+            MainGui.Instance.SmoothnessGuiScript.GetValues(ThisProject);
             if (TextureManager.Instance.SmoothnessMap != null)
-                _thisProject.SmoothnessMapPath = projectName + "_smoothness." + extension;
+                ThisProject.SmoothnessMapPath = projectName + "_smoothness." + extension;
             else
-                _thisProject.SmoothnessMapPath = "null";
+                ThisProject.SmoothnessMapPath = "null";
 
             if (TextureManager.Instance.MaskMap != null)
-                _thisProject.MaskMapPath = projectName + "_maskMap." + extension;
+                ThisProject.MaskMapPath = projectName + "_maskMap." + extension;
             else
-                _thisProject.MaskMapPath = "null";
+                ThisProject.MaskMapPath = "null";
 
-            MainGui.Instance.AoFromNormalGuiScript.GetValues(_thisProject);
+            MainGui.Instance.AoFromNormalGuiScript.GetValues(ThisProject);
             if (TextureManager.Instance.AoMap != null)
-                _thisProject.AoMapPath = projectName + "_ao." + extension;
+                ThisProject.AoMapPath = projectName + "_ao." + extension;
             else
-                _thisProject.AoMapPath = "null";
+                ThisProject.AoMapPath = "null";
 
-            MainGui.Instance.MaterialGuiScript.GetValues(_thisProject);
+            MainGui.Instance.MaterialGuiScript.GetValues(ThisProject);
 
             var serializer = new XmlSerializer(typeof(ProjectObject));
             var stream = new FileStream(pathToFile + ".mtz", FileMode.Create);
-            serializer.Serialize(stream, _thisProject);
+            serializer.Serialize(stream, ThisProject);
             stream.Close();
 
             SaveAllFiles(pathToFile);
@@ -191,27 +191,30 @@ namespace General
         private IEnumerator SaveAllTextures(string pathToFile)
         {
             var path = pathToFile.Substring(0, pathToFile.LastIndexOf(_pathChar) + 1);
+            ThisProject.ProjectPath = path;
             yield return StartCoroutine(SaveTexture(TextureManager.Instance.HeightMap,
-                path + _thisProject.HeightMapPath));
+                path + ThisProject.HeightMapPath));
 
             yield return StartCoroutine(SaveTexture(TextureManager.Instance.DiffuseMap,
-                path + _thisProject.DiffuseMapPath));
+                path + ThisProject.DiffuseMapPath));
 
             yield return StartCoroutine(SaveTexture(TextureManager.Instance.DiffuseMapOriginal,
-                path + _thisProject.DiffuseMapOriginalPath));
+                path + ThisProject.DiffuseMapOriginalPath));
 
             yield return StartCoroutine(SaveTexture(TextureManager.Instance.NormalMap,
-                path + _thisProject.NormalMapPath));
+                path + ThisProject.NormalMapPath));
 
             yield return StartCoroutine(SaveTexture(TextureManager.Instance.MetallicMap,
-                path + _thisProject.MetallicMapPath));
+                path + ThisProject.MetallicMapPath));
 
             yield return StartCoroutine(SaveTexture(TextureManager.Instance.SmoothnessMap,
-                path + _thisProject.SmoothnessMapPath));
+                path + ThisProject.SmoothnessMapPath));
 
-            yield return StartCoroutine(SaveTexture(TextureManager.Instance.MaskMap, path + _thisProject.MaskMapPath));
+            yield return StartCoroutine(SaveTexture(TextureManager.Instance.MaskMap, path + ThisProject.MaskMapPath));
 
-            yield return StartCoroutine(SaveTexture(TextureManager.Instance.AoMap, path + _thisProject.AoMapPath));
+            yield return StartCoroutine(SaveTexture(TextureManager.Instance.AoMap, path + ThisProject.AoMapPath));
+
+            ClearPanelQuickSave();
         }
 
         public IEnumerator SaveTexture(string extension, Texture2D textureToSave, string pathToFile)
@@ -290,51 +293,54 @@ namespace General
         private IEnumerator LoadAllTextures(string pathToFile)
         {
             pathToFile = pathToFile.Substring(0, pathToFile.LastIndexOf(_pathChar) + 1);
+            ThisProject.ProjectPath = pathToFile;
 
-            if (_thisProject.HeightMapPath != "null")
-                StartCoroutine(LoadTexture(ProgramEnums.MapType.Height, pathToFile + _thisProject.HeightMapPath));
+            if (ThisProject.HeightMapPath != "null")
+                StartCoroutine(LoadTexture(ProgramEnums.MapType.Height, pathToFile + ThisProject.HeightMapPath));
 
             while (Busy) yield return new WaitForSeconds(0.01f);
 
-            if (_thisProject.DiffuseMapOriginalPath != "null")
+            if (ThisProject.DiffuseMapOriginalPath != "null")
                 StartCoroutine(LoadTexture(ProgramEnums.MapType.DiffuseOriginal,
-                    pathToFile + _thisProject.DiffuseMapOriginalPath));
+                    pathToFile + ThisProject.DiffuseMapOriginalPath));
 
             while (Busy) yield return new WaitForSeconds(0.01f);
 
-            if (_thisProject.DiffuseMapPath != "null")
-                StartCoroutine(LoadTexture(ProgramEnums.MapType.Diffuse, pathToFile + _thisProject.DiffuseMapPath));
+            if (ThisProject.DiffuseMapPath != "null")
+                StartCoroutine(LoadTexture(ProgramEnums.MapType.Diffuse, pathToFile + ThisProject.DiffuseMapPath));
 
             while (Busy) yield return new WaitForSeconds(0.01f);
 
-            if (_thisProject.NormalMapPath != "null")
-                StartCoroutine(LoadTexture(ProgramEnums.MapType.Normal, pathToFile + _thisProject.NormalMapPath));
+            if (ThisProject.NormalMapPath != "null")
+                StartCoroutine(LoadTexture(ProgramEnums.MapType.Normal, pathToFile + ThisProject.NormalMapPath));
 
             while (Busy) yield return new WaitForSeconds(0.01f);
 
-            if (_thisProject.MetallicMapPath != "null")
-                StartCoroutine(LoadTexture(ProgramEnums.MapType.Metallic, pathToFile + _thisProject.MetallicMapPath));
+            if (ThisProject.MetallicMapPath != "null")
+                StartCoroutine(LoadTexture(ProgramEnums.MapType.Metallic, pathToFile + ThisProject.MetallicMapPath));
 
             while (Busy) yield return new WaitForSeconds(0.01f);
 
-            if (_thisProject.SmoothnessMapPath != "null")
+            if (ThisProject.SmoothnessMapPath != "null")
                 StartCoroutine(
-                    LoadTexture(ProgramEnums.MapType.Smoothness, pathToFile + _thisProject.SmoothnessMapPath));
+                    LoadTexture(ProgramEnums.MapType.Smoothness, pathToFile + ThisProject.SmoothnessMapPath));
 
             while (Busy) yield return new WaitForSeconds(0.01f);
 
-            if (_thisProject.MaskMapPath != "null")
-                StartCoroutine(LoadTexture(ProgramEnums.MapType.MaskMap, pathToFile + _thisProject.MaskMapPath));
+            if (ThisProject.MaskMapPath != "null")
+                StartCoroutine(LoadTexture(ProgramEnums.MapType.MaskMap, pathToFile + ThisProject.MaskMapPath));
 
             while (Busy) yield return new WaitForSeconds(0.01f);
 
-            if (_thisProject.AoMapPath != "null")
-                StartCoroutine(LoadTexture(ProgramEnums.MapType.Ao, pathToFile + _thisProject.AoMapPath));
+            if (ThisProject.AoMapPath != "null")
+                StartCoroutine(LoadTexture(ProgramEnums.MapType.Ao, pathToFile + ThisProject.AoMapPath));
 
             while (Busy) yield return new WaitForSeconds(0.01f);
 
             yield return new WaitForSeconds(0.01f);
             TextureManager.Instance.SetFullMaterial();
+
+            ClearPanelQuickSave();
         }
 
         public IEnumerator LoadTexture(ProgramEnums.MapType textureToLoad, string pathToFile)
@@ -399,6 +405,15 @@ namespace General
             yield return new WaitForSeconds(0.01f);
 
             Busy = false;
+        }
+
+        private void ClearPanelQuickSave()
+        {
+            var panels = FindObjectsOfType<TexturePanel>();
+            foreach (var panel in panels)
+            {
+                panel.QuickSavePath = null;
+            }
         }
     }
 }
