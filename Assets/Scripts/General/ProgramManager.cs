@@ -32,6 +32,7 @@ namespace General
         public HDRenderPipelineAsset MediumQualityAsset;
         public HDRenderPipelineAsset LowQualityAsset;
         public ProgramEnums.GraphicsQuality GraphicsQuality;
+        public Volume SceneVolume;
 
         #region Settings
 
@@ -220,6 +221,9 @@ namespace General
         {
             if (Application.isEditor) yield break;
 
+            TextureManager.Instance.CleanMaterial();
+            Instance.SceneVolume.enabled = false;
+
             switch (screenMode)
             {
                 case ProgramEnums.ScreenMode.FullScreen:
@@ -236,7 +240,7 @@ namespace General
                     throw new ArgumentOutOfRangeException(nameof(screenMode), screenMode, null);
             }
 
-//            yield return new WaitForSeconds(0.3f);
+            Instance.SceneVolume.enabled = true;
 
             GraphicsSettings.renderPipelineAsset = GraphicsSettings.renderPipelineAsset;
         }

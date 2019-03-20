@@ -35,13 +35,12 @@ namespace Gui
         private Rect _windowRect;
         [HideInInspector] public VolumeProfile Profile;
 
-        public Volume SceneVolume;
 
         public bool Hide { get; set; }
 
         private void Awake()
         {
-            Profile = SceneVolume.profile;
+            Profile = ProgramManager.Instance.SceneVolume.profile;
 
             Profile.TryGet(out _bloom);
             _bloomIntensity = _bloom.intensity.value;
@@ -98,12 +97,12 @@ namespace Gui
 
         public void PostProcessOn()
         {
-            SceneVolume.enabled = true;
+            ProgramManager.Instance.SceneVolume.enabled = true;
         }
 
         public void PostProcessOff()
         {
-            SceneVolume.enabled = false;
+            ProgramManager.Instance.SceneVolume.enabled = false;
         }
 
         public void TogglePostProcessGui()

@@ -1411,7 +1411,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Profile: {fileID: 0}
-  SceneVolume: {fileID: 2072837669}
 --- !u!4 &1107095848
 Transform:
   m_ObjectHideFlags: 0
@@ -4450,6 +4449,7 @@ MonoBehaviour:
   MediumQualityAsset: {fileID: 11400000, guid: c70b1ea4295ec1e26a01d8a6c9086304, type: 2}
   LowQualityAsset: {fileID: 11400000, guid: 179adb809604d5a67a969e8c3850c7be, type: 2}
   GraphicsQuality: 0
+  SceneVolume: {fileID: 2072837669}
   StartCubeMap: {fileID: 8900000, guid: d179a5cf97a39ec5c91cb199d742898a, type: 3}
   SceneObjects: []
   CommandListExecutorObject: {fileID: 1637277520}

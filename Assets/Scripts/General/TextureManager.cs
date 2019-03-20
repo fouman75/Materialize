@@ -167,8 +167,6 @@ namespace General
 
         public void SetFullMaterial()
         {
-            GL.Flush();
-
             MessagePanel.ShowMessage("Setting Material");
 
             if (HeightMap)
@@ -216,6 +214,13 @@ namespace General
             ProgramManager.Instance.MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
 
             MessagePanel.HideMessage();
+        }
+
+        public void CleanMaterial()
+        {
+            ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = null;
+            GameObject.Destroy(FullMaterialInstance);
+            FullMaterialInstance = new Material(FullMaterial);
         }
 
         private IEnumerator PackNormalAndSet()

@@ -15,9 +15,10 @@ namespace SimpleLightProbePlacer
         public float MergeDistance = 0.5f;
         public float PointLightRange = 1;
         public bool UsePointLights;
+#if UNITY_EDITOR
         public int MergedProbes => _mergedProbes;
         private int _mergedProbes;
-#if UNITY_EDITOR
+
         public LightProbeGroup LightProbeGroup
         {
             get
