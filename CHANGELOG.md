@@ -27,6 +27,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Speed improve in processing.
 - Don't let user be too fast pressing buttons and breaking things.
 - Other stability changes to Compute Shaders.
+- Fix Normal Packing in Material View.
+- Fix gama correction when saving.
+- Fix Post Processing enable disabling other than not Post Processing Effects.
 - Minor fixes and improve stability.
 
 ### To Implement
