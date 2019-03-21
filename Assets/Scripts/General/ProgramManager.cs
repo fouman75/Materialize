@@ -231,6 +231,7 @@ namespace General
 
             Instance.PostProcessingVolume.enabled = false;
             Instance.SceneVolume.enabled = false;
+            var asset = GraphicsSettings.renderPipelineAsset;
             GraphicsSettings.renderPipelineAsset = null;
             yield return null;
 
@@ -240,32 +241,44 @@ namespace General
                     var fsRes = Screen.resolutions;
                     var highRes = fsRes[fsRes.Length - 1];
                     Screen.SetResolution(highRes.width, highRes.height, FullScreenMode.ExclusiveFullScreen);
+                    Screen.fullScreen = true;
                     break;
                 case ProgramEnums.ScreenMode.Windowed:
-                    var res = GetSecondHighestResolution();
-                    Screen.SetResolution(res.width, res.height, FullScreenMode.Windowed);
+                    var res = GetHighestResolution(2);
+                    if (res == null) break;
+                    Screen.SetResolution(res.Value.width, res.Value.height, FullScreenMode.Windowed);
+                    Screen.fullScreen = false;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(screenMode), screenMode, null);
             }
 
-            GraphicsSettings.renderPipelineAsset = GraphicsSettings.renderPipelineAsset;
+            GraphicsSettings.renderPipelineAsset = asset;
             Instance.PostProcessingVolume.enabled = true;
             Instance.SceneVolume.enabled = true;
             RenderProbe();
         }
 
-        private static Resolution GetSecondHighestResolution()
+        /// <summary>
+        /// Get the Highest resolution skipping n matches
+        /// </summary>
+        /// <param name="skip"> number of matches to skip</param>
+        /// <returns> resolution after n skips in the same aspect ratio than native </returns>
+        private static Resolution? GetHighestResolution(int skip)
         {
             var winRes = Screen.resolutions;
+            if (winRes.Length <= 0) return null;
             var nativeRes = winRes[winRes.Length - 1];
             var res = nativeRes;
+            var currentResolution = Screen.currentResolution;
             var nativeAspect = 1.0f * nativeRes.width / nativeRes.height;
+            var count = skip;
             for (var i = winRes.Length - 1; i >= 0; i--)
             {
                 var aspectRatio = 1.0f * winRes[i].width / winRes[i].height;
-
-                if (!(Mathf.Abs(aspectRatio - nativeAspect) < 0.001f)) continue;
+                if (!(Mathf.Abs(aspectRatio - nativeAspect) < 0.00001f)) continue;
+                if (winRes[i].width > currentResolution.width) continue;
+                if (count-- > 0) continue;
 
                 res = winRes[i];
                 break;

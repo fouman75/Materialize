@@ -2,14 +2,20 @@
 
 using System;
 using System.Collections;
+using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using Gui;
 using Plugins.Extension;
 using Settings;
 using UnityEngine;
+using Graphics = UnityEngine.Graphics;
+#if UNITY_STANDALONE_WIN
+using System.Windows.Forms;
+using System.Drawing;
+
+#endif
 
 #endregion
 
@@ -134,47 +140,8 @@ namespace General
 
         public void PasteFile(ProgramEnums.MapType mapTypeToLoad)
         {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) return;
-            const string filePrefix = "file:///";
-            string pathToFile;
-
-            var pathToTextFile = Path.GetTempFileName();
-            BashRunner.Run($"xclip -selection clipboard -t TARGETS -o > {pathToTextFile}");
-            var bashOut = File.ReadAllText(pathToTextFile);
-
-//            General.Logger.Log($"Out : {bashOut}");
-            File.Delete(pathToTextFile);
-
-            if (bashOut.Contains("image/png"))
-            {
-                pathToFile = Path.GetTempFileName() + ".png";
-                BashRunner.Run($"xclip -selection clipboard -t image/png -o > {pathToFile}");
-            }
-            else
-            {
-                BashRunner.Run($"xclip -selection clipboard -o > {pathToTextFile}");
-                bashOut = File.ReadAllText(pathToTextFile);
-
-                var supported = ProgramManager.LoadFormats.Any(format => bashOut.Contains(format));
-                if (!supported) return;
-
-                if (bashOut.Contains(filePrefix)) bashOut = bashOut.Replace(filePrefix, "/");
-
-                var firstIndex = bashOut.IndexOf('/');
-                if (bashOut.Length > firstIndex)
-                {
-                    var extension = Path.GetExtension(bashOut);
-                    var lastIndex = bashOut.IndexOf(extension, firstIndex, StringComparison.Ordinal) + extension.Length;
-                    var length = lastIndex - firstIndex;
-                    pathToFile = bashOut.Substring(firstIndex, length);
-                }
-                else
-                {
-                    return;
-                }
-            }
-
-            File.Delete(pathToTextFile);
+            var pathToFile = GetClipboardImagePath();
+            if (pathToFile.IsNullOrEmpty()) return;
 
             if (!File.Exists(pathToFile)) return;
 
@@ -427,5 +394,76 @@ namespace General
                 panel.QuickSavePath = null;
             }
         }
+
+#if UNITY_STANDALONE_WIN
+        private static string GetClipboardImagePath()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return null;
+
+            string pathToFile;
+            if (Clipboard.ContainsFileDropList())
+            {
+                var file = Clipboard.GetFileDropList()[0];
+                pathToFile = Path.GetFullPath(file);
+                return pathToFile;
+            }
+
+            if (!Clipboard.ContainsImage()) return null;
+
+            pathToFile = Path.GetTempFileName() + ".png";
+            var image = Clipboard.GetImage();
+            if (image == null) return null;
+            image.Save(pathToFile, ImageFormat.Png);
+            return pathToFile;
+        }
+#endif
+#if UNITY_STANDALONE_LINUX
+        private static string GetClipboardImagePath()
+        {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) return null;
+            const string filePrefix = "file:///";
+            string pathToFile;
+
+            var pathToTextFile = Path.GetTempFileName();
+            BashRunner.Run($"xclip -selection clipboard -t TARGETS -o > {pathToTextFile}");
+            var bashOut = File.ReadAllText(pathToTextFile);
+
+            //            General.Logger.Log($"Out : {bashOut}");
+            File.Delete(pathToTextFile);
+
+            if (bashOut.Contains("image/png"))
+            {
+                pathToFile = Path.GetTempFileName() + ".png";
+                BashRunner.Run($"xclip -selection clipboard -t image/png -o > {pathToFile}");
+            }
+            else
+            {
+                BashRunner.Run($"xclip -selection clipboard -o > {pathToTextFile}");
+                bashOut = File.ReadAllText(pathToTextFile);
+
+                var supported = ProgramManager.LoadFormats.Any(format => bashOut.Contains(format));
+                if (!supported) return null;
+
+                if (bashOut.Contains(filePrefix)) bashOut = bashOut.Replace(filePrefix, "/");
+
+                var firstIndex = bashOut.IndexOf('/');
+                if (bashOut.Length > firstIndex)
+                {
+                    var extension = Path.GetExtension(bashOut);
+                    var lastIndex = bashOut.IndexOf(extension, firstIndex, StringComparison.Ordinal) + extension.Length;
+                    var length = lastIndex - firstIndex;
+                    pathToFile = bashOut.Substring(firstIndex, length);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            File.Delete(pathToTextFile);
+
+            return pathToFile;
+        }
+#endif
     }
 }
