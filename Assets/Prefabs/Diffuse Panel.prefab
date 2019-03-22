@@ -1832,12 +1832,12 @@ MonoBehaviour:
   NumberOfPanels: 7
   PanelSlot: 0
   PasteButton: {fileID: 7599500117993623187}
+  QuickSavePath: 
   SaveButton: {fileID: 3573352198816952946}
   TextureFrame: {fileID: 7106373826158246535}
   Title: {fileID: 8488669187998808996}
   TopBorder: -5
   Width: 125
-  QuickSavePath: 
 --- !u!1 &8759541849923599324
 GameObject:
   m_ObjectHideFlags: 0

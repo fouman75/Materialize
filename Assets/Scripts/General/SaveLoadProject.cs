@@ -10,10 +10,10 @@ using Gui;
 using Plugins.Extension;
 using Settings;
 using UnityEngine;
-
+using Graphics = UnityEngine.Graphics;
 #if UNITY_STANDALONE_WIN
 using System.Windows.Forms;
-using System.Drawing;
+using System.Drawing.Imaging;
 
 #endif
 
