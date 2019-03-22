@@ -10,28 +10,13 @@ using Logger = General.Logger;
 
 namespace Gui
 {
-    public class MetallicGui : MonoBehaviour, IProcessor, IHideable
+    public class MetallicGui : TexturePanelGui
     {
-        private static readonly int MetalColor = Shader.PropertyToID("_MetalColor");
-        private static readonly int SampleUv = Shader.PropertyToID("_SampleUV");
-        private static readonly int HueWeight = Shader.PropertyToID("_HueWeight");
-        private static readonly int SatWeight = Shader.PropertyToID("_SatWeight");
-        private static readonly int LumWeight = Shader.PropertyToID("_LumWeight");
-        private static readonly int MaskLow = Shader.PropertyToID("_MaskLow");
-        private static readonly int MaskHigh = Shader.PropertyToID("_MaskHigh");
-        private static readonly int Slider = Shader.PropertyToID("_Slider");
-        private static readonly int BlurOverlay = Shader.PropertyToID("_BlurOverlay");
-        private static readonly int FinalContrast = Shader.PropertyToID("_FinalContrast");
-        private static readonly int FinalBias = Shader.PropertyToID("_FinalBias");
-        private static readonly int MainTex = Shader.PropertyToID("_MainTex");
-        private static readonly int BlurTex = Shader.PropertyToID("_BlurTex");
-        private static readonly int OverlayBlurTex = Shader.PropertyToID("_OverlayBlurTex");
         private RenderTexture _blurMap;
         private Camera _camera;
 
         private Texture2D _diffuseMap;
         private Texture2D _diffuseMapOriginal;
-        private bool _doStuff;
 
         private int _imageSizeX;
         private int _imageSizeY;
@@ -42,9 +27,7 @@ namespace Gui
 
         private MetallicSettings _metallicSettings;
         private bool _mouseButtonDown;
-        private bool _newTexture;
         private RenderTexture _overlayBlurMap;
-        private bool _readyToProcess;
         private bool _selectingColor;
 
         private bool _settingsInitialized;
@@ -59,40 +42,8 @@ namespace Gui
 
         public ComputeShader MetallicCompute;
 
-        public GameObject TestObject;
-
-        public Material ThisMaterial;
-
-        public bool Hide { get; set; }
-
-        public bool Active
+        protected override IEnumerator Process()
         {
-            get => gameObject.activeSelf;
-            set => gameObject.SetActive(value);
-        }
-
-        public void DoStuff()
-        {
-            _doStuff = true;
-        }
-
-        public void NewTexture()
-        {
-            _newTexture = true;
-        }
-
-        public void Close()
-        {
-            CleanupTextures();
-            gameObject.SetActive(false);
-        }
-
-        public IEnumerator Process()
-        {
-            while (!ProgramManager.Lock()) yield return null;
-
-            while (!_readyToProcess) yield return null;
-
             MessagePanel.ShowMessage("Processing Metallic Map");
             var metallicKernel = MetallicCompute.FindKernel("CSMetallic");
 
@@ -129,25 +80,14 @@ namespace Gui
 
             TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Metallic);
 
-            yield return null;
-
             RenderTexture.ReleaseTemporary(_tempMap);
 
-            MessagePanel.HideMessage();
-
-            ProgramManager.Unlock();
+            yield break;
         }
 
         private void Awake()
         {
             _windowRect = new Rect(10.0f, 265.0f, 300f, 460f);
-        }
-
-
-        private void OnDisable()
-        {
-            CleanupTextures();
-            _readyToProcess = false;
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -172,7 +112,7 @@ namespace Gui
             _metalColorMap.SetPixel(1, 1, _metallicSettings.MetalColor);
             _metalColorMap.Apply(false);
 
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void InitializeSettings()
@@ -238,22 +178,22 @@ namespace Gui
 
             if (_selectingColor) SelectColor();
 
-            if (_newTexture)
+            if (IsNewTexture)
             {
                 InitializeTextures();
-                _newTexture = false;
+                IsNewTexture = false;
             }
 
             if (_metallicSettings.UseAdjustedDiffuse != _lastUseAdjustedDiffuse)
             {
                 _lastUseAdjustedDiffuse = _metallicSettings.UseAdjustedDiffuse;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
-            if (_doStuff)
+            if (StuffToBeDone)
             {
                 StartCoroutine(ProcessBlur());
-                _doStuff = false;
+                StuffToBeDone = false;
             }
 
             //thisMaterial.SetFloat ("_BlurWeight", BlurWeight);
@@ -331,12 +271,12 @@ namespace Gui
             offsetY += 150;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Blur Size", _metallicSettings.BlurSize,
-                out _metallicSettings.BlurSize, 0, 100)) _doStuff = true;
+                out _metallicSettings.BlurSize, 0, 100)) StuffToBeDone = true;
             offsetY += 40;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlay Blur Size",
                 _metallicSettings.OverlayBlurSize, out _metallicSettings.OverlayBlurSize,
-                10, 100)) _doStuff = true;
+                10, 100)) StuffToBeDone = true;
             offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "High Pass Overlay", _metallicSettings.BlurOverlay,
@@ -359,7 +299,7 @@ namespace Gui
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Metallic From Diffuse");
         }
 
-        private void CleanupTextures()
+        protected override void CleanupTextures()
         {
             RenderTexture.ReleaseTemporary(_blurMap);
             RenderTexture.ReleaseTemporary(_overlayBlurMap);
@@ -461,7 +401,7 @@ namespace Gui
             yield return null;
             yield return null;
 
-            _readyToProcess = true;
+            IsReadyToProcess = true;
 
             MessagePanel.HideMessage();
 

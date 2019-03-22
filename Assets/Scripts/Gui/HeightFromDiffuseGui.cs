@@ -13,72 +13,8 @@ using Logger = General.Logger;
 
 namespace Gui
 {
-    public class HeightFromDiffuseGui : MonoBehaviour, IProcessor, IHideable
+    public class HeightFromDiffuseGui : TexturePanelGui
     {
-        private const float BlurScale = 1.0f;
-        private static readonly int BlurScaleId = Shader.PropertyToID("_BlurScale");
-        private static readonly int ImageSize = Shader.PropertyToID("_ImageSize");
-        private static readonly int Isolate = Shader.PropertyToID("_Isolate");
-        private static readonly int Blur0Weight = Shader.PropertyToID("_Blur0Weight");
-        private static readonly int Blur1Weight = Shader.PropertyToID("_Blur1Weight");
-        private static readonly int Blur2Weight = Shader.PropertyToID("_Blur2Weight");
-        private static readonly int Blur3Weight = Shader.PropertyToID("_Blur3Weight");
-        private static readonly int Blur4Weight = Shader.PropertyToID("_Blur4Weight");
-        private static readonly int Blur5Weight = Shader.PropertyToID("_Blur5Weight");
-        private static readonly int Blur6Weight = Shader.PropertyToID("_Blur6Weight");
-        private static readonly int Blur0Contrast = Shader.PropertyToID("_Blur0Contrast");
-        private static readonly int Blur1Contrast = Shader.PropertyToID("_Blur1Contrast");
-        private static readonly int Blur2Contrast = Shader.PropertyToID("_Blur2Contrast");
-        private static readonly int Blur3Contrast = Shader.PropertyToID("_Blur3Contrast");
-        private static readonly int Blur4Contrast = Shader.PropertyToID("_Blur4Contrast");
-        private static readonly int Blur5Contrast = Shader.PropertyToID("_Blur5Contrast");
-        private static readonly int Blur6Contrast = Shader.PropertyToID("_Blur6Contrast");
-        private static readonly int FinalGain = Shader.PropertyToID("_FinalGain");
-        private static readonly int FinalContrast = Shader.PropertyToID("_FinalContrast");
-        private static readonly int FinalBias = Shader.PropertyToID("_FinalBias");
-        private static readonly int Slider = Shader.PropertyToID("_Slider");
-        private static readonly int BlurTex0 = Shader.PropertyToID("_BlurTex0");
-        private static readonly int HeightFromNormal = Shader.PropertyToID("_HeightFromNormal");
-        private static readonly int BlurTex1 = Shader.PropertyToID("_BlurTex1");
-        private static readonly int BlurTex2 = Shader.PropertyToID("_BlurTex2");
-        private static readonly int BlurTex3 = Shader.PropertyToID("_BlurTex3");
-        private static readonly int BlurTex4 = Shader.PropertyToID("_BlurTex4");
-        private static readonly int BlurTex5 = Shader.PropertyToID("_BlurTex5");
-        private static readonly int BlurTex6 = Shader.PropertyToID("_BlurTex6");
-        private static readonly int AvgTex = Shader.PropertyToID("_AvgTex");
-        private static readonly int Spread = Shader.PropertyToID("_Spread");
-        private static readonly int SpreadBoost = Shader.PropertyToID("_SpreadBoost");
-        private static readonly int Samples = Shader.PropertyToID("_Samples");
-        private static readonly int MainTex = Shader.PropertyToID("_MainTex");
-        private static readonly int BlendTex = Shader.PropertyToID("_BlendTex");
-        private static readonly int IsNormal = Shader.PropertyToID("_IsNormal");
-        private static readonly int BlendAmount = Shader.PropertyToID("_BlendAmount");
-        private static readonly int Progress = Shader.PropertyToID("_Progress");
-        private static readonly int IsolateSample1 = Shader.PropertyToID("_IsolateSample1");
-        private static readonly int UseSample1 = Shader.PropertyToID("_UseSample1");
-        private static readonly int SampleColor1 = Shader.PropertyToID("_SampleColor1");
-        private static readonly int SampleUv1 = Shader.PropertyToID("_SampleUV1");
-        private static readonly int HueWeight1 = Shader.PropertyToID("_HueWeight1");
-        private static readonly int SatWeight1 = Shader.PropertyToID("_SatWeight1");
-        private static readonly int LumWeight1 = Shader.PropertyToID("_LumWeight1");
-        private static readonly int MaskLow1 = Shader.PropertyToID("_MaskLow1");
-        private static readonly int MaskHigh1 = Shader.PropertyToID("_MaskHigh1");
-        private static readonly int Sample1Height = Shader.PropertyToID("_Sample1Height");
-        private static readonly int IsolateSample2 = Shader.PropertyToID("_IsolateSample2");
-        private static readonly int UseSample2 = Shader.PropertyToID("_UseSample2");
-        private static readonly int SampleColor2 = Shader.PropertyToID("_SampleColor2");
-        private static readonly int SampleUv2 = Shader.PropertyToID("_SampleUV2");
-        private static readonly int HueWeight2 = Shader.PropertyToID("_HueWeight2");
-        private static readonly int SatWeight2 = Shader.PropertyToID("_SatWeight2");
-        private static readonly int LumWeight2 = Shader.PropertyToID("_LumWeight2");
-        private static readonly int MaskLow2 = Shader.PropertyToID("_MaskLow2");
-        private static readonly int MaskHigh2 = Shader.PropertyToID("_MaskHigh2");
-        private static readonly int Sample2Height = Shader.PropertyToID("_Sample2Height");
-        private static readonly int SampleBlend = Shader.PropertyToID("_SampleBlend");
-        private static readonly int BlurContrast = Shader.PropertyToID("_BlurContrast");
-        private static readonly int BlurSamples = Shader.PropertyToID("_BlurSamples");
-        private static readonly int BlurSpread = Shader.PropertyToID("_BlurSpread");
-        private static readonly int BlurDirection = Shader.PropertyToID("_BlurDirection");
         private RenderTexture _avgMap;
 
         private RenderTexture _avgTempMap;
@@ -93,7 +29,6 @@ namespace Gui
         private Camera _camera;
 
         private int _currentSelection;
-        private bool _doStuff;
 
         private HeightFromDiffuseSettings _heightFromDiffuseSettings;
         private int _imageSizeX = 1024;
@@ -106,8 +41,6 @@ namespace Gui
         private bool _lastUseNormal;
         private bool _lastUseOriginalDiffuse;
         private bool _mouseButtonDown;
-        private bool _newTexture;
-        private bool _readyToProcess;
 
         private Texture2D _sampleColorMap1;
         private Texture2D _sampleColorMap2;
@@ -125,40 +58,8 @@ namespace Gui
         public ComputeShader HeightCompute;
         public ComputeShader SampleCompute;
 
-        public GameObject TestObject;
-
-        public Material ThisMaterial;
-
-        public bool Hide { get; set; }
-
-        public bool Active
+        protected override IEnumerator Process()
         {
-            get => gameObject.activeSelf;
-            set => gameObject.SetActive(value);
-        }
-
-        public void DoStuff()
-        {
-            _doStuff = true;
-        }
-
-        public void NewTexture()
-        {
-            _newTexture = true;
-        }
-
-        public void Close()
-        {
-            CleanupTextures();
-            gameObject.SetActive(false);
-        }
-
-        public IEnumerator Process()
-        {
-            while (!ProgramManager.Lock()) yield return null;
-
-            while (!_readyToProcess) yield return null;
-
             MessagePanel.ShowMessage("Processing Height Map");
 
             var kernelCombine = HeightCompute.FindKernel("CSCombineHeight");
@@ -230,23 +131,14 @@ namespace Gui
 
             RenderTexture.ReleaseTemporary(_tempHeightMap);
 
-            yield return new WaitForSeconds(0.1f);
-
-            MessagePanel.HideMessage();
-
-            ProgramManager.Unlock();
+            yield break;
         }
 
         private void Awake()
         {
             _windowRect = new Rect(10.0f, 265.0f, 300f, 520f);
         }
-
-        private void OnDisable()
-        {
-            CleanupTextures();
-            _readyToProcess = false;
-        }
+        
 
         public void GetValues(ProjectObject projectObject)
         {
@@ -273,7 +165,7 @@ namespace Gui
             _sampleColorMap2.SetPixel(1, 1, _heightFromDiffuseSettings.SampleColor2);
             _sampleColorMap2.Apply(false);
 
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void InitializeSettings()
@@ -304,10 +196,10 @@ namespace Gui
 
             InitializeSettings();
 
-            if (_newTexture)
+            if (IsNewTexture)
             {
                 InitializeTextures();
-                _newTexture = false;
+                IsNewTexture = false;
             }
 
             FixUseMaps();
@@ -383,7 +275,7 @@ namespace Gui
             _heightFromDiffuseSettings.Blur4Weight = 0.7f;
             _heightFromDiffuseSettings.Blur5Weight = 0.9f;
             _heightFromDiffuseSettings.Blur6Weight = 1.0f;
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void SetWeightEqDetail()
@@ -395,7 +287,7 @@ namespace Gui
             _heightFromDiffuseSettings.Blur4Weight = 0.8f;
             _heightFromDiffuseSettings.Blur5Weight = 0.9f;
             _heightFromDiffuseSettings.Blur6Weight = 0.7f;
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void SetWeightEqDisplace()
@@ -407,7 +299,7 @@ namespace Gui
             _heightFromDiffuseSettings.Blur4Weight = 0.7f;
             _heightFromDiffuseSettings.Blur5Weight = 0.9f;
             _heightFromDiffuseSettings.Blur6Weight = 1.0f;
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void SetContrastEqDefault()
@@ -419,7 +311,7 @@ namespace Gui
             _heightFromDiffuseSettings.Blur4Contrast = 1.0f;
             _heightFromDiffuseSettings.Blur5Contrast = 1.0f;
             _heightFromDiffuseSettings.Blur6Contrast = 1.0f;
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void SetContrastEqCrackedMud()
@@ -431,7 +323,7 @@ namespace Gui
             _heightFromDiffuseSettings.Blur4Contrast = -0.2f;
             _heightFromDiffuseSettings.Blur5Contrast = -2.0f;
             _heightFromDiffuseSettings.Blur6Contrast = -4.0f;
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void SetContrastEqFunky()
@@ -443,7 +335,7 @@ namespace Gui
             _heightFromDiffuseSettings.Blur4Contrast = 2.0f;
             _heightFromDiffuseSettings.Blur5Contrast = 2.5f;
             _heightFromDiffuseSettings.Blur6Contrast = 2.0f;
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void SelectColor()
@@ -487,7 +379,7 @@ namespace Gui
                         throw new InvalidOperationException();
                 }
 
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             if (!Input.GetMouseButtonUp(0) || !_mouseButtonDown) return;
@@ -506,34 +398,34 @@ namespace Gui
             if (_heightFromDiffuseSettings.UseAdjustedDiffuse != _lastUseDiffuse)
             {
                 _lastUseDiffuse = _heightFromDiffuseSettings.UseAdjustedDiffuse;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             if (_heightFromDiffuseSettings.UseOriginalDiffuse != _lastUseOriginalDiffuse)
             {
                 _lastUseOriginalDiffuse = _heightFromDiffuseSettings.UseOriginalDiffuse;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             if (_heightFromDiffuseSettings.UseNormal != _lastUseNormal)
             {
                 _lastUseNormal = _heightFromDiffuseSettings.UseNormal;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             if (Math.Abs(_heightFromDiffuseSettings.Blur0Contrast - _lastBlur0Contrast) > 0.001f)
             {
                 _lastBlur0Contrast = _heightFromDiffuseSettings.Blur0Contrast;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
-            if (_newTexture)
+            if (IsNewTexture)
             {
                 InitializeTextures();
-                _newTexture = false;
+                IsNewTexture = false;
             }
 
-            if (_doStuff)
+            if (StuffToBeDone)
             {
                 if (_heightFromDiffuseSettings.UseNormal)
                 {
@@ -546,7 +438,7 @@ namespace Gui
                     StartCoroutine(ProcessDiffuse());
                 }
 
-                _doStuff = false;
+                StuffToBeDone = false;
             }
 
             if (_heightFromDiffuseSettings.IsolateSample1 || _heightFromDiffuseSettings.IsolateSample2)
@@ -639,13 +531,13 @@ namespace Gui
             {
                 if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 10), "Sample Spread",
                     _heightFromDiffuseSettings.Spread, out _heightFromDiffuseSettings.Spread, 10.0f, 200.0f))
-                    _doStuff = true;
+                    StuffToBeDone = true;
 
                 offsetY += 35;
 
                 if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 10), "Sample Spread Boost",
                     _heightFromDiffuseSettings.SpreadBoost, out _heightFromDiffuseSettings.SpreadBoost,
-                    1.0f, 5.0f)) _doStuff = true;
+                    1.0f, 5.0f)) StuffToBeDone = true;
 
                 offsetY += 35;
             }
@@ -729,14 +621,15 @@ namespace Gui
                 offsetY += 100;
 
 
-                _doStuff = GuiHelper.Toggle(new Rect(offsetX, offsetY, 150, 20), _heightFromDiffuseSettings.UseSample1,
+                StuffToBeDone = GuiHelper.Toggle(new Rect(offsetX, offsetY, 150, 20),
+                    _heightFromDiffuseSettings.UseSample1,
                     out _heightFromDiffuseSettings.UseSample1,
-                    "Use Color Sample 1", _doStuff);
+                    "Use Color Sample 1", StuffToBeDone);
                 if (_heightFromDiffuseSettings.UseSample1)
                 {
-                    _doStuff = GuiHelper.Toggle(new Rect(offsetX + 180, offsetY, 150, 20),
+                    StuffToBeDone = GuiHelper.Toggle(new Rect(offsetX + 180, offsetY, 150, 20),
                         _heightFromDiffuseSettings.IsolateSample1,
-                        out _heightFromDiffuseSettings.IsolateSample1, "Isolate Mask", _doStuff);
+                        out _heightFromDiffuseSettings.IsolateSample1, "Isolate Mask", StuffToBeDone);
                     if (_heightFromDiffuseSettings.IsolateSample1) _heightFromDiffuseSettings.IsolateSample2 = false;
                     offsetY += 30;
 
@@ -749,34 +642,34 @@ namespace Gui
                     GUI.DrawTexture(new Rect(offsetX + 10, offsetY + 35, 60, 60), _sampleColorMap1);
 
                     GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
-                    _doStuff = GuiHelper.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 70),
                         _heightFromDiffuseSettings.HueWeight1,
-                        out _heightFromDiffuseSettings.HueWeight1, 1.0f, 0.0f, _doStuff);
+                        out _heightFromDiffuseSettings.HueWeight1, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 120, offsetY, 250, 30), "Sat");
-                    _doStuff = GuiHelper.VerticalSlider(new Rect(offsetX + 125, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 125, offsetY + 30, 10, 70),
                         _heightFromDiffuseSettings.SatWeight1,
-                        out _heightFromDiffuseSettings.SatWeight1, 1.0f, 0.0f, _doStuff);
+                        out _heightFromDiffuseSettings.SatWeight1, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 150, offsetY, 250, 30), "Lum");
-                    _doStuff = GuiHelper.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 70),
                         _heightFromDiffuseSettings.LumWeight1,
-                        out _heightFromDiffuseSettings.LumWeight1, 1.0f, 0.0f, _doStuff);
+                        out _heightFromDiffuseSettings.LumWeight1, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 180, offsetY, 250, 30), "Low");
-                    _doStuff = GuiHelper.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 70),
                         _heightFromDiffuseSettings.MaskLow1,
-                        out _heightFromDiffuseSettings.MaskLow1, 1.0f, 0.0f, _doStuff);
+                        out _heightFromDiffuseSettings.MaskLow1, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 210, offsetY, 250, 30), "High");
-                    _doStuff = GuiHelper.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 70),
                         _heightFromDiffuseSettings.MaskHigh1,
-                        out _heightFromDiffuseSettings.MaskHigh1, 1.0f, 0.0f, _doStuff);
+                        out _heightFromDiffuseSettings.MaskHigh1, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 240, offsetY, 250, 30), "Height");
-                    _doStuff = GuiHelper.VerticalSlider(new Rect(offsetX + 255, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 255, offsetY + 30, 10, 70),
                         _heightFromDiffuseSettings.Sample1Height,
-                        out _heightFromDiffuseSettings.Sample1Height, 1.0f, 0.0f, _doStuff);
+                        out _heightFromDiffuseSettings.Sample1Height, 1.0f, 0.0f, StuffToBeDone);
 
                     offsetY += 110;
                 }
@@ -787,14 +680,15 @@ namespace Gui
                 }
 
 
-                _doStuff = GuiHelper.Toggle(new Rect(offsetX, offsetY, 150, 20), _heightFromDiffuseSettings.UseSample2,
+                StuffToBeDone = GuiHelper.Toggle(new Rect(offsetX, offsetY, 150, 20),
+                    _heightFromDiffuseSettings.UseSample2,
                     out _heightFromDiffuseSettings.UseSample2,
-                    "Use Color Sample 2", _doStuff);
+                    "Use Color Sample 2", StuffToBeDone);
                 if (_heightFromDiffuseSettings.UseSample2)
                 {
-                    _doStuff = GuiHelper.Toggle(new Rect(offsetX + 180, offsetY, 150, 20),
+                    StuffToBeDone = GuiHelper.Toggle(new Rect(offsetX + 180, offsetY, 150, 20),
                         _heightFromDiffuseSettings.IsolateSample2,
-                        out _heightFromDiffuseSettings.IsolateSample2, "Isolate Mask", _doStuff);
+                        out _heightFromDiffuseSettings.IsolateSample2, "Isolate Mask", StuffToBeDone);
                     if (_heightFromDiffuseSettings.IsolateSample2) _heightFromDiffuseSettings.IsolateSample1 = false;
                     offsetY += 30;
 
@@ -807,34 +701,34 @@ namespace Gui
                     GUI.DrawTexture(new Rect(offsetX + 10, offsetY + 35, 60, 60), _sampleColorMap2);
 
                     GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
-                    _doStuff = GuiHelper.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 70),
                         _heightFromDiffuseSettings.HueWeight2,
-                        out _heightFromDiffuseSettings.HueWeight2, 1.0f, 0.0f, _doStuff);
+                        out _heightFromDiffuseSettings.HueWeight2, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 120, offsetY, 250, 30), "Sat");
-                    _doStuff = GuiHelper.VerticalSlider(new Rect(offsetX + 125, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 125, offsetY + 30, 10, 70),
                         _heightFromDiffuseSettings.SatWeight2,
-                        out _heightFromDiffuseSettings.SatWeight2, 1.0f, 0.0f, _doStuff);
+                        out _heightFromDiffuseSettings.SatWeight2, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 150, offsetY, 250, 30), "Lum");
-                    _doStuff = GuiHelper.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 70),
                         _heightFromDiffuseSettings.LumWeight2,
-                        out _heightFromDiffuseSettings.LumWeight2, 1.0f, 0.0f, _doStuff);
+                        out _heightFromDiffuseSettings.LumWeight2, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 180, offsetY, 250, 30), "Low");
-                    _doStuff = GuiHelper.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 70),
                         _heightFromDiffuseSettings.MaskLow2,
-                        out _heightFromDiffuseSettings.MaskLow2, 1.0f, 0.0f, _doStuff);
+                        out _heightFromDiffuseSettings.MaskLow2, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 210, offsetY, 250, 30), "High");
-                    _doStuff = GuiHelper.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 70),
                         _heightFromDiffuseSettings.MaskHigh2,
-                        out _heightFromDiffuseSettings.MaskHigh2, 1.0f, 0.0f, _doStuff);
+                        out _heightFromDiffuseSettings.MaskHigh2, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 240, offsetY, 250, 30), "Height");
-                    _doStuff = GuiHelper.VerticalSlider(new Rect(offsetX + 255, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 255, offsetY + 30, 10, 70),
                         _heightFromDiffuseSettings.Sample2Height,
-                        out _heightFromDiffuseSettings.Sample2Height, 1.0f, 0.0f, _doStuff);
+                        out _heightFromDiffuseSettings.Sample2Height, 1.0f, 0.0f, StuffToBeDone);
 
                     offsetY += 110;
                 }
@@ -848,7 +742,7 @@ namespace Gui
                 {
                     if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Sample Blend",
                         _heightFromDiffuseSettings.SampleBlend, out _heightFromDiffuseSettings.SampleBlend,
-                        0.0f, 1.0f)) _doStuff = true;
+                        0.0f, 1.0f)) StuffToBeDone = true;
                     offsetY += 40;
                 }
             }
@@ -928,7 +822,7 @@ namespace Gui
             SetMaterialValues();
         }
 
-        private void CleanupTextures()
+        protected override void CleanupTextures()
         {
             RenderTexture.ReleaseTemporary(_tempBlurMap);
             RenderTexture.ReleaseTemporary(_blurMap0);
@@ -979,7 +873,7 @@ namespace Gui
 
             yield return null;
 
-            _readyToProcess = true;
+            IsReadyToProcess = true;
             MessagePanel.HideMessage();
 
             ProgramManager.Unlock();
@@ -1105,7 +999,7 @@ namespace Gui
             yield return null;
             yield return null;
 
-            _readyToProcess = true;
+            IsReadyToProcess = true;
 
             MessagePanel.HideMessage();
 

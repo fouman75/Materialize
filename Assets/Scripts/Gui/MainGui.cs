@@ -146,7 +146,7 @@ namespace Gui
             yield return StartCoroutine(Create(AoFromNormalGuiScript, button));
         }
 
-        private IEnumerator Create(IProcessor processor, Button button)
+        private IEnumerator Create(TexturePanelGui processor, Button button)
         {
             CloseWindows();
             TextureManager.Instance.FixSize();
@@ -158,7 +158,7 @@ namespace Gui
             var oldText = textComp.text;
             textComp.text = "Apply";
 
-            var action = new UnityAction(() => StartCoroutine(processor.Process()));
+            var action = new UnityAction(() => StartCoroutine(processor.StartProcessing()));
             var oldDelegate = button.onClick;
             button.onClick = new Button.ButtonClickedEvent();
             button.onClick.AddListener(action);

@@ -172,6 +172,7 @@ public class CommandListExecutor : MonoBehaviour
                         yield return StartCoroutine(_saveLoad.LoadTexture(thisCommand.MapType, thisCommand.FilePath));
                         break;
                     }
+
                     case CommandType.Save:
                     {
                         switch (thisCommand.MapType)
@@ -223,6 +224,7 @@ public class CommandListExecutor : MonoBehaviour
                         while (ProgramManager.IsLocked) yield return new WaitForSeconds(0.1f);
                         break;
                     }
+
                     case CommandType.FlipNormalMapY:
                         TextureManager.Instance.FlipNormalYCallback();
                         break;
@@ -237,10 +239,11 @@ public class CommandListExecutor : MonoBehaviour
                         MainGui.Instance.HeightFromDiffuseGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
                         yield return StartCoroutine(MainGui.Instance.HeightFromDiffuseGuiScript.ProcessDiffuse());
-                        yield return StartCoroutine(MainGui.Instance.HeightFromDiffuseGuiScript.Process());
+                        yield return StartCoroutine(MainGui.Instance.HeightFromDiffuseGuiScript.StartProcessing());
                         MainGui.Instance.HeightFromDiffuseGuiScript.Close();
                         break;
                     }
+
                     case CommandType.NormalFromHeight:
                     {
                         MainGui.Instance.CloseWindows();
@@ -249,11 +252,12 @@ public class CommandListExecutor : MonoBehaviour
                         MainGui.Instance.NormalFromHeightGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
                         yield return StartCoroutine(MainGui.Instance.NormalFromHeightGuiScript.ProcessHeight());
-                        MainGui.Instance.NormalFromHeightGuiScript.Process();
+                        yield return StartCoroutine(MainGui.Instance.NormalFromHeightGuiScript.StartProcessing());
 
                         MainGui.Instance.NormalFromHeightGuiScript.Close();
                         break;
                     }
+
                     case CommandType.Metallic:
                     {
                         MainGui.Instance.CloseWindows();
@@ -262,10 +266,11 @@ public class CommandListExecutor : MonoBehaviour
                         MainGui.Instance.MetallicGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
                         yield return StartCoroutine(MainGui.Instance.MetallicGuiScript.ProcessBlur());
-                        yield return StartCoroutine(MainGui.Instance.MetallicGuiScript.Process());
+                        yield return StartCoroutine(MainGui.Instance.MetallicGuiScript.StartProcessing());
                         MainGui.Instance.MetallicGuiScript.Close();
                         break;
                     }
+
                     case CommandType.Smoothness:
                     {
                         MainGui.Instance.CloseWindows();
@@ -274,10 +279,11 @@ public class CommandListExecutor : MonoBehaviour
                         MainGui.Instance.SmoothnessGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
                         yield return StartCoroutine(MainGui.Instance.SmoothnessGuiScript.ProcessBlur());
-                        MainGui.Instance.SmoothnessGuiScript.Process();
+                        yield return StartCoroutine(MainGui.Instance.SmoothnessGuiScript.StartProcessing());
                         MainGui.Instance.SmoothnessGuiScript.Close();
                         break;
                     }
+
                     case CommandType.AoFromNormal:
                     {
                         MainGui.Instance.CloseWindows();
@@ -286,16 +292,18 @@ public class CommandListExecutor : MonoBehaviour
                         MainGui.Instance.AoFromNormalGuiScript.InitializeTextures();
                         yield return new WaitForSeconds(0.1f);
                         yield return StartCoroutine(MainGui.Instance.AoFromNormalGuiScript.ProcessNormalDepth());
-                        yield return StartCoroutine(MainGui.Instance.AoFromNormalGuiScript.Process());
+                        yield return StartCoroutine(MainGui.Instance.AoFromNormalGuiScript.StartProcessing());
                         MainGui.Instance.AoFromNormalGuiScript.Close();
                         break;
                     }
+
                     case CommandType.MaskMap:
                     {
                         MainGui.Instance.CloseWindows();
-                        TextureManager.Instance.MakeMaskMap();
+                        yield return StartCoroutine(TextureManager.Instance.MakeMaskMap());
                         break;
                     }
+
                     case CommandType.QuickSave:
 
                         break;

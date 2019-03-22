@@ -10,41 +10,20 @@ using Logger = General.Logger;
 
 namespace Gui
 {
-    public class EditDiffuseGui : MonoBehaviour, IProcessor, IHideable
+    public class EditDiffuseGui : TexturePanelGui
     {
-        private static readonly int Slider = Shader.PropertyToID("_Slider");
-        private static readonly int BlurContrast = Shader.PropertyToID("_BlurContrast");
-        private static readonly int LightMaskPow = Shader.PropertyToID("_LightMaskPow");
-        private static readonly int LightPow = Shader.PropertyToID("_LightPow");
-        private static readonly int DarkMaskPow = Shader.PropertyToID("_DarkMaskPow");
-        private static readonly int DarkPow = Shader.PropertyToID("_DarkPow");
-        private static readonly int HotSpot = Shader.PropertyToID("_HotSpot");
-        private static readonly int DarkSpot = Shader.PropertyToID("_DarkSpot");
-        private static readonly int FinalContrast = Shader.PropertyToID("_FinalContrast");
-        private static readonly int FinalBias = Shader.PropertyToID("_FinalBias");
-        private static readonly int ColorLerp = Shader.PropertyToID("_ColorLerp");
-        private static readonly int Saturation = Shader.PropertyToID("_Saturation");
-        private static readonly int ImageSize = Shader.PropertyToID("_ImageSize");
-        private static readonly int MainTex = Shader.PropertyToID("_MainTex");
-        private static readonly int BlurTex = Shader.PropertyToID("_BlurTex");
-        private static readonly int AvgTex = Shader.PropertyToID("_AvgTex");
-        private static readonly int BlurSpread = Shader.PropertyToID("_BlurSpread");
-        private static readonly int BlurSamples = Shader.PropertyToID("_BlurSamples");
-        private static readonly int BlurDirection = Shader.PropertyToID("_BlurDirection");
         private RenderTexture _avgMap;
         private Material _blitMaterial;
         private RenderTexture _blurMap;
 
         private Texture2D _diffuseMap;
         private Texture2D _diffuseMapOriginal;
-        private bool _doStuff;
 
         private EditDiffuseSettings _eds;
 
         private int _imageSizeX;
         private int _imageSizeY;
         private Material _material;
-        private bool _newTexture;
         private bool _settingsInitialized;
 
         private float _slider = 0.5f;
@@ -54,39 +33,9 @@ namespace Gui
 
         private Rect _windowRect;
 
-        public GameObject TestObject;
 
-        public Material ThisMaterial;
-
-        public bool Hide { get; set; }
-
-        public bool Active
+        protected override IEnumerator Process()
         {
-            get => gameObject.activeSelf;
-            set => gameObject.SetActive(value);
-        }
-
-        public void DoStuff()
-        {
-            _doStuff = true;
-        }
-
-        public void NewTexture()
-        {
-            _newTexture = true;
-        }
-
-
-        public void Close()
-        {
-            CleanupTextures();
-            gameObject.SetActive(false);
-        }
-
-        public IEnumerator Process()
-        {
-            while (!ProgramManager.Lock()) yield return null;
-
             Logger.Log("Processing Diffuse");
 
             _blitMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
@@ -123,10 +72,8 @@ namespace Gui
             TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Diffuse);
 
             RenderTexture.ReleaseTemporary(_tempMap);
-
-            yield return new WaitForSeconds(0.5f);
-
-            ProgramManager.Unlock();
+            
+            yield break;
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -153,7 +100,7 @@ namespace Gui
                 InitializeSettings();
             }
 
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void InitializeSettings()
@@ -162,12 +109,6 @@ namespace Gui
             Logger.Log("Initializing Edit Diffuse Settings");
             _eds = new EditDiffuseSettings();
             _settingsInitialized = true;
-        }
-
-        private void OnDisable()
-        {
-            _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
-            CleanupTextures();
         }
 
         // Use this for initialization
@@ -189,16 +130,16 @@ namespace Gui
         {
             if (ProgramManager.IsLocked) return;
 
-            if (_newTexture)
+            if (IsNewTexture)
             {
                 InitializeTextures();
-                _newTexture = false;
+                IsNewTexture = false;
             }
 
-            if (_doStuff)
+            if (StuffToBeDone)
             {
                 StartCoroutine(ProcessBlur());
-                _doStuff = false;
+                StuffToBeDone = false;
             }
 
 
@@ -235,11 +176,11 @@ namespace Gui
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Average Color Blur Size", _eds.AvgColorBlurSize,
                 out _eds.AvgColorBlurSize, 5, 100))
-                _doStuff = true;
+                StuffToBeDone = true;
             offsetY += 37;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlay Blur Size", _eds.BlurSize,
-                out _eds.BlurSize, 5, 100)) _doStuff = true;
+                out _eds.BlurSize, 5, 100)) StuffToBeDone = true;
             offsetY += 37;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlay Blur Contrast", _eds.BlurContrast,
                 out _eds.BlurContrast, -1.0f, 1.0f);
@@ -288,7 +229,7 @@ namespace Gui
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Edit Diffuse");
         }
 
-        private void CleanupTextures()
+        protected override void CleanupTextures()
         {
             RenderTexture.ReleaseTemporary(_blurMap);
             RenderTexture.ReleaseTemporary(_tempMap);

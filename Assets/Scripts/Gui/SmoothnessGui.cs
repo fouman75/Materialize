@@ -13,47 +13,8 @@ using Logger = General.Logger;
 
 namespace Gui
 {
-    public class SmoothnessGui : MonoBehaviour, IProcessor, IHideable
+    public class SmoothnessGui : TexturePanelGui
     {
-        private static readonly int MetalSmoothness = Shader.PropertyToID("_MetalSmoothness");
-        private static readonly int IsolateSample1 = Shader.PropertyToID("_IsolateSample1");
-        private static readonly int UseSample1 = Shader.PropertyToID("_UseSample1");
-        private static readonly int SampleColor1 = Shader.PropertyToID("_SampleColor1");
-        private static readonly int SampleUv1 = Shader.PropertyToID("_SampleUV1");
-        private static readonly int HueWeight1 = Shader.PropertyToID("_HueWeight1");
-        private static readonly int SatWeight1 = Shader.PropertyToID("_SatWeight1");
-        private static readonly int LumWeight1 = Shader.PropertyToID("_LumWeight1");
-        private static readonly int MaskLow1 = Shader.PropertyToID("_MaskLow1");
-        private static readonly int MaskHigh1 = Shader.PropertyToID("_MaskHigh1");
-        private static readonly int Sample1Smoothness = Shader.PropertyToID("_Sample1Smoothness");
-        private static readonly int IsolateSample2 = Shader.PropertyToID("_IsolateSample2");
-        private static readonly int UseSample2 = Shader.PropertyToID("_UseSample2");
-        private static readonly int SampleColor2 = Shader.PropertyToID("_SampleColor2");
-        private static readonly int SampleUv2 = Shader.PropertyToID("_SampleUV2");
-        private static readonly int HueWeight2 = Shader.PropertyToID("_HueWeight2");
-        private static readonly int SatWeight2 = Shader.PropertyToID("_SatWeight2");
-        private static readonly int LumWeight2 = Shader.PropertyToID("_LumWeight2");
-        private static readonly int MaskLow2 = Shader.PropertyToID("_MaskLow2");
-        private static readonly int MaskHigh2 = Shader.PropertyToID("_MaskHigh2");
-        private static readonly int Sample2Smoothness = Shader.PropertyToID("_Sample2Smoothness");
-        private static readonly int IsolateSample3 = Shader.PropertyToID("_IsolateSample3");
-        private static readonly int UseSample3 = Shader.PropertyToID("_UseSample3");
-        private static readonly int SampleColor3 = Shader.PropertyToID("_SampleColor3");
-        private static readonly int SampleUv3 = Shader.PropertyToID("_SampleUV3");
-        private static readonly int HueWeight3 = Shader.PropertyToID("_HueWeight3");
-        private static readonly int SatWeight3 = Shader.PropertyToID("_SatWeight3");
-        private static readonly int LumWeight3 = Shader.PropertyToID("_LumWeight3");
-        private static readonly int MaskLow3 = Shader.PropertyToID("_MaskLow3");
-        private static readonly int MaskHigh3 = Shader.PropertyToID("_MaskHigh3");
-        private static readonly int Sample3Smoothness = Shader.PropertyToID("_Sample3Smoothness");
-        private static readonly int BaseSmoothness = Shader.PropertyToID("_BaseSmoothness");
-        private static readonly int Slider = Shader.PropertyToID("_Slider");
-        private static readonly int BlurOverlay = Shader.PropertyToID("_BlurOverlay");
-        private static readonly int FinalContrast = Shader.PropertyToID("_FinalContrast");
-        private static readonly int FinalBias = Shader.PropertyToID("_FinalBias");
-        private static readonly int MainTex = Shader.PropertyToID("_MainTex");
-        private static readonly int MetallicTex = Shader.PropertyToID("_MetallicTex");
-        private static readonly int OverlayBlurTex = Shader.PropertyToID("_OverlayBlurTex");
         private RenderTexture _blurMap;
         private Camera _camera;
 
@@ -61,7 +22,6 @@ namespace Gui
 
         private Texture2D _diffuseMap;
         private Texture2D _diffuseMapOriginal;
-        private bool _doStuff;
 
         private int _imageSizeX;
         private int _imageSizeY;
@@ -69,9 +29,7 @@ namespace Gui
 
         private Texture2D _metallicMap;
         private bool _mouseButtonDown;
-        private bool _newTexture;
         private RenderTexture _overlayBlurMap;
-        private bool _readyToProcess;
 
         private Texture2D _sampleColorMap1;
         private Texture2D _sampleColorMap2;
@@ -94,40 +52,9 @@ namespace Gui
 
         public Texture2D DefaultMetallicMap;
         public ComputeShader SmoothnessCompute;
-        public GameObject TestObject;
 
-        public Material ThisMaterial;
-
-        public bool Hide { get; set; }
-
-        public bool Active
+        protected override IEnumerator Process()
         {
-            get => gameObject.activeSelf;
-            set => gameObject.SetActive(value);
-        }
-
-        public void DoStuff()
-        {
-            _doStuff = true;
-        }
-
-        public void NewTexture()
-        {
-            _newTexture = true;
-        }
-
-        public void Close()
-        {
-            CleanUpTextures();
-            gameObject.SetActive(false);
-        }
-
-        public IEnumerator Process()
-        {
-            while (!ProgramManager.Lock()) yield return null;
-
-            while (!_readyToProcess) yield return null;
-
             MessagePanel.ShowMessage("Processing Smoothness Map");
 
             var smoothnessKernel = SmoothnessCompute.FindKernel("CSSmoothness");
@@ -136,7 +63,6 @@ namespace Gui
 
             SmoothnessCompute.SetTexture(smoothnessKernel, "_MetallicTex",
                 _metallicMap != null ? _metallicMap : DefaultMetallicMap);
-
 
             SmoothnessCompute.SetTexture(smoothnessKernel, "_BlurTex", _blurMap);
 
@@ -197,24 +123,13 @@ namespace Gui
             TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Smoothness);
 
             RenderTexture.ReleaseTemporary(_tempMap);
-
-            yield return null;
-
-            MessagePanel.HideMessage();
-
-            ProgramManager.Unlock();
+            yield break;
         }
 
         private void Awake()
         {
             _camera = Camera.main;
             _windowRect = new Rect(10.0f, 265.0f, 300f, 450f);
-        }
-
-        private void OnDisable()
-        {
-            CleanUpTextures();
-            _readyToProcess = false;
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -245,7 +160,7 @@ namespace Gui
             _sampleColorMap3.SetPixel(1, 1, _settings.SampleColor3);
             _sampleColorMap3.Apply(false);
 
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void InitializeSettings()
@@ -285,22 +200,22 @@ namespace Gui
 
             if (_selectingColor) SelectColor();
 
-            if (_newTexture)
+            if (IsNewTexture)
             {
                 InitializeTextures();
-                _newTexture = false;
+                IsNewTexture = false;
             }
 
             if (_settings.UseAdjustedDiffuse != _lastUseAdjustedDiffuse)
             {
                 _lastUseAdjustedDiffuse = _settings.UseAdjustedDiffuse;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
-            if (_doStuff)
+            if (StuffToBeDone)
             {
                 StartCoroutine(ProcessBlur());
-                _doStuff = false;
+                StuffToBeDone = false;
             }
 
             //thisMaterial.SetFloat ("_BlurWeight", BlurWeight);
@@ -549,11 +464,11 @@ namespace Gui
             offsetY += 40;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Sample Blur Size", _settings.BlurSize,
-                out _settings.BlurSize, 0, 100)) _doStuff = true;
+                out _settings.BlurSize, 0, 100)) StuffToBeDone = true;
             offsetY += 40;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "High Pass Blur Size", _settings.OverlayBlurSize,
-                out _settings.OverlayBlurSize, 10, 100)) _doStuff = true;
+                out _settings.OverlayBlurSize, 10, 100)) StuffToBeDone = true;
             offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "High Pass Overlay", _settings.BlurOverlay,
@@ -580,7 +495,7 @@ namespace Gui
             MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Smoothness From Diffuse");
         }
 
-        private void CleanUpTextures()
+        protected override void CleanupTextures()
         {
             RenderTexture.ReleaseTemporary(_blurMap);
             RenderTexture.ReleaseTemporary(_overlayBlurMap);
@@ -591,7 +506,7 @@ namespace Gui
         {
             TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
 
-            CleanUpTextures();
+            CleanupTextures();
 
             _diffuseMap = TextureManager.Instance.DiffuseMap;
             _diffuseMapOriginal = TextureManager.Instance.DiffuseMapOriginal;
@@ -684,7 +599,7 @@ namespace Gui
             yield return null;
             yield return null;
 
-            _readyToProcess = true;
+            IsReadyToProcess = true;
 
             MessagePanel.HideMessage();
 

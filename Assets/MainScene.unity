@@ -659,10 +659,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79b6b4b30e58933469d807ecc340a2d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
-  MetallicCompute: {fileID: 7200000, guid: 9ce34682c1d7648d899be3d879dd5943, type: 3}
   TestObject: {fileID: 1463534583}
   ThisMaterial: {fileID: 2100000, guid: 737272c68658cdf41aeb0a785065b699, type: 2}
+  BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
+  MetallicCompute: {fileID: 7200000, guid: 9ce34682c1d7648d899be3d879dd5943, type: 3}
 --- !u!1 &513423964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1972,9 +1972,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524b2e2efd4dd464aacafed015a5d6f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AoCompute: {fileID: 7200000, guid: ba69990ce89f5252fa92a9c1df13104b, type: 3}
   TestObject: {fileID: 1463534583}
   ThisMaterial: {fileID: 2100000, guid: bdada9e324602714d9fb2b5ad75f45a3, type: 2}
+  AoCompute: {fileID: 7200000, guid: ba69990ce89f5252fa92a9c1df13104b, type: 3}
 --- !u!4 &1318754590
 Transform:
   m_ObjectHideFlags: 0
@@ -3344,11 +3344,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c311a2b5638944983c713e2d8d6669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TestObject: {fileID: 1463534583}
+  ThisMaterial: {fileID: 2100000, guid: 48a5da314272a9d4da4cfa82a779455f, type: 2}
   BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
   DefaultMetallicMap: {fileID: 2800000, guid: d06194f3a7ca3b64082ef8ff725091b7, type: 3}
   SmoothnessCompute: {fileID: 7200000, guid: 0d98f1530b8834f0bbe7a6d49a9cf440, type: 3}
-  TestObject: {fileID: 1463534583}
-  ThisMaterial: {fileID: 2100000, guid: 48a5da314272a9d4da4cfa82a779455f, type: 2}
 --- !u!4 &1612067965
 Transform:
   m_ObjectHideFlags: 0
@@ -4011,11 +4011,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42bfcfcf9f072604a93d2b19d0d9fb46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TestObject: {fileID: 1463534583}
+  ThisMaterial: {fileID: 2100000, guid: b737aed4cdca0074482a1475d22763a2, type: 2}
   BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
   HeightCompute: {fileID: 7200000, guid: 17f086950c0da403f87512844428f028, type: 3}
   SampleCompute: {fileID: 7200000, guid: d8911c43e0f28fafda7ec493e8d14825, type: 3}
-  TestObject: {fileID: 1463534583}
-  ThisMaterial: {fileID: 2100000, guid: b737aed4cdca0074482a1475d22763a2, type: 2}
 --- !u!4 &1922002223
 Transform:
   m_ObjectHideFlags: 0
@@ -4059,12 +4059,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2779cf5cd160cd14d91000f76919d956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TestObject: {fileID: 1463534583}
+  ThisMaterial: {fileID: 2100000, guid: 4678d9f7beec7d04e824e08435395770, type: 2}
   BlurCompute: {fileID: 7200000, guid: b10a699eb7cea4ab9add0701edef8fe6, type: 3}
   HeightBlurMap: {fileID: 0}
   MainLight: {fileID: 1585571158}
   NormalCompute: {fileID: 7200000, guid: 054c3774b078c2fad8f520cb6674d9d0, type: 3}
-  TestObject: {fileID: 1463534583}
-  ThisMaterial: {fileID: 2100000, guid: 4678d9f7beec7d04e824e08435395770, type: 2}
 --- !u!4 &1970709860
 Transform:
   m_ObjectHideFlags: 0

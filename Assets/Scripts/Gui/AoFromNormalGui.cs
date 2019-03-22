@@ -10,35 +10,17 @@ using Logger = General.Logger;
 
 namespace Gui
 {
-    public class AoFromNormalGui : MonoBehaviour, IProcessor, IHideable
+    public class AoFromNormalGui : TexturePanelGui
     {
-        private static readonly int FinalContrast = Shader.PropertyToID("_FinalContrast");
-        private static readonly int FinalBias = Shader.PropertyToID("_FinalBias");
-        private static readonly int AoBlend = Shader.PropertyToID("_AOBlend");
-        private static readonly int ImageInput = Shader.PropertyToID("ImageInput");
-        private static readonly int MainTex = Shader.PropertyToID("_MainTex");
-        private static readonly int ImageSize = Shader.PropertyToID("_ImageSize");
-        private static readonly int Spread = Shader.PropertyToID("_Spread");
-        private static readonly int HeightTex = Shader.PropertyToID("_HeightTex");
-        private static readonly int BlendTex = Shader.PropertyToID("_BlendTex");
-        private static readonly int Depth = Shader.PropertyToID("_Depth");
-        private static readonly int BlendAmount = Shader.PropertyToID("_BlendAmount");
-        private static readonly int Progress = Shader.PropertyToID("_Progress");
-        private static readonly int Slider = Shader.PropertyToID("_Slider");
-        private static readonly int NormalTex = Shader.PropertyToID("_NormalTex");
         private Texture2D _aoMap;
 
         private AoSettings _aos;
         private RenderTexture _blendedAoMap;
-        private bool _doStuff;
 
         private int _imageSizeX;
         private int _imageSizeY;
         private int _kernelAo;
         private int _kernelCombine;
-        private bool _newTexture;
-        private Coroutine _processingNormalCoroutine;
-        private bool _readyToProcess;
 
         private bool _settingsInitialized;
         private float _slider = 0.5f;
@@ -49,40 +31,9 @@ namespace Gui
 
         public ComputeShader AoCompute;
 
-        public GameObject TestObject;
 
-        public Material ThisMaterial;
-
-        public bool Hide { get; set; }
-
-        public bool Active
+        protected override IEnumerator Process()
         {
-            get => gameObject.activeSelf;
-            set => gameObject.SetActive(value);
-        }
-
-        public void DoStuff()
-        {
-            _doStuff = true;
-        }
-
-        public void NewTexture()
-        {
-            _newTexture = true;
-        }
-
-        public void Close()
-        {
-            CleanupTextures();
-            gameObject.SetActive(false);
-        }
-
-        public IEnumerator Process()
-        {
-            while (!ProgramManager.Lock()) yield return null;
-
-            while (!_readyToProcess) yield return null;
-
             MessagePanel.ShowMessage("Processing Ambient Occlusion");
 
             var tempAoMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
@@ -101,12 +52,7 @@ namespace Gui
 
             TextureManager.Instance.GetTextureFromRender(tempAoMap, ProgramEnums.MapType.Ao);
             RenderTexture.ReleaseTemporary(tempAoMap);
-
-            yield return null;
-
-            MessagePanel.HideMessage();
-
-            ProgramManager.Unlock();
+            yield break;
         }
 
         private void Awake()
@@ -114,12 +60,6 @@ namespace Gui
             _testObjectRenderer = TestObject.GetComponent<Renderer>();
             ThisMaterial = new Material(ThisMaterial.shader);
             _windowRect = new Rect(10.0f, 265.0f, 300f, 280f);
-        }
-
-        private void OnDisable()
-        {
-            CleanupTextures();
-            _readyToProcess = false;
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -140,7 +80,7 @@ namespace Gui
                 InitializeSettings();
             }
 
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void InitializeSettings()
@@ -165,17 +105,17 @@ namespace Gui
         {
             if (ProgramManager.IsLocked) return;
 
-            if (_newTexture)
+            if (IsNewTexture)
             {
                 InitializeTextures();
-                _newTexture = false;
+                IsNewTexture = false;
             }
 
-            if (_doStuff)
+            if (StuffToBeDone)
             {
                 StopAllCoroutines();
-                _processingNormalCoroutine = StartCoroutine(ProcessNormalDepth());
-                _doStuff = false;
+                StartCoroutine(ProcessNormalDepth());
+                StuffToBeDone = false;
             }
 
             ThisMaterial.SetFloat(FinalContrast, _aos.FinalContrast);
@@ -194,11 +134,11 @@ namespace Gui
             offsetY += 35;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "AO pixel Spread", _aos.Spread,
-                out _aos.Spread, 10.0f, 100.0f)) _doStuff = true;
+                out _aos.Spread, 10.0f, 100.0f)) StuffToBeDone = true;
             offsetY += 40;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Pixel Depth", _aos.Depth,
-                out _aos.Depth, 0.0f, 256.0f)) _doStuff = true;
+                out _aos.Depth, 0.0f, 256.0f)) StuffToBeDone = true;
             offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Blend Normal AO and Depth AO", _aos.Blend,
@@ -237,7 +177,7 @@ namespace Gui
             ThisMaterial.SetTexture(NormalTex, TextureManager.Instance.NormalMap);
         }
 
-        private void CleanupTextures()
+        protected override void CleanupTextures()
         {
             RenderTexture.ReleaseTemporary(_blendedAoMap);
         }
@@ -286,7 +226,7 @@ namespace Gui
             yield return null;
             yield return null;
 
-            _readyToProcess = true;
+            IsReadyToProcess = true;
 
             MessagePanel.HideMessage();
 

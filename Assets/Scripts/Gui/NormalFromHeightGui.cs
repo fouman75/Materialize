@@ -11,42 +11,8 @@ using Logger = General.Logger;
 
 namespace Gui
 {
-    public class NormalFromHeightGui : MonoBehaviour, IProcessor, IHideable
+    public class NormalFromHeightGui : TexturePanelGui
     {
-        private static readonly int Blur0Weight = Shader.PropertyToID("_Blur0Weight");
-        private static readonly int Blur1Weight = Shader.PropertyToID("_Blur1Weight");
-        private static readonly int Blur2Weight = Shader.PropertyToID("_Blur2Weight");
-        private static readonly int Blur3Weight = Shader.PropertyToID("_Blur3Weight");
-        private static readonly int Blur4Weight = Shader.PropertyToID("_Blur4Weight");
-        private static readonly int Blur5Weight = Shader.PropertyToID("_Blur5Weight");
-        private static readonly int Blur6Weight = Shader.PropertyToID("_Blur6Weight");
-        private static readonly int Slider = Shader.PropertyToID("_Slider");
-        private static readonly int Angularity = Shader.PropertyToID("_Angularity");
-        private static readonly int AngularIntensity = Shader.PropertyToID("_AngularIntensity");
-        private static readonly int FinalContrast = Shader.PropertyToID("_FinalContrast");
-        private static readonly int LightDir = Shader.PropertyToID("_LightDir");
-        private static readonly int HeightTex = Shader.PropertyToID("_HeightTex");
-        private static readonly int ImageSize = Shader.PropertyToID("_ImageSize");
-        private static readonly int HeightBlurTex = Shader.PropertyToID("_HeightBlurTex");
-        private static readonly int ImageInput = Shader.PropertyToID("ImageInput");
-        private static readonly int BlurTex0 = Shader.PropertyToID("_BlurTex0");
-        private static readonly int BlurTex1 = Shader.PropertyToID("_BlurTex1");
-        private static readonly int BlurTex2 = Shader.PropertyToID("_BlurTex2");
-        private static readonly int BlurTex3 = Shader.PropertyToID("_BlurTex3");
-        private static readonly int BlurTex4 = Shader.PropertyToID("_BlurTex4");
-        private static readonly int BlurTex5 = Shader.PropertyToID("_BlurTex5");
-        private static readonly int BlurTex6 = Shader.PropertyToID("_BlurTex6");
-        private static readonly int BlurSpread = Shader.PropertyToID("_BlurSpread");
-        private static readonly int BlurSamples = Shader.PropertyToID("_BlurSamples");
-        private static readonly int BlurDirection = Shader.PropertyToID("_BlurDirection");
-        private static readonly int BlurContrast = Shader.PropertyToID("_BlurContrast");
-        private static readonly int Desaturate = Shader.PropertyToID("_Desaturate");
-        private static readonly int LightTex = Shader.PropertyToID("_LightTex");
-        private static readonly int LightBlurTex = Shader.PropertyToID("_LightBlurTex");
-        private static readonly int LightRotation = Shader.PropertyToID("_LightRotation");
-        private static readonly int ShapeRecognition = Shader.PropertyToID("_ShapeRecognition");
-        private static readonly int ShapeBias = Shader.PropertyToID("_ShapeBias");
-        private static readonly int DiffuseTex = Shader.PropertyToID("_DiffuseTex");
         private RenderTexture _blurMap0;
         private RenderTexture _blurMap1;
         private RenderTexture _blurMap2;
@@ -54,17 +20,13 @@ namespace Gui
         private RenderTexture _blurMap4;
         private RenderTexture _blurMap5;
         private RenderTexture _blurMap6;
-        private bool _doStuff;
         private int _imageSizeX = 1024;
         private int _imageSizeY = 1024;
         private int _kernelBlur;
         private int _kernelNormal;
-        private bool _newTexture;
         private Material _previewMaterial;
 
         private Coroutine _processingCoroutine;
-        private bool _readyToProcess;
-
         private NormalFromHeightSettings _settings;
         private bool _settingsInitialized;
 
@@ -82,40 +44,8 @@ namespace Gui
         public Light MainLight;
         public ComputeShader NormalCompute;
 
-        public GameObject TestObject;
-
-        public Material ThisMaterial;
-
-        public bool Hide { get; set; }
-
-        public bool Active
+        protected override IEnumerator Process()
         {
-            get => gameObject.activeSelf;
-            set => gameObject.SetActive(value);
-        }
-
-        public void DoStuff()
-        {
-            _doStuff = true;
-        }
-
-        public void NewTexture()
-        {
-            _newTexture = true;
-        }
-
-        public void Close()
-        {
-            CleanupTextures();
-            gameObject.SetActive(false);
-        }
-
-        public IEnumerator Process()
-        {
-            while (!ProgramManager.Lock()) yield return null;
-
-            while (!_readyToProcess) yield return null;
-
             MessagePanel.ShowMessage("Processing Normal Map");
 
             var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
@@ -158,24 +88,13 @@ namespace Gui
             TextureManager.Instance.GetTextureFromRender(tempNormalMap, ProgramEnums.MapType.Normal);
 
             RenderTexture.ReleaseTemporary(tempNormalMap);
-
-            yield return null;
-
-            MessagePanel.HideMessage();
-
-            ProgramManager.Unlock();
+            yield break;
         }
 
         private void Awake()
         {
             _testMaterialRenderer = TestObject.GetComponent<Renderer>();
             _windowRect = new Rect(10.0f, 265.0f, 300f, 535f);
-        }
-
-        private void OnDisable()
-        {
-            CleanupTextures();
-            _readyToProcess = false;
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -197,7 +116,7 @@ namespace Gui
                 InitializeSettings();
             }
 
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void InitializeSettings()
@@ -231,7 +150,7 @@ namespace Gui
             _settings.Blur4Weight = 1.0f;
             _settings.Blur5Weight = 0.95f;
             _settings.Blur6Weight = 0.8f;
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void SetWeightEqSmooth()
@@ -243,7 +162,7 @@ namespace Gui
             _settings.Blur4Weight = 0.9f;
             _settings.Blur5Weight = 1.0f;
             _settings.Blur6Weight = 1.0f;
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void SetWeightEqCrisp()
@@ -255,7 +174,7 @@ namespace Gui
             _settings.Blur4Weight = 0.25f;
             _settings.Blur5Weight = 0.15f;
             _settings.Blur6Weight = 0.1f;
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         // ReSharper disable once IdentifierTypo
@@ -268,7 +187,7 @@ namespace Gui
             _settings.Blur4Weight = 0.85f;
             _settings.Blur5Weight = 0.5f;
             _settings.Blur6Weight = 0.15f;
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void Update()
@@ -277,11 +196,11 @@ namespace Gui
 
             if (ProgramManager.IsLocked) return;
 
-            if (_doStuff)
+            if (StuffToBeDone)
             {
                 if (_processingCoroutine != null) StopCoroutine(_processingCoroutine);
                 _processingCoroutine = StartCoroutine(ProcessHeight());
-                _doStuff = false;
+                StuffToBeDone = false;
             }
 
             _previewMaterial.SetFloat(Blur0Weight, _settings.Blur0Weight);
@@ -313,7 +232,7 @@ namespace Gui
             offsetY += 35;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Pre Contrast", _settings.Blur0Contrast,
-                out _settings.Blur0Contrast, 0.0f, 50.0f)) _doStuff = true;
+                out _settings.Blur0Contrast, 0.0f, 50.0f)) StuffToBeDone = true;
             offsetY += 45;
 
             GUI.Label(new Rect(offsetX, offsetY, 250, 30), "Frequency Equalizer");
@@ -362,23 +281,23 @@ namespace Gui
             var tempBool = _settings.UseDiffuse;
             _settings.UseDiffuse = GUI.Toggle(new Rect(offsetX, offsetY, 280, 30), _settings.UseDiffuse,
                 " Shape from Diffuse (Unchecked from Height)");
-            if (tempBool != _settings.UseDiffuse) _doStuff = true;
+            if (tempBool != _settings.UseDiffuse) StuffToBeDone = true;
             offsetY += 35;
 
             GUI.enabled = true;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), " Shape Recognition, Rotation, Spread, Bias",
                 _settings.ShapeRecognition,
-                out _settings.ShapeRecognition, 0.0f, 1.0f)) _doStuff = true;
+                out _settings.ShapeRecognition, 0.0f, 1.0f)) StuffToBeDone = true;
             offsetY += 25;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.LightRotation,
-                out _settings.LightRotation, -3.14f, 3.14f)) _doStuff = true;
+                out _settings.LightRotation, -3.14f, 3.14f)) StuffToBeDone = true;
             offsetY += 25;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.SlopeBlur,
-                out _settings.SlopeBlur, 5, 100)) _doStuff = true;
+                out _settings.SlopeBlur, 5, 100)) StuffToBeDone = true;
             offsetY += 25;
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _settings.ShapeBias,
-                out _settings.ShapeBias, 0.0f, 1.0f)) _doStuff = true;
+                out _settings.ShapeBias, 0.0f, 1.0f)) StuffToBeDone = true;
             offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Contrast", _settings.FinalContrast,
@@ -395,7 +314,7 @@ namespace Gui
 
         public void InitializeTextures()
         {
-            if (!_newTexture) return;
+            if (!IsNewTexture) return;
 
             _testMaterialRenderer.material = _previewMaterial;
 
@@ -421,10 +340,10 @@ namespace Gui
             _blurMap5 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
             _blurMap6 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
 
-            _newTexture = false;
+            IsNewTexture = false;
         }
 
-        private void CleanupTextures()
+        protected override void CleanupTextures()
         {
             RenderTexture.ReleaseTemporary(_tempBlurMap);
             RenderTexture.ReleaseTemporary(HeightBlurMap);
@@ -565,7 +484,7 @@ namespace Gui
             yield return null;
             yield return null;
 
-            _readyToProcess = true;
+            IsReadyToProcess = true;
 
             MessagePanel.HideMessage();
 

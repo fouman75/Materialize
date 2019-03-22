@@ -68,7 +68,6 @@
             <e p="EditDiffuseGui.cs" t="Include" />
             <e p="HeightFromDiffuseGui.cs" t="Include" />
             <e p="IHideable.cs" t="Include" />
-            <e p="IProcessor.cs" t="Include" />
             <e p="MainGui.cs" t="Include" />
             <e p="MaterialGui.cs" t="Include" />
             <e p="MessagePanel.cs" t="Include" />
@@ -78,6 +77,7 @@
             <e p="SettingsGui.cs" t="Include" />
             <e p="SmoothnessGui.cs" t="Include" />
             <e p="TexturePanel.cs" t="Include" />
+            <e p="TexturePanelGui.cs" t="Include" />
             <e p="TilingTextureMakerGui.cs" t="Include" />
             <e p="WelcomeScreen.cs" t="Include" />
           </e>
