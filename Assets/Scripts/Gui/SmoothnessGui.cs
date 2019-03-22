@@ -23,8 +23,6 @@ namespace Gui
         private Texture2D _diffuseMap;
         private Texture2D _diffuseMapOriginal;
 
-        private int _imageSizeX;
-        private int _imageSizeY;
         private bool _lastUseAdjustedDiffuse;
 
         private Texture2D _metallicMap;
@@ -59,7 +57,7 @@ namespace Gui
 
             var smoothnessKernel = SmoothnessCompute.FindKernel("CSSmoothness");
 
-            SmoothnessCompute.SetVector("_ImageSize", new Vector2(_imageSizeX, _imageSizeY));
+            SmoothnessCompute.SetVector(ImageSizeId, new Vector2(ImageSize.x, ImageSize.y));
 
             SmoothnessCompute.SetTexture(smoothnessKernel, "_MetallicTex",
                 _metallicMap != null ? _metallicMap : DefaultMetallicMap);
@@ -110,10 +108,10 @@ namespace Gui
             SmoothnessCompute.SetFloat("_FinalBias", _settings.FinalBias);
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y);
 
-            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
-            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
 
             var source = _settings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
             SmoothnessCompute.SetTexture(smoothnessKernel, "ImageInput", source);
@@ -517,24 +515,24 @@ namespace Gui
             if (_diffuseMap)
             {
                 ThisMaterial.SetTexture(MainTex, _diffuseMap);
-                _imageSizeX = _diffuseMap.width;
-                _imageSizeY = _diffuseMap.height;
+                ImageSize.x = _diffuseMap.width;
+                ImageSize.y = _diffuseMap.height;
             }
             else
             {
                 ThisMaterial.SetTexture(MainTex, _diffuseMapOriginal);
-                _imageSizeX = _diffuseMapOriginal.width;
-                _imageSizeY = _diffuseMapOriginal.height;
+                ImageSize.x = _diffuseMapOriginal.width;
+                ImageSize.y = _diffuseMapOriginal.height;
 
                 _settings.UseAdjustedDiffuse = false;
                 _settings.UseOriginalDiffuse = true;
             }
 
-            Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
+            Logger.Log("Initializing Textures of size: " + ImageSize.x + "x" + ImageSize.y);
 
-            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
-            _blurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
-            _overlayBlurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y);
+            _blurMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y);
+            _overlayBlurMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y);
         }
 
         public IEnumerator ProcessBlur()
@@ -543,12 +541,12 @@ namespace Gui
 
             MessagePanel.ShowMessage("Processing Blur for Smoothness Map");
 
-            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
-            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
 
             var blurKernel = BlurCompute.FindKernel("CSBlur");
 
-            BlurCompute.SetVector("_ImageSize", new Vector4(_imageSizeX, _imageSizeY, 0, 0));
+            BlurCompute.SetVector(ImageSizeId, new Vector4(ImageSize.x, ImageSize.y, 0, 0));
             BlurCompute.SetFloat("_BlurContrast", 1.0f);
             BlurCompute.SetFloat("_BlurSpread", 1.0f);
 

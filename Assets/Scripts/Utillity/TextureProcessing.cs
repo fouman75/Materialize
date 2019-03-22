@@ -83,7 +83,7 @@ public static class TextureProcessing
         var groupsX = (int) Mathf.Ceil(imageSizeX / 8f);
         var groupsY = (int) Mathf.Ceil(imageSizeY / 8f);
         compute.Dispatch(kernel, groupsX, groupsY, 1);
-        
+
         RenderTexture.active = renderTexture;
         var tex = TextureManager.Instance.GetStandardTexture(texture.width, texture.height);
         tex.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);

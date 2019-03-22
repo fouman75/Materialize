@@ -12,6 +12,13 @@ namespace General
             Invalid
         }
 
+        public enum GraphicsQuality
+        {
+            High,
+            Medium,
+            Low
+        }
+
         public enum MapType
         {
             None,
@@ -32,13 +39,6 @@ namespace General
         {
             FullScreen,
             Windowed
-        }
-
-        public enum GraphicsQuality
-        {
-            High,
-            Medium,
-            Low
         }
     }
 }

@@ -30,10 +30,10 @@ namespace General
         [UsedImplicitly] [SerializeField] private Material FullMaterial = null;
         public bool Hdr;
         public ComputeShader MaskMapCompute;
-        public ComputeShader TextureProcessingCompute;
         public RenderTextureFormat RenderTextureFormat;
 
         [HideInInspector] public ProgramEnums.MapType TextureInClipboard;
+        public ComputeShader TextureProcessingCompute;
         public Material FullMaterialInstance { get; private set; }
 
         private void Awake()
@@ -225,7 +225,7 @@ namespace General
         public void CleanMaterial()
         {
             ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = null;
-            GameObject.Destroy(FullMaterialInstance);
+            Destroy(FullMaterialInstance);
             FullMaterialInstance = new Material(FullMaterial);
         }
 

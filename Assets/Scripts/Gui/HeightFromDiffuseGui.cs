@@ -31,8 +31,6 @@ namespace Gui
         private int _currentSelection;
 
         private HeightFromDiffuseSettings _heightFromDiffuseSettings;
-        private int _imageSizeX = 1024;
-        private int _imageSizeY = 1024;
         private int _kernelBlur;
 
         private float _lastBlur0Contrast = 1.0f;
@@ -63,10 +61,10 @@ namespace Gui
             MessagePanel.ShowMessage("Processing Height Map");
 
             var kernelCombine = HeightCompute.FindKernel("CSCombineHeight");
-            HeightCompute.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
+            HeightCompute.SetVector(ImageSizeId, new Vector4(ImageSize.x, ImageSize.y, 0, 0));
 
             RenderTexture.ReleaseTemporary(_tempHeightMap);
-            _tempHeightMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _tempHeightMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y);
 
             HeightCompute.SetFloat(FinalContrast, _heightFromDiffuseSettings.FinalContrast);
             HeightCompute.SetFloat(FinalBias, _heightFromDiffuseSettings.FinalBias);
@@ -110,7 +108,7 @@ namespace Gui
             // Save low fidelity for texture 2d
             HeightCompute.SetTexture(kernelCombine, "ImageInput", _blurMap0);
             HeightCompute.SetTexture(kernelCombine, "Result", _tempHeightMap);
-            HeightCompute.Dispatch(kernelCombine, _imageSizeX / 8, _imageSizeY / 8, 1);
+            HeightCompute.Dispatch(kernelCombine, ImageSize.x / 8, ImageSize.y / 8, 1);
 
             if (TextureManager.Instance.HeightMap) Destroy(TextureManager.Instance.HeightMap);
 
@@ -127,7 +125,7 @@ namespace Gui
                 TextureManager.Instance.GetTempRenderTexture(_tempHeightMap.width, _tempHeightMap.width);
             HeightCompute.SetTexture(kernelCombine, "ImageInput", _blurMap0);
             HeightCompute.SetTexture(kernelCombine, "Result", TextureManager.Instance.HdHeightMap);
-            HeightCompute.Dispatch(kernelCombine, _imageSizeX / 8, _imageSizeY / 8, 1);
+            HeightCompute.Dispatch(kernelCombine, ImageSize.x / 8, ImageSize.y / 8, 1);
 
             RenderTexture.ReleaseTemporary(_tempHeightMap);
 
@@ -138,7 +136,7 @@ namespace Gui
         {
             _windowRect = new Rect(10.0f, 265.0f, 300f, 520f);
         }
-        
+
 
         public void GetValues(ProjectObject projectObject)
         {
@@ -263,7 +261,7 @@ namespace Gui
         private void SetMaterialValues()
         {
             ThisMaterial.SetFloat(BlurScaleId, BlurScale);
-            ThisMaterial.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
+            ThisMaterial.SetVector(ImageSizeId, new Vector4(ImageSize.x, ImageSize.y, 0, 0));
         }
 
         private void SetWeightEqDefault()
@@ -792,33 +790,33 @@ namespace Gui
 
             if (_heightFromDiffuseSettings.UseAdjustedDiffuse)
             {
-                _imageSizeX = TextureManager.Instance.DiffuseMap.width;
-                _imageSizeY = TextureManager.Instance.DiffuseMap.height;
+                ImageSize.x = TextureManager.Instance.DiffuseMap.width;
+                ImageSize.y = TextureManager.Instance.DiffuseMap.height;
             }
             else if (_heightFromDiffuseSettings.UseOriginalDiffuse)
             {
-                _imageSizeX = TextureManager.Instance.DiffuseMapOriginal.width;
-                _imageSizeY = TextureManager.Instance.DiffuseMapOriginal.height;
+                ImageSize.x = TextureManager.Instance.DiffuseMapOriginal.width;
+                ImageSize.y = TextureManager.Instance.DiffuseMapOriginal.height;
             }
             else if (_heightFromDiffuseSettings.UseNormal)
             {
-                _imageSizeX = TextureManager.Instance.NormalMap.width;
-                _imageSizeY = TextureManager.Instance.NormalMap.height;
+                ImageSize.x = TextureManager.Instance.NormalMap.width;
+                ImageSize.y = TextureManager.Instance.NormalMap.height;
             }
 
 
-//        General.Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
+//        General.Logger.Log("Initializing Textures of size: " + ImageSize.x + "x" + ImageSize.y);
 
-            _tempBlurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
-            _blurMap0 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
-            _blurMap1 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
-            _blurMap2 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
-            _blurMap3 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
-            _blurMap4 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
-            _blurMap5 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
-            _blurMap6 = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
-            _avgMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
-            _avgTempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY, false, true);
+            _tempBlurMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y, false, true);
+            _blurMap0 = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y, false, true);
+            _blurMap1 = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y, false, true);
+            _blurMap2 = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y, false, true);
+            _blurMap3 = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y, false, true);
+            _blurMap4 = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y, false, true);
+            _blurMap5 = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y, false, true);
+            _blurMap6 = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y, false, true);
+            _avgMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y, false, true);
+            _avgTempMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y, false, true);
             SetMaterialValues();
         }
 
@@ -845,7 +843,7 @@ namespace Gui
 
             MessagePanel.ShowMessage("Processing Normal for Height Map");
 
-            HeightCompute.SetVector(ImageSize, new Vector4(_imageSizeX, _imageSizeY, 0, 0));
+            HeightCompute.SetVector(ImageSizeId, new Vector4(ImageSize.x, ImageSize.y, 0, 0));
             HeightCompute.SetFloat(Spread, _heightFromDiffuseSettings.Spread);
             HeightCompute.SetFloat(SpreadBoost, _heightFromDiffuseSettings.SpreadBoost);
             HeightCompute.SetInt(Samples, (int) _heightFromDiffuseSettings.Spread);
@@ -857,8 +855,8 @@ namespace Gui
             ThisMaterial.SetTexture(BlurTex0, _blurMap0);
             ThisMaterial.SetTexture(BlurTex1, _blurMap1);
             ThisMaterial.SetTexture(MainTex, TextureManager.Instance.NormalMap);
-            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
-            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
 
             for (var i = 1; i < 100; i++)
             {
@@ -888,7 +886,7 @@ namespace Gui
             var kernelSample = SampleCompute.FindKernel("CSSample");
 
             ThisMaterial.SetFloat(IsNormal, 0.0f);
-            SampleCompute.SetVector(ImageSize, new Vector2(_imageSizeX, _imageSizeY));
+            SampleCompute.SetVector(ImageSizeId, new Vector2(ImageSize.x, ImageSize.y));
 
             SampleCompute.SetInt(IsolateSample1, _heightFromDiffuseSettings.IsolateSample1 ? 1 : 0);
             SampleCompute.SetInt(UseSample1, _heightFromDiffuseSettings.UseSample1 ? 1 : 0);
@@ -928,11 +926,11 @@ namespace Gui
 
             SampleCompute.SetTexture(kernelSample, "ImageInput", source);
             SampleCompute.SetTexture(kernelSample, "Result", _blurMap0);
-            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
-            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
             SampleCompute.Dispatch(kernelSample, groupsX, groupsY, 1);
 
-            BlurCompute.SetVector(ImageSize, new Vector2(_imageSizeX, _imageSizeY));
+            BlurCompute.SetVector(ImageSizeId, new Vector2(ImageSize.x, ImageSize.y));
 //            BlurCompute.SetInt("_Desaturate", 1);
             BlurCompute.SetFloat(BlurContrast, 1.0f);
 
@@ -1012,8 +1010,8 @@ namespace Gui
             BlurCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
             BlurCompute.SetTexture(_kernelBlur, "ImageInput", source);
             BlurCompute.SetTexture(_kernelBlur, "Result", _tempBlurMap);
-            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
-            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
             BlurCompute.Dispatch(_kernelBlur, groupsX, groupsY, 1);
             BlurCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
             BlurCompute.SetTexture(_kernelBlur, "ImageInput", _tempBlurMap);

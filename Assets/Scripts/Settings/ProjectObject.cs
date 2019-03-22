@@ -12,7 +12,6 @@ namespace Settings
 {
     public class ProjectObject
     {
-        [XmlIgnore] public string ProjectPath;
         public string AoMapPath;
 
         public AoSettings AoSettings;
@@ -31,6 +30,7 @@ namespace Settings
 
         public NormalFromHeightSettings NormalFromHeightSettings;
         public string NormalMapPath;
+        [XmlIgnore] public string ProjectPath;
         public string SmoothnessMapPath;
 
         public SmoothnessSettings SmoothnessSettings;

@@ -316,9 +316,7 @@ namespace Gui
             _greyTexture = TextureManager.Instance.GetStandardTexture(64, 64);
             for (var i = 0; i < _greyTexture.width; i++)
             for (var j = 0; j < _greyTexture.height; j++)
-            {
                 _greyTexture.SetPixel(i, j, Color.grey);
-            }
 
 
             _propertyCompShader = Shader.Find("Hidden/Blit_Property_Comp");

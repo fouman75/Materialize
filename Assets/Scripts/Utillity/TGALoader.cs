@@ -56,6 +56,7 @@ public static class TGALoader
 
                     break;
                 }
+
                 case 24:
                 {
                     tex = new Texture2D(width, height, TextureFormat.RGB24, false, false);
@@ -70,6 +71,7 @@ public static class TGALoader
 
                     break;
                 }
+
                 default:
                     throw new Exception("TGA texture had non 32/24 bit depth.");
             }

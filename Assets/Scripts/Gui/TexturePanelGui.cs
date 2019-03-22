@@ -1,16 +1,85 @@
+#region
+
+using System;
 using System.Collections;
 using General;
 using UnityEngine;
+
+#endregion
 
 namespace Gui
 {
     public abstract class TexturePanelGui : MonoBehaviour, IHideable
     {
+        protected Vector2Int ImageSize = new Vector2Int(1024, 1024);
+        protected bool IsNewTexture;
+        protected bool IsReadyToProcess;
+        protected bool StuffToBeDone;
+
+        public GameObject TestObject;
+
+        public Material ThisMaterial;
+
+        public bool Active
+        {
+            get => gameObject.activeSelf;
+            set => gameObject.SetActive(value);
+        }
+
+        public bool Hide { get; set; }
+
+        public void DoStuff()
+        {
+            StuffToBeDone = true;
+        }
+
+        public void NewTexture()
+        {
+            IsNewTexture = true;
+        }
+
+        public void Close()
+        {
+            CleanupTextures();
+            gameObject.SetActive(false);
+        }
+
+        protected virtual void CleanupTextures()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator StartProcessing()
+        {
+            while (!ProgramManager.Lock()) yield return null;
+
+            while (!IsReadyToProcess) yield return null;
+
+            StartCoroutine(Process());
+
+            yield return new WaitForSeconds(0.1f);
+
+            MessagePanel.HideMessage();
+
+            ProgramManager.Unlock();
+        }
+
+        protected virtual IEnumerator Process()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void OnDisable()
+        {
+            CleanupTextures();
+            IsReadyToProcess = false;
+        }
+
         #region TextureIDs
 
         protected const float BlurScale = 1.0f;
         protected static readonly int BlurScaleId = Shader.PropertyToID("_BlurScale");
-        protected static readonly int ImageSize = Shader.PropertyToID("_ImageSize");
+        protected static readonly int ImageSizeId = Shader.PropertyToID("_ImageSize");
         protected static readonly int Isolate = Shader.PropertyToID("_Isolate");
         protected static readonly int Blur0Weight = Shader.PropertyToID("_Blur0Weight");
         protected static readonly int Blur1Weight = Shader.PropertyToID("_Blur1Weight");
@@ -123,67 +192,5 @@ namespace Gui
         protected static readonly int MetallicTex = Shader.PropertyToID("_MetallicTex");
 
         #endregion
-
-        public GameObject TestObject;
-
-        public Material ThisMaterial;
-        protected bool StuffToBeDone;
-        protected bool IsNewTexture;
-        protected bool IsReadyToProcess;
-
-        public bool Hide { get; set; }
-
-        public bool Active
-        {
-            get => gameObject.activeSelf;
-            set => gameObject.SetActive(value);
-        }
-
-        public void DoStuff()
-        {
-            StuffToBeDone = true;
-        }
-
-        public void NewTexture()
-        {
-            IsNewTexture = true;
-        }
-
-        public void Close()
-        {
-            CleanupTextures();
-            gameObject.SetActive(false);
-        }
-
-        protected virtual void CleanupTextures()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerator StartProcessing()
-        {
-            while (!ProgramManager.Lock()) yield return null;
-
-            while (!IsReadyToProcess) yield return null;
-
-            StartCoroutine(Process());
-
-            yield return new WaitForSeconds(0.1f);
-
-            MessagePanel.HideMessage();
-
-            ProgramManager.Unlock();
-        }
-
-        protected virtual IEnumerator Process()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        protected void OnDisable()
-        {
-            CleanupTextures();
-            IsReadyToProcess = false;
-        }
     }
 }

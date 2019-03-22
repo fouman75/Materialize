@@ -23,16 +23,16 @@ namespace General
         private int _windowId;
         public bool ApplicationIsQuitting;
         public int DesiredFrameRate;
-        public Vector2 GuiScale = new Vector2(1, 1);
-        [HideInInspector] public string LastPath;
-        public Light MainLight;
-        public MessagePanel MessagePanelObject;
-        public HDRenderPipeline RenderPipeline;
-        public HDRenderPipelineAsset HighQualityAsset;
-        public HDRenderPipelineAsset MediumQualityAsset;
-        public HDRenderPipelineAsset LowQualityAsset;
         public ProgramEnums.GraphicsQuality GraphicsQuality;
+        public Vector2 GuiScale = new Vector2(1, 1);
+        public HDRenderPipelineAsset HighQualityAsset;
+        [HideInInspector] public string LastPath;
+        public HDRenderPipelineAsset LowQualityAsset;
+        public Light MainLight;
+        public HDRenderPipelineAsset MediumQualityAsset;
+        public MessagePanel MessagePanelObject;
         public Volume PostProcessingVolume;
+        public HDRenderPipeline RenderPipeline;
         public Volume SceneVolume;
 
         #region Settings
@@ -215,10 +215,7 @@ namespace General
             if (Application.isEditor) yield break;
             yield return null;
 
-            if (MainGui.Instance)
-            {
-                MainGui.Instance.CloseWindows();
-            }
+            if (MainGui.Instance) MainGui.Instance.CloseWindows();
 
             Instance.PostProcessingVolume.enabled = false;
             Instance.SceneVolume.enabled = false;
@@ -276,7 +273,7 @@ namespace General
         }
 
         /// <summary>
-        /// Get the Highest resolution skipping n matches
+        ///     Get the Highest resolution skipping n matches
         /// </summary>
         /// <param name="skip"> number of matches to skip</param>
         /// <returns> resolution after n skips in the same aspect ratio than native </returns>

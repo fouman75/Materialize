@@ -18,9 +18,6 @@ namespace Gui
         private Texture2D _diffuseMap;
         private Texture2D _diffuseMapOriginal;
 
-        private int _imageSizeX;
-        private int _imageSizeY;
-
         private bool _lastUseAdjustedDiffuse;
         private Texture2D _metalColorMap;
         private Texture2D _metallicMap;
@@ -47,7 +44,7 @@ namespace Gui
             MessagePanel.ShowMessage("Processing Metallic Map");
             var metallicKernel = MetallicCompute.FindKernel("CSMetallic");
 
-            MetallicCompute.SetVector("_ImageSize", new Vector2(_imageSizeX, _imageSizeY));
+            MetallicCompute.SetVector(ImageSizeId, new Vector2(ImageSize.x, ImageSize.y));
 
             MetallicCompute.SetVector("_MetalColor", _metallicSettings.MetalColor);
             MetallicCompute.SetVector("_SampleUV", _metallicSettings.SampleUv);
@@ -69,13 +66,13 @@ namespace Gui
             MetallicCompute.SetTexture(metallicKernel, "_OverlayBlurTex", _overlayBlurMap);
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y);
             var source = _metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
 
             MetallicCompute.SetTexture(metallicKernel, "ImageInput", source);
             MetallicCompute.SetTexture(metallicKernel, "Result", _tempMap);
-            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
-            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
             MetallicCompute.Dispatch(metallicKernel, groupsX, groupsY, 1);
 
             TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Metallic);
@@ -318,24 +315,24 @@ namespace Gui
             if (_diffuseMap)
             {
                 ThisMaterial.SetTexture(MainTex, _diffuseMap);
-                _imageSizeX = _diffuseMap.width;
-                _imageSizeY = _diffuseMap.height;
+                ImageSize.x = _diffuseMap.width;
+                ImageSize.y = _diffuseMap.height;
             }
             else
             {
                 ThisMaterial.SetTexture(MainTex, _diffuseMapOriginal);
-                _imageSizeX = _diffuseMapOriginal.width;
-                _imageSizeY = _diffuseMapOriginal.height;
+                ImageSize.x = _diffuseMapOriginal.width;
+                ImageSize.y = _diffuseMapOriginal.height;
 
                 _metallicSettings.UseAdjustedDiffuse = false;
                 _metallicSettings.UseOriginalDiffuse = true;
             }
 
-            Logger.Log("Initializing Textures of size: " + _imageSizeX + "x" + _imageSizeY);
+            Logger.Log("Initializing Textures of size: " + ImageSize.x + "x" + ImageSize.y);
 
-            _tempMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
-            _blurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
-            _overlayBlurMap = TextureManager.Instance.GetTempRenderTexture(_imageSizeX, _imageSizeY);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y);
+            _blurMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y);
+            _overlayBlurMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y);
         }
 
         public IEnumerator ProcessBlur()
@@ -347,7 +344,7 @@ namespace Gui
 
             var blurKernel = BlurCompute.FindKernel("CSBlur");
 
-            BlurCompute.SetVector("_ImageSize", new Vector2(_imageSizeX, _imageSizeY));
+            BlurCompute.SetVector(ImageSizeId, new Vector2(ImageSize.x, ImageSize.y));
             BlurCompute.SetFloat("_BlurContrast", 1.0f);
             BlurCompute.SetFloat("_BlurSpread", 1.0f);
 
@@ -356,8 +353,8 @@ namespace Gui
             BlurCompute.SetVector("_BlurDirection", new Vector4(1, 0, 0, 0));
             var diffuse = _metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
 
-            var groupsX = (int) Mathf.Ceil(_imageSizeX / 8f);
-            var groupsY = (int) Mathf.Ceil(_imageSizeY / 8f);
+            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
 
             if (_metallicSettings.BlurSize == 0)
             {

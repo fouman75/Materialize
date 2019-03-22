@@ -10,7 +10,7 @@ using Gui;
 using Plugins.Extension;
 using Settings;
 using UnityEngine;
-using Graphics = UnityEngine.Graphics;
+
 #if UNITY_STANDALONE_WIN
 using System.Windows.Forms;
 using System.Drawing;
@@ -232,22 +232,26 @@ namespace General
                     bytes = textureToSave.EncodeToPNG();
                     break;
                 }
+
                 case "jpg":
                 {
                     bytes = textureToSave.EncodeToJPG();
                     break;
                 }
+
                 case "tga":
                 {
                     bytes = ImageConversion.EncodeToTGA(textureToSave);
                     break;
                 }
+
                 case "exr":
                 {
                     const Texture2D.EXRFlags flags = Texture2D.EXRFlags.CompressZIP;
                     bytes = textureToSave.EncodeToEXR(flags);
                     break;
                 }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(extension), extension, null);
             }
@@ -389,10 +393,7 @@ namespace General
         private static void ClearPanelQuickSave()
         {
             var panels = FindObjectsOfType<TexturePanel>();
-            foreach (var panel in panels)
-            {
-                panel.QuickSavePath = null;
-            }
+            foreach (var panel in panels) panel.QuickSavePath = null;
         }
 
 #if UNITY_STANDALONE_WIN

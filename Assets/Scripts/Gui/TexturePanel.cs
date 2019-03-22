@@ -22,13 +22,13 @@ namespace Gui
         public int NumberOfPanels = 7;
         public int PanelSlot;
         public Button PasteButton;
+        [HideInInspector] public string QuickSavePath;
         public Button SaveButton;
 
         [Header("Gui Elements")] public RawImage TextureFrame;
         public TextMeshProUGUI Title;
         public int TopBorder = -5;
         public int Width = 125;
-        [HideInInspector] public string QuickSavePath;
 
         private void Awake()
         {

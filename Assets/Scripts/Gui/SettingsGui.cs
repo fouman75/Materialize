@@ -207,21 +207,15 @@ namespace Gui
 
             var isLow = ProgramSettings.GraphicsQuality == ProgramEnums.GraphicsQuality.Low;
             if (GUI.Toggle(new Rect(offsetX + 20, offsetY, 50, 30), isLow, "Low"))
-            {
                 ProgramSettings.GraphicsQuality = ProgramEnums.GraphicsQuality.Low;
-            }
 
             var isMedium = ProgramSettings.GraphicsQuality == ProgramEnums.GraphicsQuality.Medium;
             if (GUI.Toggle(new Rect(offsetX + 100, offsetY, 50, 30), isMedium, "Medium"))
-            {
                 ProgramSettings.GraphicsQuality = ProgramEnums.GraphicsQuality.Medium;
-            }
 
             var isHigh = ProgramSettings.GraphicsQuality == ProgramEnums.GraphicsQuality.High;
             if (GUI.Toggle(new Rect(offsetX + 180, offsetY, 50, 30), isHigh, "High"))
-            {
                 ProgramSettings.GraphicsQuality = ProgramEnums.GraphicsQuality.High;
-            }
 
             offsetY += 40;
 
