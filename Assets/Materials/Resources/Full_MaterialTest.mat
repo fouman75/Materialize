@@ -499,7 +499,7 @@ Material:
     - _TessellationFactor: 10
     - _TessellationFactorMaxDistance: 50
     - _TessellationFactorMinDistance: 25
-    - _TessellationFactorTriangleSize: 5
+    - _TessellationFactorTriangleSize: 1
     - _TessellationMode: 1
     - _TessellationShapeFactor: 0.75
     - _TexWorldScale: 1

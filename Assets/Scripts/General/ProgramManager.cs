@@ -17,7 +17,7 @@ namespace General
     public class ProgramManager : MonoBehaviour
     {
         private const string LastPathKey = nameof(LastPathKey);
-        public const int DefaultFrameRate = 30;
+        public const int DefaultFrameRate = 60;
         public static ProgramManager Instance;
         public static Vector2 GuiReferenceSize = new Vector2(1440, 810);
         private int _windowId;
@@ -74,8 +74,6 @@ namespace General
 
             GuiScale = new Vector2(Screen.width / GuiReferenceSize.x, Screen.height / GuiReferenceSize.y);
             MessagePanelObject.gameObject.SetActive(true);
-
-            StartCoroutine(SetScreen(ProgramEnums.ScreenMode.Windowed));
         }
 
         private IEnumerator Start()
@@ -89,8 +87,15 @@ namespace General
             MaterialGuiObject = FindMonoBehaviour<MaterialGui>().gameObject;
 
             ActivateObjects();
-            StartCoroutine(SlowUpdate());
             yield return StartCoroutine(GetHdrpCoroutine());
+            yield return StartCoroutine(SetScreen(ProgramEnums.ScreenMode.Windowed));
+
+            RenderPipeline.RequestSkyEnvironmentUpdate();
+            Logger.Log("HDRI Sky Atualizado");
+
+            RenderProbe();
+
+            StartCoroutine(SlowUpdate());
         }
 
         private T FindMonoBehaviour<T>() where T : MonoBehaviour
@@ -123,33 +128,21 @@ namespace General
 
                 yield return StartCoroutine(UpdateQuality());
 
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.5f);
             }
         }
 
         private IEnumerator UpdateQuality()
         {
-            HDRenderPipelineAsset hdRenderPipelineAsset;
-            switch (GraphicsQuality)
-            {
-                case ProgramEnums.GraphicsQuality.High:
-                    QualitySettings.SetQualityLevel(2);
-                    hdRenderPipelineAsset = HighQualityAsset;
-                    break;
-                case ProgramEnums.GraphicsQuality.Medium:
-                    QualitySettings.SetQualityLevel(1);
-                    hdRenderPipelineAsset = MediumQualityAsset;
-                    break;
-                case ProgramEnums.GraphicsQuality.Low:
-                    QualitySettings.SetQualityLevel(0);
-                    hdRenderPipelineAsset = LowQualityAsset;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            var hdRenderPipelineAsset = GetRpQualityAsset();
 
             if (GraphicsSettings.renderPipelineAsset == hdRenderPipelineAsset) yield break;
 
+            Logger.Log("Changing quality to " + GraphicsQuality);
+
+            GraphicsSettings.renderPipelineAsset = null;
+            yield return null;
+
             switch (GraphicsQuality)
             {
                 case ProgramEnums.GraphicsQuality.High:
@@ -165,7 +158,7 @@ namespace General
                     throw new ArgumentOutOfRangeException();
             }
 
-            yield return new WaitForSeconds(0.3f);
+            yield return null;
 
             GraphicsSettings.renderPipelineAsset = hdRenderPipelineAsset;
 
@@ -185,7 +178,7 @@ namespace General
         private IEnumerator GetHdrpCoroutine()
         {
             RenderPipeline = RenderPipelineManager.currentPipeline as HDRenderPipeline;
-            var maxTries = 10;
+            var maxTries = 100;
             while (RenderPipeline == null)
             {
                 RenderPipeline = RenderPipelineManager.currentPipeline as HDRenderPipeline;
@@ -227,13 +220,8 @@ namespace General
                 MainGui.Instance.CloseWindows();
             }
 
-//            if (TextureManager.Instance) TextureManager.Instance.CleanMaterial();
-
             Instance.PostProcessingVolume.enabled = false;
             Instance.SceneVolume.enabled = false;
-            var asset = GraphicsSettings.renderPipelineAsset;
-            GraphicsSettings.renderPipelineAsset = null;
-            yield return null;
 
             switch (screenMode)
             {
@@ -241,22 +229,50 @@ namespace General
                     var fsRes = Screen.resolutions;
                     var highRes = fsRes[fsRes.Length - 1];
                     Screen.SetResolution(highRes.width, highRes.height, FullScreenMode.ExclusiveFullScreen);
-                    Screen.fullScreen = true;
                     break;
                 case ProgramEnums.ScreenMode.Windowed:
                     var res = GetHighestResolution(2);
                     if (res == null) break;
                     Screen.SetResolution(res.Value.width, res.Value.height, FullScreenMode.Windowed);
-                    Screen.fullScreen = false;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(screenMode), screenMode, null);
             }
 
-            GraphicsSettings.renderPipelineAsset = asset;
+            var hdRenderPipelineAsset = GetRpQualityAsset();
+
+            GraphicsSettings.renderPipelineAsset = null;
+            yield return null;
+            GraphicsSettings.renderPipelineAsset = hdRenderPipelineAsset;
+
+            yield return null;
             Instance.PostProcessingVolume.enabled = true;
             Instance.SceneVolume.enabled = true;
             RenderProbe();
+        }
+
+        private static HDRenderPipelineAsset GetRpQualityAsset()
+        {
+            HDRenderPipelineAsset hdRenderPipelineAsset;
+            switch (Instance.GraphicsQuality)
+            {
+                case ProgramEnums.GraphicsQuality.High:
+                    QualitySettings.SetQualityLevel(2);
+                    hdRenderPipelineAsset = Instance.HighQualityAsset;
+                    break;
+                case ProgramEnums.GraphicsQuality.Medium:
+                    QualitySettings.SetQualityLevel(1);
+                    hdRenderPipelineAsset = Instance.MediumQualityAsset;
+                    break;
+                case ProgramEnums.GraphicsQuality.Low:
+                    QualitySettings.SetQualityLevel(0);
+                    hdRenderPipelineAsset = Instance.LowQualityAsset;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return hdRenderPipelineAsset;
         }
 
         /// <summary>

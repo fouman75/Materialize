@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.50718784, g: 0.48171702, b: 0.4364872, a: 1}
+  m_IndirectSpecularColor: {r: 0.50718814, g: 0.4817171, b: 0.4364872, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -52,7 +52,7 @@ LightmapSettings:
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 1
+    m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
     serializedVersion: 12
@@ -1049,7 +1049,7 @@ MonoBehaviour:
     camera:
       camera: 0
   m_ProxyVolume: {fileID: 0}
-  m_BakedTexture: {fileID: 8900000, guid: a6c2986befaa796d9963a7d529bf4766, type: 3}
+  m_BakedTexture: {fileID: 8900000, guid: 6ac92190b330c1a9e80874e7faec7ae1, type: 3}
   m_CustomTexture: {fileID: 0}
   m_BakedRenderData:
     m_WorldToCameraRHS:
@@ -2925,7 +2925,10 @@ MonoBehaviour:
   m_Script: {fileID: 612403191}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Entries: []
+  m_Entries:
+  - id: 0
+    category: 0
+    gameObject: {fileID: 662260262}
 --- !u!4 &1521276572
 Transform:
   m_ObjectHideFlags: 19

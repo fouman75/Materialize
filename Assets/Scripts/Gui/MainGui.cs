@@ -310,7 +310,7 @@ namespace Gui
             ProgramManager.Instance.SceneObjects.Add(gameObject);
         }
 
-        private IEnumerator Start()
+        private void Start()
         {
             //Inclua uma textura cinza
             _greyTexture = TextureManager.Instance.GetStandardTexture(64, 64);
@@ -345,23 +345,6 @@ namespace Gui
             HideGuiLocker.LockEmpty += LoadHideState;
             _volumeProfile.TryGet(out HdriSky);
             HdriSky.hdriSky.value = CubeMaps[0];
-
-            HDRenderPipeline hdrp = null;
-            if (RenderPipelineManager.currentPipeline != null)
-                hdrp = RenderPipelineManager.currentPipeline as HDRenderPipeline;
-
-            while (hdrp == null)
-            {
-                if (RenderPipelineManager.currentPipeline != null)
-                    hdrp = RenderPipelineManager.currentPipeline as HDRenderPipeline;
-
-                yield return new WaitForSeconds(0.1f);
-            }
-
-            hdrp.RequestSkyEnvironmentUpdate();
-            Logger.Log("HDRI Sky Atualizado");
-
-            ProgramManager.RenderProbe();
         }
 
         #endregion

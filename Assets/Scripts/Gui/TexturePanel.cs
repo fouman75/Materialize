@@ -120,7 +120,7 @@ namespace Gui
             TextureManager.Instance.ClearTexture(MapType);
             TextureFrame.texture = null;
             MainGui.Instance.CloseWindows();
-            TextureManager.Instance.SetFullMaterial();
+            TextureManager.Instance.SetFullMaterialAndUpdate();
             TextureManager.Instance.FixSize();
         }
 

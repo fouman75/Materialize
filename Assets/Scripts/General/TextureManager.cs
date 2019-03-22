@@ -165,7 +165,7 @@ namespace General
             return null;
         }
 
-        public void SetFullMaterial()
+        public void SetFullMaterialAndUpdate()
         {
             MessagePanel.ShowMessage("Setting Material");
 
@@ -214,6 +214,12 @@ namespace General
             ProgramManager.Instance.MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
 
             MessagePanel.HideMessage();
+        }
+
+        public void SetFullMaterial()
+        {
+            ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = FullMaterialInstance;
+            ProgramManager.Instance.MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
         }
 
         public void CleanMaterial()
@@ -352,7 +358,7 @@ namespace General
             ClearTexture(ProgramEnums.MapType.MaskMap);
             ClearTexture(ProgramEnums.MapType.Ao);
 
-            SetFullMaterial();
+            SetFullMaterialAndUpdate();
         }
 
         public void ClearTexture(ProgramEnums.MapType mapType)
@@ -473,7 +479,7 @@ namespace General
 
             ProgramManager.Unlock();
 
-            SetFullMaterial();
+            SetFullMaterialAndUpdate();
         }
 
         public void FlipNormalYCallback()

@@ -2,8 +2,8 @@
 
 using System;
 using System.Collections;
-using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using Gui;
@@ -319,7 +319,7 @@ namespace General
             while (ProgramManager.IsLocked) yield return new WaitForSeconds(0.01f);
 
             yield return new WaitForSeconds(0.01f);
-            TextureManager.Instance.SetFullMaterial();
+            TextureManager.Instance.SetFullMaterialAndUpdate();
 
             ClearPanelQuickSave();
         }

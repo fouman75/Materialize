@@ -94,7 +94,7 @@ namespace Gui
             {
                 MainGui.Instance.CloseWindows();
                 TextureManager.Instance.FixSize();
-                TextureManager.Instance.SetFullMaterial();
+                TextureManager.Instance.SetFullMaterialAndUpdate();
                 Initialize();
                 gameObject.SetActive(true);
                 TestRotator.Reset();
