@@ -1836,7 +1836,6 @@ MonoBehaviour:
   SaveButton: {fileID: 3573352198816952946}
   TextureFrame: {fileID: 7106373826158246535}
   Title: {fileID: 8488669187998808996}
-  TopBorder: -5
   Width: 125
 --- !u!1 &8759541849923599324
 GameObject:

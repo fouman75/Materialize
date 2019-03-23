@@ -32,9 +32,7 @@ namespace Gui
 
         private RenderTexture _tempBlurMap;
         private Renderer _testMaterialRenderer;
-        private int _windowId;
-
-        private Rect _windowRect;
+        
         public ComputeShader BlurCompute;
 
         [HideInInspector] public RenderTexture HeightBlurMap;
@@ -89,10 +87,16 @@ namespace Gui
             yield break;
         }
 
+        protected override void ResetSettings()
+        {
+            _settings.Reset();
+        }
+
         private void Awake()
         {
             _testMaterialRenderer = TestObject.GetComponent<Renderer>();
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 535f);
+            WindowRect = new Rect(10.0f, 265.0f, 300f, 535f);
+            PostAwake();
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -134,7 +138,6 @@ namespace Gui
             yield return null;
             InitializeTextures();
 
-            _windowId = ProgramManager.Instance.GetWindowId;
             _kernelBlur = BlurCompute.FindKernel("CSBlur");
             _kernelNormal = NormalCompute.FindKernel("CSNormal");
         }
@@ -300,14 +303,16 @@ namespace Gui
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Contrast", _settings.FinalContrast,
                 out _settings.FinalContrast, 0.0f, 10.0f);
+            offsetY += 40;
 
-            GUI.DragWindow();
+            
+            DrawGuiExtras(offsetX, offsetY);
         }
 
         private void OnGUI()
         {
             if (Hide) return;
-            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Normal From Height");
+            MainGui.MakeScaledWindow(WindowRect, WindowId, DoMyWindow, "Normal From Height", GuiScale);
         }
 
         public void InitializeTextures()

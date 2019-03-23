@@ -7,105 +7,62 @@ using UnityEngine;
 
 namespace Settings
 {
-    public class HeightFromDiffuseSettings
+    public class HeightFromDiffuseSettings : TexturePanelSettings
     {
-        [DefaultValue(1.0f)] public float Blur0Contrast;
-
-        [DefaultValue(0.15f)] public float Blur0Weight;
-
-        [DefaultValue(1.0f)] public float Blur1Contrast;
-
-        [DefaultValue(0.19f)] public float Blur1Weight;
-
-        [DefaultValue(1.0f)] public float Blur2Contrast;
-
-        [DefaultValue(0.3f)] public float Blur2Weight;
-
-        [DefaultValue(1.0f)] public float Blur3Contrast;
-
-        [DefaultValue(0.5f)] public float Blur3Weight;
-
-        [DefaultValue(1.0f)] public float Blur4Contrast;
-
-        [DefaultValue(0.7f)] public float Blur4Weight;
-
-        [DefaultValue(1.0f)] public float Blur5Contrast;
-
-        [DefaultValue(0.9f)] public float Blur5Weight;
-
-        [DefaultValue(1.0f)] public float Blur6Contrast;
-
-        [DefaultValue(1.0f)] public float Blur6Weight;
-
-        [DefaultValue(0.0f)] public float FinalBias;
-
-        [DefaultValue(1.5f)] public float FinalContrast;
-
-        [DefaultValue(0.0f)] public float FinalGain;
-
-        [DefaultValue(1.0f)] public float HueWeight1;
-
-        [DefaultValue(1.0f)] public float HueWeight2;
-
-        [DefaultValue(false)] public bool IsolateSample1;
-
-        [DefaultValue(false)] public bool IsolateSample2;
-
-        [DefaultValue(0.2f)] public float LumWeight1;
-
-        [DefaultValue(0.2f)] public float LumWeight2;
-
-        [DefaultValue(1.0f)] public float MaskHigh1;
-
-        [DefaultValue(1.0f)] public float MaskHigh2;
-
-        [DefaultValue(0.0f)] public float MaskLow1;
-
-        [DefaultValue(0.0f)] public float MaskLow2;
-
-        [DefaultValue(0.5f)] public float Sample1Height;
-
-        [DefaultValue(0.5f)] public float Sample2Height;
-
-        [DefaultValue(0.5f)] public float SampleBlend;
-
-
-        //[DefaultValueAttribute(Color.black)]
+        public float Blur0Contrast;
+        public float Blur0Weight;
+        public float Blur1Contrast;
+        public float Blur1Weight;
+        public float Blur2Contrast;
+        public float Blur2Weight;
+        public float Blur3Contrast;
+        public float Blur3Weight;
+        public float Blur4Contrast;
+        public float Blur4Weight;
+        public float Blur5Contrast;
+        public float Blur5Weight;
+        public float Blur6Contrast;
+        public float Blur6Weight;
+        public float FinalBias;
+        public float FinalContrast;
+        public float FinalGain;
+        public float HueWeight1;
+        public float HueWeight2;
+        public bool IsolateSample1;
+        public bool IsolateSample2;
+        public float LumWeight1;
+        public float LumWeight2;
+        public float MaskHigh1;
+        public float MaskHigh2;
+        public float MaskLow1;
+        public float MaskLow2;
+        public float Sample1Height;
+        public float Sample2Height;
+        public float SampleBlend;
         public Color SampleColor1;
-
-        //[DefaultValueAttribute(Color.black)]
         public Color SampleColor2;
-
-        //[DefaultValueAttribute(Vector2.zero)]
         public Vector2 SampleUv1;
-
-        //[DefaultValueAttribute(Vector2.zero)]
         public Vector2 SampleUv2;
-
-        [DefaultValue(0.5f)] public float SatWeight1;
-
-        [DefaultValue(0.5f)] public float SatWeight2;
-
-        [DefaultValue(50.0f)] public float Spread;
-
-        [DefaultValue(1.0f)] public float SpreadBoost;
-
-        [DefaultValue(true)] public bool UseAdjustedDiffuse;
-
-        [DefaultValue(false)] public bool UseNormal;
-
-        [DefaultValue(false)] public bool UseOriginalDiffuse;
-
-        [DefaultValue(false)] public bool UseSample1;
-
-        [DefaultValue(false)] public bool UseSample2;
+        public float SatWeight1;
+        public float SatWeight2;
+        public float Spread;
+        public float SpreadBoost;
+        public bool UseAdjustedDiffuse;
+        public bool UseNormal;
+        public bool UseOriginalDiffuse;
+        public bool UseSample1;
+        public bool UseSample2;
 
         public HeightFromDiffuseSettings()
         {
             UseAdjustedDiffuse = true;
             UseOriginalDiffuse = false;
             UseNormal = false;
+            Reset();
+        }
 
+        public sealed override void Reset()
+        {
             Blur0Weight = 0.15f;
             Blur1Weight = 0.19f;
             Blur2Weight = 0.3f;

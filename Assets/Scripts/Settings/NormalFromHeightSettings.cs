@@ -6,41 +6,34 @@ using System.ComponentModel;
 
 namespace Settings
 {
-    public class NormalFromHeightSettings
+    public class NormalFromHeightSettings : TexturePanelSettings
     {
-        [DefaultValue(0.5f)] public float AngularIntensity;
+        public float AngularIntensity;
+        public float Angularity;
 
-        [DefaultValue(0.1f)] public float Angularity;
+        public float Blur0Contrast;
+        public float Blur0Weight;
+        public float Blur1Weight;
+        public float Blur2Weight;
+        public float Blur3Weight;
+        public float Blur4Weight;
+        public float Blur5Weight;
+        public float Blur6Weight;
 
-        [DefaultValue(20.0f)] public float Blur0Contrast;
-
-        [DefaultValue(0.3f)] public float Blur0Weight;
-
-        [DefaultValue(0.35f)] public float Blur1Weight;
-
-        [DefaultValue(0.5f)] public float Blur2Weight;
-
-        [DefaultValue(0.8f)] public float Blur3Weight;
-
-        [DefaultValue(1.0f)] public float Blur4Weight;
-
-        [DefaultValue(0.95f)] public float Blur5Weight;
-
-        [DefaultValue(0.8f)] public float Blur6Weight;
-
-        [DefaultValue(5.0f)] public float FinalContrast;
-
-        [DefaultValue(0.0f)] public float LightRotation;
-
-        [DefaultValue(0.5f)] public float ShapeBias;
-
-        [DefaultValue(0.1f)] public float ShapeRecognition;
-
-        [DefaultValue(50.0f)] public int SlopeBlur;
-
-        [DefaultValue(true)] public bool UseDiffuse;
+        public float FinalContrast;
+        public float LightRotation;
+        public float ShapeBias;
+        public float ShapeRecognition;
+        public int SlopeBlur;
+        public bool UseDiffuse;
 
         public NormalFromHeightSettings()
+        {
+            UseDiffuse = true;
+            Reset();
+        }
+
+        public sealed override void Reset()
         {
             Blur0Weight = 0.3f;
             Blur1Weight = 0.35f;
@@ -55,7 +48,6 @@ namespace Settings
 
             Angularity = 0.1f;
             AngularIntensity = 0.5f;
-            UseDiffuse = true;
 
             ShapeRecognition = 0.1f;
 

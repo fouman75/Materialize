@@ -1,6 +1,5 @@
 #region
 
-using System.ComponentModel;
 using UnityEngine;
 
 #endregion
@@ -9,93 +8,68 @@ using UnityEngine;
 
 namespace Settings
 {
-    public class SmoothnessSettings
+    public class SmoothnessSettings : TexturePanelSettings
     {
-        [DefaultValue(0.1f)] public float BaseSmoothness;
+        public float BaseSmoothness;
+        public float BlurOverlay;
+        public int BlurSize;
+        public float FinalBias;
+        public float FinalContrast;
 
-        [DefaultValue(3.0f)] public float BlurOverlay;
+        public float HueWeight1;
+        public float HueWeight2;
+        public float HueWeight3;
 
-        [DefaultValue(0)] public int BlurSize;
+        public bool IsolateSample1;
+        public bool IsolateSample2;
+        public bool IsolateSample3;
 
-        [DefaultValue(0.0f)] public float FinalBias;
+        public float LumWeight1;
+        public float LumWeight2;
+        public float LumWeight3;
 
-        [DefaultValue(1.0f)] public float FinalContrast;
+        public float MaskHigh1;
+        public float MaskHigh2;
+        public float MaskHigh3;
 
-        [DefaultValue(1.0f)] public float HueWeight1;
+        public float MaskLow1;
+        public float MaskLow2;
+        public float MaskLow3;
 
-        [DefaultValue(1.0f)] public float HueWeight2;
+        public float MetalSmoothness;
+        public int OverlayBlurSize;
 
-        [DefaultValue(1.0f)] public float HueWeight3;
+        public float Sample1Smoothness;
+        public float Sample2Smoothness;
+        public float Sample3Smoothness;
 
-        [DefaultValue(false)] public bool IsolateSample1;
-
-        [DefaultValue(false)] public bool IsolateSample2;
-
-        [DefaultValue(false)] public bool IsolateSample3;
-
-        [DefaultValue(0.2f)] public float LumWeight1;
-
-        [DefaultValue(0.2f)] public float LumWeight2;
-
-        [DefaultValue(0.2f)] public float LumWeight3;
-
-        [DefaultValue(1.0f)] public float MaskHigh1;
-
-        [DefaultValue(1.0f)] public float MaskHigh2;
-
-        [DefaultValue(1.0f)] public float MaskHigh3;
-
-        [DefaultValue(0.0f)] public float MaskLow1;
-
-        [DefaultValue(0.0f)] public float MaskLow2;
-
-        [DefaultValue(0.0f)] public float MaskLow3;
-
-        [DefaultValue(0.7f)] public float MetalSmoothness;
-
-        [DefaultValue(30)] public int OverlayBlurSize;
-
-        [DefaultValue(0.5f)] public float Sample1Smoothness;
-
-        [DefaultValue(0.3f)] public float Sample2Smoothness;
-
-        [DefaultValue(0.2f)] public float Sample3Smoothness;
-
-        //[DefaultValueAttribute(Color.black)]
         public Color SampleColor1;
-
-        //[DefaultValueAttribute(Color.black)]
         public Color SampleColor2;
-
-        //[DefaultValueAttribute(Color.black)]
         public Color SampleColor3;
 
-        //[DefaultValueAttribute(Vector2.zero)]
         public Vector2 SampleUv1;
-
-        //[DefaultValueAttribute(Vector2.zero)]
         public Vector2 SampleUv2;
-
-        //[DefaultValueAttribute(Vector2.zero)]
         public Vector2 SampleUv3;
 
-        [DefaultValue(0.5f)] public float SatWeight1;
+        public float SatWeight1;
+        public float SatWeight2;
+        public float SatWeight3;
 
-        [DefaultValue(0.5f)] public float SatWeight2;
+        public bool UseAdjustedDiffuse;
+        public bool UseOriginalDiffuse;
 
-        [DefaultValue(0.5f)] public float SatWeight3;
-
-        [DefaultValue(false)] public bool UseAdjustedDiffuse;
-
-        [DefaultValue(true)] public bool UseOriginalDiffuse;
-
-        [DefaultValue(false)] public bool UseSample1;
-
-        [DefaultValue(false)] public bool UseSample2;
-
-        [DefaultValue(false)] public bool UseSample3;
+        public bool UseSample1;
+        public bool UseSample2;
+        public bool UseSample3;
 
         public SmoothnessSettings()
+        {
+            UseAdjustedDiffuse = false;
+            UseOriginalDiffuse = true;
+            Reset();
+        }
+
+        public sealed override void Reset()
         {
             SampleColor1 = Color.black;
             SampleUv1 = Vector2.zero;
@@ -140,9 +114,6 @@ namespace Settings
             BlurOverlay = 3.0f;
             FinalContrast = 1.0f;
             FinalBias = 0.0f;
-
-            UseAdjustedDiffuse = false;
-            UseOriginalDiffuse = true;
         }
     }
 }

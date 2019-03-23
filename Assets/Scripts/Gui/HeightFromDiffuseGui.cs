@@ -49,9 +49,7 @@ namespace Gui
 
         private RenderTexture _tempBlurMap;
         private RenderTexture _tempHeightMap;
-        private int _windowId;
 
-        private Rect _windowRect;
         public ComputeShader BlurCompute;
         public ComputeShader HeightCompute;
         public ComputeShader SampleCompute;
@@ -132,9 +130,15 @@ namespace Gui
             yield break;
         }
 
+        protected override void ResetSettings()
+        {
+            _heightFromDiffuseSettings.Reset();
+        }
+
         private void Awake()
         {
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 520f);
+            WindowRect = new Rect(10.0f, 265.0f, 300f, 520f);
+            PostAwake();
         }
 
 
@@ -210,7 +214,6 @@ namespace Gui
             SetMaterialValues();
 
             _kernelBlur = BlurCompute.FindKernel("CSBlur");
-            _windowId = ProgramManager.Instance.GetWindowId;
         }
 
         private void FixUseMaps()
@@ -757,16 +760,17 @@ namespace Gui
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _heightFromDiffuseSettings.FinalBias,
                 out _heightFromDiffuseSettings.FinalBias, -1.0f, 1.0f);
-            GUI.enabled = true;
+            offsetY += 40;
 
-            GUI.DragWindow();
+
+            DrawGuiExtras(offsetX, offsetY);
         }
 
         private void OnGUI()
         {
             if (Hide) return;
 
-            var rect = _windowRect;
+            var rect = WindowRect;
             if (_heightFromDiffuseSettings.UseSample1 && !_heightFromDiffuseSettings.UseNormal)
                 rect.height += 110;
 
@@ -777,7 +781,7 @@ namespace Gui
                 !_heightFromDiffuseSettings.UseNormal) rect.height += 40;
 
 
-            MainGui.MakeScaledWindow(rect, _windowId, DoMyWindow, "Height From Diffuse");
+            MainGui.MakeScaledWindow(rect, WindowId, DoMyWindow, "Height From Diffuse", GuiScale);
         }
 
         public void InitializeTextures()

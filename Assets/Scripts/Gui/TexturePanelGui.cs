@@ -1,8 +1,8 @@
 #region
 
-using System;
 using System.Collections;
 using General;
+using Settings;
 using UnityEngine;
 
 #endregion
@@ -15,6 +15,10 @@ namespace Gui
         protected bool IsNewTexture;
         protected bool IsReadyToProcess;
         protected bool StuffToBeDone;
+        protected Rect WindowRect;
+        protected float GuiScale = 1.0f;
+        protected int WindowId;
+        protected TexturePanelSettings Settings;
 
         public GameObject TestObject;
 
@@ -44,9 +48,15 @@ namespace Gui
             gameObject.SetActive(false);
         }
 
-        protected virtual void CleanupTextures()
+        protected abstract void CleanupTextures();
+
+        protected void PostAwake()
         {
-            throw new NotImplementedException();
+            var windowRectSize = WindowRect.size;
+            windowRectSize.y += 40;
+            WindowRect.size = windowRectSize;
+            GuiScale -= 0.1f;
+            WindowId = ProgramManager.Instance.GetWindowId;
         }
 
         public IEnumerator StartProcessing()
@@ -64,16 +74,24 @@ namespace Gui
             ProgramManager.Unlock();
         }
 
-        protected virtual IEnumerator Process()
-        {
-            throw new NotImplementedException();
-        }
+        protected abstract IEnumerator Process();
 
         protected void OnDisable()
         {
             CleanupTextures();
             IsReadyToProcess = false;
         }
+
+        protected void DrawGuiExtras(int offsetX, int offsetY)
+        {
+            offsetY += 10;
+            if (GUI.Button(new Rect(offsetX + 10, offsetY, 260, 25), "Reset to Defaults"))
+            {
+                ResetSettings();
+            }
+        }
+
+        protected abstract void ResetSettings();
 
         #region TextureIDs
 

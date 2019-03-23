@@ -43,9 +43,7 @@ namespace Gui
         private Texture2D _smoothnessMap;
 
         private RenderTexture _tempMap;
-        private int _windowId;
 
-        private Rect _windowRect;
         public ComputeShader BlurCompute;
 
         public Texture2D DefaultMetallicMap;
@@ -124,10 +122,16 @@ namespace Gui
             yield break;
         }
 
+        protected override void ResetSettings()
+        {
+            _settings.Reset();
+        }
+
         private void Awake()
         {
             _camera = Camera.main;
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 450f);
+            WindowRect = new Rect(10.0f, 265.0f, 300f, 450f);
+            PostAwake();
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -188,7 +192,6 @@ namespace Gui
             TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
 
             InitializeSettings();
-            _windowId = ProgramManager.Instance.GetWindowId;
         }
 
         // Update is called once per frame
@@ -479,18 +482,20 @@ namespace Gui
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _settings.FinalBias,
                 out _settings.FinalBias, -0.5f, 0.5f);
+            offsetY += 40;
 
-            GUI.DragWindow();
+
+            DrawGuiExtras(offsetX, offsetY);
         }
 
         private void OnGUI()
         {
             if (Hide) return;
-            if (_settings.UseSample1) _windowRect.height += 110;
+            if (_settings.UseSample1) WindowRect.height += 110;
 
-            if (_settings.UseSample2) _windowRect.height += 110;
+            if (_settings.UseSample2) WindowRect.height += 110;
 
-            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Smoothness From Diffuse");
+            MainGui.MakeScaledWindow(WindowRect, WindowId, DoMyWindow, "Smoothness From Diffuse", GuiScale);
         }
 
         protected override void CleanupTextures()

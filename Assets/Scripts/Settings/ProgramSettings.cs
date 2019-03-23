@@ -19,7 +19,6 @@ namespace Settings
         public bool PostProcessEnabled;
         public PropChannelMap PropBlue;
         public PropChannelMap PropGreen;
-
         public PropChannelMap PropRed;
     }
 }

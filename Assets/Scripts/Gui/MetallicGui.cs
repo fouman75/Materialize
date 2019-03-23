@@ -32,9 +32,7 @@ namespace Gui
         private float _slider = 0.5f;
 
         private RenderTexture _tempMap;
-        private int _windowId;
 
-        private Rect _windowRect;
         public ComputeShader BlurCompute;
 
         public ComputeShader MetallicCompute;
@@ -82,9 +80,15 @@ namespace Gui
             yield break;
         }
 
+        protected override void ResetSettings()
+        {
+            _metallicSettings.Reset();
+        }
+
         private void Awake()
         {
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 460f);
+            WindowRect = new Rect(10.0f, 265.0f, 300f, 460f);
+            PostAwake();
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -133,7 +137,6 @@ namespace Gui
             TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
 
             InitializeSettings();
-            _windowId = ProgramManager.Instance.GetWindowId;
         }
 
         private void SelectColor()
@@ -286,14 +289,16 @@ namespace Gui
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _metallicSettings.FinalBias,
                 out _metallicSettings.FinalBias, -0.5f, 0.5f);
+            offsetY += 40;
 
-            GUI.DragWindow();
+
+            DrawGuiExtras(offsetX, offsetY);
         }
 
         private void OnGUI()
         {
             if (Hide) return;
-            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Metallic From Diffuse");
+            MainGui.MakeScaledWindow(WindowRect, WindowId, DoMyWindow, "Metallic From Diffuse", GuiScale);
         }
 
         protected override void CleanupTextures()

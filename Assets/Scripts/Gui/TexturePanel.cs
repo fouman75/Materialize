@@ -27,7 +27,6 @@ namespace Gui
 
         [Header("Gui Elements")] public RawImage TextureFrame;
         public TextMeshProUGUI Title;
-        public int TopBorder = -5;
         public int Width = 125;
 
         private void Awake()
@@ -42,11 +41,10 @@ namespace Gui
 
         private void Start()
         {
-            if (MapType == ProgramEnums.MapType.AnyDiffuse)
-            {
-                var text = CreateButton.GetComponentInChildren<TextMeshProUGUI>();
-                text.text = "Edit";
-            }
+            if (MapType != ProgramEnums.MapType.AnyDiffuse) return;
+            
+            var text = CreateButton.GetComponentInChildren<TextMeshProUGUI>();
+            text.text = "Edit";
         }
 
         private void Update()

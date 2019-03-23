@@ -6,20 +6,22 @@ using System.ComponentModel;
 
 namespace Settings
 {
-    public class AoSettings
+    public class AoSettings : TexturePanelSettings
     {
-        [DefaultValue(1.0f)] public float Blend;
-
-        [DefaultValue(100.0f)] public float Depth;
-
-        [DefaultValue(0.0f)] public float FinalBias;
-
-        [DefaultValue(1.0f)] public float FinalContrast;
+        public float Blend;
+        public float Depth;
+        public float FinalBias;
+        public float FinalContrast;
 
         [DefaultValue(5.0f)] public float Spread;
 
 
         public AoSettings()
+        {
+            Reset();
+        }
+
+        public sealed override void Reset()
         {
             Spread = 50.0f;
             Depth = 100.0f;

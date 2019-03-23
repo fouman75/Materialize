@@ -27,10 +27,6 @@ namespace Gui
         private float _slider = 0.5f;
 
         private RenderTexture _tempMap;
-        private int _windowId;
-
-        private Rect _windowRect;
-
 
         protected override IEnumerator Process()
         {
@@ -74,6 +70,11 @@ namespace Gui
             yield break;
         }
 
+        protected override void ResetSettings()
+        {
+            _eds.Reset();
+        }
+
         public void GetValues(ProjectObject projectObject)
         {
             InitializeSettings();
@@ -82,7 +83,9 @@ namespace Gui
 
         private void Awake()
         {
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+            WindowRect = new Rect(10.0f, 265.0f, 300f, 585f);
+            GuiScale -= 0.1f;
+            PostAwake();
         }
 
         public void SetValues(ProjectObject projectObject)
@@ -118,9 +121,6 @@ namespace Gui
             _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
 
             InitializeSettings();
-
-            _windowId = ProgramManager.Instance.GetWindowId;
-            Logger.Log($"Window ID de {name} : {_windowId}");
         }
 
         // Update is called once per frame
@@ -165,66 +165,66 @@ namespace Gui
         private void DoMyWindow(int windowId)
         {
             var offsetX = 10;
-            var offsetY = 15;
+            var offsetY = 20;
 
             GUI.enabled = true;
             GUI.Label(new Rect(offsetX, offsetY, 250, 30), "Diffuse Reveal Slider");
             _slider = GUI.HorizontalSlider(new Rect(offsetX, offsetY + 20, 280, 10), _slider, 0.0f, 1.0f);
-            offsetY += 37;
+            offsetY += 40;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Average Color Blur Size", _eds.AvgColorBlurSize,
                 out _eds.AvgColorBlurSize, 5, 100))
                 StuffToBeDone = true;
-            offsetY += 37;
+            offsetY += 40;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlay Blur Size", _eds.BlurSize,
                 out _eds.BlurSize, 5, 100)) StuffToBeDone = true;
-            offsetY += 37;
+            offsetY += 40;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlay Blur Contrast", _eds.BlurContrast,
                 out _eds.BlurContrast, -1.0f, 1.0f);
-            offsetY += 37;
+            offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Light Mask Power", _eds.LightMaskPow,
                 out _eds.LightMaskPow, 0.0f, 1.0f);
-            offsetY += 37;
+            offsetY += 40;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Remove Light", _eds.LightPow,
                 out _eds.LightPow, 0.0f, 1.0f);
-            offsetY += 37;
+            offsetY += 40;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Shadow Mask Power", _eds.DarkMaskPow,
                 out _eds.DarkMaskPow, 0.0f, 1.0f);
-            offsetY += 37;
+            offsetY += 40;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Remove Shadow", _eds.DarkPow,
                 out _eds.DarkPow, 0.0f, 1.0f);
-            offsetY += 37;
+            offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Hot Spot Removal", _eds.HotSpot,
                 out _eds.HotSpot, 0.0f, 1.0f);
-            offsetY += 37;
+            offsetY += 40;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Dark Spot Removal", _eds.DarkSpot,
                 out _eds.DarkSpot, 0.0f, 1.0f);
-            offsetY += 37;
+            offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Contrast", _eds.FinalContrast,
                 out _eds.FinalContrast, -2.0f, 2.0f);
-            offsetY += 37;
+            offsetY += 40;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Final Bias", _eds.FinalBias,
                 out _eds.FinalBias, -0.5f, 0.5f);
-            offsetY += 37;
+            offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Keep Original Color", _eds.ColorLerp,
                 out _eds.ColorLerp, 0.0f, 1.0f);
-            offsetY += 37;
+            offsetY += 40;
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Saturation", _eds.Saturation,
                 out _eds.Saturation, 0.0f, 1.0f);
+            offsetY += 40;
 
-            GUI.enabled = true;
-            GUI.DragWindow(new Rect(0, 0, 10000, 20));
+            DrawGuiExtras(offsetX, offsetY);
         }
 
         private void OnGUI()
         {
             if (Hide) return;
-            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Edit Diffuse");
+            MainGui.MakeScaledWindow(WindowRect, WindowId, DoMyWindow, "Edit Diffuse", GuiScale);
         }
 
         protected override void CleanupTextures()

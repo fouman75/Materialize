@@ -23,9 +23,6 @@ namespace Gui
         private bool _settingsInitialized;
         private float _slider = 0.5f;
         private Renderer _testObjectRenderer;
-        private int _windowId;
-
-        private Rect _windowRect;
 
         public ComputeShader AoCompute;
 
@@ -53,11 +50,17 @@ namespace Gui
             yield break;
         }
 
+        protected override void ResetSettings()
+        {
+            _aos.Reset();
+        }
+
         private void Awake()
         {
             _testObjectRenderer = TestObject.GetComponent<Renderer>();
             ThisMaterial = new Material(ThisMaterial.shader);
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 280f);
+            WindowRect = new Rect(10.0f, 265.0f, 300f, 280f);
+            PostAwake();
         }
 
         public void GetValues(ProjectObject projectObject)
@@ -85,14 +88,12 @@ namespace Gui
         {
             if (_settingsInitialized) return;
             _aos = new AoSettings {Blend = TextureManager.Instance && TextureManager.Instance.HeightMap ? 1.0f : 0.0f};
-
             _settingsInitialized = true;
         }
 
         private void Start()
         {
             MessagePanel.ShowMessage("Initializing AO GUI");
-            _windowId = ProgramManager.Instance.GetWindowId;
             InitializeSettings();
 
             _kernelAo = AoCompute.FindKernel("CSAo");
@@ -150,14 +151,15 @@ namespace Gui
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "AO Bias", _aos.FinalBias,
                 out _aos.FinalBias, -1.0f, 1.0f);
 
-            GUI.enabled = true;
-            GUI.DragWindow(new Rect(0, 0, 10000, 20));
+            offsetY += 40;
+
+            DrawGuiExtras(offsetX, offsetY);
         }
 
         private void OnGUI()
         {
             if (Hide) return;
-            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Normal + Depth to AO");
+            MainGui.MakeScaledWindow(WindowRect, WindowId, DoMyWindow, "Normal + Depth to AO", GuiScale);
         }
 
         public void InitializeTextures()

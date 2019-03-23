@@ -2428,7 +2428,7 @@ Camera:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 0
+  m_FOVAxisMode: 1
   m_SensorSize: {x: 70.41, y: 52.63}
   m_LensShift: {x: 0, y: 0}
   m_FocalLength: 50
@@ -2440,7 +2440,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 60.80707
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -4505,14 +4505,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ApplicationIsQuitting: 0
   DesiredFrameRate: 0
-  GuiScale: {x: 1, y: 1}
-  LastPath: 
-  MainLight: {fileID: 1585571158}
-  MessagePanelObject: {fileID: 1674964765}
-  HighQualityAsset: {fileID: 11400000, guid: 204ea025a14fc8290b039026772df368, type: 2}
-  MediumQualityAsset: {fileID: 11400000, guid: c70b1ea4295ec1e26a01d8a6c9086304, type: 2}
-  LowQualityAsset: {fileID: 11400000, guid: 179adb809604d5a67a969e8c3850c7be, type: 2}
   GraphicsQuality: 0
+  GuiScale: {x: 1, y: 1}
+  HighQualityAsset: {fileID: 11400000, guid: 204ea025a14fc8290b039026772df368, type: 2}
+  LastPath: 
+  LowQualityAsset: {fileID: 11400000, guid: 179adb809604d5a67a969e8c3850c7be, type: 2}
+  MainLight: {fileID: 1585571158}
+  MediumQualityAsset: {fileID: 11400000, guid: c70b1ea4295ec1e26a01d8a6c9086304, type: 2}
+  MessagePanelObject: {fileID: 1674964765}
   PostProcessingVolume: {fileID: 2072837669}
   SceneVolume: {fileID: 513423966}
   StartCubeMap: {fileID: 8900000, guid: d179a5cf97a39ec5c91cb199d742898a, type: 3}
@@ -4570,10 +4570,10 @@ MonoBehaviour:
   FullMaterial: {fileID: 2100000, guid: 85f53cbecf1be3b439a8c31604ce77af, type: 2}
   Hdr: 1
   MaskMapCompute: {fileID: 7200000, guid: 28a9b64b8836c39ada04b2b11ba2bfb8, type: 3}
-  TextureProcessingCompute: {fileID: 7200000, guid: 19932851aa20fcfccbba2150b4bc878d,
-    type: 3}
   RenderTextureFormat: 0
   TextureInClipboard: 0
+  TextureProcessingCompute: {fileID: 7200000, guid: 19932851aa20fcfccbba2150b4bc878d,
+    type: 3}
   HdHeightMap: {fileID: 0}
   HeightMap: {fileID: 0}
   DiffuseMap: {fileID: 0}

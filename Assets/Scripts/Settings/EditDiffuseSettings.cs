@@ -6,24 +6,29 @@ using System.ComponentModel;
 
 namespace Settings
 {
-    public class EditDiffuseSettings
+    public class EditDiffuseSettings : TexturePanelSettings
     {
-        [DefaultValue(50)] public int AvgColorBlurSize;
-        [DefaultValue(0.0f)] public float BlurContrast;
-        [DefaultValue(20)] public int BlurSize;
-        [DefaultValue(0.5f)] public float ColorLerp;
-        [DefaultValue(0.5f)] public float DarkMaskPow;
-        [DefaultValue(0.0f)] public float DarkPow;
-        [DefaultValue(0.0f)] public float DarkSpot;
-        [DefaultValue(0.0f)] public float FinalBias;
-        [DefaultValue(1.0f)] public float FinalContrast;
-        [DefaultValue(0.0f)] public float HotSpot;
-        [DefaultValue(0.5f)] public float LightMaskPow;
-        [DefaultValue(0f)] public float LightPow;
-        [DefaultValue(1.0f)] public float Saturation;
-
+        public int AvgColorBlurSize;
+        public float BlurContrast;
+        public int BlurSize;
+        public float ColorLerp;
+        public float DarkMaskPow;
+        public float DarkPow;
+        public float DarkSpot;
+        public float FinalBias;
+        public float FinalContrast;
+        public float HotSpot;
+        public float LightMaskPow;
+        public float LightPow;
+        public float Saturation;
 
         public EditDiffuseSettings()
+        {
+            Reset();
+        }
+
+
+        public sealed override void Reset()
         {
             AvgColorBlurSize = 50;
             BlurSize = 20;

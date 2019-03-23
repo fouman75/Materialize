@@ -4,7 +4,25 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.4HDRP-beta.6] - 2019-20-03
+## [v0.4HDRP-beta.7] - 2019-xx-xx
+### Added
+- Added Reset to Defaults
+
+### Changed
+
+#### Minor changes
+- Update to SRP 5.10.0
+- Minor UI Adjusts
+
+### Fixes
+
+
+### To Implement
+- Windows Copy / Paste
+- Linux Copy to clipboard
+
+
+## [v0.4HDRP-beta.6] - 2019-23-03
 ### Added
 - Added Support for Copy/Paste in nautilus 3.26.
 - Added Info Messages on screen.
