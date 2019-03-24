@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [v0.4HDRP-beta.7] - 2019-xx-xx
 ### Added
 - Added Reset to Defaults
+- Added Save / Load Settings Profiles
 
 ### Changed
 

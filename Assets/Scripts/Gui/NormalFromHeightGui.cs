@@ -90,6 +90,17 @@ namespace Gui
         protected override void ResetSettings()
         {
             _settings.Reset();
+            StuffToBeDone = true;
+        }
+
+        protected override TexturePanelSettings GetSettings()
+        {
+            return _settings;
+        }
+
+        protected override void SetSettings(TexturePanelSettings settings)
+        {
+            _settings = settings as NormalFromHeightSettings;
         }
 
         private void Awake()

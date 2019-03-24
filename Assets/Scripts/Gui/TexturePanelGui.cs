@@ -1,8 +1,14 @@
 #region
 
+using System;
 using System.Collections;
+using System.IO;
+using System.Xml.Serialization;
 using General;
+using Plugins.Extension;
 using Settings;
+using SFB = StandaloneFileBrowser.StandaloneFileBrowser;
+using StandaloneFileBrowser;
 using UnityEngine;
 
 #endregion
@@ -85,13 +91,80 @@ namespace Gui
         protected void DrawGuiExtras(int offsetX, int offsetY)
         {
             offsetY += 10;
-            if (GUI.Button(new Rect(offsetX + 10, offsetY, 260, 25), "Reset to Defaults"))
+            if (GUI.Button(new Rect(offsetX + 10, offsetY, 91, 25), "Defaults"))
             {
                 ResetSettings();
+            }
+
+            if (GUI.Button(new Rect(offsetX + 113, offsetY, 70, 25), "Save"))
+            {
+                SaveSettings();
+            }
+
+            if (GUI.Button(new Rect(offsetX + 195, offsetY, 70, 25), "Load"))
+            {
+                LoadSettings();
             }
         }
 
         protected abstract void ResetSettings();
+        protected abstract TexturePanelSettings GetSettings();
+        protected abstract void SetSettings(TexturePanelSettings settings);
+
+        private void SaveSettings()
+        {
+            Settings = GetSettings();
+            var typeName = Settings.GetType().Name;
+            var ext = $"{typeName[0]}{typeName[1]}{'s'}".ToLower();
+            var extFilter = new[] {new ExtensionFilter(typeName, ext)};
+            var defaultName = typeName + '.' + ext;
+            SFB.SaveFilePanelAsync("Save Profile", ProgramManager.Instance.LastPath, defaultName, extFilter,
+                SaveSettingsCallback);
+        }
+
+        private void SaveSettingsCallback(string path)
+        {
+            if (path.IsNullOrEmpty()) return;
+
+            var lastBar = path.LastIndexOf(ProgramManager.Instance.PathChar);
+            ProgramManager.Instance.LastPath = path.Substring(0, lastBar + 1);
+            var serializer = new XmlSerializer(Settings.GetType());
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                serializer.Serialize(stream, Settings);
+                stream.Close();
+            }
+        }
+
+        private void LoadSettings()
+        {
+            Settings = GetSettings();
+            var typeName = Settings.GetType().Name;
+            var ext = $"{typeName[0]}{typeName[1]}{'s'}".ToLower();
+            var extFilter = new[] {new ExtensionFilter(typeName, ext)};
+            SFB.OpenFilePanelAsync("Load Profile", ProgramManager.Instance.LastPath, extFilter, false,
+                LoadSettingsCallback);
+        }
+
+        private void LoadSettingsCallback(string[] pathArray)
+        {
+            var path = pathArray[0];
+            if (path.IsNullOrEmpty()) return;
+            if (!File.Exists(path)) return;
+
+            var lastBar = path.LastIndexOf(ProgramManager.Instance.PathChar);
+            ProgramManager.Instance.LastPath = path.Substring(0, lastBar + 1);
+            var serializer = new XmlSerializer(Settings.GetType());
+            object settings;
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                settings = serializer.Deserialize(stream);
+                stream.Close();
+            }
+
+            SetSettings(settings as TexturePanelSettings);
+            StuffToBeDone = true;
+        }
 
         #region TextureIDs
 

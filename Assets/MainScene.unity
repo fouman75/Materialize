@@ -3723,6 +3723,7 @@ MonoBehaviour:
   TilingTextureMakerGuiObject: {fileID: 892130044}
   HdriSky: {fileID: 0}
   FullScreenTextObject: {fileID: 340463084}
+  Skin: {fileID: 11400000, guid: 07444da88b83ad2daa549d451bd6ece8, type: 2}
 --- !u!4 &1866024255
 Transform:
   m_ObjectHideFlags: 0

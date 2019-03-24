@@ -73,6 +73,17 @@ namespace Gui
         protected override void ResetSettings()
         {
             _eds.Reset();
+            StuffToBeDone = true;
+        }
+
+        protected override TexturePanelSettings GetSettings()
+        {
+            return _eds;
+        }
+
+        protected override void SetSettings(TexturePanelSettings settings)
+        {
+            _eds = settings as EditDiffuseSettings;
         }
 
         public void GetValues(ProjectObject projectObject)

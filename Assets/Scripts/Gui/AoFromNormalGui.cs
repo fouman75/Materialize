@@ -53,7 +53,19 @@ namespace Gui
         protected override void ResetSettings()
         {
             _aos.Reset();
+            StuffToBeDone = true;
         }
+
+        protected override TexturePanelSettings GetSettings()
+        {
+            return _aos;
+        }
+
+        protected override void SetSettings(TexturePanelSettings settings)
+        {
+            _aos = settings as AoSettings;
+        }
+
 
         private void Awake()
         {

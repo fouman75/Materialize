@@ -83,6 +83,19 @@ namespace Gui
         protected override void ResetSettings()
         {
             _metallicSettings.Reset();
+            PostSetSettings();
+
+            StuffToBeDone = true;
+        }
+
+        protected override TexturePanelSettings GetSettings()
+        {
+            return _metallicSettings;
+        }
+
+        protected override void SetSettings(TexturePanelSettings settings)
+        {
+            _metallicSettings = settings as MetallicSettings;
         }
 
         private void Awake()
@@ -110,10 +123,15 @@ namespace Gui
                 InitializeSettings();
             }
 
-            _metalColorMap.SetPixel(1, 1, _metallicSettings.MetalColor);
-            _metalColorMap.Apply(false);
+            PostSetSettings();
 
             StuffToBeDone = true;
+        }
+
+        private void PostSetSettings()
+        {
+            _metalColorMap.SetPixel(1, 1, _metallicSettings.MetalColor);
+            _metalColorMap.Apply(false);
         }
 
         private void InitializeSettings()

@@ -125,6 +125,19 @@ namespace Gui
         protected override void ResetSettings()
         {
             _settings.Reset();
+            PostSetSettings();
+
+            StuffToBeDone = true;
+        }
+
+        protected override TexturePanelSettings GetSettings()
+        {
+            return _settings;
+        }
+
+        protected override void SetSettings(TexturePanelSettings settings)
+        {
+            _settings = settings as SmoothnessSettings;
         }
 
         private void Awake()
@@ -153,6 +166,13 @@ namespace Gui
                 InitializeSettings();
             }
 
+            PostSetSettings();
+
+            StuffToBeDone = true;
+        }
+
+        private void PostSetSettings()
+        {
             _sampleColorMap1.SetPixel(1, 1, _settings.SampleColor1);
             _sampleColorMap1.Apply(false);
 
@@ -161,8 +181,6 @@ namespace Gui
 
             _sampleColorMap3.SetPixel(1, 1, _settings.SampleColor3);
             _sampleColorMap3.Apply(false);
-
-            StuffToBeDone = true;
         }
 
         private void InitializeSettings()

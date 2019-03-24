@@ -133,6 +133,18 @@ namespace Gui
         protected override void ResetSettings()
         {
             _heightFromDiffuseSettings.Reset();
+            PostSetSettings();
+            StuffToBeDone = true;
+        }
+
+        protected override TexturePanelSettings GetSettings()
+        {
+            return _heightFromDiffuseSettings;
+        }
+
+        protected override void SetSettings(TexturePanelSettings settings)
+        {
+            _heightFromDiffuseSettings = settings as HeightFromDiffuseSettings;
         }
 
         private void Awake()
@@ -161,13 +173,18 @@ namespace Gui
                 InitializeSettings();
             }
 
+            PostSetSettings();
+
+            StuffToBeDone = true;
+        }
+
+        private void PostSetSettings()
+        {
             _sampleColorMap1.SetPixel(1, 1, _heightFromDiffuseSettings.SampleColor1);
             _sampleColorMap1.Apply(false);
 
             _sampleColorMap2.SetPixel(1, 1, _heightFromDiffuseSettings.SampleColor2);
             _sampleColorMap2.Apply(false);
-
-            StuffToBeDone = true;
         }
 
         private void InitializeSettings()
@@ -640,39 +657,39 @@ namespace Gui
                         _currentSelection = 1;
                     }
 
-                    GUI.DrawTexture(new Rect(offsetX + 10, offsetY + 35, 60, 60), _sampleColorMap1);
+                    GUI.DrawTexture(new Rect(offsetX + 25, offsetY + 35, 30, 30), _sampleColorMap1);
 
                     GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
-                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 35),
                         _heightFromDiffuseSettings.HueWeight1,
                         out _heightFromDiffuseSettings.HueWeight1, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 120, offsetY, 250, 30), "Sat");
-                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 125, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 125, offsetY + 30, 10, 35),
                         _heightFromDiffuseSettings.SatWeight1,
                         out _heightFromDiffuseSettings.SatWeight1, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 150, offsetY, 250, 30), "Lum");
-                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 35),
                         _heightFromDiffuseSettings.LumWeight1,
                         out _heightFromDiffuseSettings.LumWeight1, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 180, offsetY, 250, 30), "Low");
-                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 35),
                         _heightFromDiffuseSettings.MaskLow1,
                         out _heightFromDiffuseSettings.MaskLow1, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 210, offsetY, 250, 30), "High");
-                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 35),
                         _heightFromDiffuseSettings.MaskHigh1,
                         out _heightFromDiffuseSettings.MaskHigh1, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 240, offsetY, 250, 30), "Height");
-                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 255, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 255, offsetY + 30, 10, 35),
                         _heightFromDiffuseSettings.Sample1Height,
                         out _heightFromDiffuseSettings.Sample1Height, 1.0f, 0.0f, StuffToBeDone);
 
-                    offsetY += 110;
+                    offsetY += 70;
                 }
                 else
                 {
@@ -699,39 +716,39 @@ namespace Gui
                         _currentSelection = 2;
                     }
 
-                    GUI.DrawTexture(new Rect(offsetX + 10, offsetY + 35, 60, 60), _sampleColorMap2);
+                    GUI.DrawTexture(new Rect(offsetX + 25, offsetY + 35, 30, 30), _sampleColorMap2);
 
                     GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
-                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 35),
                         _heightFromDiffuseSettings.HueWeight2,
                         out _heightFromDiffuseSettings.HueWeight2, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 120, offsetY, 250, 30), "Sat");
-                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 125, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 125, offsetY + 30, 10, 35),
                         _heightFromDiffuseSettings.SatWeight2,
                         out _heightFromDiffuseSettings.SatWeight2, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 150, offsetY, 250, 30), "Lum");
-                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 35),
                         _heightFromDiffuseSettings.LumWeight2,
                         out _heightFromDiffuseSettings.LumWeight2, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 180, offsetY, 250, 30), "Low");
-                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 35),
                         _heightFromDiffuseSettings.MaskLow2,
                         out _heightFromDiffuseSettings.MaskLow2, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 210, offsetY, 250, 30), "High");
-                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 35),
                         _heightFromDiffuseSettings.MaskHigh2,
                         out _heightFromDiffuseSettings.MaskHigh2, 1.0f, 0.0f, StuffToBeDone);
 
                     GUI.Label(new Rect(offsetX + 240, offsetY, 250, 30), "Height");
-                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 255, offsetY + 30, 10, 70),
+                    StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 255, offsetY + 30, 10, 35),
                         _heightFromDiffuseSettings.Sample2Height,
                         out _heightFromDiffuseSettings.Sample2Height, 1.0f, 0.0f, StuffToBeDone);
 
-                    offsetY += 110;
+                    offsetY += 70;
                 }
                 else
                 {
@@ -771,17 +788,30 @@ namespace Gui
             if (Hide) return;
 
             var rect = WindowRect;
+            var guiScale = GuiScale;
             if (_heightFromDiffuseSettings.UseSample1 && !_heightFromDiffuseSettings.UseNormal)
-                rect.height += 110;
+            {
+                rect.height += 70;
+                guiScale -= 0.13f * guiScale;
+            }
 
             if (_heightFromDiffuseSettings.UseSample2 && !_heightFromDiffuseSettings.UseNormal)
-                rect.height += 110;
+            {
+                rect.height += 70;
+                guiScale -= 0.13f * guiScale;
+            }
+
+            if ((_heightFromDiffuseSettings.UseSample1 && _heightFromDiffuseSettings.UseSample2) &&
+                !_heightFromDiffuseSettings.UseNormal)
+            {
+                guiScale += 0.03f * guiScale;
+            }
 
             if ((_heightFromDiffuseSettings.UseSample1 || _heightFromDiffuseSettings.UseSample2) &&
                 !_heightFromDiffuseSettings.UseNormal) rect.height += 40;
 
 
-            MainGui.MakeScaledWindow(rect, WindowId, DoMyWindow, "Height From Diffuse", GuiScale);
+            MainGui.MakeScaledWindow(rect, WindowId, DoMyWindow, "Height From Diffuse", guiScale);
         }
 
         public void InitializeTextures()

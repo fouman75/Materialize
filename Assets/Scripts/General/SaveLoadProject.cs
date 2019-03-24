@@ -44,9 +44,12 @@ namespace General
             Logger.Log("Loading Project: " + pathToFile);
 
             var serializer = new XmlSerializer(typeof(ProjectObject));
-            var stream = new FileStream(pathToFile, FileMode.Open);
-            ThisProject = serializer.Deserialize(stream) as ProjectObject;
-            stream.Close();
+            using (var stream = new FileStream(pathToFile, FileMode.Open))
+            {
+                ThisProject = serializer.Deserialize(stream) as ProjectObject;
+                stream.Close();
+            }
+
             MainGui.Instance.HeightFromDiffuseGuiScript.SetValues(ThisProject);
             MainGui.Instance.EditDiffuseGuiScript.SetValues(ThisProject);
             MainGui.Instance.NormalFromHeightGuiScript.SetValues(ThisProject);
@@ -121,9 +124,11 @@ namespace General
             MainGui.Instance.MaterialGuiScript.GetValues(ThisProject);
 
             var serializer = new XmlSerializer(typeof(ProjectObject));
-            var stream = new FileStream(pathToFile + ".mtz", FileMode.Create);
-            serializer.Serialize(stream, ThisProject);
-            stream.Close();
+            using (var stream = new FileStream(pathToFile + ".mtz", FileMode.Create))
+            {
+                serializer.Serialize(stream, ThisProject);
+                stream.Close();
+            }
 
             SaveAllFiles(pathToFile);
         }

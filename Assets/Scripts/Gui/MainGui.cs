@@ -178,6 +178,7 @@ namespace Gui
         public static void MakeScaledWindow(Rect windowRect, int id, GUI.WindowFunction callback, string title,
             float scale = 1.0f)
         {
+            if (Instance.Skin) GUI.skin = Instance.Skin;
             var aspect = ProgramManager.Instance.GuiScale.x / ProgramManager.Instance.GuiScale.y;
             var posX = windowRect.x * ProgramManager.Instance.GuiScale.x;
             var posY = windowRect.y * ProgramManager.Instance.GuiScale.y;
@@ -196,6 +197,7 @@ namespace Gui
 
         private static Rect MakeScaledBox(Rect windowRect, string title, float scale = 1.0f)
         {
+            if (Instance.Skin) GUI.skin = Instance.Skin;
             var aspect = ProgramManager.Instance.GuiScale.x / ProgramManager.Instance.GuiScale.y;
             var posX = windowRect.x * ProgramManager.Instance.GuiScale.x;
             var posY = windowRect.y * ProgramManager.Instance.GuiScale.y;
@@ -299,6 +301,7 @@ namespace Gui
 
         // ReSharper disable once RedundantDefaultMemberInitializer
         [SerializeField] private TextMeshProUGUI FullScreenTextObject = null;
+        public GUISkin Skin;
 
         #endregion
 
