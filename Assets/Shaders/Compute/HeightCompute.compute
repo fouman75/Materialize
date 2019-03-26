@@ -1,5 +1,4 @@
-﻿#include "Assets/Shaders/Include/Color.hlsl"
-#include "Assets/Shaders/Include/Random.hlsl"
+﻿#include "Assets/Shaders/Include/Random.hlsl"
 
 #pragma kernel CSCombineHeight
 #pragma kernel CSHeightFromNormal

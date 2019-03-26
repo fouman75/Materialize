@@ -11,6 +11,7 @@ using Plugins.Extension;
 using Settings;
 using UnityEngine;
 using Graphics = UnityEngine.Graphics;
+
 #if UNITY_STANDALONE_WIN
 using System.Windows.Forms;
 using System.Drawing.Imaging;
@@ -342,7 +343,7 @@ namespace General
 
             var newTexture = TextureProcessing.GetTextureFromFile(pathToFile);
 
-            if (newTexture && newTexture.format != TextureManager.DefaultHdrTextureFormat)
+            if (newTexture && newTexture.format != TextureManager.Instance.DefaultTextureFormat)
                 newTexture = TextureProcessing.ConvertToStandard(newTexture);
 
             if (!newTexture)

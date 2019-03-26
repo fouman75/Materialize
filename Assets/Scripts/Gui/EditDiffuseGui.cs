@@ -13,7 +13,6 @@ namespace Gui
     public class EditDiffuseGui : TexturePanelGui
     {
         private RenderTexture _avgMap;
-        private Material _blitMaterial;
         private RenderTexture _blurMap;
 
         private Texture2D _diffuseMap;
@@ -27,41 +26,41 @@ namespace Gui
         private float _slider = 0.5f;
 
         private RenderTexture _tempMap;
+        public ComputeShader EditCompute;
 
         protected override IEnumerator Process()
         {
             Logger.Log("Processing Diffuse");
+            var kernel = EditCompute.FindKernel("CSEditDiffuse");
 
-            _blitMaterial.SetVector(ImageSizeId, new Vector4(ImageSize.x, ImageSize.y, 0, 0));
+            EditCompute.SetVector(ImageSizeId, new Vector2(ImageSize.x, ImageSize.y));
 
-            _blitMaterial.SetTexture(MainTex, _diffuseMapOriginal);
+            EditCompute.SetTexture(kernel, BlurTex, _blurMap);
+            EditCompute.SetFloat(BlurContrast, _eds.BlurContrast);
 
-            _blitMaterial.SetTexture(BlurTex, _blurMap);
-            _blitMaterial.SetFloat(BlurContrast, _eds.BlurContrast);
+            EditCompute.SetTexture(kernel, AvgTex, _avgMap);
 
-            _blitMaterial.SetTexture(AvgTex, _avgMap);
+            EditCompute.SetFloat(LightMaskPow, _eds.LightMaskPow);
+            EditCompute.SetFloat(LightPow, _eds.LightPow);
 
-            _blitMaterial.SetFloat(LightMaskPow, _eds.LightMaskPow);
-            _blitMaterial.SetFloat(LightPow, _eds.LightPow);
+            EditCompute.SetFloat(DarkMaskPow, _eds.DarkMaskPow);
+            EditCompute.SetFloat(DarkPow, _eds.DarkPow);
 
-            _blitMaterial.SetFloat(DarkMaskPow, _eds.DarkMaskPow);
-            _blitMaterial.SetFloat(DarkPow, _eds.DarkPow);
+            EditCompute.SetFloat(HotSpot, _eds.HotSpot);
+            EditCompute.SetFloat(DarkSpot, _eds.DarkSpot);
 
-            _blitMaterial.SetFloat(HotSpot, _eds.HotSpot);
-            _blitMaterial.SetFloat(DarkSpot, _eds.DarkSpot);
+            EditCompute.SetFloat(FinalContrast, _eds.FinalContrast);
 
-            _blitMaterial.SetFloat(FinalContrast, _eds.FinalContrast);
+            EditCompute.SetFloat(FinalBias, _eds.FinalBias);
 
-            _blitMaterial.SetFloat(FinalBias, _eds.FinalBias);
+            EditCompute.SetFloat(ColorLerp, _eds.ColorLerp);
 
-            _blitMaterial.SetFloat(ColorLerp, _eds.ColorLerp);
-
-            _blitMaterial.SetFloat(Saturation, _eds.Saturation);
+            EditCompute.SetFloat(Saturation, _eds.Saturation);
 
             RenderTexture.ReleaseTemporary(_tempMap);
             _tempMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y);
 
-            Graphics.Blit(_diffuseMapOriginal, _tempMap, _blitMaterial, 11);
+            RunKernel(EditCompute, kernel, _diffuseMapOriginal, _tempMap);
 
             TextureManager.Instance.GetTextureFromRender(_tempMap, ProgramEnums.MapType.Diffuse);
 
@@ -128,8 +127,6 @@ namespace Gui
         {
             _material = new Material(ThisMaterial);
             TestObject.GetComponent<Renderer>().material = _material;
-
-            _blitMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
 
             InitializeSettings();
         }
@@ -268,42 +265,31 @@ namespace Gui
         {
             while (!ProgramManager.Lock()) yield return null;
 
-            Logger.Log("Processing Blur");
+            MessagePanel.ShowMessage("Processing Blur for Diffuse");
 
             RenderTexture.ReleaseTemporary(_tempMap);
             _tempMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y);
 
-            _blitMaterial.SetVector(ImageSizeId, new Vector4(ImageSize.x, ImageSize.y, 0, 0));
-            _blitMaterial.SetFloat(BlurContrast, 1.0f);
-            _blitMaterial.SetFloat(BlurSpread, 1.0f);
+            EditCompute.SetVector(ImageSizeId, new Vector4(ImageSize.x, ImageSize.y, 0, 0));
+            EditCompute.SetFloat(BlurContrast, 1.0f);
+            EditCompute.SetFloat(BlurSpread, 1.0f);
 
-            // Blur the image 1
-            _blitMaterial.SetInt(BlurSamples, _eds.BlurSize);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            Graphics.Blit(_diffuseMapOriginal, _tempMap, _blitMaterial, 1);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            Graphics.Blit(_tempMap, _blurMap, _blitMaterial, 1);
-            _material.SetTexture(BlurTex, _blurMap);
+            EditCompute.SetInt(BlurSamples, _eds.BlurSize);
+            BlurImage(1.0f, _diffuseMapOriginal, _blurMap);
 
-
-            _blitMaterial.SetTexture(MainTex, _diffuseMapOriginal);
-            _blitMaterial.SetInt(BlurSamples, _eds.AvgColorBlurSize);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            Graphics.Blit(_diffuseMapOriginal, _tempMap, _blitMaterial, 1);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            Graphics.Blit(_tempMap, _avgMap, _blitMaterial, 1);
-
-            _blitMaterial.SetFloat(BlurSpread, _eds.AvgColorBlurSize / 5.0f);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            Graphics.Blit(_avgMap, _tempMap, _blitMaterial, 1);
-            _blitMaterial.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            Graphics.Blit(_tempMap, _avgMap, _blitMaterial, 1);
+            EditCompute.SetInt(BlurSamples, _eds.AvgColorBlurSize);
+            BlurImage(1.0f, _diffuseMapOriginal, _avgMap);
+            BlurImage(_eds.AvgColorBlurSize / 5.0f, _avgMap, _avgMap);
 
             _material.SetTexture(AvgTex, _avgMap);
 
             RenderTexture.ReleaseTemporary(_tempMap);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return null;
+
+            IsReadyToProcess = true;
+            
+            MessagePanel.HideMessage();
 
             ProgramManager.Unlock();
         }

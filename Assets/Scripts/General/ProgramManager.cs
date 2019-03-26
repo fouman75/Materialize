@@ -34,7 +34,7 @@ namespace General
         public Volume PostProcessingVolume;
         public HDRenderPipeline RenderPipeline;
         public Volume SceneVolume;
-
+        public Camera MainCamera;
         #region Settings
 
         public Cubemap StartCubeMap;

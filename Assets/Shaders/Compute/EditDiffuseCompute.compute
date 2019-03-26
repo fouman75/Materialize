@@ -1,0 +1,95 @@
+﻿#include "Assets/Shaders/Include/Color.hlsl"
+#pragma kernel CSEditDiffuse
+
+RWTexture2D<float4> Result;
+Texture2D<float4> ImageInput;
+Texture2D<float4> _BlurTex;
+Texture2D<float4> _AvgTex;
+SamplerState LinearRepeatSample;
+
+float2 _ImageSize;
+float _HotSpot;
+float _DarkSpot;
+float _LightMaskPow;
+float _LightPow;
+    
+float _DarkMaskPow;
+float _DarkPow;
+float _ColorLerp;
+float _BlurContrast;
+
+float _FinalContrast;
+float _FinalBias;
+float _Saturation;
+
+
+[numthreads(8,8,1)]
+void CSEditDiffuse (uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= uint(_ImageSize.x) || id.y >= uint(_ImageSize.y))
+        return;
+    float2 uv = id.xy / _ImageSize;
+
+    // Texturel lookups
+    half3 mainTex = ImageInput.SampleLevel(LinearRepeatSample, uv, 0).xyz;
+    half3 blurTex = _BlurTex.SampleLevel(LinearRepeatSample, uv, 0).xyz;
+    half3 avgColor = _AvgTex.SampleLevel(LinearRepeatSample, uv, 0).xyz;
+
+    // overlay
+    half3 overlay = mainTex - blurTex;
+
+    // save original copy
+    half3 maintexInitialHSL = RgbToHsl( mainTex.xyz );
+
+    // spot removal
+    //float maxLum = max( max( mainTex.x, mainTex.y ), mainTex.z );
+    float avgLum = mainTex.x * 0.3 + mainTex.y * 0.5 + mainTex.z * 0.2;
+    float lightMask = smoothstep( 1.0 - _HotSpot, ( 1.0 - _HotSpot ) + pow( _HotSpot, 0.5 ) + 0.01, avgLum );
+    float darkMask = smoothstep( _DarkSpot - pow( _DarkSpot, 0.5 ) - 0.01, _DarkSpot, avgLum ); // this mask is inverted
+    mainTex = lerp( mainTex, avgColor, 1.0 - ( 1.0 - lightMask ) * darkMask );
+
+    // Lighting removal
+    float lightMaskPow = saturate( ( _LightMaskPow - 0.5 ) * 2.0 ) + 1.0;
+    lightMaskPow -= 1.0 - ( 1.0 / ( saturate( ( _LightMaskPow - 0.5 ) * -2.0 ) + 1.0) );
+
+    float darkMaskPow = saturate( ( _DarkMaskPow - 0.5 ) * 2.0 ) + 1;
+    darkMaskPow -= 1.0 - ( 1.0 / ( saturate( ( _DarkMaskPow - 0.5 ) * -2.0 ) + 1.0) );
+
+    mainTex = ( mainTex - avgColor);
+    half mainTexGrey = mainTex.x * 0.3 + mainTex.y * 0.5 + mainTex.z * 0.2;
+    half3 mainTexHighMask = pow( clamp( mainTexGrey * 2.0, 0.001, 0.99 ), lightMaskPow );
+    half3 mainTexLowMask = pow( clamp( -mainTexGrey * 2.0, 0.001, 0.99 ), darkMaskPow );
+    mainTex += 0.5;
+
+    //mainTex = clamp( mainTex, 0.001, 0.99 );
+    //mainTex = lerp( mainTex, pow( mainTex, _LightPow * 5.0 + 1.0 ), mainTexHighMask );
+    //mainTex = lerp( mainTex, pow( mainTex, 1.0 / ( _DarkPow * 5.0 + 1.0 ) ), mainTexLowMask );
+
+    mainTex = lerp( mainTex, mainTex * ( 1.0 - _LightPow ) , mainTexHighMask );
+    mainTex = lerp( mainTex, 1.0 - ( 1.0 - mainTex ) * ( 1.0 - _DarkPow ), mainTexLowMask );
+
+    float3 desaturateMask = mainTexHighMask * _LightPow;
+    desaturateMask += mainTexLowMask * _DarkPow * 2.0;
+    desaturateMask += 1.0 - ( 1.0 - lightMask ) * darkMask;
+    desaturateMask = 1.0 - saturate( desaturateMask );
+
+    // apply overlay
+    float3 overlayMask = 1.0 - ( 1.0 - mainTexHighMask * _LightPow ) * ( 1.0 - mainTexLowMask * _DarkPow );
+    overlayMask = saturate( overlayMask * 2.0 + 0.1 );
+    mainTex *= lerp( 1.0, overlay * _BlurContrast * 10.0 + 1.0, overlayMask );
+    mainTex = saturate( mainTex );
+
+    // maintain color
+    half3 maintexHSL = RgbToHsl( saturate( mainTex.xyz ) );
+    maintexHSL.xy = maintexInitialHSL.xy;
+    float3 mainTexOriginalColor = HslToRgb( maintexHSL );
+    mainTex.xyz = lerp( mainTex.xyz, mainTexOriginalColor.xyz, _ColorLerp * desaturateMask );
+
+    // brightness and contrast
+    mainTex = saturate( ( mainTex - 0.5 ) * _FinalContrast + 0.5 + _FinalBias );
+
+    // Saturation
+    mainTex.xyz = lerp( mainTex.x * 0.3 + mainTex.y * 0.5 + mainTex.z * 0.2, mainTex.xyz, _Saturation );
+    
+    Result[id.xy] = float4( saturate( mainTex.xyz ), 1.0 );
+}

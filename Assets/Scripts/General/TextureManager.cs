@@ -13,8 +13,12 @@ namespace General
 {
     public class TextureManager : MonoBehaviour
     {
+        // ReSharper disable once MemberCanBePrivate.Global
         public const TextureFormat DefaultHdrTextureFormat = TextureFormat.RGBAHalf;
+
+        // ReSharper disable once MemberCanBePrivate.Global
         public const TextureFormat DefaultLdrTextureFormat = TextureFormat.RGBA32;
+        public TextureFormat DefaultTextureFormat;
         public static TextureManager Instance;
 
         private static readonly int DiffuseMapId = Shader.PropertyToID("_BaseColorMap");
@@ -55,6 +59,7 @@ namespace General
             _blackTexture.SetPixel(0, 0, Color.black);
 
             RenderTextureFormat = Hdr ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
+            DefaultTextureFormat = Hdr ? DefaultHdrTextureFormat : DefaultLdrTextureFormat;
         }
 
         private void Start()

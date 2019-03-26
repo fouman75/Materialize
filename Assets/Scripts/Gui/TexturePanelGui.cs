@@ -1,6 +1,5 @@
 #region
 
-using System;
 using System.Collections;
 using System.IO;
 using System.Xml.Serialization;
@@ -24,11 +23,14 @@ namespace Gui
         protected Rect WindowRect;
         protected float GuiScale = 1.0f;
         protected int WindowId;
-        protected TexturePanelSettings Settings;
+        private TexturePanelSettings _settings;
+        protected int KernelBlur;
+
 
         public GameObject TestObject;
 
         public Material ThisMaterial;
+        public ComputeShader BlurCompute;
 
         public bool Active
         {
@@ -63,6 +65,7 @@ namespace Gui
             WindowRect.size = windowRectSize;
             GuiScale -= 0.1f;
             WindowId = ProgramManager.Instance.GetWindowId;
+            KernelBlur = BlurCompute.FindKernel("CSBlur");
         }
 
         public IEnumerator StartProcessing()
@@ -113,8 +116,8 @@ namespace Gui
 
         private void SaveSettings()
         {
-            Settings = GetSettings();
-            var typeName = Settings.GetType().Name;
+            _settings = GetSettings();
+            var typeName = _settings.GetType().Name;
             var ext = $"{typeName[0]}{typeName[1]}{'s'}".ToLower();
             var extFilter = new[] {new ExtensionFilter(typeName, ext)};
             var defaultName = typeName + '.' + ext;
@@ -128,18 +131,18 @@ namespace Gui
 
             var lastBar = path.LastIndexOf(ProgramManager.Instance.PathChar);
             ProgramManager.Instance.LastPath = path.Substring(0, lastBar + 1);
-            var serializer = new XmlSerializer(Settings.GetType());
+            var serializer = new XmlSerializer(_settings.GetType());
             using (var stream = new FileStream(path, FileMode.Create))
             {
-                serializer.Serialize(stream, Settings);
+                serializer.Serialize(stream, _settings);
                 stream.Close();
             }
         }
 
         private void LoadSettings()
         {
-            Settings = GetSettings();
-            var typeName = Settings.GetType().Name;
+            _settings = GetSettings();
+            var typeName = _settings.GetType().Name;
             var ext = $"{typeName[0]}{typeName[1]}{'s'}".ToLower();
             var extFilter = new[] {new ExtensionFilter(typeName, ext)};
             SFB.OpenFilePanelAsync("Load Profile", ProgramManager.Instance.LastPath, extFilter, false,
@@ -154,7 +157,7 @@ namespace Gui
 
             var lastBar = path.LastIndexOf(ProgramManager.Instance.PathChar);
             ProgramManager.Instance.LastPath = path.Substring(0, lastBar + 1);
-            var serializer = new XmlSerializer(Settings.GetType());
+            var serializer = new XmlSerializer(_settings.GetType());
             object settings;
             using (var stream = new FileStream(path, FileMode.Open))
             {
@@ -164,6 +167,32 @@ namespace Gui
 
             SetSettings(settings as TexturePanelSettings);
             StuffToBeDone = true;
+        }
+
+        protected void RunKernel(ComputeShader computeShader, int kernel, Texture source, Texture destiny)
+        {
+            computeShader.SetTexture(kernel, "ImageInput", source);
+            computeShader.SetTexture(kernel, "Result", destiny);
+            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
+            computeShader.Dispatch(kernel, groupsX, groupsY, 1);
+        }
+
+        protected void BlurImage(float spread, Texture source, Texture dest)
+        {
+            var tempBlurMap = TextureManager.Instance.GetTempRenderTexture(source.width, source.height);
+            BlurCompute.SetFloat(BlurSpread, spread);
+            BlurCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
+            BlurCompute.SetTexture(KernelBlur, "ImageInput", source);
+            BlurCompute.SetTexture(KernelBlur, "Result", tempBlurMap);
+            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
+            BlurCompute.Dispatch(KernelBlur, groupsX, groupsY, 1);
+            BlurCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
+            BlurCompute.SetTexture(KernelBlur, "ImageInput", tempBlurMap);
+            BlurCompute.SetTexture(KernelBlur, "Result", dest);
+            BlurCompute.Dispatch(KernelBlur, groupsX, groupsY, 1);
+            RenderTexture.ReleaseTemporary(tempBlurMap);
         }
 
         #region TextureIDs

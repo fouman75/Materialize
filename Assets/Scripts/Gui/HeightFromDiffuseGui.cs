@@ -31,7 +31,6 @@ namespace Gui
         private int _currentSelection;
 
         private HeightFromDiffuseSettings _heightFromDiffuseSettings;
-        private int _kernelBlur;
 
         private float _lastBlur0Contrast = 1.0f;
 
@@ -50,7 +49,6 @@ namespace Gui
         private RenderTexture _tempBlurMap;
         private RenderTexture _tempHeightMap;
 
-        public ComputeShader BlurCompute;
         public ComputeShader HeightCompute;
         public ComputeShader SampleCompute;
 
@@ -229,8 +227,6 @@ namespace Gui
             _lastBlur0Contrast = _heightFromDiffuseSettings.Blur0Contrast;
 
             SetMaterialValues();
-
-            _kernelBlur = BlurCompute.FindKernel("CSBlur");
         }
 
         private void FixUseMaps()
@@ -362,22 +358,28 @@ namespace Gui
             {
                 _mouseButtonDown = true;
                 if (!_camera) return;
+                const int mask = 1 << 11;
+                var wasHit = Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out var hit,
+                    Mathf.Infinity, mask, QueryTriggerInteraction.UseGlobal);
 
-                if (!Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out var hit))
-                    return;
+                if (!wasHit) return;
 
                 var rend = hit.transform.GetComponent<Renderer>();
-                var meshCollider = hit.collider as MeshCollider;
-                if (!rend || !rend.sharedMaterial || !rend.sharedMaterial.mainTexture ||
-                    !meshCollider)
+                var hasMeshCollider = hit.collider is MeshCollider;
+                if (!rend || !rend.sharedMaterial || !rend.sharedMaterial.mainTexture || !hasMeshCollider)
                     return;
 
                 var pixelUv = hit.textureCoord;
 
                 var useAdjusted = _heightFromDiffuseSettings.UseAdjustedDiffuse;
-                var sampledColor = useAdjusted
-                    ? TextureManager.Instance.DiffuseMap.GetPixelBilinear(pixelUv.x, pixelUv.y)
-                    : TextureManager.Instance.DiffuseMapOriginal.GetPixelBilinear(pixelUv.x, pixelUv.y);
+                var tex = useAdjusted
+                    ? TextureManager.Instance.DiffuseMap
+                    : TextureManager.Instance.DiffuseMapOriginal;
+//                var pos = new Vector2Int(Mathf.RoundToInt(pixelUv.x * tex.width),
+//                    Mathf.RoundToInt(pixelUv.y * tex.height));
+//                var pixels = tex.GetPixels32();
+//                var sampledColor = pixels[pos.y * tex.height + pos.x];
+                var sampledColor = tex.GetPixelBilinear(pixelUv.x, pixelUv.y);
 
                 switch (_currentSelection)
                 {
@@ -958,11 +960,7 @@ namespace Gui
                 ? TextureManager.Instance.DiffuseMapOriginal
                 : TextureManager.Instance.DiffuseMap;
 
-            SampleCompute.SetTexture(kernelSample, "ImageInput", source);
-            SampleCompute.SetTexture(kernelSample, "Result", _blurMap0);
-            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
-            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
-            SampleCompute.Dispatch(kernelSample, groupsX, groupsY, 1);
+            RunKernel(SampleCompute, kernelSample, source, _blurMap0);
 
             BlurCompute.SetVector(ImageSizeId, new Vector2(ImageSize.x, ImageSize.y));
 //            BlurCompute.SetInt("_Desaturate", 1);
@@ -1005,14 +1003,17 @@ namespace Gui
             BlurCompute.SetInt(BlurSamples, 32);
             BlurCompute.SetFloat(BlurSpread, 64.0f * extraSpread);
             BlurCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            BlurCompute.SetTexture(_kernelBlur, "ImageInput", _blurMap6);
-            BlurCompute.SetTexture(_kernelBlur, "Result", _avgTempMap);
+            BlurCompute.SetTexture(KernelBlur, "ImageInput", _blurMap6);
+            BlurCompute.SetTexture(KernelBlur, "Result", _avgTempMap);
 
-            BlurCompute.Dispatch(_kernelBlur, groupsX, groupsY, 1);
+            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
+
+            BlurCompute.Dispatch(KernelBlur, groupsX, groupsY, 1);
             BlurCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            BlurCompute.SetTexture(_kernelBlur, "ImageInput", _avgTempMap);
-            BlurCompute.SetTexture(_kernelBlur, "Result", _avgMap);
-            BlurCompute.Dispatch(_kernelBlur, groupsX, groupsY, 1);
+            BlurCompute.SetTexture(KernelBlur, "ImageInput", _avgTempMap);
+            BlurCompute.SetTexture(KernelBlur, "Result", _avgMap);
+            BlurCompute.Dispatch(KernelBlur, groupsX, groupsY, 1);
 
             ThisMaterial.SetTexture(MainTex,
                 _heightFromDiffuseSettings.UseOriginalDiffuse
@@ -1029,28 +1030,12 @@ namespace Gui
             ThisMaterial.SetTexture(AvgTex, _avgMap);
 
             yield return null;
-            yield return null;
 
             IsReadyToProcess = true;
 
             MessagePanel.HideMessage();
 
             ProgramManager.Unlock();
-        }
-
-        private void BlurImage(float spread, Texture source, Texture dest)
-        {
-            BlurCompute.SetFloat(BlurSpread, spread);
-            BlurCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            BlurCompute.SetTexture(_kernelBlur, "ImageInput", source);
-            BlurCompute.SetTexture(_kernelBlur, "Result", _tempBlurMap);
-            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
-            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
-            BlurCompute.Dispatch(_kernelBlur, groupsX, groupsY, 1);
-            BlurCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            BlurCompute.SetTexture(_kernelBlur, "ImageInput", _tempBlurMap);
-            BlurCompute.SetTexture(_kernelBlur, "Result", dest);
-            BlurCompute.Dispatch(_kernelBlur, groupsX, groupsY, 1);
         }
     }
 }

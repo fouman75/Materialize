@@ -32,8 +32,6 @@ namespace Gui
 
         private RenderTexture _tempBlurMap;
         private Renderer _testMaterialRenderer;
-        
-        public ComputeShader BlurCompute;
 
         [HideInInspector] public RenderTexture HeightBlurMap;
 
@@ -316,7 +314,7 @@ namespace Gui
                 out _settings.FinalContrast, 0.0f, 10.0f);
             offsetY += 40;
 
-            
+
             DrawGuiExtras(offsetX, offsetY);
         }
 
@@ -503,22 +501,6 @@ namespace Gui
             MessagePanel.HideMessage();
 
             ProgramManager.Unlock();
-        }
-
-        private void BlurImage(float spread, Texture source, Texture dest)
-        {
-            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
-            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
-
-            BlurCompute.SetFloat(BlurSpread, spread);
-            BlurCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            BlurCompute.SetTexture(_kernelBlur, "ImageInput", source);
-            BlurCompute.SetTexture(_kernelBlur, "Result", _tempBlurMap);
-            BlurCompute.Dispatch(_kernelBlur, groupsX, groupsY, 1);
-            BlurCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            BlurCompute.SetTexture(_kernelBlur, "ImageInput", _tempBlurMap);
-            BlurCompute.SetTexture(_kernelBlur, "Result", dest);
-            BlurCompute.Dispatch(_kernelBlur, groupsX, groupsY, 1);
         }
     }
 }

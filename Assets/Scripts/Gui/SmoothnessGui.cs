@@ -44,9 +44,6 @@ namespace Gui
 
         private RenderTexture _tempMap;
 
-        public ComputeShader BlurCompute;
-
-        public Texture2D DefaultMetallicMap;
         public ComputeShader SmoothnessCompute;
 
         protected override IEnumerator Process()
@@ -58,7 +55,7 @@ namespace Gui
             SmoothnessCompute.SetVector(ImageSizeId, new Vector2(ImageSize.x, ImageSize.y));
 
             SmoothnessCompute.SetTexture(smoothnessKernel, "_MetallicTex",
-                _metallicMap != null ? _metallicMap : DefaultMetallicMap);
+                _metallicMap != null ? _metallicMap : Texture2D.blackTexture);
 
             SmoothnessCompute.SetTexture(smoothnessKernel, "_BlurTex", _blurMap);
 
@@ -533,7 +530,7 @@ namespace Gui
             _diffuseMapOriginal = TextureManager.Instance.DiffuseMapOriginal;
 
             _metallicMap = TextureManager.Instance.MetallicMap;
-            ThisMaterial.SetTexture(MetallicTex, _metallicMap != null ? _metallicMap : DefaultMetallicMap);
+            ThisMaterial.SetTexture(MetallicTex, _metallicMap ? _metallicMap : Texture2D.blackTexture);
 
             if (_diffuseMap)
             {
@@ -602,19 +599,11 @@ namespace Gui
             }
 
             ThisMaterial.SetTexture("_BlurTex", _blurMap);
-
-            // Blur the image for overlay
-            BlurCompute.SetInt("_BlurSamples", _settings.OverlayBlurSize);
-            BlurCompute.SetVector("_BlurDirection", new Vector4(1, 0, 0, 0));
             var source = _settings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
-            BlurCompute.SetTexture(blurKernel, "ImageInput", source);
-            BlurCompute.SetTexture(blurKernel, "Result", _tempMap);
-            BlurCompute.Dispatch(blurKernel, groupsX, groupsY, 1);
 
-            BlurCompute.SetVector("_BlurDirection", new Vector4(0, 1, 0, 0));
-            BlurCompute.SetTexture(blurKernel, "ImageInput", _tempMap);
-            BlurCompute.SetTexture(blurKernel, "Result", _overlayBlurMap);
-            BlurCompute.Dispatch(blurKernel, groupsX, groupsY, 1);
+            BlurCompute.SetInt("_BlurSamples", _settings.OverlayBlurSize);
+            BlurImage(1.0f, source, _overlayBlurMap);
+
             ThisMaterial.SetTexture(OverlayBlurTex, _overlayBlurMap);
 
             yield return null;

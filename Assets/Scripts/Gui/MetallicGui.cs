@@ -33,8 +33,6 @@ namespace Gui
 
         private RenderTexture _tempMap;
 
-        public ComputeShader BlurCompute;
-
         public ComputeShader MetallicCompute;
 
         protected override IEnumerator Process()
