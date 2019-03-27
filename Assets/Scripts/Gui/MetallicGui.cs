@@ -416,12 +416,11 @@ namespace Gui
             BlurCompute.Dispatch(blurKernel, groupsX, groupsY, 1);
             ThisMaterial.SetTexture(OverlayBlurTex, _overlayBlurMap);
 
-            yield return null;
-            yield return null;
-
             IsReadyToProcess = true;
 
             MessagePanel.HideMessage();
+
+            yield return new WaitForSeconds(0.1f);
 
             ProgramManager.Unlock();
         }

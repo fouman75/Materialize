@@ -42,7 +42,7 @@ namespace Gui
         private void Start()
         {
             if (MapType != ProgramEnums.MapType.AnyDiffuse) return;
-            
+
             var text = CreateButton.GetComponentInChildren<TextMeshProUGUI>();
             text.text = "Edit";
         }

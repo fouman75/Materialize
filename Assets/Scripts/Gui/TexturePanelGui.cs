@@ -6,9 +6,9 @@ using System.Xml.Serialization;
 using General;
 using Plugins.Extension;
 using Settings;
-using SFB = StandaloneFileBrowser.StandaloneFileBrowser;
 using StandaloneFileBrowser;
 using UnityEngine;
+using SFB = StandaloneFileBrowser.StandaloneFileBrowser;
 
 #endregion
 
@@ -16,21 +16,21 @@ namespace Gui
 {
     public abstract class TexturePanelGui : MonoBehaviour, IHideable
     {
+        private TexturePanelSettings _settings;
+        public ComputeShader BlurCompute;
+        protected float GuiScale = 1.0f;
         protected Vector2Int ImageSize = new Vector2Int(1024, 1024);
         protected bool IsNewTexture;
         protected bool IsReadyToProcess;
-        protected bool StuffToBeDone;
-        protected Rect WindowRect;
-        protected float GuiScale = 1.0f;
-        protected int WindowId;
-        private TexturePanelSettings _settings;
         protected int KernelBlur;
+        protected bool StuffToBeDone;
 
 
         public GameObject TestObject;
 
         public Material ThisMaterial;
-        public ComputeShader BlurCompute;
+        protected int WindowId;
+        protected Rect WindowRect;
 
         public bool Active
         {
@@ -94,20 +94,11 @@ namespace Gui
         protected void DrawGuiExtras(int offsetX, int offsetY)
         {
             offsetY += 10;
-            if (GUI.Button(new Rect(offsetX + 10, offsetY, 91, 25), "Defaults"))
-            {
-                ResetSettings();
-            }
+            if (GUI.Button(new Rect(offsetX + 10, offsetY, 91, 25), "Defaults")) ResetSettings();
 
-            if (GUI.Button(new Rect(offsetX + 113, offsetY, 70, 25), "Save"))
-            {
-                SaveSettings();
-            }
+            if (GUI.Button(new Rect(offsetX + 113, offsetY, 70, 25), "Save")) SaveSettings();
 
-            if (GUI.Button(new Rect(offsetX + 195, offsetY, 70, 25), "Load"))
-            {
-                LoadSettings();
-            }
+            if (GUI.Button(new Rect(offsetX + 195, offsetY, 70, 25), "Load")) LoadSettings();
         }
 
         protected abstract void ResetSettings();

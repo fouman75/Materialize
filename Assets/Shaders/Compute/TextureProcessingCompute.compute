@@ -1,4 +1,6 @@
-﻿#pragma kernel CSPackNormal
+﻿#include "Assets/Shaders/Include/Color.hlsl"
+
+#pragma kernel CSPackNormal
 #pragma kernel ConvertToGama
 
 RWTexture2D<float4> Result;
@@ -25,11 +27,9 @@ void ConvertToGama (uint3 id : SV_DispatchThreadID)
 {
     if (id.x >= uint(_ImageSize.x) || id.y >= uint(_ImageSize.y))
         return;
-        
+
     float2 uv = id.xy / _ImageSize;
     float4 col = Input.SampleLevel(LinearRepeatSample, uv, 0);
-    
-    col = pow(abs(col), 0.4545);
 
-    Result[id.xy] = col;
+    Result[id.xy] = LinearToSRGB(col);
 }

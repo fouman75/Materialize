@@ -803,11 +803,9 @@ namespace Gui
                 guiScale -= 0.13f * guiScale;
             }
 
-            if ((_heightFromDiffuseSettings.UseSample1 && _heightFromDiffuseSettings.UseSample2) &&
+            if (_heightFromDiffuseSettings.UseSample1 && _heightFromDiffuseSettings.UseSample2 &&
                 !_heightFromDiffuseSettings.UseNormal)
-            {
                 guiScale += 0.03f * guiScale;
-            }
 
             if ((_heightFromDiffuseSettings.UseSample1 || _heightFromDiffuseSettings.UseSample2) &&
                 !_heightFromDiffuseSettings.UseNormal) rect.height += 40;
@@ -1029,11 +1027,11 @@ namespace Gui
             ThisMaterial.SetTexture(BlurTex6, _blurMap6);
             ThisMaterial.SetTexture(AvgTex, _avgMap);
 
-            yield return null;
-
             IsReadyToProcess = true;
 
             MessagePanel.HideMessage();
+
+            yield return new WaitForSeconds(0.1f);
 
             ProgramManager.Unlock();
         }

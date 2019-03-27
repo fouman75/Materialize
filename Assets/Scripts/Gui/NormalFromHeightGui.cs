@@ -493,12 +493,11 @@ namespace Gui
             _previewMaterial.SetTexture(BlurTex5, _blurMap5);
             _previewMaterial.SetTexture(BlurTex6, _blurMap6);
 
-            yield return null;
-            yield return null;
-
             IsReadyToProcess = true;
 
             MessagePanel.HideMessage();
+
+            yield return new WaitForSeconds(0.1f);
 
             ProgramManager.Unlock();
         }

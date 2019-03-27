@@ -18,6 +18,25 @@ namespace Gui
         private static readonly int HeightTex = Shader.PropertyToID("_HeightTex");
         private static readonly int ObjectScale = Shader.PropertyToID("_ObjectScale");
         private static readonly int FlipY = Shader.PropertyToID("_FlipY");
+        private static readonly int SplatScale = Shader.PropertyToID("_SplatScale");
+        private static readonly int AspectRatio = Shader.PropertyToID("_AspectRatio");
+        private static readonly int TargetAspectRatio = Shader.PropertyToID("_TargetAspectRatio");
+        private static readonly int SplatRotation = Shader.PropertyToID("_SplatRotation");
+        private static readonly int SplatRotationRandom = Shader.PropertyToID("_SplatRotationRandom");
+        private static readonly int SplatKernel = Shader.PropertyToID("_SplatKernel");
+        private static readonly int Wobble = Shader.PropertyToID("_Wobble");
+        private static readonly int SplatRandomize = Shader.PropertyToID("_SplatRandomize");
+        private static readonly int TargetTex = Shader.PropertyToID("_TargetTex");
+        private static readonly int Falloff = Shader.PropertyToID("_Falloff");
+        private static readonly int OverlapX = Shader.PropertyToID("_OverlapX");
+        private static readonly int OverlapY = Shader.PropertyToID("_OverlapY");
+        private static readonly int IsHeight = Shader.PropertyToID("_IsHeight");
+        private static readonly int DiffuseMap = Shader.PropertyToID("_BaseColorMap");
+        private static readonly int MetallicMap = Shader.PropertyToID("_MetallicMap");
+        private static readonly int SmoothnessMap = Shader.PropertyToID("_SmoothnessMap");
+        private static readonly int IsNormal = Shader.PropertyToID("_IsNormal");
+        private static readonly int NormalMap = Shader.PropertyToID("_NormalMap");
+        private static readonly int AoMap = Shader.PropertyToID("_AOMap");
         private RenderTexture _aoMapTemp;
 
         private Material _blitMaterial;
@@ -85,25 +104,6 @@ namespace Gui
         private Rect _windowRect;
 
         public GameObject TestObject;
-        private static readonly int SplatScale = Shader.PropertyToID("_SplatScale");
-        private static readonly int AspectRatio = Shader.PropertyToID("_AspectRatio");
-        private static readonly int TargetAspectRatio = Shader.PropertyToID("_TargetAspectRatio");
-        private static readonly int SplatRotation = Shader.PropertyToID("_SplatRotation");
-        private static readonly int SplatRotationRandom = Shader.PropertyToID("_SplatRotationRandom");
-        private static readonly int SplatKernel = Shader.PropertyToID("_SplatKernel");
-        private static readonly int Wobble = Shader.PropertyToID("_Wobble");
-        private static readonly int SplatRandomize = Shader.PropertyToID("_SplatRandomize");
-        private static readonly int TargetTex = Shader.PropertyToID("_TargetTex");
-        private static readonly int Falloff = Shader.PropertyToID("_Falloff");
-        private static readonly int OverlapX = Shader.PropertyToID("_OverlapX");
-        private static readonly int OverlapY = Shader.PropertyToID("_OverlapY");
-        private static readonly int IsHeight = Shader.PropertyToID("_IsHeight");
-        private static readonly int DiffuseMap = Shader.PropertyToID("_BaseColorMap");
-        private static readonly int MetallicMap = Shader.PropertyToID("_MetallicMap");
-        private static readonly int SmoothnessMap = Shader.PropertyToID("_SmoothnessMap");
-        private static readonly int IsNormal = Shader.PropertyToID("_IsNormal");
-        private static readonly int NormalMap = Shader.PropertyToID("_NormalMap");
-        private static readonly int AoMap = Shader.PropertyToID("_AOMap");
 
         public bool Hide { get; set; }
 

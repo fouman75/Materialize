@@ -9,8 +9,6 @@ using Logger = General.Logger;
 
 #endregion
 
-// ReSharper disable Unity.PreferAddressByIdToGraphicsParams
-
 namespace Gui
 {
     public class SmoothnessGui : TexturePanelGui
@@ -51,56 +49,55 @@ namespace Gui
             MessagePanel.ShowMessage("Processing Smoothness Map");
 
             var smoothnessKernel = SmoothnessCompute.FindKernel("CSSmoothness");
-
             SmoothnessCompute.SetVector(ImageSizeId, new Vector2(ImageSize.x, ImageSize.y));
 
-            SmoothnessCompute.SetTexture(smoothnessKernel, "_MetallicTex",
+            SmoothnessCompute.SetTexture(smoothnessKernel, MetallicTex,
                 _metallicMap != null ? _metallicMap : Texture2D.blackTexture);
 
-            SmoothnessCompute.SetTexture(smoothnessKernel, "_BlurTex", _blurMap);
+            SmoothnessCompute.SetTexture(smoothnessKernel, BlurTex, _blurMap);
 
-            SmoothnessCompute.SetTexture(smoothnessKernel, "_OverlayBlurTex", _overlayBlurMap);
+            SmoothnessCompute.SetTexture(smoothnessKernel, OverlayBlurTex, _overlayBlurMap);
 
-            SmoothnessCompute.SetFloat("_MetalSmoothness", _settings.MetalSmoothness);
+            SmoothnessCompute.SetFloat(MetalSmoothness, _settings.MetalSmoothness);
 
-            SmoothnessCompute.SetInt("_UseSample1", _settings.UseSample1 ? 1 : 0);
-            SmoothnessCompute.SetVector("_SampleColor1", _settings.SampleColor1);
-            SmoothnessCompute.SetVector("_SampleUV1",
+            SmoothnessCompute.SetInt(UseSample1, _settings.UseSample1 ? 1 : 0);
+            SmoothnessCompute.SetVector(SampleColor1, _settings.SampleColor1);
+            SmoothnessCompute.SetVector(SampleUv1,
                 new Vector4(_settings.SampleUv1.x, _settings.SampleUv1.y, 0, 0));
-            SmoothnessCompute.SetFloat("_HueWeight1", _settings.HueWeight1);
-            SmoothnessCompute.SetFloat("_SatWeight1", _settings.SatWeight1);
-            SmoothnessCompute.SetFloat("_LumWeight1", _settings.LumWeight1);
-            SmoothnessCompute.SetFloat("_MaskLow1", _settings.MaskLow1);
-            SmoothnessCompute.SetFloat("_MaskHigh1", _settings.MaskHigh1);
-            SmoothnessCompute.SetFloat("_Sample1Smoothness", _settings.Sample1Smoothness);
+            SmoothnessCompute.SetFloat(HueWeight1, _settings.HueWeight1);
+            SmoothnessCompute.SetFloat(SatWeight1, _settings.SatWeight1);
+            SmoothnessCompute.SetFloat(LumWeight1, _settings.LumWeight1);
+            SmoothnessCompute.SetFloat(MaskLow1, _settings.MaskLow1);
+            SmoothnessCompute.SetFloat(MaskHigh1, _settings.MaskHigh1);
+            SmoothnessCompute.SetFloat(Sample1Smoothness, _settings.Sample1Smoothness);
 
-            SmoothnessCompute.SetInt("_UseSample2", _settings.UseSample2 ? 1 : 0);
-            SmoothnessCompute.SetVector("_SampleColor2", _settings.SampleColor2);
-            SmoothnessCompute.SetVector("_SampleUV2",
+            SmoothnessCompute.SetInt(UseSample2, _settings.UseSample2 ? 1 : 0);
+            SmoothnessCompute.SetVector(SampleColor2, _settings.SampleColor2);
+            SmoothnessCompute.SetVector(SampleUv2,
                 new Vector4(_settings.SampleUv2.x, _settings.SampleUv2.y, 0, 0));
-            SmoothnessCompute.SetFloat("_HueWeight2", _settings.HueWeight2);
-            SmoothnessCompute.SetFloat("_SatWeight2", _settings.SatWeight2);
-            SmoothnessCompute.SetFloat("_LumWeight2", _settings.LumWeight2);
-            SmoothnessCompute.SetFloat("_MaskLow2", _settings.MaskLow2);
-            SmoothnessCompute.SetFloat("_MaskHigh2", _settings.MaskHigh2);
-            SmoothnessCompute.SetFloat("_Sample2Smoothness", _settings.Sample2Smoothness);
+            SmoothnessCompute.SetFloat(HueWeight2, _settings.HueWeight2);
+            SmoothnessCompute.SetFloat(SatWeight2, _settings.SatWeight2);
+            SmoothnessCompute.SetFloat(LumWeight2, _settings.LumWeight2);
+            SmoothnessCompute.SetFloat(MaskLow2, _settings.MaskLow2);
+            SmoothnessCompute.SetFloat(MaskHigh2, _settings.MaskHigh2);
+            SmoothnessCompute.SetFloat(Sample2Smoothness, _settings.Sample2Smoothness);
 
-            SmoothnessCompute.SetInt("_UseSample3", _settings.UseSample3 ? 1 : 0);
-            SmoothnessCompute.SetVector("_SampleColor3", _settings.SampleColor3);
-            SmoothnessCompute.SetVector("_SampleUV3",
+            SmoothnessCompute.SetInt(UseSample3, _settings.UseSample3 ? 1 : 0);
+            SmoothnessCompute.SetVector(SampleColor3, _settings.SampleColor3);
+            SmoothnessCompute.SetVector(SampleUv3,
                 new Vector4(_settings.SampleUv3.x, _settings.SampleUv3.y, 0, 0));
-            SmoothnessCompute.SetFloat("_HueWeight3", _settings.HueWeight3);
-            SmoothnessCompute.SetFloat("_SatWeight3", _settings.SatWeight3);
-            SmoothnessCompute.SetFloat("_LumWeight3", _settings.LumWeight3);
-            SmoothnessCompute.SetFloat("_MaskLow3", _settings.MaskLow3);
-            SmoothnessCompute.SetFloat("_MaskHigh3", _settings.MaskHigh3);
-            SmoothnessCompute.SetFloat("_Sample3Smoothness", _settings.Sample3Smoothness);
+            SmoothnessCompute.SetFloat(HueWeight3, _settings.HueWeight3);
+            SmoothnessCompute.SetFloat(SatWeight3, _settings.SatWeight3);
+            SmoothnessCompute.SetFloat(LumWeight3, _settings.LumWeight3);
+            SmoothnessCompute.SetFloat(MaskLow3, _settings.MaskLow3);
+            SmoothnessCompute.SetFloat(MaskHigh3, _settings.MaskHigh3);
+            SmoothnessCompute.SetFloat(Sample3Smoothness, _settings.Sample3Smoothness);
 
-            SmoothnessCompute.SetFloat("_BaseSmoothness", _settings.BaseSmoothness);
+            SmoothnessCompute.SetFloat(BaseSmoothness, _settings.BaseSmoothness);
 
-            SmoothnessCompute.SetFloat("_BlurOverlay", _settings.BlurOverlay);
-            SmoothnessCompute.SetFloat("_FinalContrast", _settings.FinalContrast);
-            SmoothnessCompute.SetFloat("_FinalBias", _settings.FinalBias);
+            SmoothnessCompute.SetFloat(BlurOverlay, _settings.BlurOverlay);
+            SmoothnessCompute.SetFloat(FinalContrast, _settings.FinalContrast);
+            SmoothnessCompute.SetFloat(FinalBias, _settings.FinalBias);
 
             RenderTexture.ReleaseTemporary(_tempMap);
             _tempMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y);
@@ -598,7 +595,7 @@ namespace Gui
                 BlurCompute.Dispatch(blurKernel, groupsX, groupsY, 1);
             }
 
-            ThisMaterial.SetTexture("_BlurTex", _blurMap);
+            ThisMaterial.SetTexture(BlurTex, _blurMap);
             var source = _settings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
 
             BlurCompute.SetInt("_BlurSamples", _settings.OverlayBlurSize);
@@ -606,12 +603,11 @@ namespace Gui
 
             ThisMaterial.SetTexture(OverlayBlurTex, _overlayBlurMap);
 
-            yield return null;
-            yield return null;
-
             IsReadyToProcess = true;
 
             MessagePanel.HideMessage();
+
+            yield return new WaitForSeconds(0.1f);
 
             ProgramManager.Unlock();
         }

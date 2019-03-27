@@ -235,12 +235,11 @@ namespace Gui
                 if (i % 25 == 0) yield return null;
             }
 
-            yield return null;
-            yield return null;
-
             IsReadyToProcess = true;
 
             MessagePanel.HideMessage();
+            
+            yield return new WaitForSeconds(0.1f);
 
             ProgramManager.Unlock();
         }

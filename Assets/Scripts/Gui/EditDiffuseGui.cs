@@ -33,7 +33,7 @@ namespace Gui
             Logger.Log("Processing Diffuse");
             var kernel = EditCompute.FindKernel("CSEditDiffuse");
 
-            EditCompute.SetVector(ImageSizeId, new Vector2(ImageSize.x, ImageSize.y));
+            EditCompute.SetVector(ImageSizeId, (Vector2) ImageSize);
 
             EditCompute.SetTexture(kernel, BlurTex, _blurMap);
             EditCompute.SetFloat(BlurContrast, _eds.BlurContrast);
@@ -268,16 +268,16 @@ namespace Gui
             MessagePanel.ShowMessage("Processing Blur for Diffuse");
 
             RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y, true);
 
-            EditCompute.SetVector(ImageSizeId, new Vector4(ImageSize.x, ImageSize.y, 0, 0));
-            EditCompute.SetFloat(BlurContrast, 1.0f);
-            EditCompute.SetFloat(BlurSpread, 1.0f);
+            BlurCompute.SetVector(ImageSizeId, (Vector2) ImageSize);
+            BlurCompute.SetFloat(BlurContrast, 1.0f);
+            BlurCompute.SetFloat(BlurSpread, 1.0f);
 
-            EditCompute.SetInt(BlurSamples, _eds.BlurSize);
+            BlurCompute.SetInt(BlurSamples, _eds.BlurSize);
             BlurImage(1.0f, _diffuseMapOriginal, _blurMap);
 
-            EditCompute.SetInt(BlurSamples, _eds.AvgColorBlurSize);
+            BlurCompute.SetInt(BlurSamples, _eds.AvgColorBlurSize);
             BlurImage(1.0f, _diffuseMapOriginal, _avgMap);
             BlurImage(_eds.AvgColorBlurSize / 5.0f, _avgMap, _avgMap);
 
@@ -285,11 +285,11 @@ namespace Gui
 
             RenderTexture.ReleaseTemporary(_tempMap);
 
-            yield return null;
-
             IsReadyToProcess = true;
-            
+
             MessagePanel.HideMessage();
+
+            yield return new WaitForSeconds(0.1f);
 
             ProgramManager.Unlock();
         }

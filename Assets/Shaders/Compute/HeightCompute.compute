@@ -85,8 +85,6 @@ void CSCombineHeight (uint3 id : SV_DispatchThreadID)
     }
     
     heightTex.x = saturate(((heightTex.x - 0.5) * _FinalContrast) + 0.5 + _FinalBias);
-                
-    heightTex.x = saturate( heightTex.x );
     
     if( heightTex.x > 0.5 ){
         heightTex.x = pow( saturate( heightTex.x * 2.0 - 1.0 ), _FinalGain ) * 0.5 + 0.5;

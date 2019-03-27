@@ -95,7 +95,7 @@
 				half mainTexGrey = mainTex.x * 0.3 + mainTex.y * 0.5 + mainTex.z * 0.2;
 				half3 mainTexHighMask = pow( clamp( mainTexGrey * 2.0, 0.001, 0.99 ), lightMaskPow );
 				half3 mainTexLowMask = pow( clamp( -mainTexGrey * 2.0, 0.001, 0.99 ), darkMaskPow );
-				mainTex += 0.5;
+				mainTex += 0.24;
 
 				//mainTex = clamp( mainTex, 0.001, 0.99 );
 				//mainTex = lerp( mainTex, pow( mainTex, _LightPow * 5.0 + 1.0 ), mainTexHighMask );
