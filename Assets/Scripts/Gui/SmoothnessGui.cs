@@ -24,7 +24,6 @@ namespace Gui
         private bool _lastUseAdjustedDiffuse;
 
         private Texture2D _metallicMap;
-        private bool _mouseButtonDown;
         private RenderTexture _overlayBlurMap;
 
         private Texture2D _sampleColorMap1;
@@ -280,17 +279,22 @@ namespace Gui
 
         private void SelectColor()
         {
+            var selectSuccess = false;
             if (Input.GetMouseButton(0))
             {
-                _mouseButtonDown = true;
+                if (!_camera) return;
+                const int mask = 1 << 11;
+                var wasHit = Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out var hit,
+                    Mathf.Infinity, mask, QueryTriggerInteraction.UseGlobal);
 
-                if (!Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out var hit))
-                    return;
+                if (!wasHit) return;
 
                 var rend = hit.transform.GetComponent<Renderer>();
-                var meshCollider = hit.collider as MeshCollider;
-                if (!rend || !rend.sharedMaterial || !rend.sharedMaterial.mainTexture || !meshCollider)
+                var hasMeshCollider = hit.collider is MeshCollider;
+                if (!rend || !rend.sharedMaterial || !rend.sharedMaterial.mainTexture || !hasMeshCollider)
+                {
                     return;
+                }
 
                 var pixelUv = hit.textureCoord;
 
@@ -321,10 +325,13 @@ namespace Gui
                     default:
                         throw new InvalidOperationException();
                 }
+
+                StuffToBeDone = true;
+                selectSuccess = true;
             }
 
-            if (!Input.GetMouseButtonUp(0) || !_mouseButtonDown) return;
-            _mouseButtonDown = false;
+            if (!selectSuccess) return;
+
             _selectingColor = false;
             _currentSelection = 0;
         }
@@ -373,41 +380,46 @@ namespace Gui
 
                 offsetY += 30;
 
-                if (GUI.Button(new Rect(offsetX, offsetY + 5, 80, 20), "Pick Color"))
+                GUI.skin.button.fontSize -= 3;
+                if (GUI.Button(new Rect(offsetX, offsetY + 5, 55, 20), "Pick Color"))
                 {
                     _selectingColor = true;
                     _currentSelection = 1;
                 }
 
-                GUI.DrawTexture(new Rect(offsetX + 10, offsetY + 35, 60, 60), _sampleColorMap1);
+                GUI.skin.button.fontSize += 3;
+                GUI.Toggle(new Rect(offsetX + 65, offsetY + 5, 15, 20), _selectingColor, string.Empty);
+
+
+                GUI.DrawTexture(new Rect(offsetX + 5, offsetY + 30, 45, 45), _sampleColorMap1);
 
                 GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
-                _settings.HueWeight1 = GUI.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 70),
+                _settings.HueWeight1 = GUI.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 50),
                     _settings.HueWeight1, 1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 120, offsetY, 250, 30), "Sat");
                 _settings.SatWeight1 =
-                    GUI.VerticalSlider(new Rect(offsetX + 125, offsetY + 30, 10, 70), _settings.SatWeight1, 1.0f, 0.0f);
+                    GUI.VerticalSlider(new Rect(offsetX + 125, offsetY + 30, 10, 50), _settings.SatWeight1, 1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 150, offsetY, 250, 30), "Lum");
                 _settings.LumWeight1 =
-                    GUI.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 70), _settings.LumWeight1, 1.0f, 0.0f);
+                    GUI.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 50), _settings.LumWeight1, 1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 180, offsetY, 250, 30), "Low");
-                _settings.MaskLow1 = GUI.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 70),
+                _settings.MaskLow1 = GUI.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 50),
                     _settings.MaskLow1,
                     1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 210, offsetY, 250, 30), "High");
-                _settings.MaskHigh1 = GUI.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 70),
+                _settings.MaskHigh1 = GUI.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 50),
                     _settings.MaskHigh1,
                     1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 240, offsetY, 250, 30), "Smooth");
-                _settings.Sample1Smoothness = GUI.VerticalSlider(new Rect(offsetX + 255, offsetY + 30, 10, 70),
+                _settings.Sample1Smoothness = GUI.VerticalSlider(new Rect(offsetX + 255, offsetY + 30, 10, 50),
                     _settings.Sample1Smoothness, 1.0f, 0.0f);
 
-                offsetY += 110;
+                offsetY += 90;
             }
             else
             {
@@ -430,41 +442,45 @@ namespace Gui
 
                 offsetY += 30;
 
-                if (GUI.Button(new Rect(offsetX, offsetY + 5, 80, 20), "Pick Color"))
+                GUI.skin.button.fontSize -= 3;
+                if (GUI.Button(new Rect(offsetX, offsetY + 5, 55, 20), "Pick Color"))
                 {
                     _selectingColor = true;
                     _currentSelection = 2;
                 }
 
-                GUI.DrawTexture(new Rect(offsetX + 10, offsetY + 35, 60, 60), _sampleColorMap2);
+                GUI.skin.button.fontSize += 3;
+                GUI.Toggle(new Rect(offsetX + 65, offsetY + 5, 15, 20), _selectingColor, string.Empty);
+
+                GUI.DrawTexture(new Rect(offsetX + 5, offsetY + 35, 45, 45), _sampleColorMap2);
 
                 GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
-                _settings.HueWeight2 = GUI.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 70),
+                _settings.HueWeight2 = GUI.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 50),
                     _settings.HueWeight2, 1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 120, offsetY, 250, 30), "Sat");
                 _settings.SatWeight2 =
-                    GUI.VerticalSlider(new Rect(offsetX + 125, offsetY + 30, 10, 70), _settings.SatWeight2, 1.0f, 0.0f);
+                    GUI.VerticalSlider(new Rect(offsetX + 125, offsetY + 30, 10, 50), _settings.SatWeight2, 1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 150, offsetY, 250, 30), "Lum");
                 _settings.LumWeight2 =
-                    GUI.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 70), _settings.LumWeight2, 1.0f, 0.0f);
+                    GUI.VerticalSlider(new Rect(offsetX + 155, offsetY + 30, 10, 50), _settings.LumWeight2, 1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 180, offsetY, 250, 30), "Low");
-                _settings.MaskLow2 = GUI.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 70),
+                _settings.MaskLow2 = GUI.VerticalSlider(new Rect(offsetX + 185, offsetY + 30, 10, 50),
                     _settings.MaskLow2,
                     1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 210, offsetY, 250, 30), "High");
-                _settings.MaskHigh2 = GUI.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 70),
+                _settings.MaskHigh2 = GUI.VerticalSlider(new Rect(offsetX + 215, offsetY + 30, 10, 50),
                     _settings.MaskHigh2,
                     1.0f, 0.0f);
 
                 GUI.Label(new Rect(offsetX + 240, offsetY, 250, 30), "Smooth");
-                _settings.Sample2Smoothness = GUI.VerticalSlider(new Rect(offsetX + 255, offsetY + 30, 10, 70),
+                _settings.Sample2Smoothness = GUI.VerticalSlider(new Rect(offsetX + 255, offsetY + 30, 10, 50),
                     _settings.Sample2Smoothness, 1.0f, 0.0f);
 
-                offsetY += 110;
+                offsetY += 90;
             }
             else
             {
@@ -503,11 +519,26 @@ namespace Gui
         private void OnGUI()
         {
             if (Hide) return;
-            if (_settings.UseSample1) WindowRect.height += 110;
+            var rect = WindowRect;
+            var guiScale = GuiScale;
+            if (_settings.UseSample1)
+            {
+                rect.height += 90;
+//                guiScale -= 0.02f * guiScale;
+            }
 
-            if (_settings.UseSample2) WindowRect.height += 110;
+            if (_settings.UseSample2)
+            {
+                rect.height += 90;
+//                guiScale -= 0.02f * guiScale;
+            }
 
-            MainGui.MakeScaledWindow(WindowRect, WindowId, DoMyWindow, "Smoothness From Diffuse", GuiScale);
+            if (_settings.UseSample1 && _settings.UseSample2)
+            {
+                guiScale -= 0.15f * guiScale;
+            }
+
+            MainGui.MakeScaledWindow(rect, WindowId, DoMyWindow, "Smoothness From Diffuse", guiScale);
         }
 
         protected override void CleanupTextures()

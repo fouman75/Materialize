@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added Save / Load Settings Profiles
 
 ### Changed
+- Changed the way window scaling works.
 
 #### Minor changes
 - Update to SRP 5.10.0
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixes
 - Fix slow sliders that were too slow because were processing to often.
 - Fix Color on Edit Diffuse. Old bug.
+- Fix Color Picking.
 
 ### To Implement
 - Windows Copy / Paste

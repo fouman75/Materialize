@@ -149,11 +149,11 @@ public static class TextureProcessing
 
     public static Texture2D ConvertToStandard(Texture2D newTexture, bool linear = false)
     {
-        var converted = TextureManager.Instance.GetStandardTexture(newTexture.width, newTexture.height, linear);
-        var result = Graphics.ConvertTexture(newTexture, converted);
+        var tempRenderTexture = TextureManager.Instance.GetTempRenderTexture(newTexture.width, newTexture.height);
+
+        Graphics.CopyTexture(newTexture, 0, 0, tempRenderTexture, 0, 0);
+        TextureManager.Instance.GetTextureFromRender(tempRenderTexture, out var converted);
         Object.Destroy(newTexture);
-        Logger.Log(result ? "Sucesso na conversao" : "Erro na conversao");
-        newTexture = converted;
-        return newTexture;
+        return converted;
     }
 }

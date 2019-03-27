@@ -47,6 +47,7 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!(eventData.button == PanButton || eventData.button == RotateButton)) return;
         _lastMousePos = eventData.position;
         _offset = transform.position - eventData.pointerCurrentRaycast.worldPosition;
         if (AllowHide) MainGui.Instance.SaveHideStateAndHideAndLock(this);
@@ -55,6 +56,7 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!(eventData.button == PanButton || eventData.button == RotateButton)) return;
         var canRotate = KeyToHoldToRotate == KeyCode.None || Input.GetKey(KeyToHoldToRotate);
         canRotate = canRotate && eventData.button == RotateButton;
 
@@ -68,6 +70,7 @@ public class ObjectZoomPanRotate : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!(eventData.button == PanButton || eventData.button == RotateButton)) return;
         MainGui.Instance.HideGuiLocker.Unlock(this);
     }
 

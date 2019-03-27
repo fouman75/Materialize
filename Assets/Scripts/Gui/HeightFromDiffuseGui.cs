@@ -37,7 +37,6 @@ namespace Gui
         private bool _lastUseDiffuse;
         private bool _lastUseNormal;
         private bool _lastUseOriginalDiffuse;
-        private bool _mouseButtonDown;
 
         private Texture2D _sampleColorMap1;
         private Texture2D _sampleColorMap2;
@@ -354,9 +353,9 @@ namespace Gui
 
         private void SelectColor()
         {
+            var selectSuccess = false;
             if (Input.GetMouseButton(0))
             {
-                _mouseButtonDown = true;
                 if (!_camera) return;
                 const int mask = 1 << 11;
                 var wasHit = Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out var hit,
@@ -367,7 +366,9 @@ namespace Gui
                 var rend = hit.transform.GetComponent<Renderer>();
                 var hasMeshCollider = hit.collider is MeshCollider;
                 if (!rend || !rend.sharedMaterial || !rend.sharedMaterial.mainTexture || !hasMeshCollider)
+                {
                     return;
+                }
 
                 var pixelUv = hit.textureCoord;
 
@@ -375,10 +376,6 @@ namespace Gui
                 var tex = useAdjusted
                     ? TextureManager.Instance.DiffuseMap
                     : TextureManager.Instance.DiffuseMapOriginal;
-//                var pos = new Vector2Int(Mathf.RoundToInt(pixelUv.x * tex.width),
-//                    Mathf.RoundToInt(pixelUv.y * tex.height));
-//                var pixels = tex.GetPixels32();
-//                var sampledColor = pixels[pos.y * tex.height + pos.x];
                 var sampledColor = tex.GetPixelBilinear(pixelUv.x, pixelUv.y);
 
                 switch (_currentSelection)
@@ -400,11 +397,11 @@ namespace Gui
                 }
 
                 StuffToBeDone = true;
+                selectSuccess = true;
             }
 
-            if (!Input.GetMouseButtonUp(0) || !_mouseButtonDown) return;
+            if (!selectSuccess) return;
 
-            _mouseButtonDown = false;
             _selectingColor = false;
             _currentSelection = 0;
         }
@@ -653,13 +650,18 @@ namespace Gui
                     if (_heightFromDiffuseSettings.IsolateSample1) _heightFromDiffuseSettings.IsolateSample2 = false;
                     offsetY += 30;
 
-                    if (GUI.Button(new Rect(offsetX, offsetY + 5, 80, 20), "Pick Color"))
+                    GUI.skin.button.fontSize -= 2;
+                    if (GUI.Button(new Rect(offsetX, offsetY + 5, 55, 20), "Pick Color"))
                     {
                         _selectingColor = true;
                         _currentSelection = 1;
                     }
 
-                    GUI.DrawTexture(new Rect(offsetX + 25, offsetY + 35, 30, 30), _sampleColorMap1);
+                    GUI.skin.button.fontSize += 2;
+
+                    GUI.Toggle(new Rect(offsetX + 65, offsetY + 5, 15, 20), _selectingColor, string.Empty);
+
+                    GUI.DrawTexture(new Rect(offsetX + 15, offsetY + 35, 30, 30), _sampleColorMap1);
 
                     GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
                     StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 35),
@@ -712,13 +714,18 @@ namespace Gui
                     if (_heightFromDiffuseSettings.IsolateSample2) _heightFromDiffuseSettings.IsolateSample1 = false;
                     offsetY += 30;
 
-                    if (GUI.Button(new Rect(offsetX, offsetY + 5, 80, 20), "Pick Color"))
+                    GUI.skin.button.fontSize -= 2;
+                    if (GUI.Button(new Rect(offsetX, offsetY + 5, 55, 20), "Pick Color"))
                     {
                         _selectingColor = true;
                         _currentSelection = 2;
                     }
 
-                    GUI.DrawTexture(new Rect(offsetX + 25, offsetY + 35, 30, 30), _sampleColorMap2);
+                    GUI.skin.button.fontSize += 2;
+
+                    GUI.Toggle(new Rect(offsetX + 65, offsetY + 5, 15, 20), _selectingColor, string.Empty);
+
+                    GUI.DrawTexture(new Rect(offsetX + 15, offsetY + 35, 30, 30), _sampleColorMap2);
 
                     GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
                     StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 35),

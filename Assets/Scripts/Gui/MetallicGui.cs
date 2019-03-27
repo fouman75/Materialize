@@ -23,7 +23,6 @@ namespace Gui
         private Texture2D _metallicMap;
 
         private MetallicSettings _metallicSettings;
-        private bool _mouseButtonDown;
         private RenderTexture _overlayBlurMap;
         private bool _selectingColor;
 
@@ -157,17 +156,23 @@ namespace Gui
 
         private void SelectColor()
         {
+            Debug.Log("Selecting Color");
+            var selectSuccess = false;
             if (Input.GetMouseButton(0))
             {
-                _mouseButtonDown = true;
+                if (!_camera) return;
+                const int mask = 1 << 11;
+                var wasHit = Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out var hit,
+                    Mathf.Infinity, mask, QueryTriggerInteraction.UseGlobal);
 
-                if (!Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out var hit))
-                    return;
+                if (!wasHit) return;
 
                 var rend = hit.transform.GetComponent<Renderer>();
-                var meshCollider = hit.collider as MeshCollider;
-                if (!rend || !rend.sharedMaterial || !rend.sharedMaterial.mainTexture || !meshCollider)
+                var hasMeshCollider = hit.collider is MeshCollider;
+                if (!rend || !rend.sharedMaterial || !rend.sharedMaterial.mainTexture || !hasMeshCollider)
+                {
                     return;
+                }
 
                 var pixelUv = hit.textureCoord;
 
@@ -179,11 +184,13 @@ namespace Gui
 
                 _metalColorMap.SetPixel(1, 1, _metallicSettings.MetalColor);
                 _metalColorMap.Apply(false);
+
+                StuffToBeDone = true;
+                selectSuccess = true;
             }
 
-            if (!Input.GetMouseButtonUp(0) || !_mouseButtonDown) return;
+            if (!selectSuccess) return;
 
-            _mouseButtonDown = false;
             _selectingColor = false;
         }
 
@@ -260,9 +267,12 @@ namespace Gui
 
             offsetY += 40;
 
-            if (GUI.Button(new Rect(offsetX, offsetY + 10, 80, 30), "Pick Color")) _selectingColor = true;
+            GUI.skin.button.fontSize -= 2;
+            if (GUI.Button(new Rect(offsetX, offsetY + 10, 55, 30), "Pick Color")) _selectingColor = true;
+            GUI.Toggle(new Rect(offsetX + 65, offsetY + 10, 15, 20), _selectingColor, string.Empty);
+            GUI.skin.button.fontSize += 2;
 
-            GUI.DrawTexture(new Rect(offsetX, offsetY + 50, 80, 80), _metalColorMap);
+            GUI.DrawTexture(new Rect(offsetX, offsetY + 50, 75, 75), _metalColorMap);
 
             GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
             _metallicSettings.HueWeight = GUI.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 100),

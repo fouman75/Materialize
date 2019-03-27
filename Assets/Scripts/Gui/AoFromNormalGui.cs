@@ -238,7 +238,7 @@ namespace Gui
             IsReadyToProcess = true;
 
             MessagePanel.HideMessage();
-            
+
             yield return new WaitForSeconds(0.1f);
 
             ProgramManager.Unlock();
