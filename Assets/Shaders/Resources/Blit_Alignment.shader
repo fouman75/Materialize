@@ -110,19 +110,19 @@ Shader "Hidden/Blit_Alignment" {
 		float perspectiveY1 = 1;
 		if( _PerspectiveY > 0 ){
 			perspectiveY1 = 1.0 / ( _PerspectiveY + 1.0 );
-			UV.y = 1.0 - pow( 1.0 - UV.y, perspectiveY1 );
+			newUV1.y = 1.0 - pow( 1.0 - UV.y, perspectiveY1 );
 		}else{
 			perspectiveY1 = 1.0 / ( abs( _PerspectiveY ) + 1.0 );
-			UV.y = pow( UV.y, perspectiveY1 );
+			newUV1.y = pow( UV.y, perspectiveY1 );
 		}
 		
 		float perspectiveY2 = 1;
 		if( _PerspectiveY > 0 ){
 			perspectiveY2 = 1.0 / ( _PerspectiveY + 1.0 );
-			UV.y = 1.0 - pow( 1.0 - UV.y, perspectiveY2 );
+			newUV2.y = 1.0 - pow( 1.0 - UV.y, perspectiveY2 );
 		}else{
 			perspectiveY2 = 1.0 / ( abs( _PerspectiveY ) + 1.0 );
-			UV.y = pow( UV.y, perspectiveY2 );
+			newUV2.y = pow( UV.y, perspectiveY2 );
 		}
 		
 		UV.y = lerp( newUV1.y, newUV2.y, 1.0 - IN.uv.y );

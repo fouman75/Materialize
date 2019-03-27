@@ -649,19 +649,14 @@ namespace Gui
                         out _heightFromDiffuseSettings.IsolateSample1, "Isolate Mask", StuffToBeDone);
                     if (_heightFromDiffuseSettings.IsolateSample1) _heightFromDiffuseSettings.IsolateSample2 = false;
                     offsetY += 30;
-
-                    GUI.skin.button.fontSize -= 2;
-                    if (GUI.Button(new Rect(offsetX, offsetY + 5, 55, 20), "Pick Color"))
+                    
+                    if (GUI.Toggle(new Rect(offsetX, offsetY + 5, 80, 20),_currentSelection == 1, "Pick Color", "Button"))
                     {
                         _selectingColor = true;
                         _currentSelection = 1;
                     }
 
-                    GUI.skin.button.fontSize += 2;
-
-                    GUI.Toggle(new Rect(offsetX + 65, offsetY + 5, 15, 20), _selectingColor, string.Empty);
-
-                    GUI.DrawTexture(new Rect(offsetX + 15, offsetY + 35, 30, 30), _sampleColorMap1);
+                    GUI.DrawTexture(new Rect(offsetX + 25, offsetY + 35, 30, 30), _sampleColorMap1);
 
                     GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
                     StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 35),
@@ -713,19 +708,14 @@ namespace Gui
                         out _heightFromDiffuseSettings.IsolateSample2, "Isolate Mask", StuffToBeDone);
                     if (_heightFromDiffuseSettings.IsolateSample2) _heightFromDiffuseSettings.IsolateSample1 = false;
                     offsetY += 30;
-
-                    GUI.skin.button.fontSize -= 2;
-                    if (GUI.Button(new Rect(offsetX, offsetY + 5, 55, 20), "Pick Color"))
+                    
+                    if (GUI.Toggle(new Rect(offsetX, offsetY + 5, 80, 20),_currentSelection == 2, "Pick Color", "Button"))
                     {
                         _selectingColor = true;
                         _currentSelection = 2;
                     }
 
-                    GUI.skin.button.fontSize += 2;
-
-                    GUI.Toggle(new Rect(offsetX + 65, offsetY + 5, 15, 20), _selectingColor, string.Empty);
-
-                    GUI.DrawTexture(new Rect(offsetX + 15, offsetY + 35, 30, 30), _sampleColorMap2);
+                    GUI.DrawTexture(new Rect(offsetX + 25, offsetY + 35, 30, 30), _sampleColorMap2);
 
                     GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
                     StuffToBeDone = GuiHelper.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 35),

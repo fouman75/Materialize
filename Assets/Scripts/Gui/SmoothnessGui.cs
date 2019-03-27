@@ -380,18 +380,14 @@ namespace Gui
 
                 offsetY += 30;
 
-                GUI.skin.button.fontSize -= 3;
-                if (GUI.Button(new Rect(offsetX, offsetY + 5, 55, 20), "Pick Color"))
+                if (GUI.Toggle(new Rect(offsetX, offsetY + 5, 80, 25), _currentSelection == 1, "Pick Color", "Button"))
                 {
                     _selectingColor = true;
                     _currentSelection = 1;
                 }
 
-                GUI.skin.button.fontSize += 3;
-                GUI.Toggle(new Rect(offsetX + 65, offsetY + 5, 15, 20), _selectingColor, string.Empty);
 
-
-                GUI.DrawTexture(new Rect(offsetX + 5, offsetY + 30, 45, 45), _sampleColorMap1);
+                GUI.DrawTexture(new Rect(offsetX + 20, offsetY + 35, 40, 40), _sampleColorMap1);
 
                 GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
                 _settings.HueWeight1 = GUI.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 50),
@@ -442,17 +438,13 @@ namespace Gui
 
                 offsetY += 30;
 
-                GUI.skin.button.fontSize -= 3;
-                if (GUI.Button(new Rect(offsetX, offsetY + 5, 55, 20), "Pick Color"))
+                if (GUI.Toggle(new Rect(offsetX, offsetY + 5, 80, 25), _currentSelection == 2, "Pick Color", "Button"))
                 {
                     _selectingColor = true;
                     _currentSelection = 2;
                 }
 
-                GUI.skin.button.fontSize += 3;
-                GUI.Toggle(new Rect(offsetX + 65, offsetY + 5, 15, 20), _selectingColor, string.Empty);
-
-                GUI.DrawTexture(new Rect(offsetX + 5, offsetY + 35, 45, 45), _sampleColorMap2);
+                GUI.DrawTexture(new Rect(offsetX + 20, offsetY + 35, 40, 40), _sampleColorMap2);
 
                 GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
                 _settings.HueWeight2 = GUI.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 50),

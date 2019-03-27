@@ -267,12 +267,15 @@ namespace Gui
 
             offsetY += 40;
 
-            GUI.skin.button.fontSize -= 2;
-            if (GUI.Button(new Rect(offsetX, offsetY + 10, 55, 30), "Pick Color")) _selectingColor = true;
-            GUI.Toggle(new Rect(offsetX + 65, offsetY + 10, 15, 20), _selectingColor, string.Empty);
-            GUI.skin.button.fontSize += 2;
+            GUI.skin.toggle.fontSize += 2;
+            if (GUI.Toggle(new Rect(offsetX, offsetY + 10, 80, 30), _selectingColor, "Pick Color", "Button"))
+            {
+                _selectingColor = true;
+            }
 
-            GUI.DrawTexture(new Rect(offsetX, offsetY + 50, 75, 75), _metalColorMap);
+            GUI.skin.toggle.fontSize -= 2;
+
+            GUI.DrawTexture(new Rect(offsetX, offsetY + 50, 80, 80), _metalColorMap);
 
             GUI.Label(new Rect(offsetX + 90, offsetY, 250, 30), "Hue");
             _metallicSettings.HueWeight = GUI.VerticalSlider(new Rect(offsetX + 95, offsetY + 30, 10, 100),
