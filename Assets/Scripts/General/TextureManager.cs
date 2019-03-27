@@ -227,13 +227,6 @@ namespace General
             ProgramManager.Instance.MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
         }
 
-        public void CleanMaterial()
-        {
-            ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = null;
-            Destroy(FullMaterialInstance);
-            FullMaterialInstance = new Material(FullMaterial);
-        }
-
         private IEnumerator PackNormalAndSet()
         {
             while (!ProgramManager.Lock()) yield return null;
@@ -264,7 +257,8 @@ namespace General
             var texture = new Texture2D(width, height, DefaultHdrTextureFormat, true, linear)
             {
                 hideFlags = HideFlags.HideAndDontSave,
-                filterMode = FilterMode.Point
+                filterMode = FilterMode.Point,
+                wrapMode = TextureWrapMode.Repeat
             };
             return texture;
         }
@@ -275,7 +269,8 @@ namespace General
             var texture = new Texture2D(width, height, DefaultLdrTextureFormat, true, linear)
             {
                 hideFlags = HideFlags.HideAndDontSave,
-                filterMode = FilterMode.Point
+                filterMode = FilterMode.Point,
+                wrapMode = TextureWrapMode.Repeat
             };
             return texture;
         }
@@ -289,6 +284,7 @@ namespace General
                 : RenderTexture.GetTemporary(width, height, 24, format, RenderTextureReadWrite.Linear);
 
             rt.enableRandomWrite = true;
+            rt.wrapMode = TextureWrapMode.Repeat;
 
             rt.Create();
 
@@ -510,6 +506,16 @@ namespace General
             ProgramManager.Instance.LastPath = path.Substring(0, lastBar + 1);
             var textureToSave = GetTexture(_textureToSave);
             SaveLoadProject.Instance.SaveFile(path, textureToSave);
+        }
+
+        public void SetUvScale(Vector2 scale)
+        {
+            FullMaterialInstance.SetTextureScale(DiffuseMapId, scale);
+        }
+        
+        public void SetUvOffset(Vector2 offset)
+        {
+            FullMaterialInstance.SetTextureOffset(DiffuseMapId, offset);
         }
 
         #region Map Variables

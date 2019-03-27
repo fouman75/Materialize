@@ -179,6 +179,10 @@ namespace Gui
             _thisMaterial.SetFloat(HeightCenterId, center);
             _thisMaterial.SetFloat(TessAmplitudeId, _materialSettings.DisplacementAmplitude * 100f);
 
+            TextureManager.Instance.SetUvScale(new Vector2(_materialSettings.TexTilingX, _materialSettings.TexTilingY));
+            TextureManager.Instance.SetUvOffset(new Vector2(_materialSettings.TexOffsetX,
+                _materialSettings.TexOffsetY));
+
 
 //            
         }

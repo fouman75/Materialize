@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fix slow sliders that were too slow because were processing to often.
 - Fix Color on Edit Diffuse. Old bug.
 - Fix Color Picking.
+- Fix Full Material View tiling and offset
 
 ### To Implement
 - Windows Copy / Paste
