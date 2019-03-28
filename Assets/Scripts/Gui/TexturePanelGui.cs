@@ -301,6 +301,39 @@ namespace Gui
         protected static readonly int Sample3Smoothness = Shader.PropertyToID("_Sample3Smoothness");
         protected static readonly int BaseSmoothness = Shader.PropertyToID("_BaseSmoothness");
         protected static readonly int MetallicTex = Shader.PropertyToID("_MetallicTex");
+        protected static readonly int Tiling = Shader.PropertyToID("_Tiling");
+        protected static readonly int ObjectScale = Shader.PropertyToID("_ObjectScale");
+        protected static readonly int FlipY = Shader.PropertyToID("_FlipY");
+        protected static readonly int SplatScale = Shader.PropertyToID("_SplatScale");
+        protected static readonly int AspectRatio = Shader.PropertyToID("_AspectRatio");
+        protected static readonly int TargetAspectRatio = Shader.PropertyToID("_TargetAspectRatio");
+        protected static readonly int SplatRotation = Shader.PropertyToID("_SplatRotation");
+        protected static readonly int SplatRotationRandom = Shader.PropertyToID("_SplatRotationRandom");
+        protected static readonly int SplatKernel = Shader.PropertyToID("_SplatKernel");
+        protected static readonly int Wobble = Shader.PropertyToID("_Wobble");
+        protected static readonly int SplatRandomize = Shader.PropertyToID("_SplatRandomize");
+        protected static readonly int TargetTex = Shader.PropertyToID("_TargetTex");
+        protected static readonly int Falloff = Shader.PropertyToID("_Falloff");
+        protected static readonly int OverlapX = Shader.PropertyToID("_OverlapX");
+        protected static readonly int OverlapY = Shader.PropertyToID("_OverlapY");
+        protected static readonly int IsHeight = Shader.PropertyToID("_IsHeight");
+        protected static readonly int DiffuseMap = Shader.PropertyToID("_BaseColorMap");
+        protected static readonly int MetallicMap = Shader.PropertyToID("_MetallicMap");
+        protected static readonly int SmoothnessMap = Shader.PropertyToID("_SmoothnessMap");
+        protected static readonly int NormalMap = Shader.PropertyToID("_NormalMap");
+        protected static readonly int AoMap = Shader.PropertyToID("_AOMap");
+        protected static readonly int TargetPoint = Shader.PropertyToID("_TargetPoint");
+        protected static readonly int CorrectTex = Shader.PropertyToID("_CorrectTex");
+        protected static readonly int PointScale = Shader.PropertyToID("_PointScale");
+        protected static readonly int PointTl = Shader.PropertyToID("_PointTL");
+        protected static readonly int PointTr = Shader.PropertyToID("_PointTR");
+        protected static readonly int PointBl = Shader.PropertyToID("_PointBL");
+        protected static readonly int PointBr = Shader.PropertyToID("_PointBR");
+        protected static readonly int Width = Shader.PropertyToID("_Width");
+        protected static readonly int Height = Shader.PropertyToID("_Height");
+        protected static readonly int Lens = Shader.PropertyToID("_Lens");
+        protected static readonly int PerspectiveX = Shader.PropertyToID("_PerspectiveX");
+        protected static readonly int PerspectiveY = Shader.PropertyToID("_PerspectiveY");
 
         #endregion
     }

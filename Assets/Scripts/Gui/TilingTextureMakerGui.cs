@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using General;
+using Settings;
 using UnityEngine;
 using Logger = General.Logger;
 using Random = UnityEngine.Random;
@@ -11,39 +12,13 @@ using Random = UnityEngine.Random;
 
 namespace Gui
 {
-    public class TilingTextureMakerGui : MonoBehaviour, IHideable
+    public class TilingTextureMakerGui : TexturePanelGui
     {
-        private static readonly int Tiling = Shader.PropertyToID("_Tiling");
-        private static readonly int MainTex = Shader.PropertyToID("_MainTex");
-        private static readonly int HeightTex = Shader.PropertyToID("_HeightTex");
-        private static readonly int ObjectScale = Shader.PropertyToID("_ObjectScale");
-        private static readonly int FlipY = Shader.PropertyToID("_FlipY");
-        private static readonly int SplatScale = Shader.PropertyToID("_SplatScale");
-        private static readonly int AspectRatio = Shader.PropertyToID("_AspectRatio");
-        private static readonly int TargetAspectRatio = Shader.PropertyToID("_TargetAspectRatio");
-        private static readonly int SplatRotation = Shader.PropertyToID("_SplatRotation");
-        private static readonly int SplatRotationRandom = Shader.PropertyToID("_SplatRotationRandom");
-        private static readonly int SplatKernel = Shader.PropertyToID("_SplatKernel");
-        private static readonly int Wobble = Shader.PropertyToID("_Wobble");
-        private static readonly int SplatRandomize = Shader.PropertyToID("_SplatRandomize");
-        private static readonly int TargetTex = Shader.PropertyToID("_TargetTex");
-        private static readonly int Falloff = Shader.PropertyToID("_Falloff");
-        private static readonly int OverlapX = Shader.PropertyToID("_OverlapX");
-        private static readonly int OverlapY = Shader.PropertyToID("_OverlapY");
-        private static readonly int IsHeight = Shader.PropertyToID("_IsHeight");
-        private static readonly int DiffuseMap = Shader.PropertyToID("_BaseColorMap");
-        private static readonly int MetallicMap = Shader.PropertyToID("_MetallicMap");
-        private static readonly int SmoothnessMap = Shader.PropertyToID("_SmoothnessMap");
-        private static readonly int IsNormal = Shader.PropertyToID("_IsNormal");
-        private static readonly int NormalMap = Shader.PropertyToID("_NormalMap");
-        private static readonly int AoMap = Shader.PropertyToID("_AOMap");
         private RenderTexture _aoMapTemp;
 
         private Material _blitMaterial;
         private RenderTexture _diffuseMapOriginalTemp;
         private RenderTexture _diffuseMapTemp;
-
-        private bool _doStuff;
 
         private float _falloff = 0.1f;
         private RenderTexture _hdHeightMapTemp;
@@ -99,17 +74,9 @@ namespace Gui
         private TileTechnique _tileTech = TileTechnique.Overlap;
 
         private RenderTexture _tileTemp;
-        private int _windowId;
-
-        private Rect _windowRect;
-
-        public GameObject TestObject;
-
-        public bool Hide { get; set; }
-
         private void Awake()
         {
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+            WindowRect = new Rect(10.0f, 265.0f, 300f, 540f);
         }
 
         private void Start()
@@ -133,20 +100,16 @@ namespace Gui
             _offsetKernel[7] = new Vector2(1, 0);
             _offsetKernel[8] = new Vector2(1, 1);
 
-            _windowId = ProgramManager.Instance.GetWindowId;
+            WindowId = ProgramManager.Instance.GetWindowId;
         }
-
-        private void OnDisable()
-        {
-            CleanupTextures();
-        }
+        
 
         public void Initialize()
         {
             _thisMaterial = TextureManager.Instance.FullMaterialInstance;
 
             TestObject.GetComponent<Renderer>().material = _thisMaterial;
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
         private void Update()
@@ -156,41 +119,41 @@ namespace Gui
             if (Math.Abs(_lastOverlapX - _overlapX) > 0.0001f)
             {
                 _lastOverlapX = _overlapX;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             if (Math.Abs(_lastOverlapY - _overlapY) > 0.0001f)
             {
                 _lastOverlapY = _overlapY;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             if (Math.Abs(_lastFalloff - _falloff) > 0.0001f)
             {
                 _lastFalloff = _falloff;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             if (_newTexSelectionX != _lastNewTexSelectionX)
             {
                 _lastNewTexSelectionX = _newTexSelectionX;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             if (_newTexSelectionY != _lastNewTexSelectionY)
             {
                 _lastNewTexSelectionY = _newTexSelectionY;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             if (_tileTech != _lastTileTech)
             {
                 _lastTileTech = _tileTech;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
-            if (!_doStuff) return;
-            _doStuff = false;
+            if (!StuffToBeDone) return;
+            StuffToBeDone = false;
 
             switch (_newTexSelectionX)
             {
@@ -259,7 +222,7 @@ namespace Gui
 
             TestObject.transform.localScale = _objectScale;
 
-            StartCoroutine(TileTextures());
+            StartCoroutine(StartProcessing());
         }
 
         private void SkSquare()
@@ -381,41 +344,41 @@ namespace Gui
             offsetY += 100;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Edge Falloff", _falloff, out _falloff,
-                0.01f, 1.0f)) _doStuff = true;
+                0.01f, 1.0f)) StuffToBeDone = true;
             offsetY += 40;
 
             if (_techniqueOverlap)
             {
                 if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlap X", _overlapX,
-                    out _overlapX, 0.00f, 1.0f)) _doStuff = true;
+                    out _overlapX, 0.00f, 1.0f)) StuffToBeDone = true;
                 offsetY += 40;
 
                 if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Overlap Y", _overlapY,
-                    out _overlapY, 0.00f, 1.0f)) _doStuff = true;
+                    out _overlapY, 0.00f, 1.0f)) StuffToBeDone = true;
                 offsetY += 50;
             }
 
             if (_techniqueSplat)
             {
                 if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Splat Rotation", _splatRotation,
-                    out _splatRotation, 0.0f, 1.0f)) _doStuff = true;
+                    out _splatRotation, 0.0f, 1.0f)) StuffToBeDone = true;
                 offsetY += 40;
 
                 if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Splat Random Rotation", _splatRotationRandom,
                     out _splatRotationRandom, 0.0f, 1.0f))
-                    _doStuff = true;
+                    StuffToBeDone = true;
                 offsetY += 40;
 
                 if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Splat Scale", _splatScale,
-                    out _splatScale, 0.5f, 2.0f)) _doStuff = true;
+                    out _splatScale, 0.5f, 2.0f)) StuffToBeDone = true;
                 offsetY += 40;
 
                 if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Splat Wooble Amount", _splatWobble,
-                    out _splatWobble, 0.0f, 1.0f)) _doStuff = true;
+                    out _splatWobble, 0.0f, 1.0f)) StuffToBeDone = true;
                 offsetY += 40;
 
                 if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Splat Randomize", _splatRandomize,
-                    out _splatRandomize, 0.0f, 1.0f)) _doStuff = true;
+                    out _splatRandomize, 0.0f, 1.0f)) StuffToBeDone = true;
                 offsetY += 50;
             }
 
@@ -436,16 +399,14 @@ namespace Gui
 
             if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set Maps")) StartCoroutine(SetMaps());
 
-
-            GUI.DragWindow();
         }
 
         private void OnGUI()
         {
             if (Hide) return;
-            _windowRect.width = 300;
-            _windowRect.height = _techniqueSplat ? 610 : 490;
-            MainGui.MakeScaledWindow(_windowRect, _windowId, DoMyWindow, "Tiling Texture Maker");
+            var rect = WindowRect;
+            rect.height = _techniqueSplat ? 610 : 490;
+            MainGui.MakeScaledWindow(rect, WindowId, DoMyWindow, "Tiling Texture Maker");
         }
 
         // ReSharper disable once RedundantAssignment
@@ -555,12 +516,6 @@ namespace Gui
             yield return new WaitForSeconds(0.1f);
         }
 
-        public void Close()
-        {
-            CleanupTextures();
-            gameObject.SetActive(false);
-        }
-
         private static void CleanupTexture(RenderTexture texture)
         {
             if (!texture) return;
@@ -569,7 +524,7 @@ namespace Gui
             texture = null;
         }
 
-        private void CleanupTextures()
+        protected override void CleanupTextures()
         {
             CleanupTexture(_hdHeightMapTemp);
             CleanupTexture(_heightMapTemp);
@@ -739,9 +694,9 @@ namespace Gui
             return textureTarget;
         }
 
-        private IEnumerator TileTextures()
+        protected override IEnumerator Process()
         {
-            Logger.Log("Processing Tile");
+            MessagePanel.ShowMessage("Processing Tile");
 
             _blitMaterial.SetFloat(Falloff, 1.0f);
             _blitMaterial.SetFloat(Falloff, _falloff);
@@ -808,6 +763,21 @@ namespace Gui
             }
 
             yield return new WaitForSeconds(0.1f);
+        }
+
+        protected override void ResetSettings()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override TexturePanelSettings GetSettings()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void SetSettings(TexturePanelSettings settings)
+        {
+            throw new NotImplementedException();
         }
 
         private enum TileTechnique

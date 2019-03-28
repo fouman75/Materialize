@@ -2,7 +2,7 @@
 
 using System.Collections;
 using General;
-using JetBrains.Annotations;
+using Settings;
 using UnityEngine;
 using Logger = General.Logger;
 
@@ -10,29 +10,12 @@ using Logger = General.Logger;
 
 namespace Gui
 {
-    public class AlignmentGui : MonoBehaviour, IHideable
+    public class AlignmentGui : TexturePanelGui
     {
-        private static readonly int TargetPoint = Shader.PropertyToID("_TargetPoint");
-        private static readonly int MainTex = Shader.PropertyToID("_MainTex");
-        private static readonly int CorrectTex = Shader.PropertyToID("_CorrectTex");
-        private static readonly int PointScale = Shader.PropertyToID("_PointScale");
-        private static readonly int PointTl = Shader.PropertyToID("_PointTL");
-        private static readonly int PointTr = Shader.PropertyToID("_PointTR");
-        private static readonly int PointBl = Shader.PropertyToID("_PointBL");
-        private static readonly int PointBr = Shader.PropertyToID("_PointBR");
-        private static readonly int Width = Shader.PropertyToID("_Width");
-        private static readonly int Height = Shader.PropertyToID("_Height");
-        private static readonly int Lens = Shader.PropertyToID("_Lens");
-        private static readonly int PerspectiveX = Shader.PropertyToID("_PerspectiveX");
-        private static readonly int PerspectiveY = Shader.PropertyToID("_PerspectiveY");
-        private static readonly int Slider = Shader.PropertyToID("_Slider");
         private RenderTexture _alignMap;
 
         private Material _blitMaterial;
         private Camera _camera;
-
-        private bool _doStuff;
-
 
         private int _grabbedPoint;
 
@@ -56,25 +39,10 @@ namespace Gui
 
         private Texture2D _textureToAlign;
 
-        private Rect _windowRect;
-        [UsedImplicitly] public bool NewTexture;
-        public GameObject TestObject;
-
-        public Material ThisMaterial;
-
-        public bool Hide { get; set; }
-
         private void Awake()
         {
             _camera = Camera.main;
-            _windowRect = new Rect(10.0f, 265.0f, 300f, 430f);
-        }
-
-        private void OnDisable()
-        {
-            RenderTexture.ReleaseTemporary(_alignMap);
-            RenderTexture.ReleaseTemporary(_lensMap);
-            RenderTexture.ReleaseTemporary(_perspectiveMap);
+            WindowRect = new Rect(10.0f, 265.0f, 300f, 430f);
         }
 
         public void Initialize()
@@ -98,33 +66,52 @@ namespace Gui
                 gameObject.SetActive(false);
 
 
-            _doStuff = true;
+            StuffToBeDone = true;
         }
 
-
-        private static void CleanupTexture(RenderTexture texture)
+        protected override void CleanupTextures()
         {
-            if (!texture) return;
-            texture.Release();
-            // ReSharper disable once RedundantAssignment
-            texture = null;
+            RenderTexture.ReleaseTemporary(_alignMap);
+            RenderTexture.ReleaseTemporary(_lensMap);
+            RenderTexture.ReleaseTemporary(_perspectiveMap);
         }
 
-        public void Close()
+        protected override IEnumerator Process()
         {
-            CleanupTexture(_lensMap);
-            CleanupTexture(_alignMap);
-            CleanupTexture(_perspectiveMap);
-            gameObject.SetActive(false);
+            throw new System.NotImplementedException();
+        }
+
+        protected override void ResetSettings()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override TexturePanelSettings GetSettings()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void SetSettings(TexturePanelSettings settings)
+        {
+            throw new System.NotImplementedException();
         }
 
         private void SelectClosestPoint()
         {
             if (Input.GetMouseButton(0)) return;
             if (!_camera) return;
+            const int mask = 1 << 11;
+            var wasHit = Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out var hit,
+                Mathf.Infinity, mask, QueryTriggerInteraction.UseGlobal);
 
-            if (!Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out var hit))
+            if (!wasHit) return;
+
+            var rend = hit.transform.GetComponent<Renderer>();
+            var hasMeshCollider = hit.collider is MeshCollider;
+            if (!rend || !rend.sharedMaterial || !rend.sharedMaterial.mainTexture || !hasMeshCollider)
+            {
                 return;
+            }
 
             var hitTc = hit.textureCoord;
 
@@ -168,8 +155,19 @@ namespace Gui
 
         private void DragPoint()
         {
-            if (!Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out var hit))
+            if (!_camera) return;
+            const int mask = 1 << 11;
+            var wasHit = Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out var hit,
+                Mathf.Infinity, mask, QueryTriggerInteraction.UseGlobal);
+
+            if (!wasHit) return;
+
+            var rend = hit.transform.GetComponent<Renderer>();
+            var hasMeshCollider = hit.collider is MeshCollider;
+            if (!rend || !rend.sharedMaterial || !rend.sharedMaterial.mainTexture || !hasMeshCollider)
+            {
                 return;
+            }
 
             var hitTc = hit.textureCoord;
 
@@ -202,12 +200,29 @@ namespace Gui
                     default: return;
                 }
 
+                ClampPoints();
+
                 if (point != null) ThisMaterial.SetVector(TargetPoint, point);
 
                 _startOffset = hitTc;
             }
 
-            _doStuff = true;
+            StuffToBeDone = true;
+        }
+
+        private void ClampPoints()
+        {
+            _pointTl.x = Mathf.Clamp01(_pointTl.x);
+            _pointTl.y = Mathf.Clamp01(_pointTl.y);
+
+            _pointTr.x = Mathf.Clamp01(_pointTr.x);
+            _pointTr.y = Mathf.Clamp01(_pointTr.y);
+
+            _pointBl.x = Mathf.Clamp01(_pointBl.x);
+            _pointBl.y = Mathf.Clamp01(_pointBl.y);
+
+            _pointBr.x = Mathf.Clamp01(_pointBr.x);
+            _pointBr.y = Mathf.Clamp01(_pointBr.y);
         }
 
         // Update is called once per frame
@@ -250,7 +265,7 @@ namespace Gui
             _blitMaterial.SetFloat(PerspectiveX, _perspectiveX);
             _blitMaterial.SetFloat(PerspectiveY, _perspectiveY);
 
-            if (_doStuff) _doStuff = false;
+            if (StuffToBeDone) StuffToBeDone = false;
 
             ThisMaterial.SetFloat(Slider, _slider);
         }
@@ -271,14 +286,14 @@ namespace Gui
             if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Original Diffuse Map"))
             {
                 _textureToAlign = TextureManager.Instance.DiffuseMapOriginal;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             GUI.enabled = TextureManager.Instance.DiffuseMap != null;
             if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Diffuse Map"))
             {
                 _textureToAlign = TextureManager.Instance.DiffuseMap;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             offsetY += 40;
@@ -288,7 +303,7 @@ namespace Gui
             if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Height Map"))
             {
                 _textureToAlign = TextureManager.Instance.HeightMap;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             offsetY += 40;
@@ -297,14 +312,14 @@ namespace Gui
             if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Metallic Map"))
             {
                 _textureToAlign = TextureManager.Instance.MetallicMap;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             GUI.enabled = TextureManager.Instance.SmoothnessMap != null;
             if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Smoothness Map"))
             {
                 _textureToAlign = TextureManager.Instance.SmoothnessMap;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             offsetY += 40;
@@ -313,14 +328,14 @@ namespace Gui
             if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Mask Map"))
             {
                 _textureToAlign = TextureManager.Instance.MaskMap;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             GUI.enabled = TextureManager.Instance.AoMap != null;
             if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "AO Map"))
             {
                 _textureToAlign = TextureManager.Instance.AoMap;
-                _doStuff = true;
+                StuffToBeDone = true;
             }
 
             offsetY += 40;
@@ -329,15 +344,15 @@ namespace Gui
 
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Lens Distort Correction", _lensDistort,
-                out _lensDistort, -1.0f, 1.0f)) _doStuff = true;
+                out _lensDistort, -1.0f, 1.0f)) StuffToBeDone = true;
             offsetY += 40;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Perspective Correction X", _perspectiveX,
-                out _perspectiveX, -5.0f, 5.0f)) _doStuff = true;
+                out _perspectiveX, -5.0f, 5.0f)) StuffToBeDone = true;
             offsetY += 40;
 
             if (GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Perspective Correction Y", _perspectiveY,
-                out _perspectiveY, -5.0f, 5.0f)) _doStuff = true;
+                out _perspectiveY, -5.0f, 5.0f)) StuffToBeDone = true;
             offsetY += 50;
 
             if (GUI.Button(new Rect(offsetX, offsetY, 130, 30), "Reset Points"))
@@ -358,10 +373,8 @@ namespace Gui
         private void OnGUI()
         {
             if (Hide) return;
-            var pivotPoint = new Vector2(_windowRect.x, _windowRect.y);
-            GUIUtility.ScaleAroundPivot(ProgramManager.Instance.GuiScale, pivotPoint);
 
-            _windowRect = GUI.Window(21, _windowRect, DoMyWindow, "Texture Alignment Adjuster");
+            MainGui.MakeScaledWindow(WindowRect, WindowId, DoMyWindow, "Texture Alignment Adjuster", GuiScale);
         }
 
         private void ProcessMap(Texture2D textureTarget)
@@ -411,13 +424,13 @@ namespace Gui
 
             RenderTexture.active = null;
 
-            CleanupTexture(_lensMap);
-            CleanupTexture(_alignMap);
-            CleanupTexture(_perspectiveMap);
+            RenderTexture.ReleaseTemporary(_lensMap);
+            RenderTexture.ReleaseTemporary(_alignMap);
+            RenderTexture.ReleaseTemporary(_perspectiveMap);
 
             if (replaceTexture) _textureToAlign = textureTarget;
 
-            _doStuff = true;
+            StuffToBeDone = true;
 
             return textureTarget;
         }
@@ -427,14 +440,13 @@ namespace Gui
             var width = textureTarget.width;
             var height = textureTarget.height;
 
-            CleanupTexture(_lensMap);
-            CleanupTexture(_alignMap);
-            CleanupTexture(_perspectiveMap);
+            RenderTexture.ReleaseTemporary(_lensMap);
+            RenderTexture.ReleaseTemporary(_alignMap);
+            RenderTexture.ReleaseTemporary(_perspectiveMap);
 
-            _lensMap = new RenderTexture(width, height, 0, RenderTextureFormat.RHalf, RenderTextureReadWrite.Linear);
-            _alignMap = new RenderTexture(width, height, 0, RenderTextureFormat.RHalf, RenderTextureReadWrite.Linear);
-            _perspectiveMap =
-                new RenderTexture(width, height, 0, RenderTextureFormat.RHalf, RenderTextureReadWrite.Linear);
+            _lensMap = TextureManager.Instance.GetTempRenderTexture(width, height);
+            _alignMap = TextureManager.Instance.GetTempRenderTexture(width, height);
+            _perspectiveMap = TextureManager.Instance.GetTempRenderTexture(width, height);
 
             Graphics.Blit(textureTarget, _lensMap, _blitMaterial, 0);
             Graphics.Blit(_lensMap, _alignMap, _blitMaterial, 1);
@@ -448,11 +460,11 @@ namespace Gui
 
             Graphics.Blit(_perspectiveMap, textureTarget);
 
-            CleanupTexture(_lensMap);
-            CleanupTexture(_alignMap);
-            CleanupTexture(_perspectiveMap);
+            RenderTexture.ReleaseTemporary(_lensMap);
+            RenderTexture.ReleaseTemporary(_alignMap);
+            RenderTexture.ReleaseTemporary(_perspectiveMap);
 
-            _doStuff = true;
+            StuffToBeDone = true;
 
             return textureTarget;
         }
