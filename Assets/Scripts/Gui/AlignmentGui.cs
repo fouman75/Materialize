@@ -14,7 +14,6 @@ namespace Gui
     {
         private RenderTexture _alignMap;
 
-        private Material _blitMaterial;
         private Camera _camera;
 
         private int _grabbedPoint;
@@ -38,18 +37,24 @@ namespace Gui
         private Vector2 _startOffset = Vector2.zero;
 
         private Texture2D _textureToAlign;
+        public ComputeShader AlignmentCompute;
+        private int _lensKernel;
+        private int _alignKernel;
+        private int _perspectiveKernel;
 
         private void Awake()
         {
             _camera = Camera.main;
             WindowRect = new Rect(10.0f, 265.0f, 300f, 430f);
+            _lensKernel = AlignmentCompute.FindKernel("CSLens");
+            _alignKernel = AlignmentCompute.FindKernel("CSAlign");
+            _perspectiveKernel = AlignmentCompute.FindKernel("CSPerspective");
         }
 
         public void Initialize()
         {
             gameObject.SetActive(true);
             TestObject.GetComponent<Renderer>().sharedMaterial = ThisMaterial;
-            _blitMaterial = new Material(Shader.Find("Hidden/Blit_Alignment")) {hideFlags = HideFlags.HideAndDontSave};
 
             if (TextureManager.Instance.DiffuseMapOriginal != null)
                 _textureToAlign = TextureManager.Instance.DiffuseMapOriginal;
@@ -253,17 +258,18 @@ namespace Gui
             ThisMaterial.SetVector(PointBl, _pointBl);
             ThisMaterial.SetVector(PointBr, _pointBr);
 
-            _blitMaterial.SetVector(PointTl, _pointTl);
-            _blitMaterial.SetVector(PointTr, _pointTr);
-            _blitMaterial.SetVector(PointBl, _pointBl);
-            _blitMaterial.SetVector(PointBr, _pointBr);
+            var imageSize = new Vector2(_textureToAlign.width, _textureToAlign.height);
 
-            _blitMaterial.SetFloat(Width, _textureToAlign.width);
-            _blitMaterial.SetFloat(Height, _textureToAlign.height);
+            AlignmentCompute.SetVector(ImageSizeId, imageSize);
 
-            _blitMaterial.SetFloat(Lens, _lensDistort);
-            _blitMaterial.SetFloat(PerspectiveX, _perspectiveX);
-            _blitMaterial.SetFloat(PerspectiveY, _perspectiveY);
+            AlignmentCompute.SetVector(PointTl, _pointTl);
+            AlignmentCompute.SetVector(PointTr, _pointTr);
+            AlignmentCompute.SetVector(PointBl, _pointBl);
+            AlignmentCompute.SetVector(PointBr, _pointBr);
+
+            AlignmentCompute.SetFloat(Lens, _lensDistort);
+            AlignmentCompute.SetFloat(PerspectiveX, _perspectiveX);
+            AlignmentCompute.SetFloat(PerspectiveY, _perspectiveY);
 
             if (StuffToBeDone) StuffToBeDone = false;
 
@@ -389,9 +395,12 @@ namespace Gui
             if (_perspectiveMap == null)
                 _perspectiveMap = TextureManager.Instance.GetTempRenderTexture(width, height);
 
-            Graphics.Blit(textureTarget, _lensMap, _blitMaterial, 0);
-            Graphics.Blit(_lensMap, _alignMap, _blitMaterial, 1);
-            Graphics.Blit(_alignMap, _perspectiveMap, _blitMaterial, 2);
+            ImageSize = new Vector2Int(_textureToAlign.width, _textureToAlign.height);
+
+            AlignmentCompute.SetVector(ImageSizeId, (Vector2) ImageSize);
+            RunKernel(AlignmentCompute, _lensKernel, textureTarget, _lensMap);
+            RunKernel(AlignmentCompute, _alignKernel, _lensMap, _alignMap);
+            RunKernel(AlignmentCompute, _perspectiveKernel, _alignMap, _perspectiveMap);
         }
 
         private Texture2D SetMap(Texture2D textureTarget)
@@ -407,9 +416,13 @@ namespace Gui
             _alignMap = TextureManager.Instance.GetTempRenderTexture(width, height);
             _perspectiveMap = TextureManager.Instance.GetTempRenderTexture(width, height);
 
-            Graphics.Blit(textureTarget, _lensMap, _blitMaterial, 0);
-            Graphics.Blit(_lensMap, _alignMap, _blitMaterial, 1);
-            Graphics.Blit(_alignMap, _perspectiveMap, _blitMaterial, 2);
+            ImageSize = new Vector2Int(_textureToAlign.width, _textureToAlign.height);
+
+            AlignmentCompute.SetVector(ImageSizeId, (Vector2) ImageSize);
+
+            RunKernel(AlignmentCompute, _lensKernel, textureTarget, _lensMap);
+            RunKernel(AlignmentCompute, _alignKernel, _lensMap, _alignMap);
+            RunKernel(AlignmentCompute, _perspectiveKernel, _alignMap, _perspectiveMap);
 
             var replaceTexture = _textureToAlign == textureTarget;
 
@@ -448,11 +461,15 @@ namespace Gui
             _alignMap = TextureManager.Instance.GetTempRenderTexture(width, height);
             _perspectiveMap = TextureManager.Instance.GetTempRenderTexture(width, height);
 
-            Graphics.Blit(textureTarget, _lensMap, _blitMaterial, 0);
-            Graphics.Blit(_lensMap, _alignMap, _blitMaterial, 1);
-            Graphics.Blit(_alignMap, _perspectiveMap, _blitMaterial, 2);
+            ImageSize = new Vector2Int(_textureToAlign.width, _textureToAlign.height);
 
-            if (textureTarget != null)
+            AlignmentCompute.SetVector(ImageSizeId, (Vector2) ImageSize);
+
+            RunKernel(AlignmentCompute, _lensKernel, textureTarget, _lensMap);
+            RunKernel(AlignmentCompute, _alignKernel, _lensMap, _alignMap);
+            RunKernel(AlignmentCompute, _perspectiveKernel, _alignMap, _perspectiveMap);
+
+            if (textureTarget)
             {
                 textureTarget.Release();
                 textureTarget = null;

@@ -1,0 +1,121 @@
+﻿#pragma kernel CSAlign
+#pragma kernel CSPerspective
+#pragma kernel CSLens
+
+RWTexture2D<float4> Result;
+Texture2D<float4> ImageInput;
+SamplerState LinearRepeatSample;
+
+float2 _ImageSize;
+
+float2 _PointTL;
+float2 _PointTR;
+float2 _PointBL;
+float2 _PointBR;
+
+float _Lens;
+
+float _PerspectiveX;
+float _PerspectiveY;
+
+[numthreads(8,8,1)]
+void CSLens (uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= uint(_ImageSize.x) || id.y >= uint(_ImageSize.y))
+        return;
+        
+    float2 uv = id.xy / _ImageSize;
+    float aspect = _ImageSize.x / _ImageSize.y;
+    float2 distortUV = uv;
+    distortUV = distortUV - 0.5;
+    distortUV.x *= aspect;
+    distortUV = distortUV * ( ( 1.0 - cos( distortUV.yx ) ) * _Lens + 1.0 );
+    distortUV.x *= 1.0 / aspect;
+    distortUV += 0.5;
+
+    
+    float2 distortUV3 = uv - 0.5;
+    distortUV3.x *= aspect;
+    float2 offsetSquared = distortUV3 * distortUV3;
+    float radiusSquared = offsetSquared.x + offsetSquared.y;
+    distortUV3 *= radiusSquared * _Lens + 1.0;
+    distortUV3 *= 1.0 - ( _Lens * 0.5 );
+    distortUV3.x *= 1.0 / aspect;
+    distortUV3 += 0.5;
+    
+    half4 c = ImageInput.SampleLevel(LinearRepeatSample, distortUV3, 0);
+		
+    Result[id.xy] = float4( c.xyz, 1 );
+}
+
+[numthreads(8,8,1)]
+void CSAlign (uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= uint(_ImageSize.x) || id.y >= uint(_ImageSize.y))
+        return;
+        
+    float2 uv = id.xy / _ImageSize;
+    float2 newUVtop = lerp( _PointTL, _PointTR, uv.x );
+    float2 newUVbot = lerp( _PointBL, _PointBR, uv.x );
+    float2 newUV = lerp( newUVbot, newUVtop, uv.y );
+    
+    half4 c = ImageInput.SampleLevel(LinearRepeatSample, newUV, 0);
+
+    Result[id.xy] = float4( c.xyz, 1 );
+}
+
+[numthreads(8,8,1)]
+void CSPerspective (uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= uint(_ImageSize.x) || id.y >= uint(_ImageSize.y))
+        return;
+        
+    float2 uv = id.xy / _ImageSize;
+    float2 UV = uv;
+    float2 newUV1 = uv;
+    float2 newUV2 = uv;
+    
+    float perspectiveX1 = 1;
+    if( _PerspectiveX > 0 ){
+        perspectiveX1 = 1.0 / ( _PerspectiveX + 1.0 );
+        newUV1.x = 1.0 - pow( 1.0 - newUV1.x, perspectiveX1 );
+    }else{
+        perspectiveX1 = 1.0 / ( abs( _PerspectiveX ) + 1.0 );
+        newUV1.x = pow( newUV1.x, perspectiveX1 );
+    }
+    
+    float perspectiveX2 = 1;
+    if( _PerspectiveX > 0 ){
+        perspectiveX2 = _PerspectiveX + 1.0;
+        newUV2.x = pow( newUV2.x, perspectiveX2 );
+    }else{
+        perspectiveX2 = abs( _PerspectiveX ) + 1.0;
+        newUV2.x = 1.0 - pow( 1.0 - newUV2.x, perspectiveX2 );
+    }
+    
+    UV.x = lerp( newUV1.x, newUV2.x, 1.0 - uv.x );
+    
+    float perspectiveY1 = 1;
+    if( _PerspectiveY > 0 ){
+        perspectiveY1 = 1.0 / ( _PerspectiveY + 1.0 );
+        newUV1.y = 1.0 - pow( 1.0 - UV.y, perspectiveY1 );
+    }else{
+        perspectiveY1 = 1.0 / ( abs( _PerspectiveY ) + 1.0 );
+        newUV1.y = pow( UV.y, perspectiveY1 );
+    }
+    
+    float perspectiveY2 = 1;
+    if( _PerspectiveY > 0 ){
+        perspectiveY2 = 1.0 / ( _PerspectiveY + 1.0 );
+        newUV2.y = 1.0 - pow( 1.0 - UV.y, perspectiveY2 );
+    }else{
+        perspectiveY2 = 1.0 / ( abs( _PerspectiveY ) + 1.0 );
+        newUV2.y = pow( UV.y, perspectiveY2 );
+    }
+    
+    UV.y = lerp( newUV1.y, newUV2.y, 1.0 - uv.y );
+
+    half4 c = ImageInput.SampleLevel(LinearRepeatSample, UV, 0);
+
+    Result[id.xy] = float4( c.xyz, 1 );
+}

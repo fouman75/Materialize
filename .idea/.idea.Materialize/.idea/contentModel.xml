@@ -122,6 +122,7 @@
           <e p="AO_From_Normal_Preview.shader" t="Include" />
           <e p="Alignment_Shader.shader" t="Include" />
           <e p="Compute" t="Include">
+            <e p="AlignmentCompute.compute" t="Include" />
             <e p="AoCompute.compute" t="Include" />
             <e p="BlurCompute.compute" t="Include" />
             <e p="EditDiffuseCompute.compute" t="Include" />

@@ -1456,7 +1456,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5603489c3f0e4284fa9770f7a8b89a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BlurCompute: {fileID: 0}
   TestObject: {fileID: 1463534583}
+  ThisMaterial: {fileID: 0}
 --- !u!4 &892130046
 Transform:
   m_ObjectHideFlags: 0
@@ -4250,9 +4252,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf4eeebdf642624c9183bb8bfa2a690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NewTexture: 0
+  BlurCompute: {fileID: 0}
   TestObject: {fileID: 1463534583}
   ThisMaterial: {fileID: 2100000, guid: 7fd67f956e67fdd469729a1b1456e6d7, type: 2}
+  AlignmentCompute: {fileID: 7200000, guid: f23e6a8c56eae868b94143d23a53345e, type: 3}
 --- !u!4 &1976805202
 Transform:
   m_ObjectHideFlags: 0
