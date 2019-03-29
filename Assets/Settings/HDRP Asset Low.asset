@@ -70,14 +70,14 @@ MonoBehaviour:
       maxDecalsOnScreen: 512
     hdShadowInitParams:
       maxShadowRequests: 16
-      directionalShadowsDepthBits: 16
+      directionalShadowsDepthBits: 32
       shadowQuality: 0
       punctualLightShadowAtlas:
-        shadowAtlasResolution: 1024
+        shadowAtlasResolution: 4096
         shadowAtlasDepthBits: 32
         useDynamicViewportRescale: 1
       areaLightShadowAtlas:
-        shadowAtlasResolution: 1024
+        shadowAtlasResolution: 4096
         shadowAtlasDepthBits: 32
         useDynamicViewportRescale: 1
     decalSettings:
@@ -89,13 +89,13 @@ MonoBehaviour:
       m_LutSize: 32
       lutFormat: 52
     dynamicResolutionSettings:
-      enabled: 0
+      enabled: 1
       maxPercentage: 100
       minPercentage: 50
       dynResType: 0
       upsampleFilter: 1
-      forceResolution: 0
-      forcedPercentage: 100
+      forceResolution: 1
+      forcedPercentage: 80
   allowShaderVariantStripping: 1
   enableSRPBatcher: 1
   shaderVariantLogLevel: 2

@@ -266,6 +266,8 @@ namespace Gui
         private Texture2D _textureToSave;
         private bool _tgaSelected;
         private Texture2D _greyTexture;
+        private bool _canDrawSaveOptions;
+
 
         private Material _thisMaterial;
 
@@ -354,18 +356,13 @@ namespace Gui
 
         private void OnGUI()
         {
-            #region Main Gui
+            DrawSaveOptions();
+        }
 
-            //==================================================//
-            // 						Main Gui					//
-            //==================================================//
-
-            //==============================//
-            // 		Map Saving Options		//
-            //==============================//
-
-            #region Map Saving Options
-
+        private void DrawSaveOptions()
+        {
+            if (!_canDrawSaveOptions) return;
+            //Save Options
             const int rectWidth = 220;
             var offsetXm = 1440 - rectWidth - 10;
             var offsetY = 10;
@@ -411,13 +408,7 @@ namespace Gui
                 StandaloneFileBrowser.StandaloneFileBrowser.OpenFilePanelAsync("Load Project",
                     ProgramManager.Instance.LastPath, "mtz", false, LoadProjectCallback);
 
-            #endregion
-
-            //======================================//
-            //			Property Map Settings		//
-            //======================================//
-
-            #region Property Map Settings
+            //Property Map
 
             GUI.Label(new Rect(offsetXm + 130, offsetY + 20, 100, 25), "Property Map");
 
@@ -524,10 +515,11 @@ namespace Gui
             }
 
             GUI.enabled = true;
+        }
 
-            #endregion
-
-            #endregion
+        public void ToggleSaveOptions()
+        {
+            _canDrawSaveOptions = !_canDrawSaveOptions;
         }
 
         public void AdjustAlignment()

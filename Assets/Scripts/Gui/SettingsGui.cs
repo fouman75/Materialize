@@ -82,7 +82,7 @@ namespace Gui
         {
             Logger.Log("Initializing Program Settings");
             ProgramSettings.HideUiOnRotate = ObjectHandler.AllowHide;
-            ProgramSettings.FrameRate = ProgramManager.DefaultFrameRate;
+            ProgramSettings.FrameRate = ProgramManager.Instance.DefaultFrameRate;
             ProgramSettings.GraphicsQuality = ProgramEnums.GraphicsQuality.Medium;
             ProgramSettings.HDR = TextureManager.Instance.Hdr;
             ProgramSettings.NormalMapMaxStyle = true;

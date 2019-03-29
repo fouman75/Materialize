@@ -17,12 +17,16 @@ namespace General
     public class ProgramManager : MonoBehaviour
     {
         private const string LastPathKey = nameof(LastPathKey);
-        public const int DefaultFrameRate = 60;
+
+        [HideInInspector] public int DefaultFrameRate = 30;
+        public bool ForceFrameRate;
+        public int ForcedFrameRate = 30;
+        [HideInInspector] public int DesiredFrameRate;
+
         public static ProgramManager Instance;
         public static Vector2 GuiReferenceSize = new Vector2(1440, 810);
         private int _windowId;
         public bool ApplicationIsQuitting;
-        public int DesiredFrameRate;
         public ProgramEnums.GraphicsQuality GraphicsQuality;
         public Vector2 GuiScale = new Vector2(1, 1);
         public HDRenderPipelineAsset HighQualityAsset;
@@ -35,6 +39,7 @@ namespace General
         public HDRenderPipeline RenderPipeline;
         public Volume SceneVolume;
         public Camera MainCamera;
+
         #region Settings
 
         public Cubemap StartCubeMap;
@@ -74,6 +79,12 @@ namespace General
 
             GuiScale = new Vector2(Screen.width / GuiReferenceSize.x, Screen.height / GuiReferenceSize.y);
             MessagePanelObject.gameObject.SetActive(true);
+
+            if (!Application.isEditor)
+            {
+                var monitorFrameRate = Screen.resolutions[Screen.resolutions.Length - 1].refreshRate;
+                DefaultFrameRate = ForceFrameRate ? ForcedFrameRate : monitorFrameRate;
+            }
         }
 
         private IEnumerator Start()

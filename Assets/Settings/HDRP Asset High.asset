@@ -39,7 +39,7 @@ MonoBehaviour:
     supportTransparentBackface: 0
     supportTransparentDepthPrepass: 0
     supportTransparentDepthPostpass: 0
-    colorBufferFormat: 74
+    colorBufferFormat: 48
     supportedLitShaderMode: 2
     supportDecals: 0
     msaaSampleCount: 2
@@ -94,8 +94,8 @@ MonoBehaviour:
       minPercentage: 50
       dynResType: 0
       upsampleFilter: 1
-      forceResolution: 0
-      forcedPercentage: 100
+      forceResolution: 1
+      forcedPercentage: 80
   allowShaderVariantStripping: 1
   enableSRPBatcher: 1
   shaderVariantLogLevel: 2
