@@ -13,6 +13,8 @@ namespace General
 {
     public class TextureManager : MonoBehaviour
     {
+        [Range(0, 10)] public float DefaultDisplacement = 3.0f;
+
         // ReSharper disable once MemberCanBePrivate.Global
         public const TextureFormat DefaultHdrTextureFormat = TextureFormat.RGBAHalf;
 
@@ -25,6 +27,14 @@ namespace General
         private static readonly int NormalMapId = Shader.PropertyToID("_NormalMap");
         private static readonly int MaskMapId = Shader.PropertyToID("_MaskMap");
         private static readonly int HeightMapId = Shader.PropertyToID("_HeightMap");
+        private static readonly int MetallicId = Shader.PropertyToID("_Metallic");
+        private static readonly int SmoothnessId = Shader.PropertyToID("_Smoothness");
+        private static readonly int HeightAmplitudeId = Shader.PropertyToID("_HeightAmplitude");
+        private static readonly int TessAmplitudeId = Shader.PropertyToID("_HeightTessAmplitude");
+        private static readonly int HeightMax = Shader.PropertyToID("_HeightMax");
+        private static readonly int HeightMin = Shader.PropertyToID("_HeightMin");
+        private static readonly int HeightCenterId = Shader.PropertyToID("_HeightCenter");
+
 
         private Texture2D _blackTexture;
         private Texture2D _packedNormal;
@@ -103,13 +113,17 @@ namespace General
             return false;
         }
 
+        public Material GetMaterialInstance()
+        {
+            return new Material(FullMaterial);
+        }
+
         public bool GetCreationCondition(ProgramEnums.MapType mapType)
         {
             switch (mapType)
             {
                 case ProgramEnums.MapType.Height:
-                    if (DiffuseMapOriginal == null && DiffuseMap == null && NormalMap == null) return false;
-                    return true;
+                    return DiffuseMapOriginal || DiffuseMap || NormalMap;
                 case ProgramEnums.MapType.None:
                 case ProgramEnums.MapType.Any:
                 case ProgramEnums.MapType.Diffuse:
@@ -176,9 +190,12 @@ namespace General
 
             if (HeightMap)
             {
-                FullMaterialInstance.EnableKeyword("_TESSELLATION_DISPLACEMENT");
+                FullMaterialInstance.EnableKeyword("_VERTEX_DISPLACEMENT");
                 FullMaterialInstance.EnableKeyword("_HEIGHTMAP");
                 FullMaterialInstance.SetTexture(HeightMapId, HeightMap);
+                FullMaterialInstance.SetInt(DisplacementMode, 1);
+                var center = FullMaterialInstance.GetFloat(HeightCenterId) / DefaultDisplacement;
+                SetDisplacement(DefaultDisplacement, center);
             }
             else
             {
@@ -213,12 +230,25 @@ namespace General
             else
             {
                 FullMaterialInstance.SetTexture(MaskMapId, null);
+                FullMaterialInstance.SetFloat(MetallicId, 0.0f);
+                FullMaterialInstance.SetFloat(SmoothnessId, 0.0f);
             }
 
             ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = FullMaterialInstance;
             ProgramManager.Instance.MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
 
             MessagePanel.HideMessage();
+        }
+
+        public void SetDisplacement(float displacementAmplitude, float displacementCenter)
+        {
+            FullMaterialInstance.SetFloat(HeightAmplitudeId, displacementAmplitude);
+            var center = displacementCenter * displacementAmplitude;
+            FullMaterialInstance.SetFloat(HeightCenterId, center);
+            var amplitude = displacementAmplitude * 100f;
+            FullMaterialInstance.SetFloat(HeightMax, amplitude);
+            FullMaterialInstance.SetFloat(HeightMin, 0);
+            FullMaterialInstance.SetFloat(TessAmplitudeId, amplitude);
         }
 
         public void SetFullMaterial()
@@ -512,7 +542,7 @@ namespace General
         {
             FullMaterialInstance.SetTextureScale(DiffuseMapId, scale);
         }
-        
+
         public void SetUvOffset(Vector2 offset)
         {
             FullMaterialInstance.SetTextureOffset(DiffuseMapId, offset);
@@ -531,6 +561,7 @@ namespace General
         public Texture2D MaskMap;
         public Texture2D PropertyMap;
         private ProgramEnums.MapType _textureToSave;
+        private static readonly int DisplacementMode = Shader.PropertyToID("_DisplacementMode");
 
         #endregion
 

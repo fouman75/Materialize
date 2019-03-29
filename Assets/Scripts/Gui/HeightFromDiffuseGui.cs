@@ -100,16 +100,11 @@ namespace Gui
 
             HeightCompute.SetBool(HeightFromNormal, _heightFromDiffuseSettings.UseNormal);
 
-            // Save low fidelity for texture 2d
-            HeightCompute.SetTexture(kernelCombine, "ImageInput", _blurMap0);
-            HeightCompute.SetTexture(kernelCombine, "Result", _tempHeightMap);
-            HeightCompute.Dispatch(kernelCombine, ImageSize.x / 8, ImageSize.y / 8, 1);
-
+            RunKernel(HeightCompute, kernelCombine, _blurMap0, _tempHeightMap);
             if (TextureManager.Instance.HeightMap) Destroy(TextureManager.Instance.HeightMap);
 
             TextureManager.Instance.GetTextureFromRender(_tempHeightMap, ProgramEnums.MapType.Height);
 
-            // Save high fidelity for normal making
             if (TextureManager.Instance.HdHeightMap)
             {
                 TextureManager.Instance.HdHeightMap.Release();
@@ -117,10 +112,8 @@ namespace Gui
             }
 
             TextureManager.Instance.HdHeightMap =
-                TextureManager.Instance.GetTempRenderTexture(_tempHeightMap.width, _tempHeightMap.width);
-            HeightCompute.SetTexture(kernelCombine, "ImageInput", _blurMap0);
-            HeightCompute.SetTexture(kernelCombine, "Result", TextureManager.Instance.HdHeightMap);
-            HeightCompute.Dispatch(kernelCombine, ImageSize.x / 8, ImageSize.y / 8, 1);
+                TextureManager.Instance.GetTempRenderTexture(_blurMap0.width, _blurMap0.width);
+            RunKernel(HeightCompute, kernelCombine, _blurMap0, TextureManager.Instance.HdHeightMap);
 
             RenderTexture.ReleaseTemporary(_tempHeightMap);
 
@@ -649,8 +642,9 @@ namespace Gui
                         out _heightFromDiffuseSettings.IsolateSample1, "Isolate Mask", StuffToBeDone);
                     if (_heightFromDiffuseSettings.IsolateSample1) _heightFromDiffuseSettings.IsolateSample2 = false;
                     offsetY += 30;
-                    
-                    if (GUI.Toggle(new Rect(offsetX, offsetY + 5, 80, 20),_currentSelection == 1, "Pick Color", "Button"))
+
+                    if (GUI.Toggle(new Rect(offsetX, offsetY + 5, 80, 20), _currentSelection == 1, "Pick Color",
+                        "Button"))
                     {
                         _selectingColor = true;
                         _currentSelection = 1;
@@ -708,8 +702,9 @@ namespace Gui
                         out _heightFromDiffuseSettings.IsolateSample2, "Isolate Mask", StuffToBeDone);
                     if (_heightFromDiffuseSettings.IsolateSample2) _heightFromDiffuseSettings.IsolateSample1 = false;
                     offsetY += 30;
-                    
-                    if (GUI.Toggle(new Rect(offsetX, offsetY + 5, 80, 20),_currentSelection == 2, "Pick Color", "Button"))
+
+                    if (GUI.Toggle(new Rect(offsetX, offsetY + 5, 80, 20), _currentSelection == 2, "Pick Color",
+                        "Button"))
                     {
                         _selectingColor = true;
                         _currentSelection = 2;
@@ -998,17 +993,10 @@ namespace Gui
             BlurCompute.SetInt(BlurSamples, 32);
             BlurCompute.SetFloat(BlurSpread, 64.0f * extraSpread);
             BlurCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
-            BlurCompute.SetTexture(KernelBlur, "ImageInput", _blurMap6);
-            BlurCompute.SetTexture(KernelBlur, "Result", _avgTempMap);
+            RunKernel(BlurCompute, KernelBlur, _blurMap6, _avgTempMap);
 
-            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
-            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
-
-            BlurCompute.Dispatch(KernelBlur, groupsX, groupsY, 1);
             BlurCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
-            BlurCompute.SetTexture(KernelBlur, "ImageInput", _avgTempMap);
-            BlurCompute.SetTexture(KernelBlur, "Result", _avgMap);
-            BlurCompute.Dispatch(KernelBlur, groupsX, groupsY, 1);
+            RunKernel(BlurCompute, KernelBlur, _avgTempMap, _avgMap);
 
             ThisMaterial.SetTexture(MainTex,
                 _heightFromDiffuseSettings.UseOriginalDiffuse

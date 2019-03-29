@@ -11,11 +11,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Changed the way window scaling works.
+- Changed from Tesselation to Vertex Displacement.
+- Changed the Box and Plane model, higher number of poligons (Needed for Vertex Displacement).
+- Updated Box and plane
+- Plane now contains 65000 verts, not too high for a medium GPU, but, before, with tesselation was only 2000.
+-  Displacement mode was changed because 1: ShaderGraph does not support tesselation. 2: Is more stable, i think it's about Lit is way more supported than LitTesselation.
+- Changed the Test Images inside Unity, not used in the final build. (Beta builds contains it).
 
 #### Minor changes
 - Update to SRP 5.10.0
 - Minor UI Adjusts
 - Update TextMeshPro to 2.0.0
+- Enabled the Burst Compiler.
 
 ### Fixes
 - Fix slow sliders that were too slow because were processing to often.

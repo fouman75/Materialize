@@ -133,6 +133,7 @@
             <e p="SampleCompute.compute" t="Include" />
             <e p="SmoothnessCompute.compute" t="Include" />
             <e p="TextureProcessingCompute.compute" t="Include" />
+            <e p="TilingCompute.compute" t="Include" />
           </e>
           <e p="Edge_From_Normal_Preview.shader" t="Include" />
           <e p="Edit_Diffuse_Preview.shader" t="Include" />

@@ -1,0 +1,200 @@
+﻿#pragma kernel CSTile
+#pragma kernel CSSplat
+
+RWTexture2D<float4> Result;
+Texture2D<float4> ImageInput;
+Texture2D<float4> _HeightTex;
+Texture2D<float4> _TargetTex;;
+
+SamplerState LinearRepeatSample;
+
+float2 _ImageSize;
+
+float _Falloff;
+float _OverlapX;
+float _OverlapY;
+
+float _SmoothBlend;
+
+float _IsSingleChannel;
+float _IsHeight;
+float _IsNormal;
+float _FlipY;
+
+float _SplatScale;
+float4 _SplatKernel;
+
+float4x4 _SplatMatrix[9];
+float _SplatRotation;
+float _SplatRotationRandom;
+float2 _AspectRatio;
+float2 _MaskOffset;
+float2 _MaskOffset2;
+float3 _ObjectScale;
+float _SplatRandomize;
+
+float3 _Wobble;
+
+float2 _TargetAspectRatio;
+
+static const int OffsetKernelSamples = 9;		
+static const float2 OffsetKernel[OffsetKernelSamples] =
+{
+    float2(1,1),
+    float2(0,1),
+    float2(-1,1),
+    float2(1,0),
+    float2(0,0),
+    float2(-1,0),
+    float2(1,-1),
+    float2(0,-1),
+    float2(-1,-1)
+};
+
+[numthreads(8,8,1)]
+void CSTile (uint3 id : SV_DispatchThreadID)
+{
+    float2 overlap = float2( _OverlapX, _OverlapY );
+    float2 invOverlap = 1.0 - float2( _OverlapX, _OverlapY );
+    float2 oneOverOverlap = 1.0 / float2( _OverlapX, _OverlapY );
+    
+    if (id.x >= uint(_ImageSize.x) || id.y >= uint(_ImageSize.y))
+        return;
+
+    float2 uv = id.xy / _ImageSize;
+    
+    float2 UV = uv;
+    float2 UV2 = UV - float2( overlap.x, 0.0 );
+    float2 UV3 = UV - float2( 0.0, overlap.y );
+    float2 UV4 = UV - float2( overlap.x, overlap.y );
+    
+    float2 UVMask = saturate( (  1.0 - frac( UV + 0.0 ) - invOverlap ) * oneOverOverlap );
+    
+    UV = frac( UV );
+    UV2 = frac( UV2 );
+    UV3 = frac( UV3 );
+    UV4 = frac( UV4 );
+    
+    UV *= invOverlap;
+    
+    UV2.x += overlap.x;
+    UV2 *= invOverlap;
+    
+    UV3.y += overlap.y;
+    UV3 *= invOverlap;
+    
+    UV4 += overlap;
+    UV4 *= invOverlap;
+    
+    half heightTex = _HeightTex.SampleLevel(LinearRepeatSample, UV, 0).x;
+    half heightTex2 = _HeightTex.SampleLevel(LinearRepeatSample, UV2, 0).x;
+    half heightTex3 = _HeightTex.SampleLevel(LinearRepeatSample, UV3, 0).x;
+    half heightTex4 = _HeightTex.SampleLevel(LinearRepeatSample, UV4, 0).x;
+    
+    half4 mainTex = ImageInput.SampleLevel(LinearRepeatSample, UV, 0).x;
+    half4 mainTex2 = ImageInput.SampleLevel(LinearRepeatSample, UV2, 0).x;
+    half4 mainTex3 = ImageInput.SampleLevel(LinearRepeatSample, UV3, 0).x;
+    half4 mainTex4 = ImageInput.SampleLevel(LinearRepeatSample, UV4, 0).x;
+
+    half SSHigh =  0.01 + ( 0.5 * saturate( _Falloff ) );
+    half SSLow =  -0.01 - ( 0.5 * saturate( _Falloff ) );
+    half TexBlend = smoothstep( SSLow, SSHigh, ( heightTex2 + UVMask.x ) - ( heightTex + ( 1.0 - UVMask.x ) ) );
+    
+    
+    half4 blendTexH = lerp( mainTex, mainTex2, UVMask.x );
+    half heightTexH = max( heightTex + ( 1.0 - UVMask.x ), heightTex2 + UVMask.x ) - 1.0;
+    heightTexH += saturate( min( UVMask.x, ( 1.0 - UVMask.x ) ) );
+    half4 mainTexH = lerp( mainTex, mainTex2, TexBlend );
+    
+    TexBlend = smoothstep( SSLow, SSHigh, ( heightTex4 + UVMask.x ) - ( heightTex3 + ( 1.0 - UVMask.x ) ) );
+    
+    half4 blendTexV = lerp( mainTex3, mainTex4, UVMask.x );
+    half heightTexV = max( heightTex3 + ( 1.0 - UVMask.x ), heightTex4 + UVMask.x ) - 1.0;
+    heightTexV += saturate( min( UVMask.x, ( 1.0 - UVMask.x ) ) );
+    half4 mainTexV = lerp( mainTex3, mainTex4, TexBlend );
+    
+    TexBlend = smoothstep( SSLow, SSHigh, ( heightTexV + UVMask.y ) - ( heightTexH + ( 1.0 - UVMask.y ) ) );
+    
+    half4 blendTex = lerp( mainTexH, mainTexV, UVMask.y );
+    heightTex = max( heightTexH + ( 1.0 - UVMask.y ), heightTexV + UVMask.y ) - 1.0;
+    heightTex += saturate( min( UVMask.y , ( 1.0 - UVMask.y ) ) );
+    mainTex = lerp( mainTexH, mainTexV, TexBlend );	
+    if( _IsHeight > 0.5 ){
+        Result[id.xy] =  half4( heightTex.xxx, 1.0 );
+    } else {
+        Result[id.xy] =  half4( mainTex.xyz, 1.0 );
+    }
+
+}
+
+[numthreads(8,8,1)]
+void CSSplat (uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= uint(_ImageSize.x) || id.y >= uint(_ImageSize.y))
+        return;
+
+    float2 uv = id.xy / _ImageSize;
+    
+    float2 overlap = float2( _OverlapX, _OverlapY );
+    float2 invOverlap = 1.0 - float2( _OverlapX, _OverlapY );
+    float2 oneOverOverlap = 1.0 / float2( _OverlapX, _OverlapY );
+    
+    float4 targetTex = _TargetTex.SampleLevel(LinearRepeatSample, uv, 0);
+    targetTex.w = ( 1.0 / targetTex.w ) - 1.0;
+    float4 tempTex = float4(0,0,0,0);
+    
+    for( int i = 0; i < OffsetKernelSamples; i++ ){
+    
+        float2 localPos = ( uv - _SplatKernel.xy + OffsetKernel[i].xy) * ( 1.0 / ( _SplatScale * _SplatKernel.z ) ) * _TargetAspectRatio;
+    
+        float rotation = _SplatRotation * -6.28318530718;
+        rotation += _SplatRotationRandom * _SplatRandomize * -6.28318530718;
+        float2 tempPos = localPos;
+        localPos.x = cos( rotation ) * tempPos.x - sin( rotation ) * tempPos.y;
+        localPos.y = sin( rotation ) * tempPos.x + cos( rotation ) * tempPos.y;
+    
+        float2 localMaskPos = localPos * 2.0;
+        float CenterMask = pow( saturate( ( ( 1.0 - saturate( abs( localMaskPos.x ) ) ) * ( 1.0 - saturate( abs( localMaskPos.y ) ) ) - 0.1 ) * 2.0 ), 0.3 );
+        float UVMask = saturate( ( 1.0 - saturate( abs( localMaskPos.x ) ) ) * ( 1.0 - saturate( abs( localMaskPos.y ) ) ) * 10.0 );
+    
+        localPos *= _AspectRatio.yx;
+        localPos *= ( 1.0 / (_Wobble.z + 1.0) );
+        localPos += _Wobble.xy * _Wobble.z;
+        localPos += 0.5;
+    
+        half heightTex = _HeightTex.SampleLevel(LinearRepeatSample, localPos.xy, 0).x;
+        half4 thisTex = ImageInput.SampleLevel(LinearRepeatSample, localPos.xy, 0);
+        
+        half SSHigh =  0.01 + ( 0.5 * saturate( _Falloff ) );
+        half SSLow =  -0.01 - ( 0.5 * saturate( _Falloff ) );
+        if( _IsHeight > 0.5 ){
+            SSHigh =  0.01 + 0.25;
+            SSLow =  -0.01 - 0.25;
+        }
+        
+        if( _IsNormal > 0.5 ){				
+            float3 tempTex = thisTex.xyz * 2.0 - 1.0;
+            
+    
+            if( _FlipY > 0.5 ){
+                rotation *= -1.0;
+            }
+            
+            thisTex.x = cos( rotation ) * tempTex.x - sin( rotation ) * tempTex.y;
+            thisTex.y = sin( rotation ) * tempTex.x + cos( rotation ) * tempTex.y;
+            //thisTex.y *= -1.0;
+            thisTex.xy = thisTex.xy * 0.5 + 0.5;
+        }
+    
+    
+        half thisHeight = ( heightTex.x + 0.2 ) * CenterMask * UVMask;
+        half TexBlend = smoothstep( SSLow, SSHigh, targetTex.w - thisHeight );
+        targetTex.xyz = lerp( thisTex.xyz, targetTex.xyz, TexBlend );
+        targetTex.w = max( targetTex.w, thisHeight );
+    
+    }
+    
+    targetTex.w = 1.0 / ( targetTex.w + 1.0 );
+    
+    Result[id.xy] = targetTex;
+}

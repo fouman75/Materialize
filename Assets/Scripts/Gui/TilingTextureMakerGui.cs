@@ -16,7 +16,6 @@ namespace Gui
     {
         private RenderTexture _aoMapTemp;
 
-        private Material _blitMaterial;
         private RenderTexture _diffuseMapOriginalTemp;
         private RenderTexture _diffuseMapTemp;
 
@@ -74,15 +73,20 @@ namespace Gui
         private TileTechnique _tileTech = TileTechnique.Overlap;
 
         private RenderTexture _tileTemp;
+        public ComputeShader TilingCompute;
+        private int _tileKernel;
+        private int _splatComputeKernel;
+        private bool _busy;
+
         private void Awake()
         {
             WindowRect = new Rect(10.0f, 265.0f, 300f, 540f);
+            _tileKernel = TilingCompute.FindKernel("CSTile");
+            _splatComputeKernel = TilingCompute.FindKernel("CSSplat");
         }
 
         private void Start()
         {
-            _blitMaterial = new Material(Shader.Find("Hidden/Blit_Seamless_Texture_Maker"));
-
             _texSizes = new GUIContent[4];
             _texSizes[0] = new GUIContent("512");
             _texSizes[1] = new GUIContent("1024");
@@ -102,11 +106,11 @@ namespace Gui
 
             WindowId = ProgramManager.Instance.GetWindowId;
         }
-        
+
 
         public void Initialize()
         {
-            _thisMaterial = TextureManager.Instance.FullMaterialInstance;
+            _thisMaterial = TextureManager.Instance.GetMaterialInstance();
 
             TestObject.GetComponent<Renderer>().material = _thisMaterial;
             StuffToBeDone = true;
@@ -114,7 +118,8 @@ namespace Gui
 
         private void Update()
         {
-            _thisMaterial.SetVector(Tiling, new Vector4(_texTiling, _texTiling, _texOffsetX, _texOffsetY));
+            _thisMaterial.SetTextureScale(DiffuseMap, new Vector2(_texTiling, _texTiling));
+            _thisMaterial.SetTextureOffset(DiffuseMap, new Vector2(_texOffsetX, _texOffsetY));
 
             if (Math.Abs(_lastOverlapX - _overlapX) > 0.0001f)
             {
@@ -398,7 +403,6 @@ namespace Gui
             offsetY += 40;
 
             if (GUI.Button(new Rect(offsetX + 150, offsetY, 130, 30), "Set Maps")) StartCoroutine(SetMaps());
-
         }
 
         private void OnGUI()
@@ -540,30 +544,30 @@ namespace Gui
             CleanupTexture(_splatTempAlt);
         }
 
-        private RenderTexture TileTexture(Texture textureToTile, RenderTexture textureTarget, string texName)
+        private RenderTexture TileTexture(Texture textureToTile, RenderTexture textureTarget)
         {
             CleanupTexture(_tileTemp);
             _tileTemp = TextureManager.Instance.GetTempRenderTexture(textureToTile.width, textureToTile.height);
-            _blitMaterial.SetTexture(MainTex, textureToTile);
+            ImageSize = new Vector2Int(textureToTile.width, textureToTile.height);
             Graphics.Blit(textureToTile, _tileTemp);
 
-            return TileTexture(_tileTemp, textureTarget, texName);
+            return TileTexture(_tileTemp, textureTarget);
         }
 
-        private RenderTexture TileTexture(RenderTexture textureToTile, RenderTexture textureTarget, string texName)
+        private RenderTexture TileTexture(RenderTexture textureToTile, RenderTexture textureTarget)
         {
             switch (_tileTech)
             {
                 case TileTechnique.Overlap:
-                    return TileTextureOverlap(textureToTile, textureTarget, texName);
+                    return TileTextureOverlap(textureToTile, textureTarget);
                 case TileTechnique.Splat:
-                    return TileTextureSplat(textureToTile, textureTarget, texName);
+                    return TileTextureSplat(textureToTile, textureTarget);
                 default:
-                    return TileTextureOverlap(textureToTile, textureTarget, texName);
+                    return TileTextureOverlap(textureToTile, textureTarget);
             }
         }
 
-        private RenderTexture TileTextureSplat(Texture textureToTile, RenderTexture textureTarget, string texName)
+        private RenderTexture TileTextureSplat(Texture textureToTile, RenderTexture textureTarget)
         {
             if (textureTarget)
             {
@@ -577,36 +581,16 @@ namespace Gui
             CleanupTexture(_splatTemp);
             CleanupTexture(_splatTempAlt);
 
-            if (texName == "_HDDisplacementMap")
-            {
-                _splatTemp = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.ARGBHalf,
-                    RenderTextureReadWrite.Linear);
-                _splatTempAlt = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.ARGBHalf,
-                    RenderTextureReadWrite.Linear);
-                textureTarget = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.ARGBHalf,
-                    RenderTextureReadWrite.Linear);
-            }
-            else
-            {
-                _splatTemp = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.ARGB32,
-                    RenderTextureReadWrite.Linear);
-                _splatTempAlt = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.ARGB32,
-                    RenderTextureReadWrite.Linear);
-                textureTarget = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0, RenderTextureFormat.ARGB32,
-                    RenderTextureReadWrite.Linear);
-            }
+            _splatTemp = TextureManager.Instance.GetTempRenderTexture(_newTexSizeX, _newTexSizeY);
+            _splatTempAlt = TextureManager.Instance.GetTempRenderTexture(_newTexSizeX, _newTexSizeY);
+            textureTarget = TextureManager.Instance.GetTempRenderTexture(_newTexSizeX, _newTexSizeY);
 
-            textureTarget.wrapMode = TextureWrapMode.Repeat;
+            TilingCompute.SetTexture(_tileKernel, HeightTex, TextureManager.Instance.HeightMap);
+            TilingCompute.SetTexture(_splatComputeKernel, HeightTex, TextureManager.Instance.HeightMap);
 
-            _blitMaterial.SetTexture(MainTex, textureToTile);
-            _blitMaterial.SetTexture(HeightTex, TextureManager.Instance.HeightMap);
-            _blitMaterial.SetVector(ObjectScale, _objectScale);
+            TilingCompute.SetVector(ObjectScale, _objectScale);
 
-            _blitMaterial.SetFloat(FlipY, SettingsGui.Instance.ProgramSettings.NormalMapMayaStyle ? 1.0f : 0.0f);
-
-            // Clear the ping pong buffers
-            Graphics.Blit(Texture2D.blackTexture, _splatTemp, _blitMaterial, 2);
-            Graphics.Blit(Texture2D.blackTexture, _splatTempAlt, _blitMaterial, 2);
+            TilingCompute.SetFloat(FlipY, SettingsGui.Instance.ProgramSettings.NormalMapMayaStyle ? 1.0f : 0.0f);
 
             var texArWidth = TextureManager.Instance.HeightMap.width / (float) TextureManager.Instance.HeightMap.height;
             var texArHeight = TextureManager.Instance.HeightMap.height /
@@ -625,43 +609,43 @@ namespace Gui
             else
                 _targetAr.y = targetArHeight;
 
-            _blitMaterial.SetFloat(SplatScale, _splatScale);
-            _blitMaterial.SetVector(AspectRatio, texAr);
-            _blitMaterial.SetVector(TargetAspectRatio, _targetAr);
+            TilingCompute.SetFloat(SplatScale, _splatScale);
+            TilingCompute.SetVector(AspectRatio, texAr);
+            TilingCompute.SetVector(TargetAspectRatio, _targetAr);
 
-            _blitMaterial.SetFloat(SplatRotation, _splatRotation);
-            _blitMaterial.SetFloat(SplatRotationRandom, _splatRotationRandom);
+            TilingCompute.SetFloat(SplatRotation, _splatRotation);
+            TilingCompute.SetFloat(SplatRotationRandom, _splatRotationRandom);
 
             var isEven = true;
             for (var i = 0; i < _splatKernel.Length; i++)
             {
-                _blitMaterial.SetVector(SplatKernel, _splatKernel[i]);
+                TilingCompute.SetVector(SplatKernel, _splatKernel[i]);
 
                 var offsetX = Mathf.Sin((_splatRandomize + 1.0f + i) * 128.352f);
                 var offsetY = Mathf.Cos((_splatRandomize + 1.0f + i) * 243.767f);
-                _blitMaterial.SetVector(Wobble, new Vector3(offsetX, offsetY, _splatWobble));
+                TilingCompute.SetVector(Wobble, new Vector3(offsetX, offsetY, _splatWobble));
 
-                _blitMaterial.SetFloat(SplatRandomize, Mathf.Sin((_splatRandomize + 1.0f + i) * 472.361f));
+                TilingCompute.SetFloat(SplatRandomize, Mathf.Sin((_splatRandomize + 1.0f + i) * 472.361f));
 
+                ImageSize = new Vector2Int(textureToTile.width, textureToTile.height);
+                TilingCompute.SetVector(ImageSizeId, (Vector2) ImageSize);
                 if (isEven)
                 {
-                    _blitMaterial.SetTexture(TargetTex, _splatTempAlt);
-                    Graphics.Blit(textureToTile, _splatTemp, _blitMaterial, 1);
+                    TilingCompute.SetTexture(_splatComputeKernel, TargetTex, _splatTempAlt);
+                    RunKernel(TilingCompute, _splatComputeKernel, textureToTile, _splatTemp);
                     isEven = false;
                 }
                 else
                 {
-                    _blitMaterial.SetTexture(TargetTex, _splatTemp);
-                    Graphics.Blit(textureToTile, _splatTempAlt, _blitMaterial, 1);
+                    TilingCompute.SetTexture(_splatComputeKernel, TargetTex, _splatTemp);
+                    RunKernel(TilingCompute, _splatComputeKernel, textureToTile, _splatTempAlt);
                     isEven = true;
                 }
             }
 
             //GameObject.Destroy(transHelper.gameObject);
 
-            Graphics.Blit(isEven ? _splatTempAlt : _splatTemp, textureTarget, _blitMaterial, 3);
-
-            _thisMaterial.SetTexture(texName, textureTarget);
+            Graphics.CopyTexture(isEven ? _splatTempAlt : _splatTemp, 0, 0, textureTarget, 0, 0);
 
             CleanupTexture(_splatTemp);
             CleanupTexture(_splatTempAlt);
@@ -670,7 +654,7 @@ namespace Gui
         }
 
 
-        private RenderTexture TileTextureOverlap(Texture textureToTile, RenderTexture textureTarget, string texName)
+        private RenderTexture TileTextureOverlap(Texture textureToTile, RenderTexture textureTarget)
         {
             if (textureTarget)
             {
@@ -679,90 +663,89 @@ namespace Gui
                 textureTarget = null;
             }
 
-            textureTarget = RenderTexture.GetTemporary(_newTexSizeX, _newTexSizeY, 0,
-                texName == "_HDDisplacementMap" ? RenderTextureFormat.RHalf : RenderTextureFormat.ARGB32,
-                RenderTextureReadWrite.Linear);
+            textureTarget = TextureManager.Instance.GetTempRenderTexture(_newTexSizeX, _newTexSizeY);
 
-            textureTarget.wrapMode = TextureWrapMode.Repeat;
+            ImageSize = new Vector2Int(textureToTile.width, textureToTile.height);
+            TilingCompute.SetVector(ImageSizeId, (Vector2) ImageSize);
 
-            _blitMaterial.SetTexture(MainTex, textureToTile);
-
-            Graphics.Blit(textureToTile, textureTarget, _blitMaterial, 0);
-
-            _thisMaterial.SetTexture(texName, textureTarget);
+            RunKernel(TilingCompute, _tileKernel, textureToTile, textureTarget);
 
             return textureTarget;
         }
 
         protected override IEnumerator Process()
         {
+            if (_busy) yield break;
+
+            _busy = true;
             MessagePanel.ShowMessage("Processing Tile");
 
-            _blitMaterial.SetFloat(Falloff, 1.0f);
-            _blitMaterial.SetFloat(Falloff, _falloff);
-            _blitMaterial.SetFloat(OverlapX, _overlapX);
-            _blitMaterial.SetFloat(OverlapY, _overlapY);
+            TilingCompute.SetFloat(Falloff, 1.0f);
+            TilingCompute.SetFloat(Falloff, _falloff);
+            TilingCompute.SetFloat(OverlapX, _overlapX);
+            TilingCompute.SetFloat(OverlapY, _overlapY);
 
             if (TextureManager.Instance.HeightMap == null) yield break;
 
-            _blitMaterial.SetTexture(HeightTex, TextureManager.Instance.HeightMap);
-            _blitMaterial.SetFloat(IsHeight, 1.0f);
-            _heightMapTemp = TileTexture(TextureManager.Instance.HeightMap, _heightMapTemp, "_DisplacementMap");
+            TilingCompute.SetTexture(_tileKernel, HeightTex, TextureManager.Instance.HeightMap);
+            TilingCompute.SetTexture(_splatComputeKernel, HeightTex, TextureManager.Instance.HeightMap);
+            TilingCompute.SetFloat(IsHeight, 1.0f);
 
+            _heightMapTemp = TileTexture(TextureManager.Instance.HeightMap, _heightMapTemp);
+            _thisMaterial.SetTexture(HeightMapId, _heightMapTemp);
 
             if (TextureManager.Instance.HdHeightMap != null)
             {
-                _blitMaterial.SetFloat(IsHeight, 1.0f);
-                _hdHeightMapTemp = TileTexture(TextureManager.Instance.HdHeightMap, _hdHeightMapTemp,
-                    "_HDDisplacementMap");
+                TilingCompute.SetFloat(IsHeight, 1.0f);
+                _hdHeightMapTemp = TileTexture(TextureManager.Instance.HdHeightMap, _hdHeightMapTemp);
             }
 
 
-            _blitMaterial.SetFloat(IsHeight, 0.0f);
+            TilingCompute.SetFloat(IsHeight, 0.0f);
 
             if (TextureManager.Instance.DiffuseMapOriginal != null)
             {
                 _diffuseMapOriginalTemp =
-                    TileTexture(TextureManager.Instance.DiffuseMapOriginal, _diffuseMapOriginalTemp,
-                        "_DiffuseMapOriginal");
+                    TileTexture(TextureManager.Instance.DiffuseMapOriginal, _diffuseMapOriginalTemp);
                 _thisMaterial.SetTexture(DiffuseMap, _diffuseMapOriginalTemp);
             }
 
             if (TextureManager.Instance.DiffuseMap != null)
             {
-                _diffuseMapTemp = TileTexture(TextureManager.Instance.DiffuseMap, _diffuseMapTemp, "_DiffuseMap");
+                _diffuseMapTemp = TileTexture(TextureManager.Instance.DiffuseMap, _diffuseMapTemp);
                 _thisMaterial.SetTexture(DiffuseMap, _diffuseMapTemp);
             }
 
             if (TextureManager.Instance.MetallicMap != null)
             {
-                _metallicMapTemp = TileTexture(TextureManager.Instance.MetallicMap, _metallicMapTemp, "_MetallicMap");
+                _metallicMapTemp = TileTexture(TextureManager.Instance.MetallicMap, _metallicMapTemp);
                 _thisMaterial.SetTexture(MetallicMap, _metallicMapTemp);
             }
 
             if (TextureManager.Instance.SmoothnessMap != null)
             {
-                _smoothnessMapTemp = TileTexture(TextureManager.Instance.SmoothnessMap, _smoothnessMapTemp,
-                    "_SmoothnessMap");
+                _smoothnessMapTemp = TileTexture(TextureManager.Instance.SmoothnessMap, _smoothnessMapTemp);
                 _thisMaterial.SetTexture(SmoothnessMap, _smoothnessMapTemp);
             }
 
             if (TextureManager.Instance.NormalMap != null)
             {
-                _blitMaterial.SetFloat(IsNormal, 1.0f);
-                _normalMapTemp = TileTexture(TextureManager.Instance.NormalMap, _normalMapTemp, "_NormalMap");
+                TilingCompute.SetFloat(IsNormal, 1.0f);
+                _normalMapTemp = TileTexture(TextureManager.Instance.NormalMap, _normalMapTemp);
                 _thisMaterial.SetTexture(NormalMap, _normalMapTemp);
             }
 
-            _blitMaterial.SetFloat(IsNormal, 0.0f);
+            TilingCompute.SetFloat(IsNormal, 0.0f);
 
             if (TextureManager.Instance.AoMap != null)
             {
-                _aoMapTemp = TileTexture(TextureManager.Instance.AoMap, _aoMapTemp, "_AOMap");
+                _aoMapTemp = TileTexture(TextureManager.Instance.AoMap, _aoMapTemp);
                 _thisMaterial.SetTexture(AoMap, _aoMapTemp);
             }
 
             yield return new WaitForSeconds(0.1f);
+
+            _busy = false;
         }
 
         protected override void ResetSettings()

@@ -160,24 +160,28 @@ namespace Gui
             StuffToBeDone = true;
         }
 
-        protected void RunKernel(ComputeShader computeShader, int kernel, Texture source, Texture destiny)
+        protected static void RunKernel(ComputeShader computeShader, int kernel, Texture source, Texture destiny)
         {
+            var imageSize = new Vector2(source.width, source.height);
+            computeShader.SetVector(ImageSizeId, imageSize);
             computeShader.SetTexture(kernel, "ImageInput", source);
             computeShader.SetTexture(kernel, "Result", destiny);
-            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
-            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
+            var groupsX = (int) Mathf.Ceil(imageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(imageSize.y / 8f);
             computeShader.Dispatch(kernel, groupsX, groupsY, 1);
         }
 
         protected void BlurImage(float spread, Texture source, Texture dest)
         {
             var tempBlurMap = TextureManager.Instance.GetTempRenderTexture(source.width, source.height);
+            var imageSize = new Vector2(source.width, source.height);
+            BlurCompute.SetVector(ImageSizeId, imageSize);
             BlurCompute.SetFloat(BlurSpread, spread);
             BlurCompute.SetVector(BlurDirection, new Vector4(1, 0, 0, 0));
             BlurCompute.SetTexture(KernelBlur, "ImageInput", source);
             BlurCompute.SetTexture(KernelBlur, "Result", tempBlurMap);
-            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
-            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
+            var groupsX = (int) Mathf.Ceil(imageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(imageSize.y / 8f);
             BlurCompute.Dispatch(KernelBlur, groupsX, groupsY, 1);
             BlurCompute.SetVector(BlurDirection, new Vector4(0, 1, 0, 0));
             BlurCompute.SetTexture(KernelBlur, "ImageInput", tempBlurMap);
@@ -329,11 +333,13 @@ namespace Gui
         protected static readonly int PointTr = Shader.PropertyToID("_PointTR");
         protected static readonly int PointBl = Shader.PropertyToID("_PointBL");
         protected static readonly int PointBr = Shader.PropertyToID("_PointBR");
-        protected static readonly int Width = Shader.PropertyToID("_Width");
-        protected static readonly int Height = Shader.PropertyToID("_Height");
         protected static readonly int Lens = Shader.PropertyToID("_Lens");
         protected static readonly int PerspectiveX = Shader.PropertyToID("_PerspectiveX");
         protected static readonly int PerspectiveY = Shader.PropertyToID("_PerspectiveY");
+        protected static readonly int DiffuseMapId = Shader.PropertyToID("_BaseColorMap");
+        protected static readonly int NormalMapId = Shader.PropertyToID("_NormalMap");
+        protected static readonly int MaskMapId = Shader.PropertyToID("_MaskMap");
+        protected static readonly int HeightMapId = Shader.PropertyToID("_HeightMap");
 
         #endregion
     }

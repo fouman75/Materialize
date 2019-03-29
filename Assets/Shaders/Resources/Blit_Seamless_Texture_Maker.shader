@@ -68,8 +68,7 @@ Shader "Hidden/Blit_Seamless_Texture_Maker" {
 	}
 
 	float4 frag (v2f IN) : SV_Target
-	{
-		
+	{		
 		float2 overlap = float2( _OverlapX, _OverlapY );
 		float2 invOverlap = 1.0 - float2( _OverlapX, _OverlapY );
 		float2 oneOverOverlap = 1.0 / float2( _OverlapX, _OverlapY );

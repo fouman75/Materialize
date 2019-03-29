@@ -24,9 +24,8 @@ namespace Gui
         private static readonly int SmoothnessRemapMinId = Shader.PropertyToID("_SmoothnessRemapMin");
         private static readonly int SmoothnessRemapMaxId = Shader.PropertyToID("_SmoothnessRemapMax");
         private static readonly int HeightAmplitudeId = Shader.PropertyToID("_HeightAmplitude");
-        private static readonly int TessAmplitudeId = Shader.PropertyToID("_HeightTessAmplitude");
         private static readonly int HeightCenterId = Shader.PropertyToID("_HeightCenter");
-
+        private static readonly int DiffuseMap = Shader.PropertyToID("_BaseColorMap");
 
         private bool _cubeShown;
         private bool _cylinderShown;
@@ -35,12 +34,10 @@ namespace Gui
 
         private Texture2D _heightMap;
         private Light _light;
-        private Texture2D _maskMap;
 
         private MaterialSettings _materialSettings;
 
         private Texture2D _myColorTexture;
-        private Texture2D _normalMap;
 
         private bool _planeShown = true;
 
@@ -62,7 +59,6 @@ namespace Gui
         public ObjectZoomPanRotate TestRotator;
 
         public bool Hide { get; set; }
-
 
         private void OnDisable()
         {
@@ -124,6 +120,12 @@ namespace Gui
             }
         }
 
+        private void OnEnable()
+        {
+            _settingsInitialized = false;
+            InitializeSettings();
+        }
+
         private void InitializeSettings()
         {
             _thisMaterial = TextureManager.Instance.FullMaterialInstance;
@@ -140,6 +142,10 @@ namespace Gui
             _materialSettings.SmoothnessRemapMax = _thisMaterial.GetFloat(SmoothnessRemapMaxId);
             _materialSettings.AoRemapMin = _thisMaterial.GetFloat(AoRemapMinId);
             _materialSettings.AoRemapMax = _thisMaterial.GetFloat(AoRemapMaxId);
+            _materialSettings.TexTilingX = _thisMaterial.GetTextureScale(DiffuseMap).x;
+            _materialSettings.TexTilingY = _thisMaterial.GetTextureScale(DiffuseMap).y;
+            _materialSettings.TexOffsetX = _thisMaterial.GetTextureOffset(DiffuseMap).x;
+            _materialSettings.TexOffsetY = _thisMaterial.GetTextureOffset(DiffuseMap).y;
 
             _settingsInitialized = true;
         }
@@ -174,10 +180,7 @@ namespace Gui
             if (TestObjectCylinder.activeSelf != _cylinderShown) TestObjectCylinder.SetActive(_cylinderShown);
             if (TestObjectSphere.activeSelf != _sphereShown) TestObjectSphere.SetActive(_sphereShown);
 
-            _thisMaterial.SetFloat(HeightAmplitudeId, _materialSettings.DisplacementAmplitude);
-            var center = _materialSettings.DisplacementCenter * _materialSettings.DisplacementAmplitude;
-            _thisMaterial.SetFloat(HeightCenterId, center);
-            _thisMaterial.SetFloat(TessAmplitudeId, _materialSettings.DisplacementAmplitude * 100f);
+            TextureManager.Instance.SetDisplacement(_materialSettings.DisplacementAmplitude, _materialSettings.DisplacementCenter);
 
             TextureManager.Instance.SetUvScale(new Vector2(_materialSettings.TexTilingX, _materialSettings.TexTilingY));
             TextureManager.Instance.SetUvOffset(new Vector2(_materialSettings.TexOffsetX,
@@ -231,7 +234,7 @@ namespace Gui
             _materialSettings.Metallic.Value = temp;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Normal Scale", _materialSettings.NormalStrength,
-                out temp, 0.0f, 8.0f);
+                out _materialSettings.NormalStrength, 0.0f, 8.0f);
             offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Ambient Occlusion Remap Min Max",

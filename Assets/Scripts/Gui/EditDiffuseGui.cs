@@ -267,10 +267,6 @@ namespace Gui
 
             MessagePanel.ShowMessage("Processing Blur for Diffuse");
 
-            RenderTexture.ReleaseTemporary(_tempMap);
-            _tempMap = TextureManager.Instance.GetTempRenderTexture(ImageSize.x, ImageSize.y, true);
-
-            BlurCompute.SetVector(ImageSizeId, (Vector2) ImageSize);
             BlurCompute.SetFloat(BlurContrast, 1.0f);
             BlurCompute.SetFloat(BlurSpread, 1.0f);
 
@@ -282,8 +278,6 @@ namespace Gui
             BlurImage(_eds.AvgColorBlurSize / 5.0f, _avgMap, _avgMap);
 
             _material.SetTexture(AvgTex, _avgMap);
-
-            RenderTexture.ReleaseTemporary(_tempMap);
 
             IsReadyToProcess = true;
 
