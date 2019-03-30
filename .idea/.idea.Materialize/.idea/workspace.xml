@@ -4,13 +4,6 @@
     <list default="true" id="6279255f-eae9-4fa0-9ed8-6ad320788723" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/Assets/MainScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/MainScene/LightingData.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainScene/LightingData.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainScene/PostProcessing Profile.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainScene/PostProcessing Profile.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainScene/SceneProfile.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainScene/SceneProfile.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Resources/Full_MaterialTest_NoTess.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Resources/Full_MaterialTest_NoTess.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/BoxAndPlaneLQ.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/BoxAndPlaneLQ.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Settings/HDRP Asset Medium.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/HDRP Asset Medium.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +66,7 @@
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Utillity/BashRunner.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="644">
-              <caret line="47" column="39" lean-forward="true" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
+              <caret line="47" column="39" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
               <folding>
                 <marker date="1552835992683" expanded="false" signature="0:79" ph="##region" />
                 <marker date="1552835992683" expanded="false" signature="15:67" ph="..." />
@@ -803,12 +796,12 @@
       <workItem from="1553815630087" duration="6487000" />
       <workItem from="1553882294222" duration="1426000" />
       <workItem from="1553883748911" duration="4540000" />
-      <workItem from="1553914209647" duration="497000" />
+      <workItem from="1553914209647" duration="905000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="337341000" />
+    <option name="totallyTimeSpent" value="337749000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2006,7 +1999,7 @@
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Utillity/BashRunner.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="644">
-          <caret line="47" column="39" lean-forward="true" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
+          <caret line="47" column="39" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
           <folding>
             <marker date="1552835992683" expanded="false" signature="0:79" ph="##region" />
             <marker date="1552835992683" expanded="false" signature="15:67" ph="..." />
