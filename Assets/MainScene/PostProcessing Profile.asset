@@ -31,11 +31,11 @@ MonoBehaviour:
     min: 0
   farFocusStart:
     m_OverrideState: 1
-    m_Value: 15
+    m_Value: 22
     min: 0
   farFocusEnd:
     m_OverrideState: 1
-    m_Value: 80
+    m_Value: 150
     min: 0
   nearSampleCount:
     m_OverrideState: 0
@@ -54,14 +54,14 @@ MonoBehaviour:
     max: 16
   farMaxBlur:
     m_OverrideState: 0
-    m_Value: 8
+    m_Value: 6.85
     min: 0
     max: 16
   highQualityFiltering:
     m_OverrideState: 0
-    m_Value: 1
+    m_Value: 0
   resolution:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
 --- !u!114 &-3819876013009440890
 MonoBehaviour:
@@ -131,17 +131,17 @@ MonoBehaviour:
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 1.5
     min: 0
     max: 4
   thicknessModifier:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 3
     min: 1
     max: 10
   directLightingStrength:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.3
     min: 0
     max: 1
   noiseFilterTolerance:
@@ -197,16 +197,16 @@ MonoBehaviour:
     m_Value: 1.2
     min: 0
   highQualityFiltering:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   resolution:
     m_OverrideState: 0
     m_Value: 2
   prefilter:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   anamorphic:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -340,7 +340,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.15
+    m_Value: 0.1
     min: -1
     max: 1
   xMultiplier:
@@ -357,7 +357,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: {x: 0.5, y: 0.5}
   scale:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
     min: 0.01
     max: 5

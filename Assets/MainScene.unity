@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.50718814, g: 0.4817171, b: 0.4364872, a: 1}
+  m_IndirectSpecularColor: {r: 0.50616735, g: 0.48009205, b: 0.43374777, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -1071,7 +1071,7 @@ MonoBehaviour:
       m_BoxBlendNormalDistanceNegative: {x: 1, y: 1, z: 1}
       m_BoxSideFadePositive: {x: 1, y: 1, z: 1}
       m_BoxSideFadeNegative: {x: 1, y: 1, z: 1}
-      m_SphereRadius: 150
+      m_SphereRadius: 350
       m_SphereBlendDistance: 0
       m_SphereBlendNormalDistance: 0
       m_EditorAdvancedModeBlendDistancePositive: {x: 1, y: 1, z: 1}
@@ -1396,7 +1396,7 @@ ReflectionProbe:
   m_TimeSlicingMode: 0
   m_Resolution: 128
   m_UpdateFrequency: 0
-  m_BoxSize: {x: 300, y: 300, z: 300}
+  m_BoxSize: {x: 700, y: 700, z: 700}
   m_BoxOffset: {x: 0, y: 0, z: 0}
   m_NearClip: 0.3
   m_FarClip: 1000
@@ -1779,6 +1779,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -0.20007324
       objectReference: {fileID: 0}
+    - target: {fileID: 11496292, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
+      propertyPath: m_audioModuleState
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
 --- !u!1 &1107095846
@@ -1905,42 +1909,42 @@ LightProbeGroup:
   m_GameObject: {fileID: 1136538184}
   m_Enabled: 1
   m_SourcePositions:
-  - {x: -30.000002, y: -25, z: -15.000001}
-  - {x: -30.000002, y: -25, z: 0}
-  - {x: -30.000002, y: -25, z: 15}
-  - {x: -30.000002, y: 0, z: -15.000001}
-  - {x: -30.000002, y: 0, z: 0}
-  - {x: -30.000002, y: 0, z: 15}
-  - {x: -30.000002, y: 25, z: -15.000001}
-  - {x: -30.000002, y: 25, z: 0}
-  - {x: -30.000002, y: 25, z: 15}
-  - {x: -10, y: -25, z: -15.000001}
-  - {x: -10, y: -25, z: 0}
-  - {x: -10, y: -25, z: 15}
-  - {x: -10, y: 0, z: -15.000001}
-  - {x: -10, y: 0, z: 0}
-  - {x: -10, y: 0, z: 15}
-  - {x: -10, y: 25, z: -15.000001}
-  - {x: -10, y: 25, z: 0}
-  - {x: -10, y: 25, z: 15}
-  - {x: 10, y: -25, z: -15.000001}
-  - {x: 10, y: -25, z: 0}
-  - {x: 10, y: -25, z: 15}
-  - {x: 10, y: 0, z: -15.000001}
-  - {x: 10, y: 0, z: 0}
-  - {x: 10, y: 0, z: 15}
-  - {x: 10, y: 25, z: -15.000001}
-  - {x: 10, y: 25, z: 0}
-  - {x: 10, y: 25, z: 15}
-  - {x: 30, y: -25, z: -15.000001}
-  - {x: 30, y: -25, z: 0}
-  - {x: 30, y: -25, z: 15}
-  - {x: 30, y: 0, z: -15.000001}
-  - {x: 30, y: 0, z: 0}
-  - {x: 30, y: 0, z: 15}
-  - {x: 30, y: 25, z: -15.000001}
-  - {x: 30, y: 25, z: 0}
-  - {x: 30, y: 25, z: 15}
+  - {x: -75, y: -40, z: -30}
+  - {x: -75, y: -40, z: 0}
+  - {x: -75, y: -40, z: 30}
+  - {x: -75, y: 0, z: -30}
+  - {x: -75, y: 0, z: 0}
+  - {x: -75, y: 0, z: 30}
+  - {x: -75, y: 40, z: -30}
+  - {x: -75, y: 40, z: 0}
+  - {x: -75, y: 40, z: 30}
+  - {x: -25.000002, y: -40, z: -30}
+  - {x: -25.000002, y: -40, z: 0}
+  - {x: -25.000002, y: -40, z: 30}
+  - {x: -25.000002, y: 0, z: -30}
+  - {x: -25.000002, y: 0, z: 0}
+  - {x: -25.000002, y: 0, z: 30}
+  - {x: -25.000002, y: 40, z: -30}
+  - {x: -25.000002, y: 40, z: 0}
+  - {x: -25.000002, y: 40, z: 30}
+  - {x: 25, y: -40, z: -30}
+  - {x: 25, y: -40, z: 0}
+  - {x: 25, y: -40, z: 30}
+  - {x: 25, y: 0, z: -30}
+  - {x: 25, y: 0, z: 0}
+  - {x: 25, y: 0, z: 30}
+  - {x: 25, y: 40, z: -30}
+  - {x: 25, y: 40, z: 0}
+  - {x: 25, y: 40, z: 30}
+  - {x: 75, y: -40, z: -30}
+  - {x: 75, y: -40, z: 0}
+  - {x: 75, y: -40, z: 30}
+  - {x: 75, y: 0, z: -30}
+  - {x: 75, y: 0, z: 0}
+  - {x: 75, y: 0, z: 30}
+  - {x: 75, y: 40, z: -30}
+  - {x: 75, y: 40, z: 0}
+  - {x: 75, y: 40, z: 30}
   m_Dering: 0
 --- !u!4 &1136538186
 Transform:
@@ -1985,7 +1989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_volume:
     m_origin: {x: 0, y: 0, z: 0}
-    m_size: {x: 60, y: 50, z: 30}
+    m_size: {x: 150, y: 80, z: 60}
   m_densityFixed: {x: 3, y: 2, z: 2}
   m_densityFloat: {x: 1, y: 1, z: 1}
   m_type: 0
@@ -2725,7 +2729,7 @@ MonoBehaviour:
   antialiasing: 3
   SMAAQuality: 2
   dithering: 0
-  stopNaNs: 1
+  stopNaNs: 0
   physicalParameters:
     m_Iso: 200
     m_ShutterSpeed: 0.005
@@ -2743,8 +2747,8 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_RenderingPathCustomFrameSettings:
     bitDatas:
-      data1: 69284255760157
-      data2: 4539628424389459968
+      data1: 12885098496
+      data2: 0
   renderingPathCustomFrameSettingsOverrideMask:
     mask:
       data1: 0
@@ -2821,8 +2825,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60.80707
+  far clip plane: 150
+  field of view: 55.515667
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -3676,9 +3680,9 @@ MonoBehaviour:
   m_InnerSpotPercent: 0
   lightDimmer: 1
   m_VolumetricDimmer: 1
-  lightUnit: 2
-  sunDiskSize: 3
-  sunHaloSize: 0.2
+  lightUnit: 0
+  sunDiskSize: 1
+  sunHaloSize: 0.1
   fadeDistance: 10000
   affectDiffuse: 1
   affectSpecular: 1
@@ -3692,7 +3696,7 @@ MonoBehaviour:
   maxSmoothness: 0.99
   applyRangeAttenuation: 1
   useOldInspector: 0
-  useVolumetric: 0
+  useVolumetric: 1
   featuresFoldout: 1
   showAdditionalSettings: 0
   displayLightIntensity: 1
