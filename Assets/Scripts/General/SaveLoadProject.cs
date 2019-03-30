@@ -45,6 +45,9 @@ namespace General
             Logger.Log("Loading Project: " + pathToFile);
 
             var serializer = new XmlSerializer(typeof(ProjectObject));
+            serializer.UnknownNode += Serializer_UnknownNode;
+            serializer.UnknownAttribute += Serializer_UnknownAttribute;
+            serializer.UnknownElement += Serializer_UnknownElement;
             using (var stream = new FileStream(pathToFile, FileMode.Open))
             {
                 ThisProject = serializer.Deserialize(stream) as ProjectObject;
@@ -125,6 +128,9 @@ namespace General
             MainGui.Instance.MaterialGuiScript.GetValues(ThisProject);
 
             var serializer = new XmlSerializer(typeof(ProjectObject));
+            serializer.UnknownNode += Serializer_UnknownNode;
+            serializer.UnknownAttribute += Serializer_UnknownAttribute;
+            serializer.UnknownElement += Serializer_UnknownElement;
             using (var stream = new FileStream(pathToFile + ".mtz", FileMode.Create))
             {
                 serializer.Serialize(stream, ThisProject);
@@ -134,6 +140,26 @@ namespace General
             SaveAllFiles(pathToFile);
         }
 
+        private void Serializer_UnknownNode
+            (object sender, XmlNodeEventArgs e)
+        {
+            Logger.LogError($"Unknown Node: {e.Name}\te.Text ");
+        }
+
+        private void Serializer_UnknownAttribute
+            (object sender, XmlAttributeEventArgs e)
+        {
+            var attr = e.Attr;
+            Logger.LogError($"Unknown attribute {attr.Name} + ='{attr.Value}'");
+        }
+
+        private void Serializer_UnknownElement
+            (object sender, XmlElementEventArgs xmlElementEventArgs)
+        {
+            var element = xmlElementEventArgs.Element;
+            Logger.LogError($"Unknown element {element.Name} + ='{element.Value}'");
+        }
+        
         private void SaveAllFiles(string pathToFile)
         {
             StartCoroutine(SaveAllTextures(pathToFile));
