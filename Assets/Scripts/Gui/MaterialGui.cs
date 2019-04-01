@@ -261,8 +261,8 @@ namespace Gui
             offsetY += 40;
 
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Tessellation Amplitude",
-                _materialSettings.DisplacementAmplitude, out _materialSettings.DisplacementAmplitude, 0.0f, 3.0f);
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Displacement Amplitude",
+                _materialSettings.DisplacementAmplitude, out _materialSettings.DisplacementAmplitude, 0.0f, 10.0f);
             offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Tiling (X,Y)", _materialSettings.TexTilingX,

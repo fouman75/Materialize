@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Added Reset to Defaults
 - Added Save / Load Settings Profiles
+- Automatic Creation of a hidden MaskMap, then Metallic, Smoothness and AO can be visualized without creating it.
 
 ### Changed
 - Changed the way window scaling works.
@@ -17,18 +18,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Plane now contains 65000 verts, not too high for a medium GPU, but, before, with tesselation was only 2000.
 -  Displacement mode was changed because 1: ShaderGraph does not support tesselation. 2: Is more stable, i think it's about Lit is way more supported than LitTesselation.
 - Changed the Test Images inside Unity, not used in the final build. (Beta builds contains it).
+- Changed default Metallic (Without Metallic map) to 0.
+- Changed default Smoothness (Without Smoothness Map) to also 0.
+- Changed from a local Reflection Probe to the HDRP Enviromental Reflection.
+- Changed Rendering path from Defered to Forward.
 
 #### Minor changes
+- Update to Unity 2019.1.0b9
 - Update to SRP 5.10.0
 - Minor UI Adjusts
 - Update TextMeshPro to 2.0.0
 - Enabled the Burst Compiler.
+- Changed Displacement max from 3 to 10.
+- Changed Dof Far Focus End to 200.
 
 ### Fixes
 - Fix slow sliders that were too slow because were processing to often.
 - Fix Color on Edit Diffuse. Old bug.
 - Fix Color Picking.
-- Fix Full Material View tiling and offset
+- Fix Full Material View tiling and offset.
 
 ### To Implement
 - Windows Copy / Paste

@@ -221,11 +221,28 @@ namespace General
                 FullMaterialInstance.SetTexture(NormalMapId, null);
             }
 
-            if (MaskMap)
+            if (MetallicMap)
+            {
+                FullMaterialInstance.SetFloat(MetallicId, 1.0f);
+            }
+
+            if (SmoothnessMap)
+            {
+                FullMaterialInstance.SetFloat(SmoothnessId, 1.0f);
+            }
+
+            RenderTexture tempMaskMap = null;
+            if (MetallicMap || AoMap || SmoothnessMap)
+            {
+                tempMaskMap = TextureProcessing.RenderMaskMap(MetallicMap, SmoothnessMap, AoMap);
+            }
+
+            var maskMap = MaskMap ? (Texture) MaskMap : tempMaskMap;
+            if (maskMap)
             {
                 // ReSharper disable once StringLiteralTypo
                 FullMaterialInstance.EnableKeyword("_MASKMAP");
-                FullMaterialInstance.SetTexture(MaskMapId, MaskMap);
+                FullMaterialInstance.SetTexture(MaskMapId, maskMap);
             }
             else
             {

@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 2}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 68186899872543
+      data1: 68186899872542
       data2: 4539628424389459968
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
@@ -24,7 +24,7 @@ MonoBehaviour:
       data2: 4539628424389459968
   m_RenderingPathDefaultRealtimeReflectionFrameSettings:
     bitDatas:
-      data1: 69286210305823
+      data1: 69286210305822
       data2: 4539628424389459968
   m_RenderPipelineSettings:
     supportShadowMask: 1
@@ -39,10 +39,10 @@ MonoBehaviour:
     supportTransparentBackface: 0
     supportTransparentDepthPrepass: 0
     supportTransparentDepthPostpass: 0
-    colorBufferFormat: 48
-    supportedLitShaderMode: 2
+    colorBufferFormat: 74
+    supportedLitShaderMode: 1
     supportDecals: 0
-    msaaSampleCount: 2
+    msaaSampleCount: 1
     supportMotionVectors: 0
     supportRuntimeDebugDisplay: 1
     supportDitheringCrossFade: 0

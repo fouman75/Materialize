@@ -95,12 +95,12 @@ namespace Gui
             _ambientOcclusion.intensity.value = _ambientOcclusionIntensity;
         }
 
-        public void PostProcessOn()
+        public static void PostProcessOn()
         {
             ProgramManager.Instance.PostProcessingVolume.enabled = true;
         }
 
-        public void PostProcessOff()
+        public static void PostProcessOff()
         {
             ProgramManager.Instance.PostProcessingVolume.enabled = false;
         }
@@ -188,7 +188,7 @@ namespace Gui
                 if (_dofFocusNearFocusStart > _dofFocusNearFocusEnd) _dofFocusNearFocusStart = _dofFocusNearFocusEnd;
 
                 GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "DOF Near Focus End", _dofFocusNearFocusEnd,
-                    out _dofFocusNearFocusEnd, 0.0f, 50.0f);
+                    out _dofFocusNearFocusEnd, 0.0f, 200.0f);
 
                 offsetY += 40;
 
@@ -200,7 +200,7 @@ namespace Gui
                 if (_dofFocusFarFocusStart > _dofFocusFarFocusEnd) _dofFocusFarFocusStart = _dofFocusFarFocusEnd;
 
                 GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "DOF Far Focus End", _dofFocusFarFocusEnd,
-                    out _dofFocusFarFocusEnd, 0.0f, 50.0f);
+                    out _dofFocusFarFocusEnd, 0.0f, 200.0f);
             }
 
             UpdateValues();

@@ -544,8 +544,7 @@ namespace Gui
 
             HdriSky.hdriSky.value = CubeMaps[_selectedCubemap];
 
-            ProgramManager.Instance.RenderPipeline.RequestSkyEnvironmentUpdate();
-            ProgramManager.RenderProbe();
+            StartCoroutine(ProgramManager.Instance.RenderProbe());
         }
 
         public void Quit()
@@ -560,12 +559,12 @@ namespace Gui
             if (Screen.fullScreenMode == FullScreenMode.Windowed)
             {
                 text = "Windowed";
-                StartCoroutine(ProgramManager.SetScreen(ProgramEnums.ScreenMode.FullScreen));
+                StartCoroutine(ProgramManager.Instance.SetScreen(ProgramEnums.ScreenMode.FullScreen));
             }
             else
             {
                 text = "FullScreen";
-                StartCoroutine(ProgramManager.SetScreen(ProgramEnums.ScreenMode.Windowed));
+                StartCoroutine(ProgramManager.Instance.SetScreen(ProgramEnums.ScreenMode.Windowed));
             }
 
             FullScreenTextObject.text = text;

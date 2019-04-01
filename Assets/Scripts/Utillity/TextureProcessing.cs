@@ -17,6 +17,19 @@ public static class TextureProcessing
 
     public static Texture2D BlitMaskMap(Texture2D metallicMap, Texture2D smoothnessMap, Texture2D aoMap)
     {
+        var renderMaskMap = RenderMaskMap(metallicMap, smoothnessMap, aoMap);
+
+        RenderTexture.active = renderMaskMap;
+        var maskMap = TextureManager.Instance.GetStandardTexture(renderMaskMap.width, renderMaskMap.height);
+        maskMap.ReadPixels(new Rect(0, 0, renderMaskMap.width, renderMaskMap.height), 0, 0);
+        maskMap.Apply(true);
+        RenderTexture.ReleaseTemporary(renderMaskMap);
+
+        return maskMap;
+    }
+
+    public static RenderTexture RenderMaskMap(Texture2D metallicMap, Texture2D smoothnessMap, Texture2D aoMap)
+    {
         Vector2Int size;
         if (metallicMap)
             size = new Vector2Int(metallicMap.width, metallicMap.height);
@@ -38,21 +51,17 @@ public static class TextureProcessing
         maskMapCompute.SetTexture(kernel, SmoothnessTex, smoothnessMap ? smoothnessMap : textureBlack);
         maskMapCompute.SetTexture(kernel, AoTex, aoMap ? aoMap : textureBlack);
 
-        var map = TextureManager.Instance.GetTempRenderTexture(size.x, size.y);
+        var renderMaskMap = TextureManager.Instance.GetTempRenderTexture(size.x, size.y);
         maskMapCompute.SetVector("_ImageSize", (Vector2) size);
-        maskMapCompute.SetTexture(kernel, "Result", map);
+        maskMapCompute.SetTexture(kernel, "Result", renderMaskMap);
         var groupsX = (int) Mathf.Ceil(size.x / 8f);
         var groupsY = (int) Mathf.Ceil(size.y / 8f);
         maskMapCompute.Dispatch(kernel, groupsX, groupsY, 1);
 
-        RenderTexture.active = map;
-        var maskMap = TextureManager.Instance.GetStandardTexture(map.width, map.height);
-        maskMap.ReadPixels(new Rect(0, 0, map.width, map.height), 0, 0);
-        maskMap.Apply(true);
-        RenderTexture.ReleaseTemporary(map);
 
-        return maskMap;
+        return renderMaskMap;
     }
+
 
     public static Texture2D FlipNormalMapY(Texture2D normalMap)
     {

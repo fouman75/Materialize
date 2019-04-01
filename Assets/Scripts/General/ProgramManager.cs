@@ -104,8 +104,7 @@ namespace General
             RenderPipeline.RequestSkyEnvironmentUpdate();
             Logger.Log("HDRI Sky Atualizado");
 
-            RenderProbe();
-
+            StartCoroutine(RenderProbe());
             StartCoroutine(SlowUpdate());
         }
 
@@ -174,6 +173,7 @@ namespace General
             GraphicsSettings.renderPipelineAsset = hdRenderPipelineAsset;
 
             yield return new WaitForSeconds(0.8f);
+            StartCoroutine(RenderProbe());
         }
 
         private void ActivateObjects()
@@ -190,6 +190,7 @@ namespace General
         {
             RenderPipeline = RenderPipelineManager.currentPipeline as HDRenderPipeline;
             var maxTries = 100;
+            RenderPipeline = null;
             while (RenderPipeline == null)
             {
                 RenderPipeline = RenderPipelineManager.currentPipeline as HDRenderPipeline;
@@ -201,7 +202,7 @@ namespace General
             }
         }
 
-        public static void RenderProbe()
+        public IEnumerator RenderProbe()
         {
             foreach (var probe in Instance._probes)
             {
@@ -214,6 +215,10 @@ namespace General
                 Logger.Log("Refreshing probe " + probe.name);
                 probe.RequestRenderNextUpdate();
             }
+
+            yield return StartCoroutine(GetHdrpCoroutine());
+
+            RenderPipeline.RequestSkyEnvironmentUpdate();
         }
 
         private void OnApplicationQuit()
@@ -221,7 +226,7 @@ namespace General
             ApplicationIsQuitting = true;
         }
 
-        public static IEnumerator SetScreen(ProgramEnums.ScreenMode screenMode)
+        public IEnumerator SetScreen(ProgramEnums.ScreenMode screenMode)
         {
             if (Application.isEditor) yield break;
             yield return null;
@@ -256,7 +261,7 @@ namespace General
             yield return null;
             Instance.PostProcessingVolume.enabled = true;
             Instance.SceneVolume.enabled = true;
-            RenderProbe();
+            StartCoroutine(RenderProbe());
         }
 
         private static HDRenderPipelineAsset GetRpQualityAsset()
