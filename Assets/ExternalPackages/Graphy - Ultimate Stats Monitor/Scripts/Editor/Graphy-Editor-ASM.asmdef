@@ -1,0 +1,17 @@
+{
+    "name": "Graphy-Editor-ASM",
+    "references": [
+        "GUID:30ec09ed78f419bdcbc5ab61e8f38024"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

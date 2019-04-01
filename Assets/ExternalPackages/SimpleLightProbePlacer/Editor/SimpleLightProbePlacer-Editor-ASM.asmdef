@@ -1,0 +1,17 @@
+{
+    "name": "SimpleLightProbePlacer-Editor-ASM",
+    "references": [
+        "GUID:c2a188fe5502ef6a3856d8b2d20781c2"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

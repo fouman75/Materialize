@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using General;
-using Plugins.Extension;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +11,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using Utility;
 using Logger = General.Logger;
 
 //using UnityEngine.Experimental.Rendering.HDPipeline;

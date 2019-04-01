@@ -1,0 +1,17 @@
+{
+    "name": "ObjIO-Editor-ASM",
+    "references": [
+        "GUID:3106b3c6ffe4c7666ae2c59e99fa8e07"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

@@ -1,10 +1,10 @@
 #region
 
 using General;
-using Plugins.Extension;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 
 #endregion
 

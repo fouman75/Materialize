@@ -1,13 +1,11 @@
 #region
 
-using System.ComponentModel;
 using General;
-using Settings;
 using UnityEngine;
 
 #endregion
 
-namespace Gui
+namespace Settings
 {
     public class MaterialSettings : TexturePanelSettings
     {
@@ -28,8 +26,8 @@ namespace Gui
         public float TexOffsetY;
         public float TexTilingX;
         public float TexTilingY;
-        private float _originalLightIntensity;
-        private Color _originalLightColor;
+        private readonly float _originalLightIntensity;
+        private readonly Color _originalLightColor;
 
         public MaterialSettings()
         {

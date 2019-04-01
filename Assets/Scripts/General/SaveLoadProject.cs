@@ -7,9 +7,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using Gui;
-using Plugins.Extension;
 using Settings;
 using UnityEngine;
+using Utility;
 using Graphics = UnityEngine.Graphics;
 
 #if UNITY_STANDALONE_WIN
