@@ -4,7 +4,24 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.4HDRP-beta.7] - 2019-xx-xx
+## [v0.4HDRP-beta.8] - 2019-xx-xx
+### Added
+
+### Changed
+- Removed the dedicated Sun (Directional Light), get it from HDRI Sky instead.
+
+#### Minor changes
+
+
+### Fixes
+
+
+### To Implement
+- Windows Copy / Paste
+- Linux Copy to clipboard
+
+
+## [v0.4HDRP-beta.7] - 2019-04-01
 ### Added
 - Added Reset to Defaults
 - Added Save / Load Settings Profiles

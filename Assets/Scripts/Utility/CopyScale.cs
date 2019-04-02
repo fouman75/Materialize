@@ -4,31 +4,34 @@ using UnityEngine;
 
 #endregion
 
-public class CopyScale : MonoBehaviour
+namespace Utility
 {
-    private static readonly int Parallax = Shader.PropertyToID("_Parallax");
-    private static readonly int Tiling1 = Shader.PropertyToID("_Tiling");
-    private Renderer _renderer;
-    public GameObject TargetObject;
-
-    private void Start()
+    public class CopyScale : MonoBehaviour
     {
-        _renderer = TargetObject.GetComponent<Renderer>();
-    }
+        private static readonly int Parallax = Shader.PropertyToID("_Parallax");
+        private static readonly int Tiling1 = Shader.PropertyToID("_Tiling");
+        private Renderer _renderer;
+        public GameObject TargetObject;
 
-    private void Update()
-    {
-        var tempScale = TargetObject.transform.localScale;
-        var targetMaterial = _renderer.sharedMaterial;
-
-        if (targetMaterial.HasProperty("_Parallax"))
+        private void Start()
         {
-            var height = targetMaterial.GetFloat(Parallax);
-            var tiling = targetMaterial.GetVector(Tiling1);
-
-            tempScale.z += height * (1.0f / tiling.x);
+            _renderer = TargetObject.GetComponent<Renderer>();
         }
 
-        transform.localScale = tempScale;
+        private void Update()
+        {
+            var tempScale = TargetObject.transform.localScale;
+            var targetMaterial = _renderer.sharedMaterial;
+
+            if (targetMaterial.HasProperty("_Parallax"))
+            {
+                var height = targetMaterial.GetFloat(Parallax);
+                var tiling = targetMaterial.GetVector(Tiling1);
+
+                tempScale.z += height * (1.0f / tiling.x);
+            }
+
+            transform.localScale = tempScale;
+        }
     }
 }

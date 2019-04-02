@@ -2,93 +2,95 @@
 
 using System;
 using UnityEngine;
-using Utility;
 
 #endregion
 
-public static class GuiHelper
+namespace Utility
 {
-    public static bool Slider(Rect rect, int value, out int outValue, int minValue, int maxValue)
+    public static class GuiHelper
     {
-        var res = Slider(rect, null, value, out var outValueFloat, minValue, maxValue);
-        outValue = outValueFloat;
-        return res;
-    }
-
-    public static bool Slider(Rect rect, float value, out float outValue, float minValue, float maxValue)
-    {
-        var res = Slider(rect, null, value, out var outValue2, minValue, maxValue);
-        outValue = outValue2;
-        return res;
-    }
-
-    public static bool Slider(Rect rect, string title, int value, out int outValue, int minValue, int maxValue)
-    {
-        var res = Slider(rect, title, value, out float outValueFloat, minValue, maxValue);
-
-        outValue = (int) outValueFloat;
-        return res;
-    }
-
-    public static bool Slider(Rect rect, string title, float value, out float outValue, float minValue,
-        float maxValue)
-    {
-        var offsetX = (int) rect.x;
-        var offsetY = (int) rect.y;
-        var startValue = value;
-
-        if (!title.IsNullOrEmpty()) GUI.Label(new Rect(rect.x, rect.y, 250, 30), title);
-
-        offsetY += 25;
-
-        var isChanged = false;
-
-        value = GUI.HorizontalSlider(new Rect(offsetX, offsetY, rect.width - 60, 10), value, minValue, maxValue);
-
-        var handler = Time.time.ToString();
-        GUI.SetNextControlName(handler);
-        var textValue = value.ToString();
-        textValue = GUI.TextField(new Rect(offsetX + rect.width - 50, offsetY - 5, 50, 20), textValue);
-        if (Event.current.type == EventType.KeyDown && Event.current.character == '\n' &&
-            GUI.GetNameOfFocusedControl() == handler)
+        public static bool Slider(Rect rect, int value, out int outValue, int minValue, int maxValue)
         {
-            if (textValue.Contains(".")) textValue = textValue.Replace(".", ",");
-
-            float.TryParse(textValue, out value);
-            value = Mathf.Clamp(value, minValue, maxValue);
+            var res = Slider(rect, null, value, out var outValueFloat, minValue, maxValue);
+            outValue = outValueFloat;
+            return res;
         }
 
-        if (Math.Abs(value - startValue) > 0.0001f) isChanged = true;
+        public static bool Slider(Rect rect, float value, out float outValue, float minValue, float maxValue)
+        {
+            var res = Slider(rect, null, value, out var outValue2, minValue, maxValue);
+            outValue = outValue2;
+            return res;
+        }
 
-        outValue = value;
+        public static bool Slider(Rect rect, string title, int value, out int outValue, int minValue, int maxValue)
+        {
+            var res = Slider(rect, title, value, out float outValueFloat, minValue, maxValue);
 
-        return isChanged;
-    }
+            outValue = (int) outValueFloat;
+            return res;
+        }
 
-    public static bool VerticalSlider(Rect rect, float value, out float outValue, float minValue, float maxValue,
-        bool doStuff)
-    {
-        var isChanged = false;
+        public static bool Slider(Rect rect, string title, float value, out float outValue, float minValue,
+            float maxValue)
+        {
+            var offsetX = (int) rect.x;
+            var offsetY = (int) rect.y;
+            var startValue = value;
 
-        var tempValue = value;
-        value = GUI.VerticalSlider(rect, value, minValue, maxValue);
-        if (Math.Abs(value - tempValue) > 0.0001f || doStuff) isChanged = true;
+            if (!title.IsNullOrEmpty()) GUI.Label(new Rect(rect.x, rect.y, 250, 30), title);
 
-        outValue = value;
+            offsetY += 25;
 
-        return isChanged;
-    }
+            var isChanged = false;
 
-    public static bool Toggle(Rect rect, bool value, out bool outValue, string text, bool doStuff)
-    {
-        var isChanged = false;
+            value = GUI.HorizontalSlider(new Rect(offsetX, offsetY, rect.width - 60, 10), value, minValue, maxValue);
 
-        var tempValue = value;
-        value = GUI.Toggle(rect, value, text);
-        if (value != tempValue || doStuff) isChanged = true;
+            var handler = Time.time.ToString();
+            GUI.SetNextControlName(handler);
+            var textValue = value.ToString();
+            textValue = GUI.TextField(new Rect(offsetX + rect.width - 50, offsetY - 5, 50, 20), textValue);
+            if (Event.current.type == EventType.KeyDown && Event.current.character == '\n' &&
+                GUI.GetNameOfFocusedControl() == handler)
+            {
+                if (textValue.Contains(".")) textValue = textValue.Replace(".", ",");
 
-        outValue = value;
+                float.TryParse(textValue, out value);
+                value = Mathf.Clamp(value, minValue, maxValue);
+            }
 
-        return isChanged;
+            if (Math.Abs(value - startValue) > 0.0001f) isChanged = true;
+
+            outValue = value;
+
+            return isChanged;
+        }
+
+        public static bool VerticalSlider(Rect rect, float value, out float outValue, float minValue, float maxValue,
+            bool doStuff)
+        {
+            var isChanged = false;
+
+            var tempValue = value;
+            value = GUI.VerticalSlider(rect, value, minValue, maxValue);
+            if (Math.Abs(value - tempValue) > 0.0001f || doStuff) isChanged = true;
+
+            outValue = value;
+
+            return isChanged;
+        }
+
+        public static bool Toggle(Rect rect, bool value, out bool outValue, string text, bool doStuff)
+        {
+            var isChanged = false;
+
+            var tempValue = value;
+            value = GUI.Toggle(rect, value, text);
+            if (value != tempValue || doStuff) isChanged = true;
+
+            outValue = value;
+
+            return isChanged;
+        }
     }
 }

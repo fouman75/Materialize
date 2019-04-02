@@ -6,46 +6,49 @@ using System.Text;
 
 #endregion
 
-internal static class BashRunner
+namespace Utility
 {
-    // ReSharper disable once UnusedMethodReturnValue.Global
-    public static string Run(string commandLine)
+    public static class BashRunner
     {
-        var errorBuilder = new StringBuilder();
-        var outputBuilder = new StringBuilder();
-        var arguments = $"-c \"{commandLine}\"";
-        using (var process = new Process
+        // ReSharper disable once UnusedMethodReturnValue.Global
+        public static string Run(string commandLine)
         {
-            StartInfo = new ProcessStartInfo
+            var errorBuilder = new StringBuilder();
+            var outputBuilder = new StringBuilder();
+            var arguments = $"-c \"{commandLine}\"";
+            using (var process = new Process
             {
-                FileName = "bash",
-                Arguments = arguments,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = false
-            }
-        })
-        {
-            process.Start();
-            process.OutputDataReceived += (sender, args) => { outputBuilder.AppendLine(args.Data); };
-            process.BeginOutputReadLine();
-            process.ErrorDataReceived += (sender, args) => { errorBuilder.AppendLine(args.Data); };
-            process.BeginErrorReadLine();
-            if (!process.WaitForExit(2000))
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "bash",
+                    Arguments = arguments,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = false
+                }
+            })
             {
-                var timeoutError = $@"Process timed out. Command line: bash {arguments}.
+                process.Start();
+                process.OutputDataReceived += (sender, args) => { outputBuilder.AppendLine(args.Data); };
+                process.BeginOutputReadLine();
+                process.ErrorDataReceived += (sender, args) => { errorBuilder.AppendLine(args.Data); };
+                process.BeginErrorReadLine();
+                if (!process.WaitForExit(2000))
+                {
+                    var timeoutError = $@"Process timed out. Command line: bash {arguments}.
 Output: {outputBuilder}
 Error: {errorBuilder}";
-                throw new Exception(timeoutError);
-            }
+                    throw new Exception(timeoutError);
+                }
 
-            if (process.ExitCode == 0) return outputBuilder.ToString();
+                if (process.ExitCode == 0) return outputBuilder.ToString();
 
-            var error = $@"Could not execute process. Command line: bash {arguments}.
+                var error = $@"Could not execute process. Command line: bash {arguments}.
 Output: {outputBuilder}
 Error: {errorBuilder}";
-            throw new Exception(error);
+                throw new Exception(error);
+            }
         }
     }
 }

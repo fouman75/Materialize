@@ -1,5 +1,9 @@
+#region
+
 using System;
 using System.Globalization;
+
+#endregion
 
 namespace Utility
 {
@@ -34,7 +38,7 @@ namespace Utility
         {
             if (value == null)
                 return true;
-            for (int index = 0; index < value.Length; ++index)
+            for (var index = 0; index < value.Length; ++index)
             {
                 if (!char.IsWhiteSpace(value[index]))
                     return false;

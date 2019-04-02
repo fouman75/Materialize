@@ -28,13 +28,13 @@ MonoBehaviour:
     m_Value: 0
   compensation:
     m_OverrideState: 1
-    m_Value: -1
+    m_Value: 0
   limitMin:
     m_OverrideState: 1
-    m_Value: -5
+    m_Value: -2
   limitMax:
     m_OverrideState: 1
-    m_Value: 5
+    m_Value: 2
   curveMap:
     m_OverrideState: 0
     m_Value:
@@ -238,15 +238,15 @@ MonoBehaviour:
   m_AdvancedMode: 0
   rotation:
     m_OverrideState: 1
-    m_Value: 110
+    m_Value: 213
     min: 0
     max: 360
   skyIntensityMode:
     m_OverrideState: 0
     m_Value: 0
   exposure:
-    m_OverrideState: 0
-    m_Value: -3.66
+    m_OverrideState: 1
+    m_Value: 1
   multiplier:
     m_OverrideState: 0
     m_Value: 1
@@ -260,7 +260,7 @@ MonoBehaviour:
     m_Value: 1
   updateMode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
   updatePeriod:
     m_OverrideState: 0
     m_Value: 0

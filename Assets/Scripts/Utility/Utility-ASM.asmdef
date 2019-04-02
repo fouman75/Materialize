@@ -1,0 +1,16 @@
+{
+    "name": "Utility-ASM",
+    "references": [
+        "GUID:30ec09ed78f419bdcbc5ab61e8f38024",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
