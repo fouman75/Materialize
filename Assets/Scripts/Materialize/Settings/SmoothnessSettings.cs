@@ -109,7 +109,7 @@ namespace Materialize.Settings
             Sample3Smoothness = 0.2f;
 
             BaseSmoothness = 0.1f;
-            BlurSize = 0;
+            BlurSize = 1;
             OverlayBlurSize = 30;
             BlurOverlay = 3.0f;
             FinalContrast = 1.0f;

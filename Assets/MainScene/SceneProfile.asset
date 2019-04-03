@@ -27,8 +27,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   compensation:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: -1
   limitMin:
     m_OverrideState: 1
     m_Value: -2
@@ -114,7 +114,7 @@ MonoBehaviour:
     m_Value: 1
   length:
     m_OverrideState: 0
-    m_Value: 0.15
+    m_Value: 0
     min: 0
     max: 1
   opacity:
@@ -124,7 +124,7 @@ MonoBehaviour:
     max: 1
   distanceScaleFactor:
     m_OverrideState: 0
-    m_Value: 0.5
+    m_Value: 0.476
     min: 0
     max: 1
   maxDistance:
@@ -137,7 +137,7 @@ MonoBehaviour:
     min: 0
   sampleCount:
     m_OverrideState: 1
-    m_Value: 4
+    m_Value: 10
     min: 4
     max: 64
 --- !u!114 &-1059234822759414076
@@ -295,7 +295,7 @@ MonoBehaviour:
     m_Value: 2.4410193
     min: 0
   desiredLuxValue:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   updateMode:
     m_OverrideState: 1

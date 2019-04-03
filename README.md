@@ -28,7 +28,6 @@ To use, Unity is not necessary, you can use like a normal linux application.
 #### Creating
 - The button create will only be available when the needed map is available. (Ex.: Height map requires diffuse.)
 - Press create, adjust your values then press apply to create the image.
-- In case you are creating Smoothness, AO or Metallic, you must create Mask Map if you want to see your changes in the test object.
 
 #### Saving Project
 - When you save the project, all the textures will be saved in that folder together with the .mtz file.
@@ -51,7 +50,7 @@ To use, Unity is not necessary, you can use like a normal linux application.
 - Just press Show Full Material.
 
 ## Building
-I'm developing using Unity 2019.1b7, then, is recomended to use it also. All you need to do is open in Unity and use it. It works in linux and windows without troubles related to the platform.
+I'm developing using Unity 2019.1b9, then, is recomended to use it also. All you need to do is open in Unity and use it. It works in linux and windows without troubles related to the platform.
 
 You can try to downgrade or upgrade the package, but mainly downgrading, something can go wrong.
 
@@ -96,4 +95,4 @@ You can try to downgrade or upgrade the package, but mainly downgrading, somethi
 - 16:10
 
 ## Not implemented
-- Copy to clipboard. *Planed for v0.4*.
+- Copy to clipboard.

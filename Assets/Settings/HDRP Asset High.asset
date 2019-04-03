@@ -32,10 +32,10 @@ MonoBehaviour:
     supportSSAO: 1
     supportSubsurfaceScattering: 0
     increaseSssSampleCount: 1
-    supportVolumetrics: 0
+    supportVolumetrics: 1
     increaseResolutionOfVolumetrics: 1
-    supportLightLayers: 0
-    supportDistortion: 0
+    supportLightLayers: 1
+    supportDistortion: 1
     supportTransparentBackface: 0
     supportTransparentDepthPrepass: 0
     supportTransparentDepthPostpass: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
       planarReflectionTextureSize: 1024
       reflectionProbeCacheSize: 1
       reflectionCubemapSize: 1024
-      reflectionCacheCompressed: 1
+      reflectionCacheCompressed: 0
       planarReflectionCacheCompressed: 0
       skyReflectionSize: 1024
       skyLightingOverrideLayerMask:
@@ -66,12 +66,12 @@ MonoBehaviour:
       maxDirectionalLightsOnScreen: 16
       maxPunctualLightsOnScreen: 4
       maxAreaLightsOnScreen: 4
-      maxEnvLightsOnScreen: 4
+      maxEnvLightsOnScreen: 16
       maxDecalsOnScreen: 512
     hdShadowInitParams:
       maxShadowRequests: 16
       directionalShadowsDepthBits: 32
-      shadowQuality: 0
+      shadowQuality: 2
       punctualLightShadowAtlas:
         shadowAtlasResolution: 4096
         shadowAtlasDepthBits: 32
@@ -87,7 +87,7 @@ MonoBehaviour:
       perChannelMask: 0
     postProcessSettings:
       m_LutSize: 32
-      lutFormat: 52
+      lutFormat: 48
     dynamicResolutionSettings:
       enabled: 0
       maxPercentage: 100

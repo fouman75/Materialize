@@ -45,7 +45,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -53,7 +53,7 @@ LightmapSettings:
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 0
-    m_EnableRealtimeLightmaps: 1
+    m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 12
     m_Resolution: 1
@@ -2439,7 +2439,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 5c01849d87dc32dd484d83276fec9cc1, type: 2}
+      objectReference: {fileID: 2100000, guid: 4ed4f1cb61f46934da5227468abb269e, type: 2}
     - target: {fileID: 3034780503923967866, guid: c2cab6d50c049ad48868752e7c23be91,
         type: 3}
       propertyPath: m_ReceiveGI
@@ -4320,7 +4320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8833a3d08edf409eb51c87af95cd640a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisplacementConstant: 0.1
+  DisplacementConstant: -0.1
   DefaultDisplacement: 3
   DefaultTextureFormat: 0
   FlipNormalY: 0

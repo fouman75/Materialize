@@ -39,7 +39,7 @@ namespace Materialize.Settings
             LumWeight = 0.2f;
             MaskLow = 0.0f;
             MaskHigh = 1.0f;
-            BlurSize = 0;
+            BlurSize = 1;
             OverlayBlurSize = 30;
             BlurOverlay = 1.0f;
             FinalContrast = 1.0f;

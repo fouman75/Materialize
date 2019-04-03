@@ -10,41 +10,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cf1dab834d4ec34195b920ea7bbf9ec, type: 3}
-  m_Name: HDRP Asset Medium
+  m_Name: HDRP Minimal
   m_EditorClassIdentifier: 
   m_RenderPipelineResources: {fileID: 11400000, guid: 3ce144cff5783da45aa5d4fdc2da14b7,
     type: 2}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 69284238982940
+      data1: 69279756078085
       data2: 4539628424389459968
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
-      data1: 69284255757085
+      data1: 69279757123585
       data2: 4539628424389459968
   m_RenderingPathDefaultRealtimeReflectionFrameSettings:
     bitDatas:
-      data1: 69284238966556
+      data1: 69279735090177
       data2: 4539628424389459968
   m_RenderPipelineSettings:
-    supportShadowMask: 1
+    supportShadowMask: 0
     supportSSR: 0
     supportSSAO: 0
     supportSubsurfaceScattering: 0
     increaseSssSampleCount: 0
-    supportVolumetrics: 1
+    supportVolumetrics: 0
     increaseResolutionOfVolumetrics: 0
-    supportLightLayers: 1
-    supportDistortion: 1
+    supportLightLayers: 0
+    supportDistortion: 0
     supportTransparentBackface: 0
     supportTransparentDepthPrepass: 0
     supportTransparentDepthPostpass: 0
     colorBufferFormat: 74
-    supportedLitShaderMode: 1
-    supportDecals: 0
+    supportedLitShaderMode: 2
+    supportDecals: 1
     msaaSampleCount: 1
     supportMotionVectors: 0
-    supportRuntimeDebugDisplay: 1
+    supportRuntimeDebugDisplay: 0
     supportDitheringCrossFade: 0
     supportRayTracing: 0
     lightLoopSettings:
@@ -52,34 +52,34 @@ MonoBehaviour:
       cookieTexArraySize: 16
       pointCookieSize: 128
       cubeCookieTexArraySize: 16
-      planarReflectionProbeCacheSize: 1
-      planarReflectionTextureSize: 512
-      reflectionProbeCacheSize: 1
-      reflectionCubemapSize: 512
+      planarReflectionProbeCacheSize: 2
+      planarReflectionTextureSize: 1024
+      reflectionProbeCacheSize: 64
+      reflectionCubemapSize: 256
       reflectionCacheCompressed: 0
       planarReflectionCacheCompressed: 0
-      skyReflectionSize: 512
+      skyReflectionSize: 256
       skyLightingOverrideLayerMask:
         serializedVersion: 2
         m_Bits: 0
       supportFabricConvolution: 0
-      maxDirectionalLightsOnScreen: 8
-      maxPunctualLightsOnScreen: 2
-      maxAreaLightsOnScreen: 2
-      maxEnvLightsOnScreen: 8
+      maxDirectionalLightsOnScreen: 16
+      maxPunctualLightsOnScreen: 512
+      maxAreaLightsOnScreen: 64
+      maxEnvLightsOnScreen: 64
       maxDecalsOnScreen: 512
     hdShadowInitParams:
-      maxShadowRequests: 16
-      directionalShadowsDepthBits: 32
+      maxShadowRequests: 128
+      directionalShadowsDepthBits: 16
       shadowQuality: 0
       punctualLightShadowAtlas:
         shadowAtlasResolution: 4096
-        shadowAtlasDepthBits: 32
-        useDynamicViewportRescale: 1
+        shadowAtlasDepthBits: 16
+        useDynamicViewportRescale: 0
       areaLightShadowAtlas:
         shadowAtlasResolution: 4096
-        shadowAtlasDepthBits: 32
-        useDynamicViewportRescale: 1
+        shadowAtlasDepthBits: 16
+        useDynamicViewportRescale: 0
     decalSettings:
       drawDistance: 1000
       atlasWidth: 4096

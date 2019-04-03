@@ -281,7 +281,6 @@ namespace Materialize.Gui
         protected static readonly int OverlayBlurTex = Shader.PropertyToID("_OverlayBlurTex");
         protected static readonly int Angularity = Shader.PropertyToID("_Angularity");
         protected static readonly int AngularIntensity = Shader.PropertyToID("_AngularIntensity");
-        protected static readonly int LightDir = Shader.PropertyToID("_LightDir");
         protected static readonly int HeightBlurTex = Shader.PropertyToID("_HeightBlurTex");
         protected static readonly int Desaturate = Shader.PropertyToID("_Desaturate");
         protected static readonly int LightTex = Shader.PropertyToID("_LightTex");
@@ -305,7 +304,6 @@ namespace Materialize.Gui
         protected static readonly int Sample3Smoothness = Shader.PropertyToID("_Sample3Smoothness");
         protected static readonly int BaseSmoothness = Shader.PropertyToID("_BaseSmoothness");
         protected static readonly int MetallicTex = Shader.PropertyToID("_MetallicTex");
-        protected static readonly int Tiling = Shader.PropertyToID("_Tiling");
         protected static readonly int ObjectScale = Shader.PropertyToID("_ObjectScale");
         protected static readonly int FlipY = Shader.PropertyToID("_FlipY");
         protected static readonly int SplatScale = Shader.PropertyToID("_SplatScale");

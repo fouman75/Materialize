@@ -239,7 +239,7 @@ namespace Materialize.Gui
             offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Displacement Amplitude",
-                _materialSettings.DisplacementStrength, out _materialSettings.DisplacementStrength, 0.0f, 10.0f);
+                _materialSettings.DisplacementStrength, out _materialSettings.DisplacementStrength, 0.0f, 5.0f);
             offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Tiling (X,Y)", _materialSettings.TexTilingX,

@@ -32,10 +32,10 @@ MonoBehaviour:
     supportSSAO: 0
     supportSubsurfaceScattering: 0
     increaseSssSampleCount: 1
-    supportVolumetrics: 0
-    increaseResolutionOfVolumetrics: 1
-    supportLightLayers: 0
-    supportDistortion: 0
+    supportVolumetrics: 1
+    increaseResolutionOfVolumetrics: 0
+    supportLightLayers: 1
+    supportDistortion: 1
     supportTransparentBackface: 0
     supportTransparentDepthPrepass: 0
     supportTransparentDepthPostpass: 0
@@ -87,7 +87,7 @@ MonoBehaviour:
       perChannelMask: 0
     postProcessSettings:
       m_LutSize: 32
-      lutFormat: 52
+      lutFormat: 48
     dynamicResolutionSettings:
       enabled: 0
       maxPercentage: 100

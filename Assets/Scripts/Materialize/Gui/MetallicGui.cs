@@ -385,7 +385,7 @@ namespace Materialize.Gui
 
             var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
             var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
-
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(diffuse.width, diffuse.height);
             if (_metallicSettings.BlurSize == 0)
             {
                 Graphics.Blit(diffuse, _tempMap);
@@ -411,20 +411,13 @@ namespace Materialize.Gui
 
             ThisMaterial.SetTexture(BlurTex, _blurMap);
 
-            // Blur the image for overlay
-            BlurCompute.SetInt("_BlurSamples", _metallicSettings.OverlayBlurSize);
-            BlurCompute.SetVector("_BlurDirection", new Vector4(1, 0, 0, 0));
             var source = _metallicSettings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
-            BlurCompute.SetTexture(blurKernel, "ImageInput", source);
-            BlurCompute.SetTexture(blurKernel, "Result", _tempMap);
-            BlurCompute.Dispatch(blurKernel, groupsX, groupsY, 1);
 
-            BlurCompute.SetVector("_BlurDirection", new Vector4(0, 1, 0, 0));
-            BlurCompute.SetTexture(blurKernel, "ImageInput", _tempMap);
-            BlurCompute.SetTexture(blurKernel, "Result", _overlayBlurMap);
-            BlurCompute.Dispatch(blurKernel, groupsX, groupsY, 1);
+            BlurCompute.SetInt("_BlurSamples", _metallicSettings.OverlayBlurSize);
+            BlurImage(1.0f, source, _overlayBlurMap);
+
             ThisMaterial.SetTexture(OverlayBlurTex, _overlayBlurMap);
-
+            
             IsReadyToProcess = true;
 
             MessagePanel.HideMessage();

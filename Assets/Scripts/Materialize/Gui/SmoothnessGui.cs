@@ -571,13 +571,10 @@ namespace Materialize.Gui
             while (!ProgramManager.Lock()) yield return null;
 
             MessagePanel.ShowMessage("Processing Blur for Smoothness Map");
-
-            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
-            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
-
+            
             var blurKernel = BlurCompute.FindKernel("CSBlur");
 
-            BlurCompute.SetVector(ImageSizeId, new Vector4(ImageSize.x, ImageSize.y, 0, 0));
+            BlurCompute.SetVector(ImageSizeId, new Vector2(ImageSize.x, ImageSize.y));
             BlurCompute.SetFloat("_BlurContrast", 1.0f);
             BlurCompute.SetFloat("_BlurSpread", 1.0f);
 
@@ -585,7 +582,10 @@ namespace Materialize.Gui
             BlurCompute.SetInt("_BlurSamples", _settings.BlurSize);
             BlurCompute.SetVector("_BlurDirection", new Vector4(1, 0, 0, 0));
             var diffuse = _settings.UseAdjustedDiffuse ? _diffuseMap : _diffuseMapOriginal;
-
+            
+            var groupsX = (int) Mathf.Ceil(ImageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(ImageSize.y / 8f);
+            _tempMap = TextureManager.Instance.GetTempRenderTexture(diffuse.width, diffuse.height);
             if (_settings.BlurSize == 0)
             {
                 Graphics.Blit(diffuse, _tempMap);
