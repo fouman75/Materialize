@@ -4,19 +4,15 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.4HDRP-beta.8] - 2019-xx-xx
-### Added
+## [v0.4HDRP-beta.8] - 2019-04-03
 
 ### Changed
 - Removed the dedicated Sun (Directional Light), get it from HDRI Sky instead.
-- Complete new Material Shader, based on Shader Graph
-
-#### Minor changes
-
+- Complete new Material Shader, based on Shader Graph.
 
 ### Fixes
-- Fix Metallic with new Material
-- Fix Smoothness with new Material
+- Fix Metallic with new Material.
+- Fix Smoothness with new Material.
 
 ### To Implement
 - Windows Copy / Paste
