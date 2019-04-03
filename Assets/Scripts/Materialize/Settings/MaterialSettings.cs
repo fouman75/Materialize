@@ -2,6 +2,7 @@
 
 using Materialize.General;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.HDPipeline;
 
 #endregion
 
@@ -9,7 +10,7 @@ namespace Materialize.Settings
 {
     public class MaterialSettings : TexturePanelSettings
     {
-        private const float LightIntensityDefault = 10f;
+        private const float LightIntensityDefault = 1f;
         private readonly Color _originalLightColor;
         private readonly float _originalLightIntensity;
         public float AoRemapMax;
@@ -18,7 +19,7 @@ namespace Materialize.Settings
         public float DisplacementCenter;
         public float LightB;
         public float LightG;
-        public float LightIntensity;
+        public float LightExposure;
         public float LightR;
         public TrackableProperty Metallic;
         public float NormalStrength;
@@ -31,16 +32,17 @@ namespace Materialize.Settings
 
         public MaterialSettings()
         {
-            var light = ProgramManager.Instance.MainLight;
+            ProgramManager.Instance.SceneVolume.profile.TryGet(out HDRISky hdriSky);
+            ProgramManager.Instance.SceneVolume.profile.TryGet(out ColorAdjustments colorAdjustments);
 
-            var color = light ? light.color : new Color(1.0f, 1.0f, 1.0f);
+            var color = colorAdjustments ? colorAdjustments.colorFilter : new Color(1.0f, 1.0f, 1.0f);
             _originalLightColor = color;
 
             LightR = color.r;
             LightG = color.g;
             LightB = color.b;
-            LightIntensity = light ? light.intensity : LightIntensityDefault;
-            _originalLightIntensity = LightIntensity;
+            LightExposure = hdriSky ? hdriSky.exposure : LightIntensityDefault;
+            _originalLightIntensity = LightExposure;
 
             Reset();
         }
@@ -50,7 +52,7 @@ namespace Materialize.Settings
             LightR = _originalLightColor.r;
             LightG = _originalLightColor.g;
             LightB = _originalLightColor.b;
-            LightIntensity = _originalLightIntensity;
+            LightExposure = _originalLightIntensity;
 
             TexTilingX = 1;
             TexTilingY = 1;

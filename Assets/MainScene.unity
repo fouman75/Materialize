@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.51737785, g: 0.49146035, b: 0.44464028, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -983,7 +983,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8498ef4e9144f7f47a8d1a5e20d5440d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LightObject: {fileID: 0}
   TestObject: {fileID: 1463534583}
   TestObjectCube: {fileID: 1479002646}
   TestObjectCylinder: {fileID: 2142672076}
@@ -2190,7 +2189,7 @@ MonoBehaviour:
   antialiasing: 3
   SMAAQuality: 2
   dithering: 0
-  stopNaNs: 0
+  stopNaNs: 1
   physicalParameters:
     m_Iso: 200
     m_ShutterSpeed: 0.005
@@ -2275,7 +2274,7 @@ Camera:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 1
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 70.41, y: 52.63}
   m_LensShift: {x: 0, y: 0}
   m_FocalLength: 50
@@ -2287,7 +2286,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 150
-  field of view: 55.515667
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -3815,7 +3814,6 @@ MonoBehaviour:
   TestObject: {fileID: 1463534583}
   ThisMaterial: {fileID: 2100000, guid: 4678d9f7beec7d04e824e08435395770, type: 2}
   HeightBlurMap: {fileID: 0}
-  MainLight: {fileID: 0}
   NormalCompute: {fileID: 7200000, guid: 054c3774b078c2fad8f520cb6674d9d0, type: 3}
 --- !u!4 &1970709860
 Transform:
@@ -4201,6 +4199,7 @@ MonoBehaviour:
   AllowX: 1
   AllowY: 1
   Filter: 5
+  HideGuiManager: {fileID: 1866024252}
   InvertX: 0
   InvertY: 0
   InvertZoom: 0
@@ -4209,7 +4208,6 @@ MonoBehaviour:
   PanButton: 2
   RotateButton: 1
   ZoomSpeed: 10
-  HideGuiManager: {fileID: 1866024252}
 --- !u!4 &2015501344
 Transform:
   m_ObjectHideFlags: 0
@@ -4257,22 +4255,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66d9b4f2eca473e8c490f0e9af16e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultFrameRate: 0
-  ForceFrameRate: 0
-  ForcedFrameRate: 30
-  DesiredFrameRate: 0
   ApplicationIsQuitting: 0
+  DefaultFrameRate: 0
+  DesiredFrameRate: 0
+  ForcedFrameRate: 30
+  ForceFrameRate: 0
   GraphicsQuality: 0
   GuiScale: {x: 1, y: 1}
   HighQualityAsset: {fileID: 11400000, guid: 204ea025a14fc8290b039026772df368, type: 2}
   LastPath: 
   LowQualityAsset: {fileID: 11400000, guid: 179adb809604d5a67a969e8c3850c7be, type: 2}
-  MainLight: {fileID: 0}
   MediumQualityAsset: {fileID: 11400000, guid: c70b1ea4295ec1e26a01d8a6c9086304, type: 2}
   MessagePanelObject: {fileID: 1674964765}
   PostProcessingVolume: {fileID: 2072837669}
   SceneVolume: {fileID: 513423966}
-  MainCamera: {fileID: 0}
   StartCubeMap: {fileID: 8900000, guid: d179a5cf97a39ec5c91cb199d742898a, type: 3}
   SceneObjects: []
   CommandListExecutorObject: {fileID: 1637277520}
@@ -4324,10 +4320,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8833a3d08edf409eb51c87af95cd640a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DisplacementConstant: 100
   DefaultDisplacement: 3
   DefaultTextureFormat: 0
   FlipNormalY: 0
-  FullMaterial: {fileID: 2100000, guid: 85f53cbecf1be3b439a8c31604ce77af, type: 2}
+  FullMaterial: {fileID: 2100000, guid: 4ed4f1cb61f46934da5227468abb269e, type: 2}
   Hdr: 1
   MaskMapCompute: {fileID: 7200000, guid: 28a9b64b8836c39ada04b2b11ba2bfb8, type: 3}
   RenderTextureFormat: 0

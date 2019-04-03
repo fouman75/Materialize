@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 2}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 68186899872542
+      data1: 69286411631390
       data2: 4539628424389459968
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
@@ -24,7 +24,7 @@ MonoBehaviour:
       data2: 4539628424389459968
   m_RenderingPathDefaultRealtimeReflectionFrameSettings:
     bitDatas:
-      data1: 69286210305822
+      data1: 69286411632414
       data2: 4539628424389459968
   m_RenderPipelineSettings:
     supportShadowMask: 1
@@ -97,7 +97,7 @@ MonoBehaviour:
       forceResolution: 1
       forcedPercentage: 80
   allowShaderVariantStripping: 1
-  enableSRPBatcher: 1
+  enableSRPBatcher: 0
   shaderVariantLogLevel: 2
   diffusionProfileSettings: {fileID: 0}
   diffusionProfileSettingsList:

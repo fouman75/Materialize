@@ -5,6 +5,7 @@
 using Materialize.General;
 using Materialize.Settings;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.HDPipeline;
 using Utility;
 using Logger = Utility.Logger;
 
@@ -19,13 +20,12 @@ namespace Materialize.Gui
     {
         private const int UpdateDivisor = 4;
         private static readonly int MetallicId = Shader.PropertyToID("_Metallic");
-        private static readonly int NormalStrengthId = Shader.PropertyToID("_NormalScale");
+        private static readonly int NormalStrengthId = Shader.PropertyToID("_NormalStrength");
         private static readonly int AoRemapMinId = Shader.PropertyToID("_AORemapMin");
         private static readonly int AoRemapMaxId = Shader.PropertyToID("_AORemapMax");
         private static readonly int SmoothnessRemapMinId = Shader.PropertyToID("_SmoothnessRemapMin");
         private static readonly int SmoothnessRemapMaxId = Shader.PropertyToID("_SmoothnessRemapMax");
-        private static readonly int HeightAmplitudeId = Shader.PropertyToID("_HeightAmplitude");
-        private static readonly int HeightCenterId = Shader.PropertyToID("_HeightCenter");
+        private static readonly int DisplacementStrength = Shader.PropertyToID("_DisplacementStrength");
         private static readonly int DiffuseMap = Shader.PropertyToID("_BaseColorMap");
 
         private bool _cubeShown;
@@ -34,7 +34,6 @@ namespace Materialize.Gui
         private int _divisorCount = UpdateDivisor;
 
         private Texture2D _heightMap;
-        private Light _light;
 
         private MaterialSettings _materialSettings;
 
@@ -50,7 +49,6 @@ namespace Materialize.Gui
 
         private Rect _windowRect;
 
-        public GameObject LightObject;
         public GameObject TestObject;
         public GameObject TestObjectCube;
         public GameObject TestObjectCylinder;
@@ -58,6 +56,8 @@ namespace Materialize.Gui
         public GameObject TestObjectParent;
         public GameObject TestObjectSphere;
         public ObjectZoomPanRotate TestRotator;
+        private HDRISky _hdriSky;
+        private ColorAdjustments _colorAdjustments;
 
         public bool Hide { get; set; }
 
@@ -74,7 +74,6 @@ namespace Materialize.Gui
 
         private void Awake()
         {
-            _light = LightObject.GetComponent<Light>();
             ProgramManager.Instance.SceneObjects.Add(gameObject);
             _windowRect = new Rect(10.0f, 265.0f, 300f, 575f);
         }
@@ -83,6 +82,8 @@ namespace Materialize.Gui
         {
             InitializeSettings();
             _windowId = ProgramManager.Instance.GetWindowId;
+            ProgramManager.Instance.SceneVolume.profile.TryGet(out _hdriSky);
+            ProgramManager.Instance.SceneVolume.profile.TryGet(out _colorAdjustments);
         }
 
         public void ToggleGui()
@@ -134,10 +135,8 @@ namespace Materialize.Gui
             Logger.Log("Initializing MaterialSettings");
             _materialSettings = new MaterialSettings();
             _myColorTexture = TextureManager.Instance.GetStandardTexture(1, 1);
-            _materialSettings.DisplacementAmplitude = _thisMaterial.GetFloat(HeightAmplitudeId);
+            _materialSettings.DisplacementAmplitude = _thisMaterial.GetFloat(DisplacementStrength);
             _materialSettings.NormalStrength = _thisMaterial.GetFloat(NormalStrengthId);
-            var center = _thisMaterial.GetFloat(HeightCenterId) / _materialSettings.DisplacementAmplitude;
-            _materialSettings.DisplacementCenter = center;
             _materialSettings.Metallic.Value = _thisMaterial.GetFloat(MetallicId);
             _materialSettings.SmoothnessRemapMin = _thisMaterial.GetFloat(SmoothnessRemapMinId);
             _materialSettings.SmoothnessRemapMax = _thisMaterial.GetFloat(SmoothnessRemapMaxId);
@@ -173,16 +172,16 @@ namespace Materialize.Gui
             _thisMaterial.SetFloat(SmoothnessRemapMinId, _materialSettings.SmoothnessRemapMin);
             _thisMaterial.SetFloat(SmoothnessRemapMaxId, _materialSettings.SmoothnessRemapMax);
 
-            _light.color = new Color(_materialSettings.LightR, _materialSettings.LightG, _materialSettings.LightB);
-            _light.intensity = _materialSettings.LightIntensity;
+            var color = new Color(_materialSettings.LightR, _materialSettings.LightG, _materialSettings.LightB);
+            _colorAdjustments.colorFilter.value = color;
+            _hdriSky.exposure.value = _materialSettings.LightExposure;
 
             if (TestObjectParent.activeSelf != _planeShown) TestObjectParent.SetActive(_planeShown);
             if (TestObjectCube.activeSelf != _cubeShown) TestObjectCube.SetActive(_cubeShown);
             if (TestObjectCylinder.activeSelf != _cylinderShown) TestObjectCylinder.SetActive(_cylinderShown);
             if (TestObjectSphere.activeSelf != _sphereShown) TestObjectSphere.SetActive(_sphereShown);
 
-            TextureManager.Instance.SetDisplacement(_materialSettings.DisplacementAmplitude,
-                _materialSettings.DisplacementCenter);
+            TextureManager.Instance.SetDisplacement(_materialSettings.DisplacementAmplitude);
 
             TextureManager.Instance.SetUvScale(new Vector2(_materialSettings.TexTilingX, _materialSettings.TexTilingY));
             TextureManager.Instance.SetUvOffset(new Vector2(_materialSettings.TexOffsetX,
@@ -200,8 +199,8 @@ namespace Materialize.Gui
                 GUI.VerticalSlider(new Rect(posX + 40, posY + 5, 30, 90), _materialSettings.LightG, 1.0f, 0.0f);
             _materialSettings.LightB =
                 GUI.VerticalSlider(new Rect(posX + 70, posY + 5, 30, 90), _materialSettings.LightB, 1.0f, 0.0f);
-            _materialSettings.LightIntensity =
-                GUI.VerticalSlider(new Rect(posX + 120, posY + 5, 30, 90), _materialSettings.LightIntensity, 30.0f,
+            _materialSettings.LightExposure =
+                GUI.VerticalSlider(new Rect(posX + 120, posY + 5, 30, 90), _materialSettings.LightExposure, 30.0f,
                     0.0f);
 
             GUI.Label(new Rect(posX + 10, posY + 95, 30, 25), "R");

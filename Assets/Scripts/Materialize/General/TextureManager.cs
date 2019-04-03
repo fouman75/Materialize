@@ -20,22 +20,21 @@ namespace Materialize.General
         // ReSharper disable once MemberCanBePrivate.Global
         public const TextureFormat DefaultLdrTextureFormat = TextureFormat.RGBA32;
         public static TextureManager Instance;
+        public float DisplacementConstant = 0.25f;
 
         private static readonly int DiffuseMapId = Shader.PropertyToID("_BaseColorMap");
         private static readonly int NormalMapId = Shader.PropertyToID("_NormalMap");
-        private static readonly int MaskMapId = Shader.PropertyToID("_MaskMap");
         private static readonly int HeightMapId = Shader.PropertyToID("_HeightMap");
-        private static readonly int MetallicId = Shader.PropertyToID("_Metallic");
-        private static readonly int SmoothnessId = Shader.PropertyToID("_Smoothness");
-        private static readonly int HeightAmplitudeId = Shader.PropertyToID("_HeightAmplitude");
-        private static readonly int TessAmplitudeId = Shader.PropertyToID("_HeightTessAmplitude");
-        private static readonly int HeightMax = Shader.PropertyToID("_HeightMax");
-        private static readonly int HeightMin = Shader.PropertyToID("_HeightMin");
-        private static readonly int HeightCenterId = Shader.PropertyToID("_HeightCenter");
+        private static readonly int MetallicMapId = Shader.PropertyToID("_MetallicMap");
+        private static readonly int SmoothnessMapId = Shader.PropertyToID("_SmoothnessMap");
+        private static readonly int AoMapId = Shader.PropertyToID("_AoMap");
+        private static readonly int DisplacementStrength = Shader.PropertyToID("_DisplacementStrength");
 
 
         private Texture2D _blackTexture;
         private Texture2D _packedNormal;
+        private bool _displacementInitialized;
+
         [Range(0, 10)] public float DefaultDisplacement = 3.0f;
         public TextureFormat DefaultTextureFormat;
         public bool FlipNormalY;
@@ -190,58 +189,30 @@ namespace Materialize.General
 
             if (HeightMap)
             {
-                FullMaterialInstance.EnableKeyword("_VERTEX_DISPLACEMENT");
-                FullMaterialInstance.EnableKeyword("_HEIGHTMAP");
                 FullMaterialInstance.SetTexture(HeightMapId, HeightMap);
-                FullMaterialInstance.SetInt(DisplacementMode, 1);
-                var center = FullMaterialInstance.GetFloat(HeightCenterId) / DefaultDisplacement;
-                SetDisplacement(DefaultDisplacement, center);
+                if (!_displacementInitialized)
+                {
+                    SetDisplacement(DefaultDisplacement);
+                    _displacementInitialized = true;
+                }
             }
             else
             {
                 FullMaterialInstance.SetTexture(HeightMapId, null);
             }
 
-            if (DiffuseMap != null)
+            if (DiffuseMap)
                 FullMaterialInstance.SetTexture(DiffuseMapId, DiffuseMap);
-            else if (DiffuseMapOriginal != null)
+            else if (DiffuseMapOriginal)
                 FullMaterialInstance.SetTexture(DiffuseMapId, DiffuseMapOriginal);
             else
                 FullMaterialInstance.SetTexture(DiffuseMapId, Texture2D.whiteTexture);
 
 
-            if (NormalMap)
-            {
-                // ReSharper disable once StringLiteralTypo
-                FullMaterialInstance.EnableKeyword("_NORMALMAP");
-                StartCoroutine(PackNormalAndSet());
-            }
-            else
-            {
-                FullMaterialInstance.SetTexture(NormalMapId, null);
-            }
-
-            if (MetallicMap) FullMaterialInstance.SetFloat(MetallicId, 1.0f);
-
-            if (SmoothnessMap) FullMaterialInstance.SetFloat(SmoothnessId, 1.0f);
-
-            RenderTexture tempMaskMap = null;
-            if (MetallicMap || AoMap || SmoothnessMap)
-                tempMaskMap = TextureProcessing.RenderMaskMap(MetallicMap, SmoothnessMap, AoMap);
-
-            var maskMap = MaskMap ? (Texture) MaskMap : tempMaskMap;
-            if (maskMap)
-            {
-                // ReSharper disable once StringLiteralTypo
-                FullMaterialInstance.EnableKeyword("_MASKMAP");
-                FullMaterialInstance.SetTexture(MaskMapId, maskMap);
-            }
-            else
-            {
-                FullMaterialInstance.SetTexture(MaskMapId, null);
-                FullMaterialInstance.SetFloat(MetallicId, 0.0f);
-                FullMaterialInstance.SetFloat(SmoothnessId, 0.0f);
-            }
+            FullMaterialInstance.SetTexture(NormalMapId, NormalMap ? NormalMap : null);
+            FullMaterialInstance.SetTexture(MetallicMapId, MetallicMap ? MetallicMap : null);
+            FullMaterialInstance.SetTexture(SmoothnessMapId, SmoothnessMap ? SmoothnessMap : null);
+            FullMaterialInstance.SetTexture(AoMapId, AoMap ? AoMap : null);
 
             ProgramManager.Instance.TestObject.GetComponent<Renderer>().material = FullMaterialInstance;
             ProgramManager.Instance.MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
@@ -249,15 +220,9 @@ namespace Materialize.General
             MessagePanel.HideMessage();
         }
 
-        public void SetDisplacement(float displacementAmplitude, float displacementCenter)
+        public void SetDisplacement(float displacementAmplitude)
         {
-            FullMaterialInstance.SetFloat(HeightAmplitudeId, displacementAmplitude);
-            var center = displacementCenter * displacementAmplitude;
-            FullMaterialInstance.SetFloat(HeightCenterId, center);
-            var amplitude = displacementAmplitude * 100f;
-            FullMaterialInstance.SetFloat(HeightMax, amplitude);
-            FullMaterialInstance.SetFloat(HeightMin, 0);
-            FullMaterialInstance.SetFloat(TessAmplitudeId, amplitude);
+            FullMaterialInstance.SetFloat(DisplacementStrength, displacementAmplitude);
         }
 
         public void SetFullMaterial()
@@ -408,7 +373,7 @@ namespace Materialize.General
                 case ProgramEnums.MapType.Height:
                     if (HeightMap)
                     {
-                        FullMaterialInstance.SetTexture(HeightMapId, Texture2D.whiteTexture);
+                        FullMaterialInstance.SetTexture(HeightMapId, null);
                         Destroy(HeightMap);
                         HeightMap = null;
                     }
@@ -419,7 +384,7 @@ namespace Materialize.General
                 case ProgramEnums.MapType.Diffuse:
                     if (DiffuseMap)
                     {
-                        FullMaterialInstance.SetTexture(DiffuseMapId, Texture2D.whiteTexture);
+                        FullMaterialInstance.SetTexture(DiffuseMapId, null);
                         Destroy(DiffuseMap);
                         DiffuseMap = null;
                     }
@@ -428,7 +393,7 @@ namespace Materialize.General
                 case ProgramEnums.MapType.Normal:
                     if (NormalMap)
                     {
-                        FullMaterialInstance.SetTexture(NormalMapId, Texture2D.normalTexture);
+                        FullMaterialInstance.SetTexture(NormalMapId, null);
                         Destroy(NormalMap);
                         NormalMap = null;
                     }
@@ -453,7 +418,6 @@ namespace Materialize.General
                 case ProgramEnums.MapType.MaskMap:
                     if (MaskMap)
                     {
-                        FullMaterialInstance.SetTexture(MaskMapId, Texture2D.whiteTexture);
                         Destroy(MaskMap);
                         MaskMap = null;
                     }
@@ -470,7 +434,7 @@ namespace Materialize.General
                 case ProgramEnums.MapType.DiffuseOriginal:
                     if (DiffuseMapOriginal)
                     {
-                        FullMaterialInstance.SetTexture(DiffuseMapId, Texture2D.whiteTexture);
+                        FullMaterialInstance.SetTexture(DiffuseMapId, null);
                         Destroy(DiffuseMapOriginal);
                         DiffuseMapOriginal = null;
                     }
@@ -570,7 +534,6 @@ namespace Materialize.General
         public Texture2D MaskMap;
         public Texture2D PropertyMap;
         private ProgramEnums.MapType _textureToSave;
-        private static readonly int DisplacementMode = Shader.PropertyToID("_DisplacementMode");
 
         #endregion
 

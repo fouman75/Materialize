@@ -33,8 +33,6 @@ namespace Materialize.General
         public HDRenderPipelineAsset HighQualityAsset;
         [HideInInspector] public string LastPath;
         public HDRenderPipelineAsset LowQualityAsset;
-        public Camera MainCamera;
-        public Light MainLight;
         public HDRenderPipelineAsset MediumQualityAsset;
         public MessagePanel MessagePanelObject;
         public Volume PostProcessingVolume;
@@ -102,10 +100,6 @@ namespace Materialize.General
             yield return StartCoroutine(GetHdrpCoroutine());
             yield return StartCoroutine(SetScreen(ProgramEnums.ScreenMode.Windowed));
 
-            RenderPipeline.RequestSkyEnvironmentUpdate();
-            Logger.Log("HDRI Sky Atualizado");
-
-            StartCoroutine(RenderProbe());
             StartCoroutine(SlowUpdate());
         }
 
@@ -145,6 +139,8 @@ namespace Materialize.General
 
         private IEnumerator UpdateQuality()
         {
+            if (Application.isEditor) yield break;
+
             var hdRenderPipelineAsset = GetRpQualityAsset();
 
             if (GraphicsSettings.renderPipelineAsset == hdRenderPipelineAsset) yield break;
@@ -174,7 +170,6 @@ namespace Materialize.General
             GraphicsSettings.renderPipelineAsset = hdRenderPipelineAsset;
 
             yield return new WaitForSeconds(0.8f);
-            StartCoroutine(RenderProbe());
         }
 
         private void ActivateObjects()
@@ -262,7 +257,6 @@ namespace Materialize.General
             yield return null;
             Instance.PostProcessingVolume.enabled = true;
             Instance.SceneVolume.enabled = true;
-            StartCoroutine(RenderProbe());
         }
 
         private static HDRenderPipelineAsset GetRpQualityAsset()

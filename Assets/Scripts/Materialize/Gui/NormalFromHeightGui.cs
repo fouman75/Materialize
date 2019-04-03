@@ -35,8 +35,6 @@ namespace Materialize.Gui
         private Renderer _testMaterialRenderer;
 
         [HideInInspector] public RenderTexture HeightBlurMap;
-
-        public Light MainLight;
         public ComputeShader NormalCompute;
 
         protected override IEnumerator Process()
@@ -228,8 +226,6 @@ namespace Materialize.Gui
             _previewMaterial.SetFloat(AngularIntensity, _settings.AngularIntensity);
 
             _previewMaterial.SetFloat(FinalContrast, _settings.FinalContrast);
-
-            _previewMaterial.SetVector(LightDir, MainLight.transform.forward);
         }
 
         private void DoMyWindow(int windowId)

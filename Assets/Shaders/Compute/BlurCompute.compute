@@ -20,7 +20,7 @@ void CSBlur (uint3 id : SV_DispatchThreadID)
         
     float2 pixelSize = ( 1.0 / _ImageSize.xy );
 
-    int totalSamples = _BlurSamples * 2;
+    float totalSamples = _BlurSamples * 2 + 0.000000000000000001; // Be sure to dont be zero
     int i;
     half4 mainTex = float4(0,0,0,0);
     for( i = -_BlurSamples; i <= _BlurSamples; i++ ){

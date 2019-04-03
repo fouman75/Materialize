@@ -543,8 +543,6 @@ namespace Materialize.Gui
             if (_selectedCubemap >= CubeMaps.Length) _selectedCubemap = 0;
 
             HdriSky.hdriSky.value = CubeMaps[_selectedCubemap];
-
-            StartCoroutine(ProgramManager.Instance.RenderProbe());
         }
 
         public void Quit()
@@ -879,7 +877,6 @@ namespace Materialize.Gui
             {
                 if (HideGuiLocker.IsLocked)
                 {
-                    Logger.Log("Tentando modificar IsGuiHidden quando travado");
                     return;
                 }
 

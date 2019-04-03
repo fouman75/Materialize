@@ -73,8 +73,6 @@
 
 			float _Slider;
 
-			float3 _LightDir;
-
 			// vertex-to-fragment interpolation data
 			struct v2f {
 				float4 pos : SV_POSITION;

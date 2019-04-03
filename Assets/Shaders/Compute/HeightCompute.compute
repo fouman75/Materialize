@@ -118,7 +118,7 @@ void CSHeightFromNormal (uint3 id : SV_DispatchThreadID)
     direction.x = sin( _Progress * 6.28318530718 );
     direction.y = cos( _Progress * 6.28318530718 );
     
-    float Weight = 0.0;
+    float Weight = 1.0;
     float TotalWeight = 0.0;
     float AO = 0.0;
     
@@ -135,7 +135,6 @@ void CSHeightFromNormal (uint3 id : SV_DispatchThreadID)
         sampleTex *= flipTex;
         
         float sampleAO = dot( sampleTex, normalize( float3( trueDir, 0.0 ) ) );
-        Weight = 1.0;
         TotalWeight += Weight;
         AO += sampleAO * Weight;        
     }
