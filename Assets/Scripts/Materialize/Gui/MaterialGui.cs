@@ -19,12 +19,10 @@ namespace Materialize.Gui
     public class MaterialGui : MonoBehaviour, IHideable
     {
         private const int UpdateDivisor = 4;
-        private static readonly int MetallicId = Shader.PropertyToID("_Metallic");
-        private static readonly int NormalStrengthId = Shader.PropertyToID("_NormalStrength");
-        private static readonly int AoRemapMinId = Shader.PropertyToID("_AORemapMin");
-        private static readonly int AoRemapMaxId = Shader.PropertyToID("_AORemapMax");
-        private static readonly int SmoothnessRemapMinId = Shader.PropertyToID("_SmoothnessRemapMin");
-        private static readonly int SmoothnessRemapMaxId = Shader.PropertyToID("_SmoothnessRemapMax");
+        private static readonly int NormalScaleId = Shader.PropertyToID("_NormalScale");
+        private static readonly int MetallicMultiplierId = Shader.PropertyToID("_MetallicMultiplier");
+        private static readonly int SmoothnessMultiplierId = Shader.PropertyToID("_SmoothnessMultiplier");
+        private static readonly int AoMultiplierId = Shader.PropertyToID("_AoMultiplier");
         private static readonly int DisplacementStrength = Shader.PropertyToID("_DisplacementStrength");
         private static readonly int DiffuseMap = Shader.PropertyToID("_BaseColorMap");
 
@@ -135,13 +133,11 @@ namespace Materialize.Gui
             Logger.Log("Initializing MaterialSettings");
             _materialSettings = new MaterialSettings();
             _myColorTexture = TextureManager.Instance.GetStandardTexture(1, 1);
-            _materialSettings.DisplacementAmplitude = _thisMaterial.GetFloat(DisplacementStrength);
-            _materialSettings.NormalStrength = _thisMaterial.GetFloat(NormalStrengthId);
-            _materialSettings.Metallic.Value = _thisMaterial.GetFloat(MetallicId);
-            _materialSettings.SmoothnessRemapMin = _thisMaterial.GetFloat(SmoothnessRemapMinId);
-            _materialSettings.SmoothnessRemapMax = _thisMaterial.GetFloat(SmoothnessRemapMaxId);
-            _materialSettings.AoRemapMin = _thisMaterial.GetFloat(AoRemapMinId);
-            _materialSettings.AoRemapMax = _thisMaterial.GetFloat(AoRemapMaxId);
+            _materialSettings.DisplacementStrength = _thisMaterial.GetFloat(DisplacementStrength);
+            _materialSettings.NormalScale = _thisMaterial.GetFloat(NormalScaleId);
+            _materialSettings.MetallicMultiplier = _thisMaterial.GetFloat(MetallicMultiplierId);
+            _materialSettings.SmoothnessMultiplier = _thisMaterial.GetFloat(SmoothnessMultiplierId);
+            _materialSettings.AoMultiplier = _thisMaterial.GetFloat(AoMultiplierId);
             _materialSettings.TexTilingX = _thisMaterial.GetTextureScale(DiffuseMap).x;
             _materialSettings.TexTilingY = _thisMaterial.GetTextureScale(DiffuseMap).y;
             _materialSettings.TexOffsetX = _thisMaterial.GetTextureOffset(DiffuseMap).x;
@@ -165,12 +161,10 @@ namespace Materialize.Gui
 
             if (!_thisMaterial || _materialSettings == null) return;
 
-            _thisMaterial.SetFloat(MetallicId, _materialSettings.Metallic);
-            _thisMaterial.SetFloat(NormalStrengthId, _materialSettings.NormalStrength);
-            _thisMaterial.SetFloat(AoRemapMinId, _materialSettings.AoRemapMin);
-            _thisMaterial.SetFloat(AoRemapMaxId, _materialSettings.AoRemapMax);
-            _thisMaterial.SetFloat(SmoothnessRemapMinId, _materialSettings.SmoothnessRemapMin);
-            _thisMaterial.SetFloat(SmoothnessRemapMaxId, _materialSettings.SmoothnessRemapMax);
+            _thisMaterial.SetFloat(NormalScaleId, _materialSettings.NormalScale);
+            _thisMaterial.SetFloat(MetallicMultiplierId, _materialSettings.MetallicMultiplier);
+            _thisMaterial.SetFloat(SmoothnessMultiplierId, _materialSettings.SmoothnessMultiplier);
+            _thisMaterial.SetFloat(AoMultiplierId, _materialSettings.AoMultiplier);
 
             var color = new Color(_materialSettings.LightR, _materialSettings.LightG, _materialSettings.LightB);
             _colorAdjustments.colorFilter.value = color;
@@ -181,7 +175,7 @@ namespace Materialize.Gui
             if (TestObjectCylinder.activeSelf != _cylinderShown) TestObjectCylinder.SetActive(_cylinderShown);
             if (TestObjectSphere.activeSelf != _sphereShown) TestObjectSphere.SetActive(_sphereShown);
 
-            TextureManager.Instance.SetDisplacement(_materialSettings.DisplacementAmplitude);
+            TextureManager.Instance.SetDisplacement(_materialSettings.DisplacementStrength);
 
             TextureManager.Instance.SetUvScale(new Vector2(_materialSettings.TexTilingX, _materialSettings.TexTilingY));
             TextureManager.Instance.SetUvOffset(new Vector2(_materialSettings.TexOffsetX,
@@ -227,43 +221,25 @@ namespace Materialize.Gui
         {
             const int offsetX = 10;
             var offsetY = 20;
-
-            var temp = _materialSettings.Metallic.Value;
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Metallic Multiplier", temp,
-                out temp, 0.0f, 1.0f);
-            offsetY += 40;
-            _materialSettings.Metallic.Value = temp;
-
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Normal Scale", _materialSettings.NormalStrength,
-                out _materialSettings.NormalStrength, 0.0f, 8.0f);
+            
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Metallic Multiplier", _materialSettings.MetallicMultiplier,
+                out _materialSettings.MetallicMultiplier, 0.0f, 3.0f);
             offsetY += 40;
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Ambient Occlusion Remap Min Max",
-                _materialSettings.AoRemapMin, out _materialSettings.AoRemapMin, 0.0f, 1.0f);
-            offsetY += 25;
-
-            if (_materialSettings.AoRemapMin > _materialSettings.AoRemapMax)
-                _materialSettings.AoRemapMin = _materialSettings.AoRemapMax;
-
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _materialSettings.AoRemapMax,
-                out _materialSettings.AoRemapMax, 0.0f, 1.0f);
-
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Normal Scale", _materialSettings.NormalScale,
+                out _materialSettings.NormalScale, 0.0f, 3.0f);
             offsetY += 40;
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Smoothness Remap Min Max",
-                _materialSettings.SmoothnessRemapMin, out _materialSettings.SmoothnessRemapMin, 0.0f, 1.0f);
-            if (_materialSettings.SmoothnessRemapMin > _materialSettings.SmoothnessRemapMax)
-                _materialSettings.SmoothnessRemapMin = _materialSettings.SmoothnessRemapMax;
-
-            offsetY += 25;
-
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), _materialSettings.SmoothnessRemapMax,
-                out _materialSettings.SmoothnessRemapMax, 0.0f, 1.0f);
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Smoothness Multiplier", _materialSettings.SmoothnessMultiplier,
+                out _materialSettings.SmoothnessMultiplier, 0.0f, 3.0f);
             offsetY += 40;
 
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Ao Multiplier", _materialSettings.AoMultiplier,
+                out _materialSettings.AoMultiplier, 0.0f, 3.0f);
+            offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Displacement Amplitude",
-                _materialSettings.DisplacementAmplitude, out _materialSettings.DisplacementAmplitude, 0.0f, 10.0f);
+                _materialSettings.DisplacementStrength, out _materialSettings.DisplacementStrength, 0.0f, 10.0f);
             offsetY += 40;
 
             GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Texture Tiling (X,Y)", _materialSettings.TexTilingX,

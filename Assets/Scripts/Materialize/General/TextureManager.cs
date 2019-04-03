@@ -29,6 +29,7 @@ namespace Materialize.General
         private static readonly int SmoothnessMapId = Shader.PropertyToID("_SmoothnessMap");
         private static readonly int AoMapId = Shader.PropertyToID("_AoMap");
         private static readonly int DisplacementStrength = Shader.PropertyToID("_DisplacementStrength");
+        private static readonly int DisplacementOffset = Shader.PropertyToID("_DisplacementOffset");
 
 
         private Texture2D _blackTexture;
@@ -223,6 +224,8 @@ namespace Materialize.General
         public void SetDisplacement(float displacementAmplitude)
         {
             FullMaterialInstance.SetFloat(DisplacementStrength, displacementAmplitude);
+            var offset = DisplacementConstant * (displacementAmplitude + 1.0f);
+            FullMaterialInstance.SetFloat(DisplacementOffset, offset);
         }
 
         public void SetFullMaterial()
