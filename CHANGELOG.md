@@ -9,12 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Removed the dedicated Sun (Directional Light), get it from HDRI Sky instead.
+- Complete new Material Shader, based on Shader Graph
 
 #### Minor changes
 
 
 ### Fixes
-
+- Fix Metallic with new Material
+- Fix Smoothness with new Material
 
 ### To Implement
 - Windows Copy / Paste
