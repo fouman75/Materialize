@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DepthOfField
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 1
+  m_AdvancedMode: 0
   focusMode:
     m_OverrideState: 1
     m_Value: 2
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Name: Bloom
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 1
+  m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
     m_Value: 0.2

@@ -17,6 +17,7 @@ There are builds for windows also and soon i will give it a bit more support. Fo
 ## Contact
 For sugestions, doubts or anything related to this port.
 - Email : mk2play.materialize@gmail.com
+- Gitter : https://gitter.im/Materialize-MultiPlatform/community
 
 ## Using
 To use, Unity is not necessary, you can use like a normal linux application.

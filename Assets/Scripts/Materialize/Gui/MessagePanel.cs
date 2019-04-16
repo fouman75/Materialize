@@ -23,13 +23,13 @@ namespace Materialize.Gui
         {
             Instance.Message.text = message;
             Instance.gameObject.SetActive(true);
-            MainGui.Instance.SaveHideStateAndHideAndLock(Instance);
+            if (MainGui.Instance) MainGui.Instance.SaveHideStateAndHideAndLock(Instance);
         }
 
         public static void HideMessage()
         {
             Instance.gameObject.SetActive(false);
-            MainGui.Instance.HideGuiLocker.Unlock(Instance);
+            if (MainGui.Instance) MainGui.Instance.HideGuiLocker.Unlock(Instance);
         }
     }
 }

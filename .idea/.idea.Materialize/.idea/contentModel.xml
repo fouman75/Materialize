@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="$USER_HOME$/.Rider2019.1/system/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/.Rider2019.1/system/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_Materialize.1441270350.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/.Rider2018.3/system/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.Rider2018.3/system/resharper-host/local/Transient/ReSharperHost/v183/SolutionCaches/_Materialize.1441270350.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="Assets" t="Include">
         <e p="ExternalPackages" t="Include">
@@ -122,6 +122,9 @@
           <e p="Materialize" t="Include">
             <e p="General" t="Include">
               <e p="CommandListExecutor.cs" t="Include" />
+              <e p="EntryRunner.cs" t="Include" />
+              <e p="PersistentSettings.cs" t="Include" />
+              <e p="ProgramAssets.cs" t="Include" />
               <e p="ProgramEnums.cs" t="Include" />
               <e p="ProgramManager.cs" t="Include" />
               <e p="SaveLoadProject.cs" t="Include" />

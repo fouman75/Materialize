@@ -39,6 +39,7 @@ MonoBehaviour:
     supportTransparentBackface: 0
     supportTransparentDepthPrepass: 0
     supportTransparentDepthPostpass: 0
+    supportLowResTransparent: 1
     colorBufferFormat: 74
     supportedLitShaderMode: 2
     supportDecals: 1
@@ -58,26 +59,26 @@ MonoBehaviour:
       reflectionCubemapSize: 256
       reflectionCacheCompressed: 0
       planarReflectionCacheCompressed: 0
-      skyReflectionSize: 256
+      skyReflectionSize: 128
       skyLightingOverrideLayerMask:
         serializedVersion: 2
         m_Bits: 0
       supportFabricConvolution: 0
-      maxDirectionalLightsOnScreen: 16
-      maxPunctualLightsOnScreen: 512
-      maxAreaLightsOnScreen: 64
+      maxDirectionalLightsOnScreen: 2
+      maxPunctualLightsOnScreen: 2
+      maxAreaLightsOnScreen: 2
       maxEnvLightsOnScreen: 64
       maxDecalsOnScreen: 512
     hdShadowInitParams:
-      maxShadowRequests: 128
+      maxShadowRequests: 2
       directionalShadowsDepthBits: 16
       shadowQuality: 0
       punctualLightShadowAtlas:
-        shadowAtlasResolution: 4096
+        shadowAtlasResolution: 512
         shadowAtlasDepthBits: 16
         useDynamicViewportRescale: 0
       areaLightShadowAtlas:
-        shadowAtlasResolution: 4096
+        shadowAtlasResolution: 512
         shadowAtlasDepthBits: 16
         useDynamicViewportRescale: 0
     decalSettings:
@@ -87,7 +88,7 @@ MonoBehaviour:
       perChannelMask: 0
     postProcessSettings:
       m_LutSize: 32
-      lutFormat: 48
+      lutFormat: 74
     dynamicResolutionSettings:
       enabled: 0
       maxPercentage: 100
@@ -96,6 +97,10 @@ MonoBehaviour:
       upsampleFilter: 1
       forceResolution: 1
       forcedPercentage: 80
+    lowresTransparentSettings:
+      enabled: 1
+      checkerboardDepthBuffer: 1
+      upsampleType: 1
   allowShaderVariantStripping: 1
   enableSRPBatcher: 0
   shaderVariantLogLevel: 0

@@ -557,12 +557,12 @@ namespace Materialize.Gui
             if (Screen.fullScreenMode == FullScreenMode.Windowed)
             {
                 text = "Windowed";
-                StartCoroutine(ProgramManager.Instance.SetScreen(ProgramEnums.ScreenMode.FullScreen));
+                StartCoroutine(PersistentSettings.Instance.SetScreen(ProgramEnums.ScreenMode.FullScreen));
             }
             else
             {
                 text = "FullScreen";
-                StartCoroutine(ProgramManager.Instance.SetScreen(ProgramEnums.ScreenMode.Windowed));
+                StartCoroutine(PersistentSettings.Instance.SetScreen(ProgramEnums.ScreenMode.Windowed));
             }
 
             FullScreenTextObject.text = text;

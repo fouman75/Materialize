@@ -15,15 +15,15 @@ MonoBehaviour:
   m_RenderPipelineResources: {fileID: 0}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 69275665825565
+      data1: 69284255760157
       data2: 4539628424389459968
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
-      data1: 69275665825565
+      data1: 64881914049309
       data2: 4539628424389459968
   m_RenderingPathDefaultRealtimeReflectionFrameSettings:
     bitDatas:
-      data1: 69275508285213
+      data1: 69279803252509
       data2: 4539628424389459968
   m_RenderPipelineSettings:
     supportShadowMask: 1
@@ -38,6 +38,7 @@ MonoBehaviour:
     supportTransparentBackface: 1
     supportTransparentDepthPrepass: 1
     supportTransparentDepthPostpass: 1
+    colorBufferFormat: 74
     supportedLitShaderMode: 2
     supportDecals: 1
     msaaSampleCount: 1
@@ -67,11 +68,17 @@ MonoBehaviour:
       maxEnvLightsOnScreen: 64
       maxDecalsOnScreen: 512
     hdShadowInitParams:
-      shadowAtlasResolution: 4096
       maxShadowRequests: 128
-      shadowMapsDepthBits: 32
-      useDynamicViewportRescale: 1
+      directionalShadowsDepthBits: 32
       shadowQuality: 0
+      punctualLightShadowAtlas:
+        shadowAtlasResolution: 4096
+        shadowAtlasDepthBits: 32
+        useDynamicViewportRescale: 1
+      areaLightShadowAtlas:
+        shadowAtlasResolution: 4096
+        shadowAtlasDepthBits: 32
+        useDynamicViewportRescale: 1
     decalSettings:
       drawDistance: 1000
       atlasWidth: 4096
@@ -86,16 +93,16 @@ MonoBehaviour:
       minPercentage: 50
       dynResType: 0
       upsampleFilter: 1
-      forceResolution: 0
-      forcedPercentage: 100
+      forceResolution: 1
+      forcedPercentage: 80
   allowShaderVariantStripping: 1
   enableSRPBatcher: 1
   shaderVariantLogLevel: 0
   diffusionProfileSettings: {fileID: 0}
   diffusionProfileSettingsList:
-  - {fileID: 11400000, guid: 79edffd7f583dba628536979e6e68fbd, type: 2}
-  - {fileID: 11400000, guid: 34f5d0d8ebe5dfa41a899ca985b974bb, type: 2}
-  m_Version: 3
+  - {fileID: 11400000, guid: 6ab317fcb3c1a3281ab74d18d2e6271b, type: 2}
+  - {fileID: 11400000, guid: 1c5430d2001986d538ec00ddea075582, type: 2}
+  m_Version: 5
   m_ObsoleteFrameSettings:
     overrides: 0
     enableShadow: 0

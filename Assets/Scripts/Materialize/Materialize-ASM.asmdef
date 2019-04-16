@@ -6,9 +6,10 @@
         "GUID:df380645f10b7bc4b97d4f5eb6303d95",
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:30ec09ed78f419bdcbc5ab61e8f38024",
-        "GUID:d299d63fba77dc1be8026d733e1354da"
+        "GUID:d299d63fba77dc1be8026d733e1354da",
+        "GUID:9e24947de15b9834991c9d8411ea37cf",
+        "GUID:84651a3751eca9349aac36a66bba901b"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -54,11 +54,11 @@ namespace Materialize.Gui
 
             if (_depthOfField)
             {
-                _dofFocusNearFocusStart = _depthOfField.nearFocusStart;
-                _dofFocusNearFocusEnd = _depthOfField.nearFocusEnd;
+                _dofFocusNearFocusStart = _depthOfField.nearFocusStart.value;
+                _dofFocusNearFocusEnd = _depthOfField.nearFocusEnd.value;
 
-                _dofFocusFarFocusStart = _depthOfField.farFocusStart;
-                _dofFocusFarFocusEnd = _depthOfField.farFocusEnd;
+                _dofFocusFarFocusStart = _depthOfField.farFocusStart.value;
+                _dofFocusFarFocusEnd = _depthOfField.farFocusEnd.value;
             }
 
             Profile.TryGet(out _vignette);

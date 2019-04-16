@@ -51,7 +51,7 @@ namespace Materialize.Gui
         {
             ObjectHandler.AllowHide = ProgramSettings.HideUiOnRotate;
             ProgramManager.Instance.DesiredFrameRate = ProgramSettings.FrameRate;
-            ProgramManager.Instance.GraphicsQuality = ProgramSettings.GraphicsQuality;
+            PersistentSettings.Instance.ChangeGraphicsQuality(ProgramSettings.GraphicsQuality.ToString());
             TextureManager.Instance.Hdr = ProgramSettings.HDR;
         }
 

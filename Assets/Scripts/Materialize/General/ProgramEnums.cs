@@ -16,7 +16,8 @@ namespace Materialize.General
         {
             High,
             Medium,
-            Low
+            Low,
+            Minimal
         }
 
         public enum MapType

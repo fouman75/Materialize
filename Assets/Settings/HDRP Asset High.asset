@@ -32,13 +32,14 @@ MonoBehaviour:
     supportSSAO: 1
     supportSubsurfaceScattering: 0
     increaseSssSampleCount: 1
-    supportVolumetrics: 1
+    supportVolumetrics: 0
     increaseResolutionOfVolumetrics: 1
-    supportLightLayers: 1
+    supportLightLayers: 0
     supportDistortion: 1
     supportTransparentBackface: 0
     supportTransparentDepthPrepass: 0
     supportTransparentDepthPostpass: 0
+    supportLowResTransparent: 1
     colorBufferFormat: 74
     supportedLitShaderMode: 1
     supportDecals: 0
@@ -96,12 +97,16 @@ MonoBehaviour:
       upsampleFilter: 1
       forceResolution: 1
       forcedPercentage: 80
+    lowresTransparentSettings:
+      enabled: 1
+      checkerboardDepthBuffer: 1
+      upsampleType: 1
   allowShaderVariantStripping: 1
   enableSRPBatcher: 0
   shaderVariantLogLevel: 2
   diffusionProfileSettings: {fileID: 0}
   diffusionProfileSettingsList:
-  - {fileID: 11400000, guid: 34f5d0d8ebe5dfa41a899ca985b974bb, type: 2}
+  - {fileID: 0}
   m_Version: 5
   m_ObsoleteFrameSettings:
     overrides: 0

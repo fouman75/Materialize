@@ -32,13 +32,13 @@ namespace Materialize.Settings
             ProgramManager.Instance.SceneVolume.profile.TryGet(out HDRISky hdriSky);
             ProgramManager.Instance.SceneVolume.profile.TryGet(out ColorAdjustments colorAdjustments);
 
-            var color = colorAdjustments ? colorAdjustments.colorFilter : new Color(1.0f, 1.0f, 1.0f);
+            var color = colorAdjustments ? colorAdjustments.colorFilter.value : new Color(1.0f, 1.0f, 1.0f);
             _originalLightColor = color;
 
             LightR = color.r;
             LightG = color.g;
             LightB = color.b;
-            LightExposure = hdriSky ? hdriSky.exposure : LightIntensityDefault;
+            LightExposure = hdriSky ? hdriSky.exposure.value : LightIntensityDefault;
             _originalLightIntensity = LightExposure;
 
             Reset();

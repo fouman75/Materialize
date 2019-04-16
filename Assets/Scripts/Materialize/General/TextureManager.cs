@@ -202,13 +202,8 @@ namespace Materialize.General
                 FullMaterialInstance.SetTexture(HeightMapId, null);
             }
 
-            if (DiffuseMap)
-                FullMaterialInstance.SetTexture(DiffuseMapId, DiffuseMap);
-            else if (DiffuseMapOriginal)
-                FullMaterialInstance.SetTexture(DiffuseMapId, DiffuseMapOriginal);
-            else
-                FullMaterialInstance.SetTexture(DiffuseMapId, Texture2D.whiteTexture);
-
+            FullMaterialInstance.SetTexture(DiffuseMapId,
+                DiffuseMap ? DiffuseMap : DiffuseMapOriginal ? DiffuseMapOriginal : null);
 
             FullMaterialInstance.SetTexture(NormalMapId, NormalMap ? NormalMap : null);
             FullMaterialInstance.SetTexture(MetallicMapId, MetallicMap ? MetallicMap : null);

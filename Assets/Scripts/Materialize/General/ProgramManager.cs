@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
 using Logger = Utility.Logger;
+using PersistentSettings = Materialize.General.PersistentSettings;
 
 #endregion
 
@@ -28,12 +29,9 @@ namespace Materialize.General
         [HideInInspector] public int DesiredFrameRate;
         public int ForcedFrameRate = 30;
         public bool ForceFrameRate;
-        public ProgramEnums.GraphicsQuality GraphicsQuality;
         public Vector2 GuiScale = new Vector2(1, 1);
-        public HDRenderPipelineAsset HighQualityAsset;
+        
         [HideInInspector] public string LastPath;
-        public HDRenderPipelineAsset LowQualityAsset;
-        public HDRenderPipelineAsset MediumQualityAsset;
         public MessagePanel MessagePanelObject;
         public Volume PostProcessingVolume;
         public HDRenderPipeline RenderPipeline;
@@ -98,7 +96,6 @@ namespace Materialize.General
 
             ActivateObjects();
             yield return StartCoroutine(GetHdrpCoroutine());
-            yield return StartCoroutine(SetScreen(ProgramEnums.ScreenMode.Windowed));
 
             StartCoroutine(SlowUpdate());
         }
@@ -131,46 +128,10 @@ namespace Materialize.General
 
                 if (LastPath != null) PlayerPrefs.SetString(LastPathKey, LastPath);
 
-                yield return StartCoroutine(UpdateQuality());
-
                 yield return new WaitForSeconds(0.5f);
             }
         }
 
-        private IEnumerator UpdateQuality()
-        {
-            if (Application.isEditor) yield break;
-
-            var hdRenderPipelineAsset = GetRpQualityAsset();
-
-            if (GraphicsSettings.renderPipelineAsset == hdRenderPipelineAsset) yield break;
-
-            Logger.Log("Changing quality to " + GraphicsQuality);
-
-            GraphicsSettings.renderPipelineAsset = null;
-            yield return null;
-
-            switch (GraphicsQuality)
-            {
-                case ProgramEnums.GraphicsQuality.High:
-                    QualitySettings.SetQualityLevel(2);
-                    break;
-                case ProgramEnums.GraphicsQuality.Medium:
-                    QualitySettings.SetQualityLevel(1);
-                    break;
-                case ProgramEnums.GraphicsQuality.Low:
-                    QualitySettings.SetQualityLevel(0);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            yield return null;
-
-            GraphicsSettings.renderPipelineAsset = hdRenderPipelineAsset;
-
-            yield return new WaitForSeconds(0.8f);
-        }
 
         private void ActivateObjects()
         {
@@ -222,94 +183,7 @@ namespace Materialize.General
             ApplicationIsQuitting = true;
         }
 
-        public IEnumerator SetScreen(ProgramEnums.ScreenMode screenMode)
-        {
-            if (Application.isEditor) yield break;
-            yield return null;
 
-            if (MainGui.Instance) MainGui.Instance.CloseWindows();
-
-            Instance.PostProcessingVolume.enabled = false;
-            Instance.SceneVolume.enabled = false;
-
-            switch (screenMode)
-            {
-                case ProgramEnums.ScreenMode.FullScreen:
-                    var fsRes = Screen.resolutions;
-                    var highRes = fsRes[fsRes.Length - 1];
-                    Screen.SetResolution(highRes.width, highRes.height, FullScreenMode.ExclusiveFullScreen);
-                    break;
-                case ProgramEnums.ScreenMode.Windowed:
-                    var res = GetHighestResolution(2);
-                    if (res == null) break;
-                    Screen.SetResolution(res.Value.width, res.Value.height, FullScreenMode.Windowed);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(screenMode), screenMode, null);
-            }
-
-            var hdRenderPipelineAsset = GetRpQualityAsset();
-
-            GraphicsSettings.renderPipelineAsset = null;
-            yield return null;
-            GraphicsSettings.renderPipelineAsset = hdRenderPipelineAsset;
-
-            yield return null;
-            Instance.PostProcessingVolume.enabled = true;
-            Instance.SceneVolume.enabled = true;
-        }
-
-        private static HDRenderPipelineAsset GetRpQualityAsset()
-        {
-            HDRenderPipelineAsset hdRenderPipelineAsset;
-            switch (Instance.GraphicsQuality)
-            {
-                case ProgramEnums.GraphicsQuality.High:
-                    QualitySettings.SetQualityLevel(2);
-                    hdRenderPipelineAsset = Instance.HighQualityAsset;
-                    break;
-                case ProgramEnums.GraphicsQuality.Medium:
-                    QualitySettings.SetQualityLevel(1);
-                    hdRenderPipelineAsset = Instance.MediumQualityAsset;
-                    break;
-                case ProgramEnums.GraphicsQuality.Low:
-                    QualitySettings.SetQualityLevel(0);
-                    hdRenderPipelineAsset = Instance.LowQualityAsset;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return hdRenderPipelineAsset;
-        }
-
-        /// <summary>
-        ///     Get the Highest resolution skipping n matches
-        /// </summary>
-        /// <param name="skip"> number of matches to skip</param>
-        /// <returns> resolution after n skips in the same aspect ratio than native </returns>
-        private static Resolution? GetHighestResolution(int skip)
-        {
-            var winRes = Screen.resolutions;
-            if (winRes.Length <= 0) return null;
-            var nativeRes = winRes[winRes.Length - 1];
-            var res = nativeRes;
-            var currentResolution = Screen.currentResolution;
-            var nativeAspect = 1.0f * nativeRes.width / nativeRes.height;
-            var count = skip;
-            for (var i = winRes.Length - 1; i >= 0; i--)
-            {
-                var aspectRatio = 1.0f * winRes[i].width / winRes[i].height;
-                if (!(Mathf.Abs(aspectRatio - nativeAspect) < 0.00001f)) continue;
-                if (winRes[i].width > currentResolution.width) continue;
-                if (count-- > 0) continue;
-
-                res = winRes[i];
-                break;
-            }
-
-            return res;
-        }
 
         #region Gui Objects
 
