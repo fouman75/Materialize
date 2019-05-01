@@ -5,14 +5,34 @@ Materialize is a program for converting images to materials for use mainly but n
 I decided to port materialize to linux, since the original is for windows only. I will keep improving it.
 There are builds for windows also and soon i will give it a bit more support. Focus still in linux.
 
-## System Requirements
-- Latest Graphics drivers - Nvidia 418 recomended.
-- Vulkan support in linux.
-- DirectX 11/12 in windows, or vulkan.
-- If with nvidia, dont use Nouveau since it will for sure crash with vulkan.
-- Nvidia on wayland is not supported.
+## Hardware and Software i'm using to test Materialize
+### Hardware
+**CPU** - Intel® Core™ i7-7700HQ CPU @ 2.80GHz × 8  
+**GPU** - GeForce GTX 1050 Ti/PCIe/SSE2 4GB VRAM  
+**RAM** - 16GB DDR4 2400  
+### Software
+**Desktop Environment** - Gnome 3.30.1  
+**X-Server** - Xorg 1.20.1  
+**Graphics Driver** - Nvidia Proprietary 418.56  
+**OS** - Ubuntu 18.10  
+
+## Required by HDRP
+- DirectX 11/12 in windows, or vulkan (Linux and Windows).
 - Ubuntu 16.04+;
 - Windows 7+.
+
+## Unity Recomendation
+- Ubuntu 16.04, 18.04
+- CentOS 7
+- x86-64 architecture
+- Gnome desktop environment running on top of X11 windowing system
+- Nvidia official proprietary graphics driver, AMD Mesa graphics driver
+- Desktop form factors, running on device/hardware without emulation or compatibility layer
+
+## What is known to not work
+- Nvidia on Wayland
+- Nvidia with Mesa (Nouveau)
+- Intel graphics, Only Skylake, Kaby Lake, Coffee Lake and beyond offer full Vulkan support, anything older won't work.
 
 ## Contact
 For sugestions, doubts or anything related to this port.

@@ -175,7 +175,8 @@ namespace Materialize.General
             var pathToFile = GetClipboardImagePath();
             if (pathToFile.IsNullOrEmpty()) return;
 
-            if (!File.Exists(pathToFile)) return;
+            var pathUnescaped = Uri.UnescapeDataString(pathToFile);
+            if (!File.Exists(pathUnescaped)) return;
 
             StartCoroutine(LoadTexture(mapTypeToLoad, pathToFile));
         }
@@ -454,7 +455,7 @@ namespace Materialize.General
         private static string GetClipboardImagePath()
         {
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) return null;
-            const string filePrefix = "file:///";
+            const string filePrefix = "file://";
             string pathToFile;
 
             var pathToTextFile = Path.GetTempFileName();
@@ -476,19 +477,28 @@ namespace Materialize.General
 
                 var supported = ProgramManager.LoadFormats.Any(format => bashOut.Contains(format));
                 if (!supported) return null;
-
-                if (bashOut.Contains(filePrefix)) bashOut = bashOut.Replace(filePrefix, "/");
-
                 var firstIndex = bashOut.IndexOf('/');
+                if (bashOut.Contains(filePrefix))
+                {
+                    firstIndex = bashOut.IndexOf(filePrefix, StringComparison.Ordinal) + filePrefix.Length;
+                }
+
                 if (bashOut.Length > firstIndex)
                 {
+                    if (bashOut.EndsWith("\n"))
+                    {
+                        bashOut = bashOut.Remove(bashOut.Length - 1);
+                    }
+
                     var extension = Path.GetExtension(bashOut);
-                    var lastIndex = bashOut.IndexOf(extension, firstIndex, StringComparison.Ordinal) + extension.Length;
+                    var lastIndex = bashOut.IndexOf(extension, firstIndex, StringComparison.Ordinal) +
+                                    extension.Length;
                     var length = lastIndex - firstIndex;
                     pathToFile = bashOut.Substring(firstIndex, length);
                 }
                 else
                 {
+                    File.Delete(pathToTextFile);
                     return null;
                 }
             }

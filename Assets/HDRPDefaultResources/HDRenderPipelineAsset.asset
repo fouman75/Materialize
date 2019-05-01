@@ -15,7 +15,7 @@ MonoBehaviour:
   m_RenderPipelineResources: {fileID: 0}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 69284255760157
+      data1: 69284256022301
       data2: 4539628424389459968
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
@@ -38,6 +38,7 @@ MonoBehaviour:
     supportTransparentBackface: 1
     supportTransparentDepthPrepass: 1
     supportTransparentDepthPostpass: 1
+    supportLowResTransparent: 1
     colorBufferFormat: 74
     supportedLitShaderMode: 2
     supportDecals: 1
@@ -90,18 +91,22 @@ MonoBehaviour:
     dynamicResolutionSettings:
       enabled: 0
       maxPercentage: 100
-      minPercentage: 50
+      minPercentage: 100
       dynResType: 0
       upsampleFilter: 1
-      forceResolution: 1
-      forcedPercentage: 80
+      forceResolution: 0
+      forcedPercentage: 100
+    lowresTransparentSettings:
+      enabled: 1
+      checkerboardDepthBuffer: 1
+      upsampleType: 1
   allowShaderVariantStripping: 1
   enableSRPBatcher: 1
   shaderVariantLogLevel: 0
   diffusionProfileSettings: {fileID: 0}
   diffusionProfileSettingsList:
-  - {fileID: 11400000, guid: 6ab317fcb3c1a3281ab74d18d2e6271b, type: 2}
-  - {fileID: 11400000, guid: 1c5430d2001986d538ec00ddea075582, type: 2}
+  - {fileID: 11400000, guid: fe3fd6f3812b1292eafba283aae1c301, type: 2}
+  - {fileID: 11400000, guid: ef8dbebe46f6b5b9481799cffdf8b643, type: 2}
   m_Version: 5
   m_ObsoleteFrameSettings:
     overrides: 0
