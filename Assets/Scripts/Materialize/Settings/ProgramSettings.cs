@@ -10,7 +10,6 @@ namespace Materialize.Settings
     {
         public ProgramEnums.FileFormat FileFormat;
         public int FrameRate;
-        public ProgramEnums.GraphicsQuality GraphicsQuality;
         public bool HDR;
         public bool HideUiOnRotate;
         public bool NormalMapMaxStyle;

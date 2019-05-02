@@ -112,7 +112,7 @@ namespace Materialize.Gui
             var ext = $"{typeName[0]}{typeName[1]}{'s'}".ToLower();
             var extFilter = new[] {new ExtensionFilter(typeName, ext)};
             var defaultName = typeName + '.' + ext;
-            SFB.SaveFilePanelAsync("Save Profile", ProgramManager.Instance.LastPath, defaultName, extFilter,
+            SFB.SaveFilePanelAsync("Save Profile", PrefsManager.LastPath, defaultName, extFilter,
                 SaveSettingsCallback);
         }
 
@@ -120,8 +120,8 @@ namespace Materialize.Gui
         {
             if (path.IsNullOrEmpty()) return;
 
-            var lastBar = path.LastIndexOf(ProgramManager.Instance.PathChar);
-            ProgramManager.Instance.LastPath = path.Substring(0, lastBar + 1);
+            var lastBar = path.LastIndexOf(ProgramManager.PathChar);
+            PrefsManager.LastPath = path.Substring(0, lastBar + 1);
             var serializer = new XmlSerializer(_settings.GetType());
             using (var stream = new FileStream(path, FileMode.Create))
             {
@@ -136,7 +136,7 @@ namespace Materialize.Gui
             var typeName = _settings.GetType().Name;
             var ext = $"{typeName[0]}{typeName[1]}{'s'}".ToLower();
             var extFilter = new[] {new ExtensionFilter(typeName, ext)};
-            SFB.OpenFilePanelAsync("Load Profile", ProgramManager.Instance.LastPath, extFilter, false,
+            SFB.OpenFilePanelAsync("Load Profile", PrefsManager.LastPath, extFilter, false,
                 LoadSettingsCallback);
         }
 
@@ -146,8 +146,8 @@ namespace Materialize.Gui
             if (path.IsNullOrEmpty()) return;
             if (!File.Exists(path)) return;
 
-            var lastBar = path.LastIndexOf(ProgramManager.Instance.PathChar);
-            ProgramManager.Instance.LastPath = path.Substring(0, lastBar + 1);
+            var lastBar = path.LastIndexOf(ProgramManager.PathChar);
+            PrefsManager.LastPath = path.Substring(0, lastBar + 1);
             var serializer = new XmlSerializer(_settings.GetType());
             object settings;
             using (var stream = new FileStream(path, FileMode.Open))

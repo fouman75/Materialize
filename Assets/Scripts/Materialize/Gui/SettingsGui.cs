@@ -45,15 +45,20 @@ namespace Materialize.Gui
 
             LoadSettings();
             _windowId = ProgramManager.Instance.GetWindowId;
+            SlowUpdate();
+            InvokeRepeating(nameof(SlowUpdate), 0f, 0.5f);
         }
 
-        private void Update()
+        private void SlowUpdate()
         {
             ObjectHandler.AllowHide = ProgramSettings.HideUiOnRotate;
             ProgramManager.Instance.DesiredFrameRate = ProgramSettings.FrameRate;
-            PersistentSettings.Instance.ChangeGraphicsQuality(ProgramSettings.GraphicsQuality.ToString());
+            CachedGraphicsQuality = PrefsManager.GraphicsQuality;
+            PersistentSettings.Instance.ChangeGraphicsQuality(CachedGraphicsQuality.ToString());
             TextureManager.Instance.Hdr = ProgramSettings.HDR;
         }
+
+        private ProgramEnums.GraphicsQuality CachedGraphicsQuality { get; set; }
 
         private void LoadSettings()
         {
@@ -84,7 +89,6 @@ namespace Materialize.Gui
             Logger.Log("Initializing Program Settings");
             ProgramSettings.HideUiOnRotate = ObjectHandler.AllowHide;
             ProgramSettings.FrameRate = ProgramManager.Instance.DefaultFrameRate;
-            ProgramSettings.GraphicsQuality = ProgramEnums.GraphicsQuality.Medium;
             ProgramSettings.HDR = TextureManager.Instance.Hdr;
             ProgramSettings.NormalMapMaxStyle = true;
             ProgramSettings.NormalMapMayaStyle = false;
@@ -206,17 +210,25 @@ namespace Materialize.Gui
 
             offsetY += 30;
 
-            var isLow = ProgramSettings.GraphicsQuality == ProgramEnums.GraphicsQuality.Low;
+            var newQuality = CachedGraphicsQuality;
+            var isLow = CachedGraphicsQuality == ProgramEnums.GraphicsQuality.Low;
             if (GUI.Toggle(new Rect(offsetX + 20, offsetY, 50, 30), isLow, "Low"))
-                ProgramSettings.GraphicsQuality = ProgramEnums.GraphicsQuality.Low;
+            {
+                newQuality = ProgramEnums.GraphicsQuality.Low;
+            }
 
-            var isMedium = ProgramSettings.GraphicsQuality == ProgramEnums.GraphicsQuality.Medium;
+            var isMedium = CachedGraphicsQuality == ProgramEnums.GraphicsQuality.Medium;
             if (GUI.Toggle(new Rect(offsetX + 100, offsetY, 50, 30), isMedium, "Medium"))
-                ProgramSettings.GraphicsQuality = ProgramEnums.GraphicsQuality.Medium;
+                newQuality = ProgramEnums.GraphicsQuality.Medium;
 
-            var isHigh = ProgramSettings.GraphicsQuality == ProgramEnums.GraphicsQuality.High;
+            var isHigh = CachedGraphicsQuality == ProgramEnums.GraphicsQuality.High;
             if (GUI.Toggle(new Rect(offsetX + 180, offsetY, 50, 30), isHigh, "High"))
-                ProgramSettings.GraphicsQuality = ProgramEnums.GraphicsQuality.High;
+                newQuality = ProgramEnums.GraphicsQuality.High;
+
+            if (newQuality != CachedGraphicsQuality)
+            {
+                PersistentSettings.Instance.ChangeGraphicsQuality(newQuality.ToString());
+            }
 
             offsetY += 40;
 

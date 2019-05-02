@@ -12,12 +12,12 @@ namespace Materialize.General
             Invalid
         }
 
-        public enum GraphicsQuality
+        public enum GraphicsQuality : int
         {
-            High,
-            Medium,
-            Low,
-            Minimal
+            High = 3,
+            Medium = 2,
+            Low = 1,
+            Minimal = 0
         }
 
         public enum MapType

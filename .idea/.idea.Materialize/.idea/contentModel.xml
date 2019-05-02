@@ -124,6 +124,7 @@
               <e p="CommandListExecutor.cs" t="Include" />
               <e p="EntryRunner.cs" t="Include" />
               <e p="PersistentSettings.cs" t="Include" />
+              <e p="PrefsManager.cs" t="Include" />
               <e p="ProgramAssets.cs" t="Include" />
               <e p="ProgramEnums.cs" t="Include" />
               <e p="ProgramManager.cs" t="Include" />

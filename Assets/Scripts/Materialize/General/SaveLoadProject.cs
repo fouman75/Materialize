@@ -36,7 +36,7 @@ namespace Materialize.General
 
         private void Start()
         {
-            _pathChar = ProgramManager.Instance.PathChar;
+            _pathChar = ProgramManager.PathChar;
             ThisProject = new ProjectObject();
         }
 

@@ -4,12 +4,14 @@ using Materialize.Gui;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Materialize.General
 {
     public class EntryRunner : MonoBehaviour
     {
         public string MainSceneName;
+        public Toggle DontAskAgain;
 
         private void Start()
         {
@@ -21,6 +23,12 @@ namespace Materialize.General
             Application.targetFrameRate = 30;
 
             StartCoroutine(PersistentSettings.Instance.SetScreen(ProgramEnums.ScreenMode.Windowed));
+
+            if (PrefsManager.DontAskAgainForGraphicsQuality)
+            {
+                PersistentSettings.Instance.SetGraphicsQuality(PrefsManager.GraphicsQuality);
+                StartCoroutine(LoadSceneAsync());
+            }
         }
 
         [UsedImplicitly]
@@ -34,6 +42,7 @@ namespace Materialize.General
             yield return null; // One Frame skip just in case
 
             var sceneLoad = SceneManager.LoadSceneAsync(MainSceneName);
+            PrefsManager.DontAskAgainForGraphicsQuality = DontAskAgain.isOn;
 
             while (!sceneLoad.isDone)
             {

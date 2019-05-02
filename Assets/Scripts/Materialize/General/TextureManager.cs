@@ -229,6 +229,7 @@ namespace Materialize.General
             ProgramManager.Instance.MaterialGuiObject.GetComponent<MaterialGui>().Initialize();
         }
 
+        // ReSharper disable once UnusedMember.Local
         private IEnumerator PackNormalAndSet()
         {
             while (!ProgramManager.Lock()) yield return null;
@@ -494,7 +495,7 @@ namespace Materialize.General
         {
             var defaultName = "_" + mapType + ".png";
             _textureToSave = mapType;
-            var lastPath = ProgramManager.Instance.LastPath;
+            var lastPath = PrefsManager.LastPath;
             StandaloneFileBrowser.StandaloneFileBrowser.SaveFilePanelAsync("Save Height Map", lastPath, defaultName,
                 ProgramManager.ImageSaveFilter, SaveTextureFileCallback);
         }
@@ -503,8 +504,8 @@ namespace Materialize.General
         {
             if (path.IsNullOrEmpty()) return;
 
-            var lastBar = path.LastIndexOf(ProgramManager.Instance.PathChar);
-            ProgramManager.Instance.LastPath = path.Substring(0, lastBar + 1);
+            var lastBar = path.LastIndexOf(ProgramManager.PathChar);
+            PrefsManager.LastPath = path.Substring(0, lastBar + 1);
             var textureToSave = GetTexture(_textureToSave);
             SaveLoadProject.Instance.SaveFile(path, textureToSave);
         }

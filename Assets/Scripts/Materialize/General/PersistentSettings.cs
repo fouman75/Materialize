@@ -11,7 +11,6 @@ namespace Materialize.General
 {
     public class PersistentSettings : Utility.Singleton<PersistentSettings>
     {
-        public ProgramEnums.GraphicsQuality GraphicsQuality = ProgramEnums.GraphicsQuality.High;
         public bool ByPassUnsafe;
         public ProgramAssets ProgramAssets;
 
@@ -29,7 +28,8 @@ namespace Materialize.General
             if (isUpdate && GraphicsSettings.renderPipelineAsset == hdRenderPipelineAsset || !hdRenderPipelineAsset)
                 yield break;
 
-            Logger.Log("Changing quality to " + GraphicsQuality);
+            var quality = PrefsManager.GraphicsQuality;
+            Logger.Log("Changing quality to " + quality);
 
             if (isUpdate)
             {
@@ -37,7 +37,7 @@ namespace Materialize.General
                 yield return null;
             }
 
-            switch (GraphicsQuality)
+            switch (quality)
             {
                 case ProgramEnums.GraphicsQuality.High:
                     QualitySettings.SetQualityLevel(2);
@@ -65,7 +65,8 @@ namespace Materialize.General
             if (!ProgramAssets) return null;
 
             HDRenderPipelineAsset hdRenderPipelineAsset;
-            switch (Instance.GraphicsQuality)
+            var quality = PrefsManager.GraphicsQuality;
+            switch (quality)
             {
                 case ProgramEnums.GraphicsQuality.High:
                     hdRenderPipelineAsset = ProgramAssets.HighQualityAsset;
@@ -159,6 +160,11 @@ namespace Materialize.General
             return res;
         }
 
+        public void SetGraphicsQuality(ProgramEnums.GraphicsQuality quality)
+        {
+            SetGraphicsQuality(quality.ToString());
+        }
+
         [UsedImplicitly]
         public void SetGraphicsQuality(string quality)
         {
@@ -167,7 +173,7 @@ namespace Materialize.General
 
         public void ChangeGraphicsQuality(string quality, bool isUpdate = true)
         {
-            if (GraphicsQuality.ToString() == quality && isUpdate) return;
+            if (PrefsManager.GraphicsQuality.ToString() == quality && isUpdate) return;
 
             var graphicsQuality = ProgramEnums.GraphicsQuality.Minimal;
             var isValid = false;
@@ -184,7 +190,7 @@ namespace Materialize.General
 
 
             Logger.Log("Quality " + graphicsQuality);
-            GraphicsQuality = graphicsQuality;
+            PrefsManager.GraphicsQuality = graphicsQuality;
             StartCoroutine(UpdateQuality(isUpdate));
         }
     }

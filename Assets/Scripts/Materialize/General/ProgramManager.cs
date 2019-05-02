@@ -1,6 +1,5 @@
 #region
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +9,6 @@ using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
 using Logger = Utility.Logger;
-using PersistentSettings = Materialize.General.PersistentSettings;
 
 #endregion
 
@@ -18,8 +16,6 @@ namespace Materialize.General
 {
     public class ProgramManager : MonoBehaviour
     {
-        private const string LastPathKey = nameof(LastPathKey);
-
         public static ProgramManager Instance;
         public static Vector2 GuiReferenceSize = new Vector2(1440, 810);
         private int _windowId;
@@ -30,8 +26,7 @@ namespace Materialize.General
         public int ForcedFrameRate = 30;
         public bool ForceFrameRate;
         public Vector2 GuiScale = new Vector2(1, 1);
-        
-        [HideInInspector] public string LastPath;
+
         public MessagePanel MessagePanelObject;
         public Volume PostProcessingVolume;
         public HDRenderPipeline RenderPipeline;
@@ -48,7 +43,7 @@ namespace Materialize.General
         {
         }
 
-        public char PathChar { get; private set; }
+        public static char PathChar => Path.DirectorySeparatorChar;
 
         public int GetWindowId => _windowId++;
 
@@ -70,9 +65,7 @@ namespace Materialize.General
         private void Awake()
         {
             Instance = this;
-            LastPath = PlayerPrefs.HasKey(LastPathKey) ? PlayerPrefs.GetString(LastPathKey) : null;
 
-            PathChar = Path.DirectorySeparatorChar;
 
             GuiScale = new Vector2(Screen.width / GuiReferenceSize.x, Screen.height / GuiReferenceSize.y);
             MessagePanelObject.gameObject.SetActive(true);
@@ -125,8 +118,6 @@ namespace Materialize.General
                     Logger.Log("Setting FrameRate to " + DesiredFrameRate);
                     Application.targetFrameRate = DesiredFrameRate;
                 }
-
-                if (LastPath != null) PlayerPrefs.SetString(LastPathKey, LastPath);
 
                 yield return new WaitForSeconds(0.5f);
             }
@@ -181,8 +172,8 @@ namespace Materialize.General
         private void OnApplicationQuit()
         {
             ApplicationIsQuitting = true;
+            PrefsManager.Save();
         }
-
 
 
         #region Gui Objects

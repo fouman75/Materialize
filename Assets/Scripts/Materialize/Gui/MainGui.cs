@@ -400,13 +400,13 @@ namespace Materialize.Gui
             {
                 const string defaultName = "baseName.mtz";
                 StandaloneFileBrowser.StandaloneFileBrowser.SaveFilePanelAsync("Save Project",
-                    ProgramManager.Instance.LastPath, defaultName, "mtz", SaveProjectCallback);
+                    PrefsManager.LastPath, defaultName, "mtz", SaveProjectCallback);
             }
 
             //Load Project
             if (GUI.Button(new Rect(offsetXm + 10, offsetY + 215, 100, 25), "Load Project"))
                 StandaloneFileBrowser.StandaloneFileBrowser.OpenFilePanelAsync("Load Project",
-                    ProgramManager.Instance.LastPath, "mtz", false, LoadProjectCallback);
+                    PrefsManager.LastPath, "mtz", false, LoadProjectCallback);
 
             //Property Map
 
@@ -591,8 +591,8 @@ namespace Materialize.Gui
         {
             if (path.IsNullOrEmpty()) return;
 
-            var lastBar = path.LastIndexOf(ProgramManager.Instance.PathChar);
-            ProgramManager.Instance.LastPath = path.Substring(0, lastBar + 1);
+            var lastBar = path.LastIndexOf(ProgramManager.PathChar);
+            PrefsManager.LastPath = path.Substring(0, lastBar + 1);
 
             _saveLoadProjectScript.SaveProject(path);
         }
@@ -601,8 +601,8 @@ namespace Materialize.Gui
         {
             if (path[0].IsNullOrEmpty()) return;
 
-            var lastBar = path[0].LastIndexOf(ProgramManager.Instance.PathChar);
-            ProgramManager.Instance.LastPath = path[0].Substring(0, lastBar + 1);
+            var lastBar = path[0].LastIndexOf(ProgramManager.PathChar);
+            PrefsManager.LastPath = path[0].Substring(0, lastBar + 1);
 
             _saveLoadProjectScript.LoadProject(path[0]);
         }

@@ -62,7 +62,7 @@ namespace Materialize.Gui
         public void SaveImage()
         {
             var defaultName = "_" + MapType + ".png";
-            var lastPath = ProgramManager.Instance.LastPath;
+            var lastPath = PrefsManager.LastPath;
             StandaloneFileBrowser.StandaloneFileBrowser.SaveFilePanelAsync("Save Height Map", lastPath, defaultName,
                 ProgramManager.ImageSaveFilter, SaveTextureFileCallback);
         }
@@ -71,8 +71,8 @@ namespace Materialize.Gui
         {
             if (path.IsNullOrEmpty()) return;
 
-            var lastBar = path.LastIndexOf(ProgramManager.Instance.PathChar);
-            ProgramManager.Instance.LastPath = path.Substring(0, lastBar + 1);
+            var lastBar = path.LastIndexOf(ProgramManager.PathChar);
+            PrefsManager.LastPath = path.Substring(0, lastBar + 1);
             var textureToSave = TextureManager.Instance.GetTexture(MapType);
             SaveLoadProject.Instance.SaveFile(path, textureToSave);
             QuickSavePath = path;
@@ -81,7 +81,7 @@ namespace Materialize.Gui
         public void LoadImage()
         {
             var title = "Open " + MapType + " Map";
-            var lastPath = ProgramManager.Instance.LastPath;
+            var lastPath = PrefsManager.LastPath;
             StandaloneFileBrowser.StandaloneFileBrowser.OpenFilePanelAsync(title, lastPath,
                 ProgramManager.ImageLoadFilter, false,
                 LoadTextureCallback);
@@ -90,8 +90,8 @@ namespace Materialize.Gui
         private void LoadTextureCallback(string[] path)
         {
             if (path[0].IsNullOrEmpty()) return;
-            var lastBar = path[0].LastIndexOf(ProgramManager.Instance.PathChar);
-            ProgramManager.Instance.LastPath = path[0].Substring(0, lastBar + 1);
+            var lastBar = path[0].LastIndexOf(ProgramManager.PathChar);
+            PrefsManager.LastPath = path[0].Substring(0, lastBar + 1);
 
             TextureManager.Instance.ClearTexture(MapType);
 
