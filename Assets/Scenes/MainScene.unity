@@ -4137,7 +4137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1988110373
 Transform:
   m_ObjectHideFlags: 0
@@ -4164,8 +4164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242fd42f7d37fb4489a7316fecbee106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectHandler: {fileID: 2015501343}
-  PostProcessGui: {fileID: 1107095847}
 --- !u!1 &2015501342
 GameObject:
   m_ObjectHideFlags: 0
@@ -4257,25 +4255,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ApplicationIsQuitting: 0
   DefaultFrameRate: 0
-  DesiredFrameRate: 0
   ForcedFrameRate: 30
   ForceFrameRate: 1
-  GraphicsQuality: 0
   GuiScale: {x: 1, y: 1}
-  HighQualityAsset: {fileID: 11400000, guid: 204ea025a14fc8290b039026772df368, type: 2}
-  LastPath: 
-  LowQualityAsset: {fileID: 11400000, guid: 179adb809604d5a67a969e8c3850c7be, type: 2}
-  MediumQualityAsset: {fileID: 11400000, guid: c70b1ea4295ec1e26a01d8a6c9086304, type: 2}
   MessagePanelObject: {fileID: 1674964765}
   PostProcessingVolume: {fileID: 2072837669}
   SceneVolume: {fileID: 513423966}
-  ByPassUnsafe: 0
+  ObjectHandler: {fileID: 2015501343}
   StartCubeMap: {fileID: 8900000, guid: d179a5cf97a39ec5c91cb199d742898a, type: 3}
   SceneObjects: []
   CommandListExecutorObject: {fileID: 1637277520}
   ControlsGuiObject: {fileID: 33059743}
   MainGuiObject: {fileID: 1866024252}
-  SettingsGuiObject: {fileID: 1988110372}
   MaterialGuiObject: {fileID: 650021384}
   TestObject: {fileID: 1463534583}
 --- !u!4 &2017529247

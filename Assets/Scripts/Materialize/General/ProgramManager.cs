@@ -4,10 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Materialize.Gui;
+using Materialize.Settings;
 using StandaloneFileBrowser;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
+using Utility;
 using Logger = Utility.Logger;
 
 #endregion
@@ -22,7 +24,8 @@ namespace Materialize.General
         public bool ApplicationIsQuitting;
 
         [HideInInspector] public int DefaultFrameRate = 30;
-        [HideInInspector] public int DesiredFrameRate;
+        [HideInInspector] public ProgramSettings ProgramSettings;
+
         public int ForcedFrameRate = 30;
         public bool ForceFrameRate;
         public Vector2 GuiScale = new Vector2(1, 1);
@@ -31,6 +34,7 @@ namespace Materialize.General
         public Volume PostProcessingVolume;
         public HDRenderPipeline RenderPipeline;
         public Volume SceneVolume;
+        public ObjectZoomPanRotate ObjectHandler;
 
         #region Settings
 
@@ -83,12 +87,13 @@ namespace Materialize.General
             Logger.Log("Starting " + name);
             ControlsGuiObject = FindMonoBehaviour<ControlsGui>().gameObject;
             MainGuiObject = FindMonoBehaviour<MainGui>().gameObject;
-            SettingsGuiObject = FindMonoBehaviour<SettingsGui>().gameObject;
             CommandListExecutorObject = FindMonoBehaviour<CommandListExecutor>().gameObject;
             MaterialGuiObject = FindMonoBehaviour<MaterialGui>().gameObject;
 
             ActivateObjects();
             yield return StartCoroutine(GetHdrpCoroutine());
+
+            LoadSettings();
 
             StartCoroutine(SlowUpdate());
         }
@@ -113,11 +118,14 @@ namespace Materialize.General
         {
             while (!ApplicationIsQuitting)
             {
-                if (Application.targetFrameRate != DesiredFrameRate && DesiredFrameRate != 0)
+                if (Application.targetFrameRate != ProgramSettings.FrameRate && ProgramSettings.FrameRate != 0)
                 {
-                    Logger.Log("Setting FrameRate to " + DesiredFrameRate);
-                    Application.targetFrameRate = DesiredFrameRate;
+                    Logger.Log("Setting FrameRate to " + ProgramSettings.FrameRate);
+                    Application.targetFrameRate = ProgramSettings.FrameRate;
                 }
+
+                ObjectHandler.AllowHide = ProgramSettings.HideUiOnRotate;
+                TextureManager.Instance.Hdr = ProgramSettings.HDR;
 
                 yield return new WaitForSeconds(0.5f);
             }
@@ -128,7 +136,6 @@ namespace Materialize.General
         {
             TestObject.SetActive(true);
             MainGuiObject.SetActive(true);
-            SettingsGuiObject.SetActive(true);
             ControlsGuiObject.SetActive(true);
             MaterialGuiObject.SetActive(false);
             CommandListExecutorObject.SetActive(true);
@@ -175,6 +182,58 @@ namespace Materialize.General
             PrefsManager.Save();
         }
 
+        private void LoadSettings()
+        {
+            ProgramSettings = PrefsManager.ProgramSettings;
+
+            if (ProgramSettings == null) InitializeSettings();
+
+            SetSettings();
+        }
+
+        private void InitializeSettings()
+        {
+            Logger.Log("Initializing Program Settings");
+            ProgramSettings = new ProgramSettings
+            {
+                HideUiOnRotate = ObjectHandler.AllowHide,
+                FrameRate = DefaultFrameRate,
+                HDR = TextureManager.Instance.Hdr,
+                NormalMapMaxStyle = true,
+                NormalMapMayaStyle = false,
+                PostProcessEnabled = true,
+                PropRed = ProgramEnums.PropChannelMap.None,
+                PropGreen = ProgramEnums.PropChannelMap.None,
+                PropBlue = ProgramEnums.PropChannelMap.None,
+                FileFormat = ProgramEnums.FileFormat.Png
+            };
+            PrefsManager.ProgramSettings = ProgramSettings;
+            PrefsManager.Save();
+        }
+
+        public void SetSettings()
+        {
+            TextureManager.Instance.FlipNormalY = ProgramSettings.NormalMapMayaStyle;
+
+            if (ProgramSettings.PostProcessEnabled)
+                PostProcessGui.PostProcessOn();
+            else
+                PostProcessGui.PostProcessOff();
+
+            var mainGui = MainGui.Instance;
+            mainGui.PropRed = ProgramSettings.PropRed;
+            mainGui.PropGreen = ProgramSettings.PropGreen;
+            mainGui.PropBlue = ProgramSettings.PropBlue;
+
+            mainGui.SetFormat(ProgramSettings.FileFormat);
+        }
+
+        public void SaveSettings()
+        {
+            PrefsManager.ProgramSettings = ProgramSettings;
+            PrefsManager.Save();
+        }
+
 
         #region Gui Objects
 
@@ -185,7 +244,6 @@ namespace Materialize.General
 
         [HideInInspector] public GameObject ControlsGuiObject;
         [HideInInspector] public GameObject MainGuiObject;
-        [HideInInspector] public GameObject SettingsGuiObject;
         [HideInInspector] public GameObject MaterialGuiObject;
         public GameObject TestObject;
 

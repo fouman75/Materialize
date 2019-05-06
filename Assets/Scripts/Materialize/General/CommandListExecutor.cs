@@ -88,7 +88,7 @@ namespace Materialize.General
             var commandList = new CommandList {Commands = new List<Command>()};
 
             var command = new Command
-                {CommandType = CommandType.Settings, ProjectProgramSettings = SettingsGui.ProgramSettings};
+                {CommandType = CommandType.Settings, ProjectProgramSettings = ProgramManager.Instance.ProgramSettings};
             commandList.Commands.Add(command);
 
             command = new Command
@@ -171,8 +171,8 @@ namespace Materialize.General
                     switch (thisCommand.CommandType)
                     {
                         case CommandType.Settings:
-                            SettingsGui.ProgramSettings = thisCommand.ProjectProgramSettings;
-                            SettingsGui.SetSettings();
+                            ProgramManager.Instance.ProgramSettings = thisCommand.ProjectProgramSettings;
+                            ProgramManager.Instance.SetSettings();
                             break;
                         case CommandType.Open:
                         {

@@ -591,7 +591,7 @@ namespace Materialize.Gui
 
             TilingCompute.SetVector(ObjectScale, _objectScale);
 
-            TilingCompute.SetFloat(FlipY, SettingsGui.Instance.ProgramSettings.NormalMapMayaStyle ? 1.0f : 0.0f);
+            TilingCompute.SetFloat(FlipY, ProgramManager.Instance.ProgramSettings.NormalMapMayaStyle ? 1.0f : 0.0f);
 
             var texArWidth = TextureManager.Instance.HeightMap.width / (float) TextureManager.Instance.HeightMap.height;
             var texArHeight = TextureManager.Instance.HeightMap.height /

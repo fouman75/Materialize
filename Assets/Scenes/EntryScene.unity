@@ -981,6 +981,7 @@ MonoBehaviour:
   ByPassUnsafe: 0
   ProgramAssets: {fileID: 2895254232347730525, guid: 665166f0fc653d46280169c3dedfaa01,
     type: 3}
+  TestGraphicsOnEditor: 0
 --- !u!1 &1016013187
 GameObject:
   m_ObjectHideFlags: 0

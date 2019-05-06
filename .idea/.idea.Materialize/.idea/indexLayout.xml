@@ -3,19 +3,20 @@
   <component name="ContentModelUserStore">
     <attachedFolders />
     <explicitIncludes>
-      <Path>Library/PackageCache/com.unity.burst@1.0.0</Path>
-      <Path>Library/PackageCache/com.unity.collections@0.0.9-preview.17</Path>
+      <Path>Library/PackageCache/com.unity.burst@1.0.1</Path>
+      <Path>Library/PackageCache/com.unity.collections@0.0.9-preview.18</Path>
       <Path>Library/PackageCache/com.unity.editorcoroutines@0.0.2-preview.1</Path>
       <Path>Library/PackageCache/com.unity.ext.nunit@1.0.0</Path>
-      <Path>Library/PackageCache/com.unity.ide.rider@1.0.5</Path>
-      <Path>Library/PackageCache/com.unity.ide.visualstudio@1.0.5</Path>
-      <Path>Library/PackageCache/com.unity.ide.vscode@1.0.5</Path>
-      <Path>Library/PackageCache/com.unity.jobs@0.0.7-preview.10</Path>
+      <Path>Library/PackageCache/com.unity.ide.rider@1.0.6</Path>
+      <Path>Library/PackageCache/com.unity.ide.visualstudio@1.0.10</Path>
+      <Path>Library/PackageCache/com.unity.ide.vscode@1.0.6</Path>
+      <Path>Library/PackageCache/com.unity.jobs@0.0.7-preview.11</Path>
       <Path>Library/PackageCache/com.unity.mathematics@1.0.1</Path>
       <Path>Library/PackageCache/com.unity.memoryprofiler@0.1.0-preview.6</Path>
       <Path>Library/PackageCache/com.unity.render-pipelines.core@6.6.1</Path>
       <Path>Library/PackageCache/com.unity.render-pipelines.high-definition@6.6.1-preview</Path>
       <Path>Library/PackageCache/com.unity.shadergraph@6.6.1</Path>
+      <Path>Library/PackageCache/com.unity.test-framework.performance@1.0.6-preview</Path>
       <Path>Library/PackageCache/com.unity.test-framework@1.0.12</Path>
       <Path>Library/PackageCache/com.unity.textmeshpro@2.0.1</Path>
       <Path>Packages</Path>

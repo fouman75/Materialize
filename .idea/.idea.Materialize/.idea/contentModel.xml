@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="$USER_HOME$/.Rider2018.3/system/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/.Rider2018.3/system/resharper-host/local/Transient/ReSharperHost/v183/SolutionCaches/_Materialize.1441270350.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/.Rider2019.1/system/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.Rider2019.1/system/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_Materialize.1441270350.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="Assets" t="Include">
         <e p="ExternalPackages" t="Include">
@@ -188,16 +188,13 @@
       </e>
       <e p="Graphy-ASM.csproj" t="IncludeRecursive" />
       <e p="Graphy-Editor-ASM.csproj" t="IncludeRecursive" />
-      <e p="Library" t="ExcludeRecursive" />
       <e p="Materialize-ASM.csproj" t="IncludeRecursive" />
       <e p="Materialize-Editor-ASM.csproj" t="IncludeRecursive" />
       <e p="Materialize.sln" t="IncludeFlat" />
       <e p="SimpleLightProbePlacer-ASM.csproj" t="IncludeRecursive" />
       <e p="SimpleLightProbePlacer-Editor-ASM.csproj" t="IncludeRecursive" />
       <e p="StandaloneFileBrowser-ASM.csproj" t="IncludeRecursive" />
-      <e p="Temp" t="ExcludeRecursive">
-        <e p="bin" t="ExcludeRecursive" />
-      </e>
+      <e p="Temp/bin" t="ExcludeRecursive" />
       <e p="Utility-ASM.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
     </e>

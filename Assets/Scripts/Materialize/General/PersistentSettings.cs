@@ -14,6 +14,9 @@ namespace Materialize.General
         public bool ByPassUnsafe;
         public ProgramAssets ProgramAssets;
 
+        // ReSharper disable once RedundantDefaultMemberInitializer
+        [SerializeField] private bool TestGraphicsOnEditor = false;
+
         private void Start()
         {
             DontDestroyOnLoad(this);
@@ -21,14 +24,14 @@ namespace Materialize.General
 
         private IEnumerator UpdateQuality(bool isUpdate)
         {
-            if (Application.isEditor || ByPassUnsafe) yield break;
+            if (Application.isEditor && !TestGraphicsOnEditor || ByPassUnsafe) yield break;
 
-            var hdRenderPipelineAsset = GetRpQualityAsset();
+            var quality = PrefsManager.GraphicsQuality;
+            var hdRenderPipelineAsset = GetRpQualityAsset(quality);
 
             if (isUpdate && GraphicsSettings.renderPipelineAsset == hdRenderPipelineAsset || !hdRenderPipelineAsset)
                 yield break;
 
-            var quality = PrefsManager.GraphicsQuality;
             Logger.Log("Changing quality to " + quality);
 
             if (isUpdate)
@@ -37,35 +40,16 @@ namespace Materialize.General
                 yield return null;
             }
 
-            switch (quality)
-            {
-                case ProgramEnums.GraphicsQuality.High:
-                    QualitySettings.SetQualityLevel(2);
-                    break;
-                case ProgramEnums.GraphicsQuality.Medium:
-                    QualitySettings.SetQualityLevel(1);
-                    break;
-                case ProgramEnums.GraphicsQuality.Low:
-                case ProgramEnums.GraphicsQuality.Minimal:
-                    QualitySettings.SetQualityLevel(0);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            if (isUpdate) yield return null;
-
-            GraphicsSettings.renderPipelineAsset = hdRenderPipelineAsset;
+            yield return UpdatePipeline(hdRenderPipelineAsset);
 
             if (isUpdate) yield return new WaitForSeconds(0.5f);
         }
 
-        private HDRenderPipelineAsset GetRpQualityAsset()
+        private HDRenderPipelineAsset GetRpQualityAsset(ProgramEnums.GraphicsQuality quality)
         {
             if (!ProgramAssets) return null;
 
             HDRenderPipelineAsset hdRenderPipelineAsset;
-            var quality = PrefsManager.GraphicsQuality;
             switch (quality)
             {
                 case ProgramEnums.GraphicsQuality.High:
@@ -89,17 +73,11 @@ namespace Materialize.General
 
         public IEnumerator SetScreen(ProgramEnums.ScreenMode screenMode)
         {
-            if (Application.isEditor || ByPassUnsafe) yield break;
+            if (Application.isEditor && !TestGraphicsOnEditor || ByPassUnsafe) yield break;
 
             if (MainGui.Instance)
             {
                 if (MainGui.Instance) MainGui.Instance.CloseWindows();
-            }
-
-            if (ProgramManager.Instance)
-            {
-                ProgramManager.Instance.PostProcessingVolume.enabled = false;
-                ProgramManager.Instance.SceneVolume.enabled = false;
             }
 
             switch (screenMode)
@@ -120,14 +98,30 @@ namespace Materialize.General
 
             if (!ProgramManager.Instance) yield break;
 
-            var hdRenderPipelineAsset = GetRpQualityAsset();
+            var quality = PrefsManager.GraphicsQuality;
+            var hdRenderPipelineAsset = GetRpQualityAsset(quality);
+            yield return UpdatePipeline(hdRenderPipelineAsset);
+        }
+
+        private static IEnumerator UpdatePipeline(HDRenderPipelineAsset hdRenderPipelineAsset)
+        {
             if (!hdRenderPipelineAsset) yield break;
+
+            bool ppDisabled = false;
+            if (ProgramManager.Instance)
+            {
+                ProgramManager.Instance.PostProcessingVolume.enabled = false;
+                ProgramManager.Instance.SceneVolume.enabled = false;
+                ppDisabled = true;
+            }
 
             GraphicsSettings.renderPipelineAsset = null;
             yield return null;
             GraphicsSettings.renderPipelineAsset = hdRenderPipelineAsset;
 
             yield return null;
+            if (!ppDisabled) yield break;
+
             ProgramManager.Instance.PostProcessingVolume.enabled = true;
             ProgramManager.Instance.SceneVolume.enabled = true;
         }
