@@ -65,13 +65,18 @@ namespace Materialize.Gui
 
             offsetY += 30;
 
-            if (GUI.Button(new Rect(offsetX + 40, offsetY, 30, 30), "30")) programSettings.FrameRate = 30;
 
-            if (GUI.Button(new Rect(offsetX + 80, offsetY, 30, 30), "60")) programSettings.FrameRate = 60;
+            if (GUI.Toggle(new Rect(offsetX + 30, offsetY, 40, 30), programSettings.FrameRate == 30, "30", "Button"))
+                programSettings.FrameRate = 30;
 
-            if (GUI.Button(new Rect(offsetX + 120, offsetY, 30, 30), "120")) programSettings.FrameRate = 120;
+            if (GUI.Toggle(new Rect(offsetX + 80, offsetY, 40, 30), programSettings.FrameRate == 60, "60", "Button"))
+                programSettings.FrameRate = 60;
 
-            if (GUI.Button(new Rect(offsetX + 160, offsetY, 40, 30), "None")) programSettings.FrameRate = -1;
+            if (GUI.Toggle(new Rect(offsetX + 130, offsetY, 40, 30), programSettings.FrameRate == 120, "120", "Button"))
+                programSettings.FrameRate = 120;
+
+            if (GUI.Toggle(new Rect(offsetX + 180, offsetY, 40, 30), programSettings.FrameRate == -1, "None", "Button"))
+                programSettings.FrameRate = -1;
 
             offsetY += 40;
 

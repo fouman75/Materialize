@@ -76,7 +76,7 @@ void CSNormal (uint3 id : SV_DispatchThreadID)
 
     normalTex = normalTex * 0.5 + 0.5;
 
-    Result[id.xy] = float4( normalTex, 1.0 );
+    Result[id.xy] = float4( normalize(normalTex), 1.0 );
 }
 
 [numthreads(8,8,1)]
@@ -111,9 +111,9 @@ void CSCombineNormal (uint3 id : SV_DispatchThreadID)
     
     mainTex.xyz = normalize( mainTex.xyz ) * 0.5 + 0.5;
     
-    if( _FlipNormalY == 0 ){
+    if( _FlipNormalY == 1 ){
         mainTex.y = 1.0 - mainTex.y;
     }
     
-    Result[id.xy] = float4( mainTex.xyz, 1.0 );
+    Result[id.xy] = float4( normalize(mainTex.xyz), 1.0 );
 }

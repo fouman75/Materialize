@@ -16,6 +16,8 @@ namespace Materialize.General
         private static readonly int MetallicTex = Shader.PropertyToID("MetallicInput");
         private static readonly int SmoothnessTex = Shader.PropertyToID("SmoothnessInput");
         private static readonly int AoTex = Shader.PropertyToID("AoInput");
+        private static readonly int ImageSizeId = Shader.PropertyToID("_ImageSize");
+
 
         public static Texture2D BlitMaskMap(Texture2D metallicMap, Texture2D smoothnessMap, Texture2D aoMap)
         {
@@ -54,12 +56,7 @@ namespace Materialize.General
             maskMapCompute.SetTexture(kernel, AoTex, aoMap ? aoMap : textureBlack);
 
             var renderMaskMap = TextureManager.Instance.GetTempRenderTexture(size.x, size.y);
-            maskMapCompute.SetVector("_ImageSize", (Vector2) size);
-            maskMapCompute.SetTexture(kernel, "Result", renderMaskMap);
-            var groupsX = (int) Mathf.Ceil(size.x / 8f);
-            var groupsY = (int) Mathf.Ceil(size.y / 8f);
-            maskMapCompute.Dispatch(kernel, groupsX, groupsY, 1);
-
+            RunKernel(maskMapCompute, kernel, null, renderMaskMap);
 
             return renderMaskMap;
         }
@@ -67,16 +64,13 @@ namespace Materialize.General
 
         public static Texture2D FlipNormalMapY(Texture2D normalMap)
         {
-            if (normalMap == null) return null;
-            for (var i = 0; i < normalMap.width; i++)
-            for (var j = 0; j < normalMap.height; j++)
-            {
-                var pixelColor = normalMap.GetPixel(i, j);
-                pixelColor.g = 1.0f - pixelColor.g;
-                normalMap.SetPixel(i, j, pixelColor);
-            }
+            if (!normalMap) return null;
 
-            normalMap.Apply(false);
+            var compute = TextureManager.Instance.TextureProcessingCompute;
+            var kernel = compute.FindKernel("FlipNormalY");
+            var renderTexture = TextureManager.Instance.GetTempRenderTexture(normalMap.width, normalMap.height);
+            RunKernel(compute, kernel, normalMap, renderTexture);
+            TextureManager.Instance.GetTextureFromRender(renderTexture, out normalMap);
 
             return normalMap;
         }
@@ -167,6 +161,17 @@ namespace Materialize.General
             TextureManager.Instance.GetTextureFromRender(tempRenderTexture, out var converted);
             Object.Destroy(newTexture);
             return converted;
+        }
+
+        private static void RunKernel(ComputeShader computeShader, int kernel, Texture source, Texture destiny)
+        {
+            var imageSize = new Vector2(source.width, source.height);
+            computeShader.SetVector(ImageSizeId, imageSize);
+            if (source) computeShader.SetTexture(kernel, "ImageInput", source);
+            computeShader.SetTexture(kernel, "Result", destiny);
+            var groupsX = (int) Mathf.Ceil(imageSize.x / 8f);
+            var groupsY = (int) Mathf.Ceil(imageSize.y / 8f);
+            computeShader.Dispatch(kernel, groupsX, groupsY, 1);
         }
     }
 }

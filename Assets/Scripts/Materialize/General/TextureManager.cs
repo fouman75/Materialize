@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections;
+using System.Runtime.Remoting.Messaging;
 using JetBrains.Annotations;
 using Materialize.Gui;
 using UnityEngine;
@@ -30,7 +31,7 @@ namespace Materialize.General
         private static readonly int AoMapId = Shader.PropertyToID("_AoMap");
         private static readonly int DisplacementStrength = Shader.PropertyToID("_DisplacementStrength");
         private static readonly int DisplacementOffset = Shader.PropertyToID("_DisplacementOffset");
-
+        private static readonly int FlipNormalYId = Shader.PropertyToID("_FlipNormalY");
 
         private Texture2D _blackTexture;
         private Texture2D _packedNormal;
@@ -38,7 +39,18 @@ namespace Materialize.General
 
         [Range(0, 10)] public float DefaultDisplacement = 3.0f;
         public TextureFormat DefaultTextureFormat;
-        public bool FlipNormalY;
+
+        private bool _flipNormalY;
+
+        public bool FlipNormalY
+        {
+            set
+            {
+                Shader.SetGlobalInt(FlipNormalYId, value ? 1 : 0);
+                _flipNormalY = value;
+            }
+            get => _flipNormalY;
+        }
 
         // ReSharper disable once RedundantDefaultMemberInitializer
         [UsedImplicitly] [SerializeField] private Material FullMaterial = null;
