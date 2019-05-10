@@ -5,7 +5,7 @@
 #pragma kernel FlipNormalY
 
 RWTexture2D<float4> Result;
-Texture2D<float4> Input;
+Texture2D<float4> ImageInput;
 
 SamplerState LinearRepeatSample;
 
@@ -18,7 +18,7 @@ void CSPackNormal (uint3 id : SV_DispatchThreadID)
         return;
         
     float2 uv = id.xy / _ImageSize;
-    float2 normal = Input.SampleLevel(LinearRepeatSample, uv, 0).xy;
+    float2 normal = ImageInput.SampleLevel(LinearRepeatSample, uv, 0).xy;
 
     Result[id.xy] = float4(1.0, normal.g, normal.g, normal.r);
 }
@@ -30,7 +30,7 @@ void ConvertToGama (uint3 id : SV_DispatchThreadID)
         return;
 
     float2 uv = id.xy / _ImageSize;
-    float4 col = Input.SampleLevel(LinearRepeatSample, uv, 0);
+    float4 col = ImageInput.SampleLevel(LinearRepeatSample, uv, 0);
 
     Result[id.xy] = LinearToSRGB(col);
 }
@@ -42,8 +42,9 @@ void FlipNormalY (uint3 id : SV_DispatchThreadID)
         return;
 
     float2 uv = id.xy / _ImageSize;
-    float4 col = Input.SampleLevel(LinearRepeatSample, uv, 0);
+    float3 col = ImageInput.SampleLevel(LinearRepeatSample, uv, 0).xyz;
     col.y = 1.0 - col.y;
+    
 
-    Result[id.xy] = float4(normalize(col.xyz), 1.0);
+    Result[id.xy] = float4(col.xyz, 1.0);
 }

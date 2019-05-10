@@ -158,6 +158,9 @@ namespace Materialize.General
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
+                
+                
+                
             }
         }
 
@@ -501,6 +504,7 @@ namespace Materialize.General
         {
             NormalMap = TextureProcessing.FlipNormalMapY(NormalMap);
             FlipNormalY = !FlipNormalY;
+            SetFullMaterialAndUpdate();
         }
 
         public void SaveMap(ProgramEnums.MapType mapType)

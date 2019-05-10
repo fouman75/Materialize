@@ -106,17 +106,21 @@
 				
 				mainTex.xyz = normalize( mainTex.xyz * 2.0 - 1.0 );
 				
+                if( _FlipNormalY == 1 ){
+					mainTex.y *= -1.0;
+                    mainTex.xyz = normalize(mainTex.xyz);
+                }
+                
 				float3 angularDir = normalize( float3( normalize( float3( mainTex.xy, 0.01 ) ).xy * _AngularIntensity, max( 1.0 - _AngularIntensity, 0.01 ) ) );
 				mainTex.xyz = lerp( mainTex.xyz, angularDir, _Angularity );
 				
 				mainTex.xy = mainTex.xy * max( _FinalContrast, 0.01 );
 				mainTex.z = pow( saturate( mainTex.z ), max( _FinalContrast, 0.01 ) );
 				
-				mainTex.xyz = normalize( mainTex.xyz ) * 0.5 + 0.5;
-
+                mainTex.xyz = normalize(mainTex.xyz) * 0.5 + 0.5;
+								                
                 float3 finalColor = lerp( mainTex.xyz, heightTex.xxx, smoothstep( _Slider - 0.01, _Slider + 0.01, UV.x ) );
-				if (_FlipNormalY == 1) finalColor.y = 1.0 - finalColor;
-				return float4( normalize(finalColor), 1 );
+				return float4( finalColor, 1 );
 			}
 
 			ENDCG

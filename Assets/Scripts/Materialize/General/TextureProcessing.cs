@@ -80,22 +80,12 @@ namespace Materialize.General
             var compute = TextureManager.Instance.TextureProcessingCompute;
             var kernel = compute.FindKernel("ConvertToGama");
             var renderTexture = TextureManager.Instance.GetTempRenderTexture(texture.width, texture.height);
-            var imageSizeX = texture.width;
-            var imageSizeY = texture.height;
-            compute.SetVector("_ImageSize", new Vector2(imageSizeX, imageSizeY));
-            compute.SetTexture(kernel, "Input", texture);
-            compute.SetTexture(kernel, "Result", renderTexture);
-            var groupsX = (int) Mathf.Ceil(imageSizeX / 8f);
-            var groupsY = (int) Mathf.Ceil(imageSizeY / 8f);
-            compute.Dispatch(kernel, groupsX, groupsY, 1);
+            RunKernel(compute, kernel, texture, renderTexture);
 
-            RenderTexture.active = renderTexture;
-            var tex = TextureManager.Instance.GetStandardTexture(texture.width, texture.height);
-            tex.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
-            tex.Apply(false);
+            TextureManager.Instance.GetTextureFromRender(renderTexture, out var converted);
             RenderTexture.ReleaseTemporary(renderTexture);
 
-            return tex;
+            return converted;
         }
 
         private static Texture2D LoadPngBmpJpg(string path)
@@ -159,6 +149,7 @@ namespace Materialize.General
 
             Graphics.CopyTexture(newTexture, 0, 0, tempRenderTexture, 0, 0);
             TextureManager.Instance.GetTextureFromRender(tempRenderTexture, out var converted);
+            RenderTexture.ReleaseTemporary(tempRenderTexture);
             Object.Destroy(newTexture);
             return converted;
         }

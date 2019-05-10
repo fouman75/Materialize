@@ -102,6 +102,11 @@ void CSCombineNormal (uint3 id : SV_DispatchThreadID)
     mainTex *= 1.0 / mainTex.w;
     
     mainTex.xyz = normalize( mainTex.xyz * 2.0 - 1.0 );
+    
+    if( _FlipNormalY == 1 ){
+        mainTex.y *= -1.0;
+        mainTex.xyz = normalize(mainTex.xyz);
+    }
 
     float3 angularDir = normalize( float3( normalize( float3( mainTex.xy, 0.001 ) ).xy * _AngularIntensity, max( 1.0 - _AngularIntensity, 0.001 ) ) );
     mainTex.xyz = lerp( mainTex.xyz, angularDir, _Angularity );
@@ -110,10 +115,6 @@ void CSCombineNormal (uint3 id : SV_DispatchThreadID)
     mainTex.z = pow( saturate( mainTex.z ), _FinalContrast );
     
     mainTex.xyz = normalize( mainTex.xyz ) * 0.5 + 0.5;
-    
-    if( _FlipNormalY == 1 ){
-        mainTex.y = 1.0 - mainTex.y;
-    }
-    
+        
     Result[id.xy] = float4( normalize(mainTex.xyz), 1.0 );
 }
