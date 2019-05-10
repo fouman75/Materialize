@@ -165,7 +165,8 @@ namespace Materialize.General
 
         private static void RunKernel(ComputeShader computeShader, int kernel, Texture source, Texture destiny)
         {
-            var imageSize = new Vector2(source.width, source.height);
+            var imageSize =
+                source ? new Vector2(source.width, source.height) : new Vector2(destiny.width, destiny.height);
             computeShader.SetVector(ImageSizeId, imageSize);
             if (source) computeShader.SetTexture(kernel, "ImageInput", source);
             computeShader.SetTexture(kernel, "Result", destiny);

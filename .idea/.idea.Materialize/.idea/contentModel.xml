@@ -4,6 +4,7 @@
     <e p="$USER_HOME$/.Rider2019.1/system/extResources" t="IncludeRecursive" />
     <e p="$USER_HOME$/.Rider2019.1/system/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_Materialize.1441270350.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="ExternalPackages" t="Include">
           <e p="Graphy - Ultimate Stats Monitor" t="Include">
@@ -16,7 +17,6 @@
                 <e p="LICENSE.txt" t="Include" />
               </e>
             </e>
-            <e p="Graphy-ASM.asmdef" t="Include" />
             <e p="Scene" t="Include">
               <e p="Color Picker" t="Include">
                 <e p="G_CUIColorPicker.cs" t="Include" />
@@ -52,6 +52,7 @@
               <e p="Graph" t="Include">
                 <e p="G_Graph.cs" t="Include" />
               </e>
+              <e p="Graphy-ASM.asmdef" t="Include" />
               <e p="GraphyDebugger.cs" t="Include" />
               <e p="GraphyManager.cs" t="Include" />
               <e p="Ram" t="Include">
@@ -79,6 +80,9 @@
               <e p="GraphStandard.shader" t="Include" />
             </e>
           </e>
+          <e p="Json120r2" t="Include">
+            <e p="Newtonsoft.Json.xml" t="Include" />
+          </e>
           <e p="SimpleLightProbePlacer" t="Include">
             <e p="Editor" t="Include">
               <e p="LightProbeGroupControlEditor.cs" t="Include" />
@@ -95,14 +99,6 @@
           </e>
           <e p="StandaloneFileBrowser" t="Include">
             <e p="IStandaloneFileBrowser.cs" t="Include" />
-            <e p="Sample" t="Include">
-              <e p="BasicSample.cs" t="Include" />
-              <e p="CanvasSampleOpenFileImage.cs" t="Include" />
-              <e p="CanvasSampleOpenFileText.cs" t="Include" />
-              <e p="CanvasSampleOpenFileTextMultiple.cs" t="Include" />
-              <e p="CanvasSampleSaveFileImage.cs" t="Include" />
-              <e p="CanvasSampleSaveFileText.cs" t="Include" />
-            </e>
             <e p="StandaloneFileBrowser-ASM.asmdef" t="Include" />
             <e p="StandaloneFileBrowser.cs" t="Include" />
             <e p="StandaloneFileBrowserEditor.cs" t="Include" />

@@ -116,7 +116,7 @@
 
                 float3 finalColor = lerp( mainTex.xyz, heightTex.xxx, smoothstep( _Slider - 0.01, _Slider + 0.01, UV.x ) );
 				if (_FlipNormalY == 1) finalColor.y = 1.0 - finalColor;
-				return float4( finalColor, 1 );
+				return float4( normalize(finalColor), 1 );
 			}
 
 			ENDCG
