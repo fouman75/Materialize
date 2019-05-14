@@ -4,6 +4,7 @@
     <list default="true" id="6279255f-eae9-4fa0-9ed8-6ad320788723" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Materialize/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Materialize/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -173,8 +174,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/General/EntryRunner.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="551">
-              <caret line="43" column="44" selection-start-line="43" selection-start-column="44" selection-end-line="43" selection-end-column="44" />
+            <state relative-caret-position="494">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
               <folding>
                 <marker date="1557519162002" expanded="false" signature="0:203" ph="##region" />
                 <marker date="1557519162002" expanded="false" signature="15:191" ph="..." />
@@ -197,7 +198,7 @@
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
               <first_editor relative-caret-position="114">
-                <caret line="6" column="33" lean-forward="true" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+                <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
               </first_editor>
               <second_editor />
             </state>
@@ -732,12 +733,12 @@
       <workItem from="1557508589116" duration="56000" />
       <workItem from="1557508785089" duration="4750000" />
       <workItem from="1557851468539" duration="193000" />
-      <workItem from="1557851722067" duration="1479000" />
+      <workItem from="1557851722067" duration="2643000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="471275000" />
+    <option name="totallyTimeSpent" value="472439000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1409,26 +1410,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/General/EntryRunner.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="43" column="44" selection-start-line="43" selection-start-column="44" selection-end-line="43" selection-end-column="44" />
-          <folding>
-            <marker date="1557519162002" expanded="false" signature="0:203" ph="##region" />
-            <marker date="1557519162002" expanded="false" signature="15:191" ph="..." />
-            <marker date="1557519162002" expanded="true" signature="234:1726" ph="{...}" />
-            <marker date="1557519162002" expanded="true" signature="281:1724" ph="{...}" />
-            <marker date="1557519162002" expanded="true" signature="390:921" ph="{...}" />
-            <marker date="1557519162002" expanded="true" signature="439:528" ph="{...}" />
-            <marker date="1557519162002" expanded="true" signature="739:911" ph="{...}" />
-            <marker date="1557519162002" expanded="true" signature="985:1051" ph="{...}" />
-            <marker date="1557519162002" expanded="true" signature="1097:1718" ph="{...}" />
-            <marker date="1557519162002" expanded="true" signature="1358:1656" ph="{...}" />
-            <marker date="1557519162002" expanded="true" signature="1511:1606" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/TexturePanelGui.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2736">
@@ -1459,12 +1440,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/General/EntryRunner.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+          <folding>
+            <marker date="1557519162002" expanded="false" signature="0:203" ph="##region" />
+            <marker date="1557519162002" expanded="false" signature="15:191" ph="..." />
+            <marker date="1557519162002" expanded="true" signature="234:1726" ph="{...}" />
+            <marker date="1557519162002" expanded="true" signature="281:1724" ph="{...}" />
+            <marker date="1557519162002" expanded="true" signature="390:921" ph="{...}" />
+            <marker date="1557519162002" expanded="true" signature="439:528" ph="{...}" />
+            <marker date="1557519162002" expanded="true" signature="739:911" ph="{...}" />
+            <marker date="1557519162002" expanded="true" signature="985:1051" ph="{...}" />
+            <marker date="1557519162002" expanded="true" signature="1097:1718" ph="{...}" />
+            <marker date="1557519162002" expanded="true" signature="1358:1656" ph="{...}" />
+            <marker date="1557519162002" expanded="true" signature="1511:1606" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CHANGELOG.md">
       <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="114">
-            <caret line="6" column="33" lean-forward="true" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+            <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
           </first_editor>
           <second_editor />
         </state>

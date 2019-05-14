@@ -4,7 +4,7 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.4HDRP-beta.9] - 2019-05-xx
+## [v0.4HDRP-beta.9] - 2019-05-14
 ### Added
 - Added a Entry Scene, there you can select the graphics quality you want. You can set to auto load the last setting.
 
