@@ -4,6 +4,29 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v0.4HDRP-beta.9] - 2019-05-xx
+### Added
+- Added a Entry Scene, there you can select the graphics quality you want. You can set to auto load the last setting.
+
+### Changed
+- Disabled Screen Space Reflection for now.
+
+#### Minor changes
+- Update to Unity 2019.2.0b1
+- Update to SRP 6.5.2
+
+### Fixes
+- Reworked settings, now it save the last path and the last settings used as it should.
+#### Fixed by Unity on 2019.2
+- Fix out of memory due to memory leak.
+- Better support for AMD on Vulkan.
+- Some other fixes that can be seen on unity's changelogs.
+
+### To Implement
+- Windows Copy / Paste
+- Linux Copy to clipboard
+
+
 ## [v0.4HDRP-beta.8] - 2019-04-03
 
 ### Changed

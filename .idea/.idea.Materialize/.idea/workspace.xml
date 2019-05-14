@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6279255f-eae9-4fa0-9ed8-6ad320788723" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/EntryRunner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/EntryRunner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/PersistentSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/PersistentSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/PrefsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/PrefsManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/ProgramAssets.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/ProgramAssets.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/ProgramEnums.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/ProgramEnums.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/ProgramManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/ProgramManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/TextureManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Materialize/General/TextureManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/MainGui.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/MainGui.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/MaterialGui.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/MaterialGui.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/MetallicGui.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/MetallicGui.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/SettingsGui.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/SettingsGui.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/SmoothnessGui.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/SmoothnessGui.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Materialize/Settings/MaterialSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Materialize/Settings/MaterialSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Materialize/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Materialize/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,7 +46,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/Settings/ProgramSettings.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
+            <state relative-caret-position="190">
               <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
               <folding>
                 <marker date="1556826939834" expanded="false" signature="0:47" ph="##region" />
@@ -71,7 +60,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/General/ProgramManager.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2584">
+            <state relative-caret-position="3249">
               <caret line="215" column="40" selection-start-line="215" selection-start-column="40" selection-end-line="215" selection-end-column="40" />
               <folding>
                 <marker date="1557519210778" expanded="false" signature="0:324" ph="##region" />
@@ -116,7 +105,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/General/TextureManager.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
+            <state relative-caret-position="437">
               <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
               <folding>
                 <marker date="1557519210786" expanded="false" signature="0:177" ph="##region" />
@@ -181,11 +170,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/General/EntryRunner.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="33" column="49" selection-start-line="33" selection-start-column="49" selection-end-line="33" selection-end-column="49" />
+            <state relative-caret-position="551">
+              <caret line="43" column="44" selection-start-line="43" selection-start-column="44" selection-end-line="43" selection-end-column="44" />
               <folding>
                 <marker date="1557519162002" expanded="false" signature="0:203" ph="##region" />
                 <marker date="1557519162002" expanded="false" signature="15:191" ph="..." />
@@ -203,10 +192,22 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CHANGELOG.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="114">
+                <caret line="6" column="33" lean-forward="true" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/TexturePanelGui.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2375">
+            <state relative-caret-position="2736">
               <caret line="196" column="86" selection-start-line="196" selection-end-line="197" />
               <folding>
                 <marker date="1556825041934" expanded="false" signature="0:270" ph="##region" />
@@ -403,7 +404,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/ExternalPackages/Graphy - Ultimate Stats Monitor/Scripts/Util/G_ExtensionMethods.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/General/SaveLoadProject.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/General/TextureManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gui/MainGui.cs" />
@@ -454,6 +454,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Materialize/General/TextureProcessing.cs" />
         <option value="$PROJECT_DIR$/Assets/Shaders/Compute/TextureProcessingCompute.compute" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Materialize/General/TextureManager.cs" />
+        <option value="$PROJECT_DIR$/CHANGELOG.md" />
       </list>
     </option>
   </component>
@@ -466,12 +467,21 @@
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="UnityExplorer" proportions="" version="1">
+    <navigator currentView="FileSystemExplorer" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AssemblyExplorer" />
-      <pane id="FileSystemExplorer" />
+      <pane id="FileSystemExplorer">
+        <subPane>
+          <expand>
+            <path>
+              <item name="" type="161ac34:FileSystemExplorerRootNode" />
+              <item name="Materialize" type="34e6ba20:FileSystemExplorerNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="UnityExplorer">
         <subPane>
           <expand>
@@ -479,36 +489,13 @@
               <item name="" type="e068e287:UnityExplorerRootNode" />
               <item name="Assets" type="8711f2a6:AssetsRoot" />
             </path>
-            <path>
-              <item name="" type="e068e287:UnityExplorerRootNode" />
-              <item name="Assets" type="8711f2a6:AssetsRoot" />
-              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
-            </path>
-            <path>
-              <item name="" type="e068e287:UnityExplorerRootNode" />
-              <item name="Assets" type="8711f2a6:AssetsRoot" />
-              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
-              <item name="Materialize" type="1045f7f1:UnityExplorerNode" />
-            </path>
-            <path>
-              <item name="" type="e068e287:UnityExplorerRootNode" />
-              <item name="Assets" type="8711f2a6:AssetsRoot" />
-              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
-              <item name="Materialize" type="1045f7f1:UnityExplorerNode" />
-              <item name="General" type="1045f7f1:UnityExplorerNode" />
-            </path>
-            <path>
-              <item name="" type="e068e287:UnityExplorerRootNode" />
-              <item name="Assets" type="8711f2a6:AssetsRoot" />
-              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
-              <item name="Utility" type="1045f7f1:UnityExplorerNode" />
-            </path>
           </expand>
           <select />
         </subPane>
         <option name="show-hidden-items" value="false" />
         <option name="show-project-names" value="true" />
       </pane>
+      <pane id="AssemblyExplorer" />
       <pane id="SolutionExplorer">
         <subPane>
           <expand>
@@ -744,11 +731,13 @@
       <workItem from="1557495259986" duration="8642000" />
       <workItem from="1557508589116" duration="56000" />
       <workItem from="1557508785089" duration="4750000" />
+      <workItem from="1557851468539" duration="193000" />
+      <workItem from="1557851722067" duration="1479000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="469603000" />
+    <option name="totallyTimeSpent" value="471275000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -761,8 +750,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1032" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28975454" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2529349" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Capture Tool" order="3" />
@@ -829,7 +819,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.high-definition@5.10.0-preview/Runtime/Lighting/VolumetricLighting/VolumetricLighting.cs" />
     <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.high-definition@5.10.0-preview/Runtime/RenderPipeline/Settings/FrameSettings.cs" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7EE2E041-E4D3-4465-BA70-0DA9A9F5B0F4/a0/8cde97d4/FrameSettingsOverrideMask.cs" />
     <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.high-definition@5.10.0-preview/Runtime/RenderPipeline/Camera/HDAdditionalCameraData.cs" />
@@ -1239,6 +1228,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Shaders/Compute/AoCompute.compute">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/General/TextureProcessing.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="64" column="40" selection-start-line="64" selection-start-column="40" selection-end-line="64" selection-end-column="40" />
+          <folding>
+            <marker date="1557499436698" expanded="false" signature="0:151" ph="##region" />
+            <marker date="1557499436698" expanded="false" signature="15:139" ph="..." />
+            <marker date="1557499436698" expanded="true" signature="226:6820" ph="{...}" />
+            <marker date="1557499436698" expanded="true" signature="684:1168" ph="{...}" />
+            <marker date="1557499436698" expanded="true" signature="1284:2536" ph="{...}" />
+            <marker date="1557499436698" expanded="true" signature="2606:3102" ph="{...}" />
+            <marker date="1557499436698" expanded="true" signature="3168:3682" ph="{...}" />
+            <marker date="1557499436698" expanded="true" signature="3743:4063" ph="{...}" />
+            <marker date="1557499436698" expanded="true" signature="4135:4534" ph="{...}" />
+            <marker date="1557499436698" expanded="true" signature="4605:5606" ph="{...}" />
+            <marker date="1557499436698" expanded="true" signature="4803:5564" ph="{...}" />
+            <marker date="1557499436698" expanded="true" signature="5700:6146" ph="{...}" />
+            <marker date="1557499436698" expanded="true" signature="6259:6814" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Shaders/Compute/TilingCompute.compute">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Shaders/Compute/TextureProcessingCompute.compute">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Shaders/Compute/NormalCompute.compute">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="25" column="19" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Shaders/Normal_From_Height_Preview.shader">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2052">
@@ -1255,7 +1290,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/Settings/ProgramSettings.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
+        <state relative-caret-position="190">
           <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
           <folding>
             <marker date="1556826939834" expanded="false" signature="0:47" ph="##region" />
@@ -1267,7 +1302,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/General/ProgramManager.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2584">
+        <state relative-caret-position="3249">
           <caret line="215" column="40" selection-start-line="215" selection-start-column="40" selection-end-line="215" selection-end-column="40" />
           <folding>
             <marker date="1557519210778" expanded="false" signature="0:324" ph="##region" />
@@ -1308,85 +1343,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Shaders/Compute/AoCompute.compute">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="28" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/General/TextureProcessing.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="64" column="40" selection-start-line="64" selection-start-column="40" selection-end-line="64" selection-end-column="40" />
-          <folding>
-            <marker date="1557499436698" expanded="false" signature="0:151" ph="##region" />
-            <marker date="1557499436698" expanded="false" signature="15:139" ph="..." />
-            <marker date="1557499436698" expanded="true" signature="226:6820" ph="{...}" />
-            <marker date="1557499436698" expanded="true" signature="684:1168" ph="{...}" />
-            <marker date="1557499436698" expanded="true" signature="1284:2536" ph="{...}" />
-            <marker date="1557499436698" expanded="true" signature="2606:3102" ph="{...}" />
-            <marker date="1557499436698" expanded="true" signature="3168:3682" ph="{...}" />
-            <marker date="1557499436698" expanded="true" signature="3743:4063" ph="{...}" />
-            <marker date="1557499436698" expanded="true" signature="4135:4534" ph="{...}" />
-            <marker date="1557499436698" expanded="true" signature="4605:5606" ph="{...}" />
-            <marker date="1557499436698" expanded="true" signature="4803:5564" ph="{...}" />
-            <marker date="1557499436698" expanded="true" signature="5700:6146" ph="{...}" />
-            <marker date="1557499436698" expanded="true" signature="6259:6814" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Shaders/Compute/TilingCompute.compute">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/TexturePanelGui.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2375">
-          <caret line="196" column="86" selection-start-line="196" selection-end-line="197" />
-          <folding>
-            <marker date="1556825041934" expanded="false" signature="0:270" ph="##region" />
-            <marker date="1556825041934" expanded="false" signature="15:258" ph="..." />
-            <marker date="1556825041934" expanded="true" signature="297:19492" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="368:19490" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="898:1008" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="1079:1133" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="1167:1220" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="1249:1341" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="1429:1730" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="1776:2087" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="2174:2263" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="2327:2662" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="2888:3329" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="3385:3846" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="3732:3836" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="3883:4266" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="4329:4994" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="4784:4890" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="5109:5582" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="5660:6713" ph="{...}" />
-            <marker date="1556825041934" expanded="true" signature="6723:19484" ph="TextureIDs" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Shaders/Compute/TextureProcessingCompute.compute">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Shaders/Compute/NormalCompute.compute">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="25" column="19" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/General/TextureManager.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
+        <state relative-caret-position="437">
           <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
           <folding>
             <marker date="1557519210786" expanded="false" signature="0:177" ph="##region" />
@@ -1452,8 +1411,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/General/EntryRunner.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="33" column="49" selection-start-line="33" selection-start-column="49" selection-end-line="33" selection-end-column="49" />
+        <state relative-caret-position="551">
+          <caret line="43" column="44" selection-start-line="43" selection-start-column="44" selection-end-line="43" selection-end-column="44" />
           <folding>
             <marker date="1557519162002" expanded="false" signature="0:203" ph="##region" />
             <marker date="1557519162002" expanded="false" signature="15:191" ph="..." />
@@ -1467,6 +1426,47 @@
             <marker date="1557519162002" expanded="true" signature="1358:1656" ph="{...}" />
             <marker date="1557519162002" expanded="true" signature="1511:1606" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Materialize/Gui/TexturePanelGui.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2736">
+          <caret line="196" column="86" selection-start-line="196" selection-end-line="197" />
+          <folding>
+            <marker date="1556825041934" expanded="false" signature="0:270" ph="##region" />
+            <marker date="1556825041934" expanded="false" signature="15:258" ph="..." />
+            <marker date="1556825041934" expanded="true" signature="297:19492" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="368:19490" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="898:1008" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="1079:1133" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="1167:1220" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="1249:1341" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="1429:1730" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="1776:2087" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="2174:2263" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="2327:2662" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="2888:3329" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="3385:3846" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="3732:3836" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="3883:4266" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="4329:4994" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="4784:4890" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="5109:5582" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="5660:6713" ph="{...}" />
+            <marker date="1556825041934" expanded="true" signature="6723:19484" ph="TextureIDs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CHANGELOG.md">
+      <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="114">
+            <caret line="6" column="33" lean-forward="true" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
