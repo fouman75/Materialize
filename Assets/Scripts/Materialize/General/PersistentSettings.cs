@@ -1,15 +1,20 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections;
 using JetBrains.Annotations;
 using Materialize.Gui;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
+using Utility;
 using Logger = Utility.Logger;
+
+#endregion
 
 namespace Materialize.General
 {
-    public class PersistentSettings : Utility.Singleton<PersistentSettings>
+    public class PersistentSettings : Singleton<PersistentSettings>
     {
         public bool ByPassUnsafe;
         public ProgramAssets ProgramAssets;
@@ -107,7 +112,7 @@ namespace Materialize.General
         {
             if (!hdRenderPipelineAsset) yield break;
 
-            bool ppDisabled = false;
+            var ppDisabled = false;
             if (ProgramManager.Instance)
             {
                 ProgramManager.Instance.PostProcessingVolume.enabled = false;

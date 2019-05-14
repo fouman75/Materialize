@@ -417,7 +417,7 @@ namespace Materialize.Gui
             BlurImage(1.0f, source, _overlayBlurMap);
 
             ThisMaterial.SetTexture(OverlayBlurTex, _overlayBlurMap);
-            
+
             IsReadyToProcess = true;
 
             MessagePanel.HideMessage();

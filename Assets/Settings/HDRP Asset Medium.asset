@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 2}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 69284238982940
+      data1: 69284239245084
       data2: 4539628424389459968
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
@@ -35,7 +35,7 @@ MonoBehaviour:
     supportVolumetrics: 0
     increaseResolutionOfVolumetrics: 0
     supportLightLayers: 0
-    supportDistortion: 1
+    supportDistortion: 0
     supportTransparentBackface: 0
     supportTransparentDepthPrepass: 0
     supportTransparentDepthPostpass: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
       planarReflectionTextureSize: 512
       reflectionProbeCacheSize: 1
       reflectionCubemapSize: 512
-      reflectionCacheCompressed: 0
+      reflectionCacheCompressed: 1
       planarReflectionCacheCompressed: 0
       skyReflectionSize: 512
       skyLightingOverrideLayerMask:
@@ -103,7 +103,7 @@ MonoBehaviour:
       upsampleType: 1
   allowShaderVariantStripping: 1
   enableSRPBatcher: 0
-  shaderVariantLogLevel: 0
+  shaderVariantLogLevel: 2
   diffusionProfileSettings: {fileID: 0}
   diffusionProfileSettingsList: []
   m_Version: 5

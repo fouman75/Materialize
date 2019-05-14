@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#region
+
+using System.Collections;
 using JetBrains.Annotations;
 using Materialize.Gui;
 using UnityEngine;
@@ -6,12 +8,14 @@ using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+#endregion
+
 namespace Materialize.General
 {
     public class EntryRunner : MonoBehaviour
     {
-        public string MainSceneName;
         public Toggle DontAskAgain;
+        public string MainSceneName;
 
         private void Start()
         {
@@ -46,7 +50,7 @@ namespace Materialize.General
 
             while (!sceneLoad.isDone)
             {
-                MessagePanel.ShowMessage($"Now Loading   {(sceneLoad.progress * 100):0}%");
+                MessagePanel.ShowMessage($"Now Loading   {sceneLoad.progress * 100:0}%");
 
                 if (sceneLoad.progress >= 0.9f)
                 {

@@ -12,7 +12,7 @@ namespace Materialize.General
             Invalid
         }
 
-        public enum GraphicsQuality : int
+        public enum GraphicsQuality
         {
             High = 3,
             Medium = 2,

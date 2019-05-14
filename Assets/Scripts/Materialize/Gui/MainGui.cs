@@ -12,7 +12,6 @@ using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Utility;
-using Logger = Utility.Logger;
 
 //using UnityEngine.Experimental.Rendering.HDPipeline;
 

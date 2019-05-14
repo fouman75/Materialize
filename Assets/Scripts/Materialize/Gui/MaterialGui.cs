@@ -25,11 +25,13 @@ namespace Materialize.Gui
         private static readonly int AoMultiplierId = Shader.PropertyToID("_AoMultiplier");
         private static readonly int DisplacementStrength = Shader.PropertyToID("_DisplacementStrength");
         private static readonly int DiffuseMap = Shader.PropertyToID("_BaseColorMap");
+        private ColorAdjustments _colorAdjustments;
 
         private bool _cubeShown;
         private bool _cylinderShown;
         private Texture2D _diffuseMap;
         private int _divisorCount = UpdateDivisor;
+        private HDRISky _hdriSky;
 
         private Texture2D _heightMap;
 
@@ -54,8 +56,6 @@ namespace Materialize.Gui
         public GameObject TestObjectParent;
         public GameObject TestObjectSphere;
         public ObjectZoomPanRotate TestRotator;
-        private HDRISky _hdriSky;
-        private ColorAdjustments _colorAdjustments;
 
         public bool Hide { get; set; }
 
@@ -221,8 +221,9 @@ namespace Materialize.Gui
         {
             const int offsetX = 10;
             var offsetY = 20;
-            
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Metallic Multiplier", _materialSettings.MetallicMultiplier,
+
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Metallic Multiplier",
+                _materialSettings.MetallicMultiplier,
                 out _materialSettings.MetallicMultiplier, 0.0f, 3.0f);
             offsetY += 40;
 
@@ -230,7 +231,8 @@ namespace Materialize.Gui
                 out _materialSettings.NormalScale, 0.0f, 3.0f);
             offsetY += 40;
 
-            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Smoothness Multiplier", _materialSettings.SmoothnessMultiplier,
+            GuiHelper.Slider(new Rect(offsetX, offsetY, 280, 50), "Smoothness Multiplier",
+                _materialSettings.SmoothnessMultiplier,
                 out _materialSettings.SmoothnessMultiplier, 0.0f, 3.0f);
             offsetY += 40;
 

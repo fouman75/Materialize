@@ -63,53 +63,27 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 8
-      - keywords: _NORMALMAP_TANGENT_SPACE
-        passType: 8
       - keywords: INSTANCING_ON _DISABLE_DECALS _ENABLE_GEOMETRIC_SPECULAR_AA _MATERIAL_FEATURE_CLEAR_COAT
           _NORMALMAP_TANGENT_SPACE
         passType: 8
       - keywords: _DISABLE_DECALS _DOUBLESIDED_ON _MATERIAL_FEATURE_CLEAR_COAT _MATERIAL_FEATURE_IRIDESCENCE
           _NORMALMAP_TANGENT_SPACE _REFRACTION_PLANE
         passType: 8
-      - keywords: DECALS_OFF SHADOW_HIGH USE_CLUSTERED_LIGHTLIST _NORMALMAP_TANGENT_SPACE
-        passType: 13
-      - keywords: WRITE_NORMAL_BUFFER _NORMALMAP_TANGENT_SPACE
-        passType: 13
-      - keywords: DECALS_OFF SHADOW_HIGH USE_FPTL_LIGHTLIST _NORMALMAP_TANGENT_SPACE
-        passType: 13
-      - keywords: _DISABLE_DECALS _DOUBLESIDED_ON _MATERIAL_FEATURE_CLEAR_COAT _MATERIAL_FEATURE_IRIDESCENCE
-          _NORMALMAP_TANGENT_SPACE _REFRACTION_PLANE
-        passType: 13
-      - keywords: DECALS_OFF SHADOW_HIGH USE_CLUSTERED_LIGHTLIST _DISABLE_DECALS _DOUBLESIDED_ON
-          _MATERIAL_FEATURE_CLEAR_COAT _MATERIAL_FEATURE_IRIDESCENCE _NORMALMAP_TANGENT_SPACE
-          _REFRACTION_PLANE
+      - keywords: DECALS_OFF _DISABLE_DECALS _DOUBLESIDED_ON _MATERIAL_FEATURE_CLEAR_COAT
+          _MATERIAL_FEATURE_IRIDESCENCE _NORMALMAP_TANGENT_SPACE _REFRACTION_PLANE
         passType: 13
       - keywords: WRITE_NORMAL_BUFFER _DISABLE_DECALS _DOUBLESIDED_ON _MATERIAL_FEATURE_CLEAR_COAT
           _MATERIAL_FEATURE_IRIDESCENCE _NORMALMAP_TANGENT_SPACE _REFRACTION_PLANE
         passType: 13
-      - keywords: DECALS_3RT _DISABLE_DECALS _DOUBLESIDED_ON _MATERIAL_FEATURE_CLEAR_COAT
-          _MATERIAL_FEATURE_IRIDESCENCE _NORMALMAP_TANGENT_SPACE _REFRACTION_PLANE
+      - keywords: DECALS_OFF SHADOW_LOW USE_FPTL_LIGHTLIST _DISABLE_DECALS _DOUBLESIDED_ON
+          _MATERIAL_FEATURE_CLEAR_COAT _MATERIAL_FEATURE_IRIDESCENCE _NORMALMAP_TANGENT_SPACE
+          _REFRACTION_PLANE
         passType: 13
       - keywords: DECALS_OFF SHADOW_HIGH USE_FPTL_LIGHTLIST _DISABLE_DECALS _DOUBLESIDED_ON
           _MATERIAL_FEATURE_CLEAR_COAT _MATERIAL_FEATURE_IRIDESCENCE _NORMALMAP_TANGENT_SPACE
           _REFRACTION_PLANE
         passType: 13
   - first: {fileID: 4800000, guid: 2fcfb8d92f45e4549b3f0bad5d0654bf, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: 02ae56f4306413c4a96dcf005cde1971, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: 2e37131331fbdca449b1a2bc47a639ca, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: 035941b63024d1943af48811c1db20d9, type: 3}
     second:
       variants:
       - keywords: 
@@ -134,22 +108,10 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: 4800000, guid: 32f724728cf19904291226f239ec16f0, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
   - first: {fileID: 4800000, guid: 9bd32a6ece529fd4f9408b8d7e00c10d, type: 3}
     second:
       variants:
       - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: ec63f47fd265df243a7b1d40f9ef7fe7, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-      - keywords: _ENABLE_SUN_DISK
         passType: 0
   - first: {fileID: 4800000, guid: 123f13d52852ef547b2962de4bd9eaad, type: 3}
     second:
@@ -171,17 +133,12 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: 4800000, guid: fd532bf1795188c4daaa66ea798b8b0a, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
   - first: {fileID: 4800000, guid: 5ac9ef0c50282754b93c7692488e7ee7, type: 3}
     second:
       variants:
       - keywords: 
         passType: 0
-      - keywords: APPLY_AFTER_POST
+      - keywords: DITHER
         passType: 0
       - keywords: APPLY_AFTER_POST DITHER
         passType: 0
@@ -193,16 +150,22 @@ ShaderVariantCollection:
   - first: {fileID: 4800000, guid: 9655f4aa89a469c49aceaceabf9bc77b, type: 3}
     second:
       variants:
-      - keywords: SMAA_PRESET_LOW
-        passType: 0
-      - keywords: SMAA_PRESET_MEDIUM
-        passType: 0
       - keywords: SMAA_PRESET_HIGH
+        passType: 0
+  - first: {fileID: 4800000, guid: 19fa402a9db6edf4dbd182194973fa8c, type: 3}
+    second:
+      variants:
+      - keywords: 
         passType: 0
   - first: {fileID: 4800000, guid: 2ad7ce40f0dbaf64dadef1f58d8524d3, type: 3}
     second:
       variants:
       - keywords: NEAREST_DEPTH
+        passType: 0
+  - first: {fileID: 4800000, guid: 48ab3e2b69cf26548a2ed68d0cf0fa44, type: 3}
+    second:
+      variants:
+      - keywords: 
         passType: 0
   - first: {fileID: 4800000, guid: 67d6171b0acc6554aad48c845ec7e67f, type: 3}
     second:
@@ -210,6 +173,21 @@ ShaderVariantCollection:
       - keywords: CHECKERBOARD_DOWNSAMPLE
         passType: 0
   - first: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 7fc9f809ab74e9143a3adb85011dfe7a, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: d46c30cd1601d8047b7d18b1b69b911d, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: e1df56203f647fb478eed490855b4c03, type: 3}
     second:
       variants:
       - keywords: 
@@ -231,10 +209,6 @@ ShaderVariantCollection:
         passType: 13
       - keywords: INSTANCING_ON
         passType: 13
-      - keywords: DECALS_OFF INSTANCING_ON SHADOW_HIGH USE_CLUSTERED_LIGHTLIST
-        passType: 13
-      - keywords: INSTANCING_ON WRITE_NORMAL_BUFFER
-        passType: 13
       - keywords: DECALS_3RT
         passType: 13
       - keywords: DECALS_3RT INSTANCING_ON
@@ -242,6 +216,20 @@ ShaderVariantCollection:
       - keywords: DECALS_3RT SHADOW_LOW USE_CLUSTERED_LIGHTLIST
         passType: 13
       - keywords: DECALS_3RT INSTANCING_ON SHADOW_LOW USE_CLUSTERED_LIGHTLIST
+        passType: 13
+      - keywords: DECALS_OFF
+        passType: 13
+      - keywords: DECALS_OFF INSTANCING_ON
+        passType: 13
+      - keywords: WRITE_NORMAL_BUFFER
+        passType: 13
+      - keywords: INSTANCING_ON WRITE_NORMAL_BUFFER
+        passType: 13
+      - keywords: DECALS_OFF SHADOW_LOW USE_FPTL_LIGHTLIST
+        passType: 13
+      - keywords: DECALS_OFF INSTANCING_ON SHADOW_LOW USE_FPTL_LIGHTLIST
+        passType: 13
+      - keywords: DECALS_OFF SHADOW_HIGH USE_FPTL_LIGHTLIST
         passType: 13
       - keywords: DECALS_OFF INSTANCING_ON SHADOW_HIGH USE_FPTL_LIGHTLIST
         passType: 13

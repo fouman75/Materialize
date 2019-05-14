@@ -24,17 +24,17 @@ namespace Materialize.General
         public bool ApplicationIsQuitting;
 
         [HideInInspector] public int DefaultFrameRate = 30;
-        [HideInInspector] public ProgramSettings ProgramSettings;
 
         public int ForcedFrameRate = 30;
         public bool ForceFrameRate;
         public Vector2 GuiScale = new Vector2(1, 1);
 
         public MessagePanel MessagePanelObject;
+        public ObjectZoomPanRotate ObjectHandler;
         public Volume PostProcessingVolume;
+        [HideInInspector] public ProgramSettings ProgramSettings;
         public HDRenderPipeline RenderPipeline;
         public Volume SceneVolume;
-        public ObjectZoomPanRotate ObjectHandler;
 
         #region Settings
 

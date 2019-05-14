@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections;
-using System.Runtime.Remoting.Messaging;
 using JetBrains.Annotations;
 using Materialize.Gui;
 using UnityEngine;
@@ -21,7 +20,6 @@ namespace Materialize.General
         // ReSharper disable once MemberCanBePrivate.Global
         public const TextureFormat DefaultLdrTextureFormat = TextureFormat.RGBA32;
         public static TextureManager Instance;
-        public float DisplacementConstant = 0.25f;
 
         private static readonly int DiffuseMapId = Shader.PropertyToID("_BaseColorMap");
         private static readonly int NormalMapId = Shader.PropertyToID("_NormalMap");
@@ -34,13 +32,23 @@ namespace Materialize.General
         private static readonly int FlipNormalYId = Shader.PropertyToID("_FlipNormalY");
 
         private Texture2D _blackTexture;
-        private Texture2D _packedNormal;
         private bool _displacementInitialized;
+
+        private bool _flipNormalY;
+        private Texture2D _packedNormal;
 
         [Range(0, 10)] public float DefaultDisplacement = 3.0f;
         public TextureFormat DefaultTextureFormat;
+        public float DisplacementConstant = 0.25f;
 
-        private bool _flipNormalY;
+        // ReSharper disable once RedundantDefaultMemberInitializer
+        [UsedImplicitly] [SerializeField] private Material FullMaterial = null;
+        public bool Hdr;
+        public ComputeShader MaskMapCompute;
+        public RenderTextureFormat RenderTextureFormat;
+
+        [HideInInspector] public ProgramEnums.MapType TextureInClipboard;
+        public ComputeShader TextureProcessingCompute;
 
         public bool FlipNormalY
         {
@@ -52,14 +60,6 @@ namespace Materialize.General
             get => _flipNormalY;
         }
 
-        // ReSharper disable once RedundantDefaultMemberInitializer
-        [UsedImplicitly] [SerializeField] private Material FullMaterial = null;
-        public bool Hdr;
-        public ComputeShader MaskMapCompute;
-        public RenderTextureFormat RenderTextureFormat;
-
-        [HideInInspector] public ProgramEnums.MapType TextureInClipboard;
-        public ComputeShader TextureProcessingCompute;
         public Material FullMaterialInstance { get; private set; }
 
         private void Awake()
@@ -158,9 +158,6 @@ namespace Materialize.General
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
-                
-                
-                
             }
         }
 

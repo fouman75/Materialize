@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 2}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 68182396238622
+      data1: 68182396500766
       data2: 4539628424389459968
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
@@ -35,7 +35,7 @@ MonoBehaviour:
     supportVolumetrics: 0
     increaseResolutionOfVolumetrics: 0
     supportLightLayers: 0
-    supportDistortion: 1
+    supportDistortion: 0
     supportTransparentBackface: 0
     supportTransparentDepthPrepass: 0
     supportTransparentDepthPostpass: 0
@@ -87,7 +87,7 @@ MonoBehaviour:
       atlasHeight: 4096
       perChannelMask: 0
     postProcessSettings:
-      m_LutSize: 32
+      m_LutSize: 16
       lutFormat: 48
     dynamicResolutionSettings:
       enabled: 0

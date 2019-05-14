@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 2}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 69286411631390
+      data1: 69286411893534
       data2: 4539628424389459968
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
@@ -28,14 +28,14 @@ MonoBehaviour:
       data2: 4539628424389459968
   m_RenderPipelineSettings:
     supportShadowMask: 1
-    supportSSR: 1
+    supportSSR: 0
     supportSSAO: 1
     supportSubsurfaceScattering: 0
     increaseSssSampleCount: 1
     supportVolumetrics: 0
     increaseResolutionOfVolumetrics: 1
     supportLightLayers: 0
-    supportDistortion: 1
+    supportDistortion: 0
     supportTransparentBackface: 0
     supportTransparentDepthPrepass: 0
     supportTransparentDepthPostpass: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
       planarReflectionTextureSize: 1024
       reflectionProbeCacheSize: 1
       reflectionCubemapSize: 1024
-      reflectionCacheCompressed: 0
+      reflectionCacheCompressed: 1
       planarReflectionCacheCompressed: 0
       skyReflectionSize: 1024
       skyLightingOverrideLayerMask:
@@ -105,7 +105,9 @@ MonoBehaviour:
   enableSRPBatcher: 0
   shaderVariantLogLevel: 2
   diffusionProfileSettings: {fileID: 0}
-  diffusionProfileSettingsList: []
+  diffusionProfileSettingsList:
+  - {fileID: 11400000, guid: 404820c4cf36ad944862fa59c56064f0, type: 2}
+  - {fileID: 11400000, guid: 2384dbf2c1c420f45a792fbc315fbfb1, type: 2}
   m_Version: 5
   m_ObsoleteFrameSettings:
     overrides: 0

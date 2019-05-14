@@ -16,6 +16,8 @@ namespace Materialize.Gui
 
         private int _windowId;
 
+        private ProgramEnums.GraphicsQuality CachedGraphicsQuality { get; set; }
+
         public bool Hide { get; set; }
 
         private void Start()
@@ -23,8 +25,6 @@ namespace Materialize.Gui
             _windowId = ProgramManager.Instance.GetWindowId;
             CachedGraphicsQuality = PrefsManager.GraphicsQuality;
         }
-
-        private ProgramEnums.GraphicsQuality CachedGraphicsQuality { get; set; }
 
         private void DoMyWindow(int windowId)
         {

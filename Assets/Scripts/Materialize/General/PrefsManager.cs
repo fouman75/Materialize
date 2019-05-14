@@ -1,20 +1,24 @@
+#region
+
 using System.Collections.Generic;
 using Materialize.Settings;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using UnityEngine;
 using Logger = Utility.Logger;
-using Newtonsoft.Json;
-using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
+
+#endregion
 
 namespace Materialize.General
 {
     public static class PrefsManager
     {
-        private static List<string> _serializationErrors;
         private const string LastPathKey = nameof(LastPathKey);
         private const string GraphicsQualityKey = nameof(GraphicsQualityKey);
         private const string DontAskAgainForGraphicsQualityKey = nameof(DontAskAgainForGraphicsQualityKey);
         private const string SettingsKey = nameof(SettingsKey);
         private const string IsJsonKey = nameof(IsJsonKey);
+        private static List<string> _serializationErrors;
 
 
         public static string LastPath

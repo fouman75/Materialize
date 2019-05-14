@@ -13,15 +13,15 @@ namespace Materialize.Settings
         private const float LightIntensityDefault = 1f;
         private readonly Color _originalLightColor;
         private readonly float _originalLightIntensity;
+        public float AoMultiplier;
         public float DisplacementStrength;
         public float LightB;
-        public float LightG;
         public float LightExposure;
+        public float LightG;
         public float LightR;
-        public float NormalScale;
         public float MetallicMultiplier;
+        public float NormalScale;
         public float SmoothnessMultiplier;
-        public float AoMultiplier;
         public float TexOffsetX;
         public float TexOffsetY;
         public float TexTilingX;

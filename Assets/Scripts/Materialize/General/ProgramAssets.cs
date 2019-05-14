@@ -1,12 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿#region
+
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 
-public class ProgramAssets : MonoBehaviour
+#endregion
+
+namespace Materialize.General
 {
-    public HDRenderPipelineAsset MinimalQualityAsset;
-    public HDRenderPipelineAsset LowQualityAsset;
-    public HDRenderPipelineAsset MediumQualityAsset;
-    public HDRenderPipelineAsset HighQualityAsset;
+    public class ProgramAssets : MonoBehaviour
+    {
+        public HDRenderPipelineAsset HighQualityAsset;
+        public HDRenderPipelineAsset LowQualityAsset;
+        public HDRenderPipelineAsset MediumQualityAsset;
+        public HDRenderPipelineAsset MinimalQualityAsset;
+    }
 }
