@@ -54,7 +54,7 @@ public class SettingsGui : MonoBehaviour
         {
             Settings.NormalMapMaxStyle = true;
             Settings.NormalMapMayaStyle = false;
-            Settings.PostProcessEnabled = true;
+            Settings.PostProcessEnabled = false;
             Settings.PropRed = PropChannelMap.None;
             Settings.PropGreen = PropChannelMap.None;
             Settings.PropBlue = PropChannelMap.None;
